@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import {connect} from "react-redux";
-import LoginPage from './login/LoginPage';
 import HomePage from './home/HomePage';
-import CommonSpinnerWrapper from './common/spinner/CommonSpinnerWrapper';
 import { onApplicationMounted } from '../redux/actions/application/action-creators/action.creators'
 
 class ApplicationWrapper extends Component {
@@ -15,11 +13,7 @@ class ApplicationWrapper extends Component {
     render() {
         return (
             <View>
-                <CommonSpinnerWrapper loading={!this.props.applicationInitialized}>
-                    {this.props.loginRequired ?
-                        <LoginPage /> :
-                        <HomePage />}
-                </CommonSpinnerWrapper>
+                <HomePage />
             </View>
         );
     }
@@ -37,6 +31,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onApplicationMounted: () => dispatch(onApplicationMounted())
     };
-  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicationWrapper);
