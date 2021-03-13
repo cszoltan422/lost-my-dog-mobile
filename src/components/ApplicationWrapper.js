@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import {connect} from "react-redux";
-import HomePage from './home/HomePage';
-import { onApplicationMounted } from '../redux/actions/application/action-creators/action.creators'
+import LostMyDogNavigator from './navigation/LostMyDogNavigator';
+import { onApplicationMounted } from '../redux/actions/application/action-creators/action.creators';
 
 class ApplicationWrapper extends Component {
 
@@ -11,9 +11,15 @@ class ApplicationWrapper extends Component {
     }
 
     render() {
+        let content = null;
+        if (this.props.applicationInitialized) {
+            content = <LostMyDogNavigator />;
+        } else {
+            content = <Text>Init app</Text>;
+        }
         return (
-            <View>
-                <HomePage />
+            <View style={{flex: 1}}>
+                <LostMyDogNavigator />
             </View>
         );
     }
