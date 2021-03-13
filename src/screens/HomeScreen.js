@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
+import { View } from 'react-native';
 import {connect} from "react-redux";
 import LostDogSummaryListItem from '../components/home-page/LostDogSummaryListItem';
 import { onHomepageMounted } from '../redux/actions/homepage/action-creators/action.creators';
@@ -12,15 +12,12 @@ class HomeScreen extends Component {
 
     render() {
         return (
-            <View>
-                <FlatList
-                    keyExtractor={(data) => data.id}
-                    data={this.props.homepageData}
-                    renderItem={(data) => {
-                        return (
-                            <LostDogSummaryListItem dog={data.item}/>
-                        )
-                    }}/>
+            <View style={{height: '100%'}}>
+                {this.props.homepageData.map((data) => {
+                    return (
+                        <LostDogSummaryListItem key={data.id} dog={data}/>
+                    );
+                })}
             </View>
         );
     }

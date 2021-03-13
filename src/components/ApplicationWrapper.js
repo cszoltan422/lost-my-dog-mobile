@@ -18,8 +18,8 @@ class ApplicationWrapper extends Component {
             content = <Text>Init app</Text>;
         }
         return (
-            <View style={{flex: 1}}>
-                <LostMyDogNavigator />
+            <View style={{flex: 1, justifyContent: 'center'}}>
+                {content}
             </View>
         );
     }

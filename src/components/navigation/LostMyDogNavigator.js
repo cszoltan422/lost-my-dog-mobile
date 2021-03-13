@@ -2,7 +2,6 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Platform } from 'react-native';
 import HomeScreen from '../../screens/HomeScreen';
-import LostDogDetailsScreen from '../../screens/LostDogDetailsScreen';
 import colors from '../../colors';
 
 const LostMyDogNavigator = createStackNavigator({
