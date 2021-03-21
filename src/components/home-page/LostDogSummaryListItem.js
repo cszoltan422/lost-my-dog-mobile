@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {  View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { Avatar } from 'react-native-elements';
 import colors from '../../colors';
 
 class LostDogSummaryListItem extends Component {
@@ -8,28 +9,41 @@ class LostDogSummaryListItem extends Component {
     render() {
         return (
             <View style={styles.card}>
-                <Text style={styles.title}>{this.props.dog.dogName}</Text>
-                <View style={styles.container}>
-                <View style={styles.innerContainer}>
-                        <Icon
-                            type='font-awesome'
-                            name='paw'
-                            color={colors.accentColor}/>
-                        <Text style={styles.dogBreed}>{this.props.dog.dogBreed}</Text>
+                <View style={styles.headerContainer}>
+                    <View style={styles.imageContainer}>
+                        <Avatar
+                            size='medium'
+                            rounded
+                            title={this.props.dog.dogName.charAt(0)}
+                            source={{
+                                uri: `https://lost-my-dog-staging.herokuapp.com/image/${this.props.dog.avatarFilename}`,
+                            }} />
                     </View>
-                    <View style={styles.innerContainer}>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>{this.props.dog.dogName}</Text>
+                        <View style={styles.rowContainer}>
+                            <Icon
+                                type='font-awesome'
+                                name='paw'
+                                color={colors.accentColor}/>
+                            <Text style={styles.dogBreed}>{this.props.dog.dogBreed}</Text>
+                        </View>
+                    </View>
+                </View>
+                <View style={styles.detailsContainer}>
+                    <View style={styles.rowContainer}>
                         <Icon
                             type='material'
                             name='room'
                             color={colors.accentColor}/>
-                        <Text style={styles.locationLost}>Budapest, HU - TODO</Text>
+                        <Text style={styles.locationLost}>Budapest, HU</Text>
                     </View>
-                    <View style={styles.innerContainer}>
+                    <View style={styles.rowContainer}>
                         <Icon
                             type='material'
                             name='schedule'
                             color={colors.accentColor}/>
-                        <Text style={styles.dateLost}>{this.props.dog.dateLost}</Text>
+                        <Text style={styles.dateLost}>36 perce</Text>
                     </View>
                 </View>
             </View>
@@ -48,24 +62,37 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         marginBottom: 8,
         padding: 8,
-        height: 130
+        height: 110
     },
-    container: {
-        flexDirection: 'column',
-    },
-    innerContainer: {
+    headerContainer: {
         flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 4
+        alignItems: 'center'
+    },
+    imageContainer: {
+        flexDirection: 'column',
+        marginRight: 16
+    },
+    titleContainer: {
+        flexDirection: 'column',
+        
     },
     title: {
-        fontSize: 20,
-        marginBottom: 8,
+        fontSize: 24,
         color: colors.accentColor,
         fontWeight: 'bold'
     },
     dogBreed: {
-        marginStart: 8
+        marginStart: 8,
+        color: colors.grey
+    },
+    rowContainer: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    detailsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 8
     },
     locationLost: {
         marginStart: 8

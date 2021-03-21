@@ -5,13 +5,15 @@ import HomeScreen from '../../screens/HomeScreen';
 import colors from '../../colors';
 
 const LostMyDogNavigator = createStackNavigator({
-    'home': HomeScreen
+    'home': {
+        screen: HomeScreen
+    }
 }, {
     defaultNavigationOptions: {
         headerStyle: {
-            backgroundColor: Platform.OS === 'android' ? colors.primaryColor : ''
+            backgroundColor: colors.primaryColor
         },
-        headerTintColor: Platform.OS === 'andriod' ? 'black' : colors.primaryColor
+        headerTintColor: 'white'
     }
 });
 

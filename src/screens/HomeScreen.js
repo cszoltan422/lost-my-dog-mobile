@@ -10,9 +10,15 @@ class HomeScreen extends Component {
         this.props.onHomepageMounted();
     }
 
+    static navigationOptions = () => {
+        return {
+          title: 'Dashboard'
+        };
+      };
+
     render() {
         return (
-            <View style={{height: '100%'}}>
+            <View style={{height: '100%', padding: 8}}>
                 {this.props.homepageData.map((data) => {
                     return (
                         <LostDogSummaryListItem key={data.id} dog={data}/>
