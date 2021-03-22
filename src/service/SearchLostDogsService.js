@@ -4,12 +4,13 @@ export default class SearchLostDogsService {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjc3pvbHRhbjQyMiIsImV4cCI6MTYxNTY5NzI5MCwiaWF0IjoxNjE1NjYxMjkwfQ.iEfE07dj0PSUUpg34vXARJBVAFXlxe9zNCLFyxYQNBU'
+                'Authorization': 'Bearer DEMO_TOKEN'
             },
             body: JSON.stringify({
-                longitude: 0,
-                latitude: 0,
-                radius: 1000000
+                longitude: 19.137403,
+                latitude: 47.45742,
+                radius: 1000000,
+                page: 0
               })
           }).then(response => response.json())
     }
