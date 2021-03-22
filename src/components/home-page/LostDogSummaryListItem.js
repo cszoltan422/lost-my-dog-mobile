@@ -3,6 +3,8 @@ import {  View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Avatar } from 'react-native-elements';
 import colors from '../../colors';
+import i18n from '../../i18n/i18n';
+import {DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_MINUTES_AGO} from "../../i18n/i18n.keys";
 
 class LostDogSummaryListItem extends Component {
 
@@ -43,7 +45,7 @@ class LostDogSummaryListItem extends Component {
                             type='material'
                             name='schedule'
                             color={colors.accentColor}/>
-                        <Text style={styles.dateLost}>36 perce</Text>
+                        <Text style={styles.dateLost}>36 {i18n.t(DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_MINUTES_AGO)}</Text>
                     </View>
                 </View>
             </View>

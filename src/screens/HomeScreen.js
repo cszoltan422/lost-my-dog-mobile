@@ -3,6 +3,8 @@ import { View, FlatList } from 'react-native';
 import {connect} from "react-redux";
 import LostDogSummaryListItem from '../components/home-page/LostDogSummaryListItem';
 import { onHomepageMounted } from '../redux/actions/homepage/action-creators/action.creators';
+import i18n from '../i18n/i18n';
+import {DASHBOARD_TITLE} from "../i18n/i18n.keys";
 
 class HomeScreen extends Component {
 
@@ -12,7 +14,7 @@ class HomeScreen extends Component {
 
     static navigationOptions = () => {
         return {
-          title: 'Dashboard'
+          title: i18n.t(DASHBOARD_TITLE)
         };
       };
 
@@ -26,7 +28,7 @@ class HomeScreen extends Component {
                             <LostDogSummaryListItem dog={item.item}/>
                         );
                     }}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.id.toString()}
                 />
             </View>
         );

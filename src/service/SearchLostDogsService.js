@@ -4,7 +4,7 @@ export default class SearchLostDogsService {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer DEMO_TOKEN'
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjc3pvbHRhbjQyMiIsImV4cCI6MTYxNzAzNzE5OCwiaWF0IjoxNjE2NDMyMzk4fQ.8WFBc_7lGHfUf97YVkPchXE3UPqAUzguOqw3zAdJE3g'
             },
             body: JSON.stringify({
                 longitude: 19.137403,
