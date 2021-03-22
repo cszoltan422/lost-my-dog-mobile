@@ -11,6 +11,4 @@ i18n.translations = {
     hu
 };
 
-console.log(Localization.locale)
-
 export default i18n;
