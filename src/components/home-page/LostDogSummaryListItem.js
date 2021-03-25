@@ -37,7 +37,7 @@ class LostDogSummaryListItem extends Component {
                             type='material'
                             name='room'
                             color={colors.accentColor}/>
-                        <Text style={styles.locationLost}>Budapest, HU</Text>
+                        <Text style={styles.locationLost}>{this.props.dog.city}, {this.props.dog.countryCode}</Text>
                     </View>
                     <View style={styles.rowContainer}>
                         <Icon
