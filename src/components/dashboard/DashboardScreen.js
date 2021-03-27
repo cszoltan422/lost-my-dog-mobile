@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { View, FlatList } from 'react-native';
 import LostDogSummaryListItem from './lost-dog-summary-item/LostDogSummaryListItem';
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import {connect} from 'react-redux';
-import {onDashboardMounted} from '../../redux/actions/dashboard/action-creators/action.creators';
+import {
+    onDashboardMounted,
+    onDashboardRefreshPage
+} from '../../redux/actions/dashboard/action-creators/action.creators';
 import {DASHBOARD_TITLE} from '../../i18n/i18n.keys';
 import i18n from '../../i18n/i18n';
 
@@ -19,8 +23,16 @@ class DashboardScreen extends Component {
     };
 
     render() {
-        return (
-            <View style={{height: '100%', padding: 8}}>
+        let content;
+        if (this.props.loading) {
+            content = (
+                <SkeletonPlaceholder highlightColor='#ffffff' backgroundColor='#cfd8dc'  >
+                    <SkeletonPlaceholder.Item height={110} marginBottom={8}  borderRadius={16} />
+                    <SkeletonPlaceholder.Item height={110} marginBottom={8}  borderRadius={16} />
+                </SkeletonPlaceholder>
+            );
+        } else {
+            content = (
                 <FlatList
                     data={this.props.data}
                     renderItem={(item) => {
@@ -29,7 +41,13 @@ class DashboardScreen extends Component {
                         );
                     }}
                     keyExtractor={item => item.id.toString()}
-                />
+                    onRefresh={() => this.props.onDashboardRefreshPage()}
+                    refreshing={this.props.refreshing} />
+            );
+        }
+        return (
+            <View style={{height: '100%', padding: 8}}>
+                {content}
             </View>
         );
     }
@@ -49,7 +67,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onDashboardMounted: () => dispatch(onDashboardMounted())
+        onDashboardMounted: () => dispatch(onDashboardMounted()),
+        onDashboardRefreshPage: () => dispatch(onDashboardRefreshPage()),
     };
 };
 

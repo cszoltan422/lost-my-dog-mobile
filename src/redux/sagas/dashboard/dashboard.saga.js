@@ -13,7 +13,7 @@ import {
     onDashboardRefreshing
 } from "../../actions/dashboard/action-creators/action.creators";
 
-const CLEAR_DATA_ACTIONS = [ON_DASHBOARD_MOUNTED, ON_DASHBOARD_CHANGE_SEARCH_PARAMS];
+const CLEAR_DATA_ACTIONS = [ON_DASHBOARD_MOUNTED, ON_DASHBOARD_CHANGE_SEARCH_PARAMS, ON_DASHBOARD_REFRESH_PAGE];
 const ACTION_TYPE_STATUS_CHANGE_HANDLER = {
     ON_DASHBOARD_MOUNTED: onDashboardLoading,
     ON_DASHBOARD_REFRESH_PAGE: onDashboardRefreshing,
