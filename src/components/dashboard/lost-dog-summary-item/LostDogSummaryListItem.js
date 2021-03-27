@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {  View, Text, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Avatar } from 'react-native-elements';
-import colors from '../../colors';
-import { getTimeDifferenceString } from "../../util/date/date.utils";
+import colors from '../../../colors';
+import { getTimeDifferenceString } from "../../../util/date/date.utils";
 
 class LostDogSummaryListItem extends Component {
 
