@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
+import React, { Component, Fragment } from 'react';
+import {View, FlatList} from 'react-native';
 import LostDogSummaryListItem from './lost-dog-summary-item/LostDogSummaryListItem';
-import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import LostDogSummaryListItemPlaceholder from './lost-dog-summary-item/LostDogSummaryListItemPlaceholder';
+import LostDogSummaryEndIndicator from './lost-dog-summary-item/LostDogSummaryEndIndicator';
 import {connect} from 'react-redux';
 import {
+    onDashboardFetchNewPage,
     onDashboardMounted,
     onDashboardRefreshPage
 } from '../../redux/actions/dashboard/action-creators/action.creators';
@@ -11,6 +13,12 @@ import {DASHBOARD_TITLE} from '../../i18n/i18n.keys';
 import i18n from '../../i18n/i18n';
 
 class DashboardScreen extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.onDashboardFetchNewPage = this.onDashboardFetchNewPage.bind(this);
+    }
 
     componentDidMount() {
         this.props.onDashboardMounted();
@@ -22,32 +30,36 @@ class DashboardScreen extends Component {
         };
     };
 
-    render() {
-        let content;
-        if (this.props.loading) {
-            content = (
-                <SkeletonPlaceholder highlightColor='#ffffff' backgroundColor='#cfd8dc'  >
-                    <SkeletonPlaceholder.Item height={110} marginBottom={8}  borderRadius={16} />
-                    <SkeletonPlaceholder.Item height={110} marginBottom={8}  borderRadius={16} />
-                </SkeletonPlaceholder>
-            );
-        } else {
-            content = (
-                <FlatList
-                    data={this.props.data}
-                    renderItem={(item) => {
-                        return (
-                            <LostDogSummaryListItem dog={item.item}/>
-                        );
-                    }}
-                    keyExtractor={item => item.id.toString()}
-                    onRefresh={() => this.props.onDashboardRefreshPage()}
-                    refreshing={this.props.refreshing} />
-            );
+    onDashboardFetchNewPage() {
+        if (!this.props.hasNoMoreData && !this.props.fetchingNew && !this.props.loading && !this.props.refreshing) {
+            this.props.onDashboardFetchNewPage();
         }
+    }
+
+    render() {
         return (
             <View style={{height: '100%', padding: 8}}>
-                {content}
+                {this.props.loading ?
+                    <LostDogSummaryListItemPlaceholder /> :
+                    <FlatList
+                        data={this.props.data}
+                        renderItem={(item) => {
+                            const lastItem = item.index === this.props.data.length - 1;
+                            return (
+                                <Fragment>
+                                    <LostDogSummaryListItem dog={item.item}/>
+                                    {(lastItem && this.props.fetchingNew &&
+                                        <LostDogSummaryListItemPlaceholder /> )}
+                                    {(lastItem && this.props.hasNoMoreData &&
+                                        <LostDogSummaryEndIndicator />)}
+                                </Fragment>
+                            );
+                        }}
+                        keyExtractor={item => item.id.toString()}
+                        onRefresh={this.props.onDashboardRefreshPage}
+                        refreshing={this.props.refreshing}
+                        onEndReachedThreshold={0.1}
+                        onEndReached={this.onDashboardFetchNewPage} />}
             </View>
         );
     }
@@ -69,6 +81,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onDashboardMounted: () => dispatch(onDashboardMounted()),
         onDashboardRefreshPage: () => dispatch(onDashboardRefreshPage()),
+        onDashboardFetchNewPage: () => dispatch(onDashboardFetchNewPage()),
     };
 };
 
