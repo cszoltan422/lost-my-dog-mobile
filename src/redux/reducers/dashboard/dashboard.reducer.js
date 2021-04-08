@@ -8,6 +8,7 @@ import {
     ON_DASHBOARD_DATA_FETCH_ERROR,
     ON_DASHBOARD_HIDE_ALERT, ON_DASHBOARD_REFRESH_PAGE, ON_DASHBOARD_FETCH_NEW_PAGE
 } from '../../actions/dashboard/action-types/action.types';
+import {DASHBOARD_LIST_PAGE_SIZE} from '../../../application.constants';
 
 export const initialState = {
     loading: false,
@@ -55,6 +56,7 @@ export const reducer = createReducer(initialState, {
         state.loading = false;
         state.refreshing = false;
         state.fetchingNew = false;
+        state.hasNoMoreData = action.payload.data.length < DASHBOARD_LIST_PAGE_SIZE;
         if (action.payload.clearData) {
             state.data = [...action.payload.data];
         } else {
