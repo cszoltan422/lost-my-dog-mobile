@@ -1,16 +1,23 @@
 import React, { Component, Fragment } from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, Text} from 'react-native';
 import LostDogSummaryListItem from './lost-dog-summary-item/LostDogSummaryListItem';
 import LostDogSummaryListItemPlaceholder from './lost-dog-summary-item/LostDogSummaryListItemPlaceholder';
 import LostDogSummaryEndIndicator from './lost-dog-summary-item/LostDogSummaryEndIndicator';
+import { Slider } from 'react-native-elements';
 import {connect} from 'react-redux';
 import {
+    onDashboardChangeSearchParams,
     onDashboardFetchNewPage,
     onDashboardMounted,
     onDashboardRefreshPage
 } from '../../redux/actions/dashboard/action-creators/action.creators';
-import {DASHBOARD_TITLE} from '../../i18n/i18n.keys';
+import {DASHBOARD_SEARCH_PARAMETERS_DISTANCE, DASHBOARD_TITLE} from '../../i18n/i18n.keys';
 import i18n from '../../i18n/i18n';
+import colors from "../../colors";
+import {
+    DASHBOARD_MAX_SEARCH_DISTANCE_IN_METERS,
+    DASHBOARD_MIN_SEARCH_DISTANCE_IN_METERS, DASHBOARD_STEP_SEARCH_DISTANCE_IN_METERS
+} from "../../application.constants";
 
 class DashboardScreen extends Component {
 
@@ -18,6 +25,7 @@ class DashboardScreen extends Component {
         super(props);
 
         this.onDashboardFetchNewPage = this.onDashboardFetchNewPage.bind(this);
+        this.onDashboardChangeSliderValue = this.onDashboardChangeSliderValue.bind(this);
     }
 
     componentDidMount() {
@@ -36,9 +44,30 @@ class DashboardScreen extends Component {
         }
     }
 
+    onDashboardChangeSliderValue(value) {
+        if (!this.props.fetchingNew && !this.props.loading && !this.props.refreshing) {
+            this.props.onDashboardChangeSearchParams({
+                radiusInMeters: value,
+                searchType: this.props.searchParameters.searchType
+            });
+        }
+    }
+
     render() {
         return (
             <View style={{height: '100%', padding: 8}}>
+                <Slider
+                    value={this.props.searchParameters.radiusInMeters}
+                    minimumValue={DASHBOARD_MIN_SEARCH_DISTANCE_IN_METERS}
+                    maximumValue={DASHBOARD_MAX_SEARCH_DISTANCE_IN_METERS}
+                    step={DASHBOARD_STEP_SEARCH_DISTANCE_IN_METERS}
+                    disabled={this.props.loading || this.props.refreshing || this.props.fetchingNew}
+                    trackStyle={{ height: 5, backgroundColor: colors.primaryColor, color: colors.primaryColor }}
+                    thumbStyle={{ height: 20, width: 20, backgroundColor: colors.primaryColor }}
+                    onSlidingComplete={(value) => this.onDashboardChangeSliderValue(value)}/>
+                <Text>
+                    {i18n.t(DASHBOARD_SEARCH_PARAMETERS_DISTANCE)} {this.props.searchParameters.radiusInMeters / 1000} km
+                </Text>
                 {this.props.loading ?
                     <LostDogSummaryListItemPlaceholder /> :
                     <FlatList
@@ -82,6 +111,7 @@ const mapDispatchToProps = (dispatch) => {
         onDashboardMounted: () => dispatch(onDashboardMounted()),
         onDashboardRefreshPage: () => dispatch(onDashboardRefreshPage()),
         onDashboardFetchNewPage: () => dispatch(onDashboardFetchNewPage()),
+        onDashboardChangeSearchParams: (searchParameters) => dispatch(onDashboardChangeSearchParams(searchParameters))
     };
 };
 
