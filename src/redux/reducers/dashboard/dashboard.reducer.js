@@ -8,7 +8,11 @@ import {
     ON_DASHBOARD_DATA_FETCH_ERROR,
     ON_DASHBOARD_HIDE_ALERT, ON_DASHBOARD_REFRESH_PAGE, ON_DASHBOARD_FETCH_NEW_PAGE
 } from '../../actions/dashboard/action-types/action.types';
-import {DASHBOARD_LIST_PAGE_SIZE} from '../../../application.constants';
+import {
+    DASHBOARD_INITIAL_SEARCH_DISTANCE_IN_METERS,
+    DASHBOARD_INITIAL_SEARCH_TYPE,
+    DASHBOARD_LIST_PAGE_SIZE
+} from '../../../application.constants';
 
 export const initialState = {
     loading: false,
@@ -19,8 +23,8 @@ export const initialState = {
         currentPage: 0
     },
     searchParameters: {
-        radiusInMeters: 10000,
-        searchType: 'LOST'
+        radiusInMeters: DASHBOARD_INITIAL_SEARCH_DISTANCE_IN_METERS,
+        searchType: DASHBOARD_INITIAL_SEARCH_TYPE
     },
     data: [],
     error: {
@@ -49,7 +53,7 @@ export const reducer = createReducer(initialState, {
         state.fetchingNew = true;
     },
     [ON_DASHBOARD_CHANGE_SEARCH_PARAMS]: (state, action) => {
-        state.searchParameters = action.payload.searchParameters;
+        state.searchParameters = action.payload;
         state.pagination.currentPage = 0;
     },
     [ON_DASHBOARD_DATA_FETCHED]: (state, action) => {
