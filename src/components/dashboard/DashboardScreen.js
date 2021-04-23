@@ -65,7 +65,7 @@ class DashboardScreen extends Component {
                     trackStyle={{ height: 5, backgroundColor: colors.primaryColor, color: colors.primaryColor }}
                     thumbStyle={{ height: 20, width: 20, backgroundColor: colors.primaryColor }}
                     onSlidingComplete={(value) => this.onDashboardChangeSliderValue(value)}/>
-                <Text>
+                <Text style={{marginBottom: 8}}>
                     {i18n.t(DASHBOARD_SEARCH_PARAMETERS_DISTANCE)} {this.props.searchParameters.radiusInMeters / 1000} km
                 </Text>
                 {this.props.loading ?
