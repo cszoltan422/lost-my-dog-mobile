@@ -154,7 +154,6 @@ const styles = StyleSheet.create({
         borderColor: colors.primaryColor
     },
     indicatorStyle: {
-        backgroundColor: 'accent',
         borderColor: colors.primaryColor,
         borderWidth: 1
     },

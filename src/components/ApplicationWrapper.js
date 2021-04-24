@@ -13,6 +13,7 @@ class ApplicationWrapper extends Component {
     render() {
         let content = null;
         if (this.props.applicationInitialized) {
+            console.log(this.props.permissions)
             content = <LostMyDogNavigator />;
         } else {
             content = <Text>Init app</Text>;
@@ -30,6 +31,7 @@ const mapStateToProps = (state) => {
         applicationInitialized: state.application.applicationInitialized,
         loginRequired: state.application.loginRequired,
         user: state.application.user,
+        permissions: state.application.permissions
     };
 };
 
