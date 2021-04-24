@@ -11,7 +11,7 @@ import {
 import {
     DASHBOARD_INITIAL_SEARCH_DISTANCE_IN_METERS,
     DASHBOARD_INITIAL_SEARCH_TYPE,
-    DASHBOARD_LIST_PAGE_SIZE
+    DASHBOARD_LIST_PAGE_SIZE, DASHBOARD_SEARCH_TYPES
 } from '../../../application.constants';
 
 export const initialState = {
@@ -24,7 +24,7 @@ export const initialState = {
     },
     searchParameters: {
         radiusInMeters: DASHBOARD_INITIAL_SEARCH_DISTANCE_IN_METERS,
-        searchType: DASHBOARD_INITIAL_SEARCH_TYPE
+        searchType: DASHBOARD_SEARCH_TYPES[DASHBOARD_INITIAL_SEARCH_TYPE]
     },
     data: [],
     error: {
