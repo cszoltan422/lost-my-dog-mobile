@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 import {connect} from "react-redux";
 import LostMyDogNavigator from './navigation/LostMyDogNavigator';
 import { onApplicationMounted } from '../redux/actions/application/action-creators/action.creators';
@@ -11,12 +11,13 @@ class ApplicationWrapper extends Component {
     }
 
     render() {
-        let content = null;
+        let content;
         if (this.props.applicationInitialized) {
-            console.log(this.props.permissions)
             content = <LostMyDogNavigator />;
         } else {
-            content = <Text>Init app</Text>;
+            content = <ImageBackground
+                source={require('../../assets/splash-screen.jpg')}
+                style={{width: '100%', height: '100%'}}/>;
         }
         return (
             <View style={{flex: 1, justifyContent: 'center'}}>

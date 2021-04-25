@@ -1,4 +1,4 @@
-import { takeLatest, select, call, put } from 'redux-saga/effects';
+import { takeLatest, select, call, put, delay } from 'redux-saga/effects';
 import { ON_APPLICATION_MOUNTED } from '../../actions/application/action-types/action.types';
 import { USER_ASYNC_STORAGE_KEY } from '../../../application.constants';
 import { onInitializeApplication } from '../../actions/application/action-creators/action.creators';
@@ -49,6 +49,7 @@ function* applicationMountedSaga() {
             };
         }
 
+        yield delay(1000);
         yield put(onInitializeApplication(applicationInitializer));
     }
 }
