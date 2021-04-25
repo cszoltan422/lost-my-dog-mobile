@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ImageBackground } from 'react-native';
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 import LostMyDogNavigator from './navigation/LostMyDogNavigator';
 import { onApplicationMounted } from '../redux/actions/application/action-creators/action.creators';
 
