@@ -4,7 +4,7 @@ export default class SearchLostDogsService {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjc3pvbHRhbjQyMiIsImV4cCI6MTYxNzQ0MzkxNywiaWF0IjoxNjE2ODM5MTE3fQ.p7riTg80-sK0Z4WuE0S1oLyIBM5Xl8CrVUnngoG0xuk'
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjc3pvbHRhbjQyMiIsImV4cCI6MTYxOTg2NjExOCwiaWF0IjoxNjE5MjYxMzE4fQ.wlAwGJWW0w0U6309-FsZJdfXj8BjnE8IzYKXJ19Tpwo'
             },
             body: JSON.stringify({
                 longitude: 19.137403,
