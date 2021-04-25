@@ -1,34 +1,42 @@
 import React, { Component } from 'react';
 import {  View, Text, StyleSheet } from 'react-native';
-import { Icon } from 'react-native-elements';
-import { Avatar } from 'react-native-elements';
+import { Icon, Avatar } from 'react-native-elements';
+import Chip from '../../common/chip/Chip';
+import Card from '../../common/card/Card';
 import colors from '../../../colors';
-import { getTimeDifferenceString } from "../../../util/date/date.utils";
+import i18n from '../../../i18n/i18n';
+import { getTimeDifferenceString } from '../../../util/date/date.utils';
+import {DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS} from '../../../application.constants';
 
 class LostDogSummaryListItem extends Component {
 
     render() {
         return (
-            <View style={styles.card}>
+            <Card>
                 <View style={styles.headerContainer}>
-                    <View style={styles.imageContainer}>
-                        <Avatar
-                            size='medium'
-                            rounded
-                            title={this.props.dog.dogName.charAt(0)}
-                            source={{
-                                uri: `https://lost-my-dog-staging.herokuapp.com/image/${this.props.dog.avatarFilename}`,
-                            }} />
-                    </View>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>{this.props.dog.dogName}</Text>
-                        <View style={styles.rowContainer}>
-                            <Icon
-                                type='font-awesome'
-                                name='paw'
-                                color={colors.accentColor}/>
-                            <Text style={styles.dogBreed}>{this.props.dog.dogBreed}</Text>
+                    <View style={styles.imageTitleContainer}>
+                        <View style={styles.imageContainer}>
+                            <Avatar
+                                size='medium'
+                                rounded
+                                title={this.props.dog.dogName.charAt(0)}
+                                source={{
+                                    uri: `https://lost-my-dog-staging.herokuapp.com/image/${this.props.dog.avatarFilename}`,
+                                }} />
                         </View>
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>{this.props.dog.dogName}</Text>
+                            <View style={styles.rowContainer}>
+                                <Icon
+                                    type='font-awesome'
+                                    name='paw'
+                                    color={colors.accentColor}/>
+                                <Text style={styles.dogBreed}>{this.props.dog.dogBreed}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.statusChipContainer}>
+                        <Chip text={i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[this.props.dog.status])} />
                     </View>
                 </View>
                 <View style={styles.detailsContainer}>
@@ -47,27 +55,19 @@ class LostDogSummaryListItem extends Component {
                         <Text style={styles.dateLost}>{getTimeDifferenceString(this.props.dog.dateLost)}</Text>
                     </View>
                 </View>
-            </View>
+            </Card>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    card: {
-        shadowColor: 'black',
-        shadowOpacity: 0.26,
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 8,
-        elevation: 5,
-        borderRadius: 16,
-        backgroundColor: 'white',
-        marginBottom: 8,
-        padding: 8,
-        height: 110
-    },
     headerContainer: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    imageTitleContainer: {
+        flexDirection: 'row',
     },
     imageContainer: {
         flexDirection: 'column',
@@ -75,7 +75,10 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         flexDirection: 'column',
-        
+    },
+    statusChipContainer: {
+        flexDirection: 'column',
+        alignItems: 'flex-start'
     },
     title: {
         fontSize: 24,
