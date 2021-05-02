@@ -5,6 +5,7 @@ import LostMyDogNavigator from './navigation/LostMyDogNavigator';
 import { onApplicationMounted } from '../redux/actions/application/action-creators/action.creators';
 
 class ApplicationWrapper extends Component {
+	public props: any;
 
     componentDidMount() {
         this.props.onApplicationMounted();

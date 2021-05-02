@@ -5,7 +5,7 @@ import rootSaga from '../sagas/root.saga';
 
 const sagaMiddleware = createSagaMiddleware()
 
-function configureStore(initialState) {
+function configureStore(initialState?) {
     let enhancer = applyMiddleware(sagaMiddleware);
 
     return createStore(rootReducer, initialState, enhancer);
