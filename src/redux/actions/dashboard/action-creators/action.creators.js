@@ -1,5 +1,6 @@
 import {
-    ON_DASHBOARD_CHANGE_SEARCH_PARAMS,
+    ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
+    ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM,
     ON_DASHBOARD_DATA_FETCH_ERROR,
     ON_DASHBOARD_DATA_FETCHED,
     ON_DASHBOARD_FETCH_NEW_PAGE, ON_DASHBOARD_FETCHING_NEW_PAGE,
@@ -45,11 +46,18 @@ export const onDashboardFetchingNewPage = () => {
     };
 };
 
-export const onDashboardChangeSearchParams = (searchParameters) => {
+export const onDashboardChangeRadiusSearchParam = (radius) => {
     return {
-        type: ON_DASHBOARD_CHANGE_SEARCH_PARAMS,
-        payload: searchParameters
-    };
+        type: ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
+        payload: radius
+    }
+};
+
+export const onDashboardChangeSearchTypeParam = (searchType) => {
+    return {
+        type: ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM,
+        payload: searchType
+    }
 };
 
 export const onDashboardDataFetched = (clearData, data) => {

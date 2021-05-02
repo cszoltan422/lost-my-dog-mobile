@@ -1,7 +1,8 @@
 import { takeLatest, call, select, put } from 'redux-saga/effects';
 import SearchLostDogsService from '../../../service/SearchLostDogsService';
 import {
-    ON_DASHBOARD_CHANGE_SEARCH_PARAMS,
+    ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
+    ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM,
     ON_DASHBOARD_FETCH_NEW_PAGE,
     ON_DASHBOARD_MOUNTED,
     ON_DASHBOARD_REFRESH_PAGE
@@ -13,12 +14,18 @@ import {
     onDashboardRefreshing
 } from "../../actions/dashboard/action-creators/action.creators";
 
-const CLEAR_DATA_ACTIONS = [ON_DASHBOARD_MOUNTED, ON_DASHBOARD_CHANGE_SEARCH_PARAMS, ON_DASHBOARD_REFRESH_PAGE];
+const CLEAR_DATA_ACTIONS = [
+    ON_DASHBOARD_MOUNTED,
+    ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
+    ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM,
+    ON_DASHBOARD_REFRESH_PAGE
+];
 const ACTION_TYPE_STATUS_CHANGE_HANDLER = {
     ON_DASHBOARD_MOUNTED: onDashboardLoading,
     ON_DASHBOARD_REFRESH_PAGE: onDashboardRefreshing,
     ON_DASHBOARD_FETCH_NEW_PAGE: onDashboardFetchingNewPage,
-    ON_DASHBOARD_CHANGE_SEARCH_PARAMS: onDashboardLoading
+    ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM: onDashboardLoading,
+    ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM: onDashboardLoading,
 }
 
 export function* dashboardFetchActionWatcherSaga() {
@@ -26,7 +33,8 @@ export function* dashboardFetchActionWatcherSaga() {
         ON_DASHBOARD_MOUNTED,
         ON_DASHBOARD_REFRESH_PAGE,
         ON_DASHBOARD_FETCH_NEW_PAGE,
-        ON_DASHBOARD_CHANGE_SEARCH_PARAMS
+        ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
+        ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM
     ], dashboardFetchActionSaga);
 }
 
