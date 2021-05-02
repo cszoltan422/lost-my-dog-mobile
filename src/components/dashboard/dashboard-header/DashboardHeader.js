@@ -20,19 +20,13 @@ const DashboardHeader = (props) => {
     const onTabValueChange = (value) => {
         const currentValue = Object.keys(DASHBOARD_SEARCH_TYPES).find(key => DASHBOARD_SEARCH_TYPES[key] === props.searchParameters.searchType);
         if (currentValue != value && !props.isLoading()) {
-            props.onDashboardChangeSearchParams({
-                radiusInMeters: props.searchParameters.radiusInMeters,
-                searchType: DASHBOARD_SEARCH_TYPES[value]
-            });
+            props.onDashboardChangeSearchTypeParam(DASHBOARD_SEARCH_TYPES[value]);
         }
     }
 
     const onDashboardChangeSliderValue = (value) => {
         if (!props.isLoading()) {
-            props.onDashboardChangeSearchParams({
-                radiusInMeters: value,
-                searchType: props.searchParameters.searchType
-            });
+            props.onDashboardChangeRadiusSearchParam(value);
         }
     }
 

@@ -4,9 +4,12 @@ import {
     ON_DASHBOARD_DATA_FETCHED,
     ON_DASHBOARD_REFRESHING,
     ON_DASHBOARD_FETCHING_NEW_PAGE,
-    ON_DASHBOARD_CHANGE_SEARCH_PARAMS,
     ON_DASHBOARD_DATA_FETCH_ERROR,
-    ON_DASHBOARD_HIDE_ALERT, ON_DASHBOARD_REFRESH_PAGE, ON_DASHBOARD_FETCH_NEW_PAGE
+    ON_DASHBOARD_HIDE_ALERT,
+    ON_DASHBOARD_REFRESH_PAGE,
+    ON_DASHBOARD_FETCH_NEW_PAGE,
+    ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
+    ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM
 } from '../../actions/dashboard/action-types/action.types';
 import {
     DASHBOARD_INITIAL_SEARCH_DISTANCE_IN_METERS,
@@ -52,8 +55,12 @@ export const reducer = createReducer(initialState, {
     [ON_DASHBOARD_FETCHING_NEW_PAGE]: (state) => {
         state.fetchingNew = true;
     },
-    [ON_DASHBOARD_CHANGE_SEARCH_PARAMS]: (state, action) => {
-        state.searchParameters = action.payload;
+    [ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM]: (state, action) => {
+        state.searchParameters.radiusInMeters = action.payload;
+        state.pagination.currentPage = 0;
+    },
+    [ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM]: (state, action) => {
+        state.searchParameters.searchType = action.payload;
         state.pagination.currentPage = 0;
     },
     [ON_DASHBOARD_DATA_FETCHED]: (state, action) => {

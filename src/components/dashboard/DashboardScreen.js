@@ -5,7 +5,8 @@ import DashboardHeader from './dashboard-header/DashboardHeader';
 import DashboardList from './dashboard-list/DashboardList';
 import LoadingCard from '../common/loading-card/LoadingCard';
 import {
-    onDashboardChangeSearchParams,
+    onDashboardChangeRadiusSearchParam,
+    onDashboardChangeSearchTypeParam,
     onDashboardFetchNewPage,
     onDashboardMounted,
     onDashboardRefreshPage
@@ -42,7 +43,8 @@ const DashboardScreen = () => {
                 fetchingNew={fetchingNew}
                 searchParameters={searchParameters}
                 isLoading={isLoading}
-                onDashboardChangeSearchParams={(searchParameters) => dispatch(onDashboardChangeSearchParams(searchParameters))}
+                onDashboardChangeRadiusSearchParam={(radius) => dispatch(onDashboardChangeRadiusSearchParam(radius))}
+                onDashboardChangeSearchTypeParam={(searchType) => dispatch(onDashboardChangeSearchTypeParam(searchType))}
             />
             {loading ?
                 <LoadingCard /> :
