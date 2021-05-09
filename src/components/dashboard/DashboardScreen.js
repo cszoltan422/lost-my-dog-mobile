@@ -44,8 +44,7 @@ const DashboardScreen = () => {
                 searchParameters={searchParameters}
                 isLoading={isLoading}
                 onDashboardChangeRadiusSearchParam={(radius) => dispatch(onDashboardChangeRadiusSearchParam(radius))}
-                onDashboardChangeSearchTypeParam={(searchType) => dispatch(onDashboardChangeSearchTypeParam(searchType))}
-            />
+                onDashboardChangeSearchTypeParam={(searchType) => dispatch(onDashboardChangeSearchTypeParam(searchType))} />
             {loading ?
                 <LoadingCard /> :
                 <DashboardList

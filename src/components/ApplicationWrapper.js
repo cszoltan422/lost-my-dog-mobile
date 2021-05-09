@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, ImageBackground } from 'react-native';
+import PropTypes from 'prop-types';
+import { View, ImageBackground, StyleSheet } from 'react-native';
 import {connect} from 'react-redux';
 import LostMyDogNavigator from './navigation/LostMyDogNavigator';
 import { onApplicationMounted } from '../redux/actions/application/action-creators/action.creators';
@@ -15,25 +16,38 @@ class ApplicationWrapper extends Component {
         if (this.props.applicationInitialized) {
             content = <LostMyDogNavigator />;
         } else {
-            content = <ImageBackground
+            content = (<ImageBackground
                 source={require('../../assets/splash-screen.jpg')}
-                style={{width: '100%', height: '100%'}}/>;
+                style={styles.imageBackground} />);
         }
         return (
-            <View style={{flex: 1, justifyContent: 'center'}}>
+            <View style={styles.content}>
                 {content}
             </View>
         );
     }
 }
 
+const styles = StyleSheet.create({
+    imageBackground: {
+        width: '100%',
+        height: '100%'
+    },
+    content: {
+        flex: 1,
+        justifyContent: 'center'
+    }
+});
+
 const mapStateToProps = (state) => {
     return {
-        applicationInitialized: state.application.applicationInitialized,
-        loginRequired: state.application.loginRequired,
-        user: state.application.user,
-        permissions: state.application.permissions
+        applicationInitialized: state.application.applicationInitialized
     };
+};
+
+ApplicationWrapper.propTypes = {
+    applicationInitialized: PropTypes.bool.isRequired,
+    onApplicationMounted: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => {

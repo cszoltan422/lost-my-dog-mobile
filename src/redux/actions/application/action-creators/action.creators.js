@@ -1,4 +1,4 @@
-import { ON_APPLICATION_MOUNTED, ON_INITIALIZE_APPLICATION } from "../action-types/action.types"
+import { ON_APPLICATION_MOUNTED, ON_INITIALIZE_APPLICATION } from '../action-types/action.types'
 
 export const onApplicationMounted = () => {
     return {

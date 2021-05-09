@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { FlatList } from 'react-native';
 import DashboardListItem from './dashboard-list-item/DashboardListItem';
 import LoadingCard from '../../common/loading-card/LoadingCard';
@@ -34,5 +35,15 @@ const DashboardList = (props) => {
             onEndReached={onDashboardFetchNewPage} />
     );
 };
+
+DashboardList.propTypes = {
+    data: PropTypes.object.isRequired,
+    fetchingNew: PropTypes.bool.isRequired,
+    refreshing: PropTypes.bool.isRequired,
+    hasNoMoreData: PropTypes.bool.isRequired,
+    isLoading: PropTypes.func.isRequired,
+    onDashboardFetchNewPage: PropTypes.func.isRequired,
+    onDashboardRefreshPage: PropTypes.func.isRequired
+}
 
 export default DashboardList;

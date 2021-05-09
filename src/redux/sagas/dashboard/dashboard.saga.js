@@ -6,13 +6,13 @@ import {
     ON_DASHBOARD_FETCH_NEW_PAGE,
     ON_DASHBOARD_MOUNTED,
     ON_DASHBOARD_REFRESH_PAGE
-} from "../../actions/dashboard/action-types/action.types";
+} from '../../actions/dashboard/action-types/action.types';
 import {
     onDashboardDataFetched,
     onDashboardFetchingNewPage,
     onDashboardLoading,
     onDashboardRefreshing
-} from "../../actions/dashboard/action-creators/action.creators";
+} from '../../actions/dashboard/action-creators/action.creators';
 
 const CLEAR_DATA_ACTIONS = [
     ON_DASHBOARD_MOUNTED,

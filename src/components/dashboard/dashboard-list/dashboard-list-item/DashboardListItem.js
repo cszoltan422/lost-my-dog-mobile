@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
 import Chip from '../../../common/chip/Chip';
@@ -28,7 +29,7 @@ const DashboardListItem = (props) => {
                             <Icon
                                 type='font-awesome'
                                 name='paw'
-                                color={colors.accentColor}/>
+                                color={colors.accentColor} />
                             <Text style={styles.dogBreed}>{props.dog.dogBreed}</Text>
                         </View>
                     </View>
@@ -42,14 +43,14 @@ const DashboardListItem = (props) => {
                     <Icon
                         type='material'
                         name='room'
-                        color={colors.accentColor}/>
+                        color={colors.accentColor} />
                     <Text style={styles.locationLost}>{props.dog.city}, {props.dog.countryCode}</Text>
                 </View>
                 <View style={styles.rowContainer}>
                     <Icon
                         type='material'
                         name='schedule'
-                        color={colors.accentColor}/>
+                        color={colors.accentColor} />
                     <Text style={styles.dateLost}>{getTimeDifferenceString(props.dog.dateLost)}</Text>
                 </View>
             </View>
@@ -103,5 +104,20 @@ const styles = StyleSheet.create({
         marginStart: 8
     }
 });
+
+DashboardListItem.propTypes = {
+    dog: PropTypes.objectOf({
+        id: PropTypes.number.isRequired,
+        dogName: PropTypes.string.isRequired,
+        dogBreed: PropTypes.string.isRequired,
+        dateLost: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+        longitude: PropTypes.number.isRequired,
+        latitude: PropTypes.number.isRequired,
+        city: PropTypes.string.isRequired,
+        countryCode: PropTypes.string.isRequired,
+        avatarFilename: PropTypes.string.isRequired
+    }).isRequired
+}
 
 export default DashboardListItem;

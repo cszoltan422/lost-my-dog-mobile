@@ -1,7 +1,8 @@
 export default {
     primaryColor: '#81aba8',
     accentColor: '#c48b9f',
-    grey: '#888',
+    placeholderGrey: '#cfd8dc',
     white: '#ffffff',
-    placeholderGrey: '#cfd8dc'
+    grey: '#888',
+    black: '#000000'
 }

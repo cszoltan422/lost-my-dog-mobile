@@ -10,7 +10,7 @@ import {
     DASHBOARD_SEARCH_LOST_WANDERING_TAB,
     DASHBOARD_SEARCH_PARAMETERS_DISTANCE,
     DASHBOARD_TITLE
-} from "../i18n.keys";
+} from '../i18n.keys';
 
 export default {
     [DASHBOARD_TITLE]: 'Kezdőoldal',

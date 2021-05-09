@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, Text, View} from 'react-native';
 import { Slider, Tab } from 'react-native-elements';
 import {
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
         borderColor: colors.primaryColor
     },
     buttonStyle: {
-        backgroundColor: 'white',
+        backgroundColor: colors.white,
         borderColor: colors.primaryColor
     },
     indicatorStyle: {
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     sliderStyle: {
         elevation: 5,
         borderRadius: 16,
-        backgroundColor: 'white',
+        backgroundColor: colors.white,
         marginTop: 8,
         marginBottom: 12,
         padding: 8
@@ -109,5 +110,18 @@ const styles = StyleSheet.create({
         backgroundColor: colors.primaryColor
     }
 });
+
+DashboardHeader.propTypes = {
+    loading: PropTypes.bool.isRequired,
+    refreshing: PropTypes.bool.isRequired,
+    fetchingNew: PropTypes.bool.isRequired,
+    isLoading: PropTypes.func.isRequired,
+    searchParameters: PropTypes.objectOf({
+        radiusInMeters: PropTypes.number.isRequired,
+        searchType: PropTypes.string.isRequired,
+    }).isRequired,
+    onDashboardChangeRadiusSearchParam: PropTypes.func.isRequired,
+    onDashboardChangeSearchTypeParam: PropTypes.func.isRequired
+}
 
 export default DashboardHeader;
