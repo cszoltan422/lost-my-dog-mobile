@@ -116,7 +116,7 @@ DashboardHeader.propTypes = {
     refreshing: PropTypes.bool.isRequired,
     fetchingNew: PropTypes.bool.isRequired,
     isLoading: PropTypes.func.isRequired,
-    searchParameters: PropTypes.objectOf({
+    searchParameters: PropTypes.shape({
         radiusInMeters: PropTypes.number.isRequired,
         searchType: PropTypes.string.isRequired,
     }).isRequired,

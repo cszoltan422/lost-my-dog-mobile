@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
@@ -12,48 +12,50 @@ import { getTimeDifferenceString } from '../../../../util/date/date.utils';
 const DashboardListItem = (props) => {
     return (
         <Card>
-            <View style={styles.headerContainer}>
-                <View style={styles.imageTitleContainer}>
-                    <View style={styles.imageContainer}>
-                        <Avatar
-                            size='medium'
-                            rounded
-                            title={props.dog.dogName.charAt(0)}
-                            source={{
-                                uri: `https://lost-my-dog-staging.herokuapp.com/image/${props.dog.avatarFilename}`,
-                            }} />
-                    </View>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>{props.dog.dogName}</Text>
-                        <View style={styles.rowContainer}>
-                            <Icon
-                                type='font-awesome'
-                                name='paw'
-                                color={colors.accentColor} />
-                            <Text style={styles.dogBreed}>{props.dog.dogBreed}</Text>
+            <Fragment>
+                <View style={styles.headerContainer}>
+                    <View style={styles.imageTitleContainer}>
+                        <View style={styles.imageContainer}>
+                            <Avatar
+                                size='medium'
+                                rounded
+                                title={props.dog.dogName.charAt(0)}
+                                source={{
+                                    uri: `https://lost-my-dog-staging.herokuapp.com/image/${props.dog.avatarFilename}`,
+                                }} />
+                        </View>
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>{props.dog.dogName}</Text>
+                            <View style={styles.rowContainer}>
+                                <Icon
+                                    type='font-awesome'
+                                    name='paw'
+                                    color={colors.accentColor} />
+                                <Text style={styles.dogBreed}>{props.dog.dogBreed}</Text>
+                            </View>
                         </View>
                     </View>
+                    <View style={styles.statusChipContainer}>
+                        <Chip text={i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[props.dog.status])} />
+                    </View>
                 </View>
-                <View style={styles.statusChipContainer}>
-                    <Chip text={i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[props.dog.status])} />
+                <View style={styles.detailsContainer}>
+                    <View style={styles.rowContainer}>
+                        <Icon
+                            type='material'
+                            name='room'
+                            color={colors.accentColor} />
+                        <Text style={styles.locationLost}>{props.dog.city}, {props.dog.countryCode}</Text>
+                    </View>
+                    <View style={styles.rowContainer}>
+                        <Icon
+                            type='material'
+                            name='schedule'
+                            color={colors.accentColor} />
+                        <Text style={styles.dateLost}>{getTimeDifferenceString(props.dog.dateLost)}</Text>
+                    </View>
                 </View>
-            </View>
-            <View style={styles.detailsContainer}>
-                <View style={styles.rowContainer}>
-                    <Icon
-                        type='material'
-                        name='room'
-                        color={colors.accentColor} />
-                    <Text style={styles.locationLost}>{props.dog.city}, {props.dog.countryCode}</Text>
-                </View>
-                <View style={styles.rowContainer}>
-                    <Icon
-                        type='material'
-                        name='schedule'
-                        color={colors.accentColor} />
-                    <Text style={styles.dateLost}>{getTimeDifferenceString(props.dog.dateLost)}</Text>
-                </View>
-            </View>
+            </Fragment>
         </Card>
     );
 };
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
 });
 
 DashboardListItem.propTypes = {
-    dog: PropTypes.objectOf({
+    dog: PropTypes.shape({
         id: PropTypes.number.isRequired,
         dogName: PropTypes.string.isRequired,
         dogBreed: PropTypes.string.isRequired,

@@ -37,7 +37,18 @@ const DashboardList = (props) => {
 };
 
 DashboardList.propTypes = {
-    data: PropTypes.object.isRequired,
+    data: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        dogName: PropTypes.string.isRequired,
+        dogBreed: PropTypes.string.isRequired,
+        dateLost: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+        longitude: PropTypes.number.isRequired,
+        latitude: PropTypes.number.isRequired,
+        city: PropTypes.string.isRequired,
+        countryCode: PropTypes.string.isRequired,
+        avatarFilename: PropTypes.string.isRequired
+    })).isRequired,
     fetchingNew: PropTypes.bool.isRequired,
     refreshing: PropTypes.bool.isRequired,
     hasNoMoreData: PropTypes.bool.isRequired,
