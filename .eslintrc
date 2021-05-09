@@ -1,0 +1,77 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": [
+    "react",
+    "react-native"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "env": {
+    "react-native/react-native": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "func-names": ["error", "never"],
+    "no-multi-spaces": [2],
+    "quotes": [2, "single", { "avoidEscape": true, "allowTemplateLiterals": true } ],
+    "jsx-quotes": ["error", "prefer-single"],
+    "indent": [0],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-indent": ["error", 4],
+    "react/jsx-indent-props": 2,
+    "react/prop-types": "error",
+    "react/require-default-props": [0],
+    "react/forbid-prop-types": [0],
+    "react/jsx-pascal-case": [2],
+    "react/jsx-boolean-value": 2,
+    "react/jsx-closing-bracket-location": [2, "after-props"],
+    "react/jsx-curly-spacing": 2,
+    "react/jsx-no-duplicate-props": 2,
+    "react/jsx-no-undef": 2,
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/jsx-tag-spacing": [2, {
+      "closingSlash": "never",
+      "beforeSelfClosing": "always",
+      "afterOpening": "never",
+      "beforeClosing": "allow"
+    }],
+    "react/no-danger": 2,
+    "react/no-did-mount-set-state": 2,
+    "react/no-did-update-set-state": 2,
+    "react/no-multi-comp": 2,
+    "react/no-unknown-property": 2,
+    "react/self-closing-comp": 2,
+    "react/jsx-wrap-multilines": 2,
+    "max-len": ["error", {
+      "code": 300,
+      "tabWidth": 4,
+      "ignoreUrls": true,
+      "ignoreComments": true,
+      "ignoreRegExpLiterals": true,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true
+    }],
+    "react-native/no-unused-styles": 2,
+    "react-native/split-platform-components": 2,
+    "react-native/no-inline-styles": 2,
+    "react-native/no-color-literals": 2,
+    "react-native/no-raw-text": 2,
+    "react-native/no-single-element-style-arrays": 2
+  }
+}
