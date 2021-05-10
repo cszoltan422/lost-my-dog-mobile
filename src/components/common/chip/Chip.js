@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Text, View, StyleSheet } from 'react-native';
 import colors from '../../../colors';
 
@@ -22,9 +23,13 @@ const styles = StyleSheet.create({
         marginTop: -16
     },
     text: {
-        color: '#ffffff',
+        color: colors.white,
         fontWeight: 'bold'
     }
 });
+
+Chip.propTypes = {
+    text: PropTypes.string.isRequired
+}
 
 export default Chip;

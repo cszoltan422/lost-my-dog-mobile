@@ -6,7 +6,7 @@ import {
     DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_MINUTES_AGO,
     DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_OVER_A_MONTH_AGO,
     DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_WEEKS_AGO
-} from "../../i18n/i18n.keys";
+} from '../../i18n/i18n.keys';
 import i18n from '../../i18n/i18n';
 
 export const getTimeDifferenceString = (timeFromString) => {

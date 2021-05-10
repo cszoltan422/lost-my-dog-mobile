@@ -8,7 +8,7 @@ import {
     ON_DASHBOARD_LOADING,
     ON_DASHBOARD_MOUNTED, ON_DASHBOARD_REFRESH_PAGE,
     ON_DASHBOARD_REFRESHING
-} from "../action-types/action.types";
+} from '../action-types/action.types';
 
 export const onDashboardMounted = () => {
     return {
