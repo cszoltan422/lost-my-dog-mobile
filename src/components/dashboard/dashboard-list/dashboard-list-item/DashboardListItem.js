@@ -21,7 +21,7 @@ const DashboardListItem = (props) => {
                                 rounded
                                 title={props.dog.dogName.charAt(0)}
                                 source={{
-                                    uri: `https://lost-my-dog-staging.herokuapp.com/image/${props.dog.avatarFilename}`,
+                                    uri: `data:image/png;base64,${props.dog.rawImage}`,
                                 }} />
                         </View>
                         <View style={styles.titleContainer}>
@@ -118,7 +118,8 @@ DashboardListItem.propTypes = {
         latitude: PropTypes.number.isRequired,
         city: PropTypes.string.isRequired,
         countryCode: PropTypes.string.isRequired,
-        avatarFilename: PropTypes.string.isRequired
+        avatarFilename: PropTypes.string.isRequired,
+        rawImage: PropTypes.string.isRequired
     }).isRequired
 }
 
