@@ -1,10 +1,9 @@
 export default class SearchLostDogsService {
     static searchLostDogs(page, searchParams) {
-        return fetch('https://lost-my-dog-staging.herokuapp.com/api/lost-dog/search', {
+        return fetch('http://localhost:8080/api/lost-dog/search', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjc3pvbHRhbjQyMiIsImV4cCI6MTYyMTE1MjcxMCwiaWF0IjoxNjIwNTQ3OTEwfQ.0XRSMIo8aLyNb50_zxUNr5fdxMYzmbpqBw9gnAVohHc'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 longitude: 19.137403,
