@@ -47,7 +47,7 @@ DashboardList.propTypes = {
         latitude: PropTypes.number.isRequired,
         city: PropTypes.string.isRequired,
         countryCode: PropTypes.string.isRequired,
-        avatarFilename: PropTypes.string.isRequired
+        rawImage: PropTypes.string.isRequired
     })).isRequired,
     fetchingNew: PropTypes.bool.isRequired,
     refreshing: PropTypes.bool.isRequired,

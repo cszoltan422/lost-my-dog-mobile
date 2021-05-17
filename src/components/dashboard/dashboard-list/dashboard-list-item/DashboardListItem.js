@@ -118,7 +118,6 @@ DashboardListItem.propTypes = {
         latitude: PropTypes.number.isRequired,
         city: PropTypes.string.isRequired,
         countryCode: PropTypes.string.isRequired,
-        avatarFilename: PropTypes.string.isRequired,
         rawImage: PropTypes.string.isRequired
     }).isRequired
 }
