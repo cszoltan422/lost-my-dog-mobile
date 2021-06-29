@@ -1,0 +1,11 @@
+{
+  "name": "mockserver",
+  "version": "1.0.0",
+  "description": "Mock lost-my-dog-backend server",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

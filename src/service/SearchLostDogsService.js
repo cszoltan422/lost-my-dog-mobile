@@ -1,6 +1,8 @@
+import ENV from '../environmnent.config';
+
 export default class SearchLostDogsService {
     static searchLostDogs(page, searchParams) {
-        return fetch('http://localhost:8080/api/lost-dog/search', {
+        return fetch(`${ENV.API_URL}/api/lost-dog/search`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
