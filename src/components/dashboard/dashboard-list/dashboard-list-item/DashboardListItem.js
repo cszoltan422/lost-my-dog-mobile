@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
 import Chip from '../../../common/chip/Chip';
 import Card from '../../../common/card/Card';
@@ -11,52 +11,54 @@ import { getTimeDifferenceString } from '../../../../util/date/date.utils';
 
 const DashboardListItem = (props) => {
     return (
-        <Card>
-            <Fragment>
-                <View style={styles.headerContainer}>
-                    <View style={styles.imageTitleContainer}>
-                        <View style={styles.imageContainer}>
-                            <Avatar
-                                size='medium'
-                                rounded
-                                title={props.dog.dogName.charAt(0)}
-                                source={{
-                                    uri: `data:image/png;base64,${props.dog.rawImage}`,
-                                }} />
-                        </View>
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.title}>{props.dog.dogName}</Text>
-                            <View style={styles.rowContainer}>
-                                <Icon
-                                    type='font-awesome'
-                                    name='paw'
-                                    color={colors.accentColor} />
-                                <Text style={styles.dogBreed}>{props.dog.dogBreed}</Text>
+        <TouchableOpacity onPress={() => props.onListItemClicked(props.dog)}>
+            <Card>
+                <Fragment>
+                    <View style={styles.headerContainer}>
+                        <View style={styles.imageTitleContainer}>
+                            <View style={styles.imageContainer}>
+                                <Avatar
+                                    size='medium'
+                                    rounded
+                                    title={props.dog.dogName.charAt(0)}
+                                    source={{
+                                        uri: `data:image/png;base64,${props.dog.rawImage}`,
+                                    }} />
+                            </View>
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.title}>{props.dog.dogName}</Text>
+                                <View style={styles.rowContainer}>
+                                    <Icon
+                                        type='font-awesome'
+                                        name='paw'
+                                        color={colors.accentColor} />
+                                    <Text style={styles.dogBreed}>{props.dog.dogBreed}</Text>
+                                </View>
                             </View>
                         </View>
+                        <View style={styles.statusChipContainer}>
+                            <Chip text={i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[props.dog.status])} />
+                        </View>
                     </View>
-                    <View style={styles.statusChipContainer}>
-                        <Chip text={i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[props.dog.status])} />
+                    <View style={styles.detailsContainer}>
+                        <View style={styles.rowContainer}>
+                            <Icon
+                                type='material'
+                                name='room'
+                                color={colors.accentColor} />
+                            <Text style={styles.locationLost}>{props.dog.city}, {props.dog.countryCode}</Text>
+                        </View>
+                        <View style={styles.rowContainer}>
+                            <Icon
+                                type='material'
+                                name='schedule'
+                                color={colors.accentColor} />
+                            <Text style={styles.dateLost}>{getTimeDifferenceString(props.dog.dateLost)}</Text>
+                        </View>
                     </View>
-                </View>
-                <View style={styles.detailsContainer}>
-                    <View style={styles.rowContainer}>
-                        <Icon
-                            type='material'
-                            name='room'
-                            color={colors.accentColor} />
-                        <Text style={styles.locationLost}>{props.dog.city}, {props.dog.countryCode}</Text>
-                    </View>
-                    <View style={styles.rowContainer}>
-                        <Icon
-                            type='material'
-                            name='schedule'
-                            color={colors.accentColor} />
-                        <Text style={styles.dateLost}>{getTimeDifferenceString(props.dog.dateLost)}</Text>
-                    </View>
-                </View>
-            </Fragment>
-        </Card>
+                </Fragment>
+            </Card>
+        </TouchableOpacity>
     );
 };
 
@@ -112,14 +114,20 @@ DashboardListItem.propTypes = {
         id: PropTypes.number.isRequired,
         dogName: PropTypes.string.isRequired,
         dogBreed: PropTypes.string.isRequired,
-        dateLost: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
+        gender: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        age: PropTypes.number.isRequired,
         longitude: PropTypes.number.isRequired,
         latitude: PropTypes.number.isRequired,
+        dateLost: PropTypes.string.isRequired,
+        contactPhone: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
         city: PropTypes.string.isRequired,
         countryCode: PropTypes.string.isRequired,
         rawImage: PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    onListItemClicked: PropTypes.func.isRequired
 }
 
 export default DashboardListItem;

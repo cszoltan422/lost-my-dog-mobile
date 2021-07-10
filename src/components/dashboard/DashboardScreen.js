@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import DashboardHeader from './dashboard-header/DashboardHeader';
@@ -15,8 +16,9 @@ import {
     DASHBOARD_TITLE
 } from '../../i18n/i18n.keys';
 import i18n from '../../i18n/i18n';
+import {DETAILS_NAVIGATION_PARAM_NAME, DETAILS_NAVIGATION_SCREEN_NAME} from '../../application.constants';
 
-const DashboardScreen = () => {
+const DashboardScreen = (props) => {
 
     const loading = useSelector(state => state.dashboard.loading);
     const refreshing = useSelector(state => state.dashboard.refreshing);
@@ -54,7 +56,11 @@ const DashboardScreen = () => {
                     hasNoMoreData={hasNoMoreData}
                     isLoading={isLoading}
                     onDashboardFetchNewPage={() => dispatch(onDashboardFetchNewPage())}
-                    onDashboardRefreshPage={() => dispatch(onDashboardRefreshPage())} />}
+                    onDashboardRefreshPage={() => dispatch(onDashboardRefreshPage())}
+                    onListItemClicked={(item) => props.navigation.navigate({
+                        routeName: DETAILS_NAVIGATION_SCREEN_NAME,
+                        params: {[DETAILS_NAVIGATION_PARAM_NAME]: item}
+                    })} /> }
         </View>
     );
 };
@@ -69,5 +75,9 @@ const styles = StyleSheet.create({
 DashboardScreen['navigationOptions'] = () => ({
     title: i18n.t(DASHBOARD_TITLE)
 });
+
+DashboardScreen.propTypes = {
+    navigation: PropTypes.object.isRequired
+};
 
 export default DashboardScreen;
