@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
 });
 
 Card.propTypes = {
-    children: PropTypes.object.isRequired
+    children: PropTypes.object.isRequired,
+    styles: PropTypes.object
 }
 
 export default Card;

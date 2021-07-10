@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {View, Text, Image, ScrollView, StyleSheet} from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import Card from '../common/card/Card';
@@ -12,6 +13,7 @@ import colors from '../../colors';
 import i18n from '../../i18n/i18n';
 import {
     DETAILS_DOG_AGE_LABEL_TITLE,
+    DETAILS_DOG_AGE_YEARS,
     DETAILS_DOG_BREED_LABEL_TITLE,
     DETAILS_DOG_CITY_LABEL_TITLE,
     DETAILS_DOG_COLOR_LABEL_TITLE,
@@ -29,13 +31,13 @@ const DetailsScreen = (props) => {
     return (
         <ScrollView>
             <View style={styles.container}>
-                <Card styles={{height: 400}}>
+                <Card styles={styles.imageCardStyle}>
                     <Image
                         style={styles.imageStyle}
                         source={{uri: `data:image/png;base64,${dog.rawImage}`}} />
                 </Card>
-                <Card styles={{height: 'auto', backgroundColor: colors.accentColor}}>
-                    <Text style={{color: colors.white, fontWeight: 'bold', fontSize: 16, fontStyle: 'italic'}}>
+                <Card styles={styles.descriptionCardStyle}>
+                    <Text style={styles.descriptionTextStyle}>
                         {`"${dog.description}"`}
                     </Text>
                 </Card>
@@ -68,7 +70,7 @@ const DetailsScreen = (props) => {
                             </View>
                             <View style={styles.columnContainer}>
                                 <Text style={styles.labelTitle}>{i18n.t(DETAILS_DOG_AGE_LABEL_TITLE)}</Text>
-                                <Text style={styles.labelValue}>{dog.age}</Text>
+                                <Text style={styles.labelValue}>{dog.age} {i18n.t(DETAILS_DOG_AGE_YEARS)}</Text>
                             </View>
                         </View>
                         <View style={styles.rowContainer}>
@@ -92,14 +94,14 @@ const DetailsScreen = (props) => {
                                     icon={
                                         <Icon
                                             style={styles.iconStyle}
-                                            name="email"
+                                            name='email'
                                             type='material'
                                             size={16}
                                             color={colors.white} />
                                     }
                                     buttonStyle={{backgroundColor: colors.accentColor}}
                                     titleStyle={{color: colors.white}}
-                                    title="Send message" />
+                                    title='Send message' />
                             </View>
                             <View style={styles.columnContainer}>
                                 <Button
@@ -107,14 +109,14 @@ const DetailsScreen = (props) => {
                                     icon={
                                         <Icon
                                             style={styles.iconStyle}
-                                            name="phone"
+                                            name='phone'
                                             type='material'
                                             size={16}
                                             color={colors.white} />
                                     }
                                     buttonStyle={{backgroundColor: colors.accentColor}}
                                     titleStyle={{color: colors.white}}
-                                    title="Call owner" />
+                                    title='Call owner' />
                             </View>
                         </View>
                     </Card>
@@ -129,9 +131,22 @@ const styles = StyleSheet.create({
         height: '100%',
         padding: 8
     },
+    imageCardStyle: {
+        height: 400
+    },
     imageStyle: {
         flex: 1,
         resizeMode: 'cover'
+    },
+    descriptionCardStyle: {
+        height: 'auto',
+        backgroundColor: colors.accentColor
+    },
+    descriptionTextStyle: {
+        color: colors.white,
+        fontWeight: 'bold',
+        fontSize: 16,
+        fontStyle: 'italic'
     },
     rowContainer: {
         flexDirection: 'row',
@@ -165,5 +180,9 @@ DetailsScreen['navigationOptions'] = (navigationData) => ({
     title: navigationData.navigation.getParam(DETAILS_NAVIGATION_PARAM_NAME).dogName,
     headerBackTitleVisible: false
 });
+
+DetailsScreen.propTypes = {
+    navigation: PropTypes.object.isRequired
+};
 
 export default DetailsScreen;

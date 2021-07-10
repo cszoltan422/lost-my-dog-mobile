@@ -43,10 +43,15 @@ DashboardList.propTypes = {
         id: PropTypes.number.isRequired,
         dogName: PropTypes.string.isRequired,
         dogBreed: PropTypes.string.isRequired,
-        dateLost: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
+        gender: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        age: PropTypes.number.isRequired,
         longitude: PropTypes.number.isRequired,
         latitude: PropTypes.number.isRequired,
+        dateLost: PropTypes.string.isRequired,
+        contactPhone: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
         city: PropTypes.string.isRequired,
         countryCode: PropTypes.string.isRequired,
         rawImage: PropTypes.string.isRequired
@@ -56,7 +61,8 @@ DashboardList.propTypes = {
     hasNoMoreData: PropTypes.bool.isRequired,
     isLoading: PropTypes.func.isRequired,
     onDashboardFetchNewPage: PropTypes.func.isRequired,
-    onDashboardRefreshPage: PropTypes.func.isRequired
+    onDashboardRefreshPage: PropTypes.func.isRequired,
+    onListItemClicked: PropTypes.func.isRequired
 }
 
 export default DashboardList;

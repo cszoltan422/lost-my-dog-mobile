@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import DashboardHeader from './dashboard-header/DashboardHeader';
@@ -74,5 +75,9 @@ const styles = StyleSheet.create({
 DashboardScreen['navigationOptions'] = () => ({
     title: i18n.t(DASHBOARD_TITLE)
 });
+
+DashboardScreen.propTypes = {
+    navigation: PropTypes.object.isRequired
+};
 
 export default DashboardScreen;

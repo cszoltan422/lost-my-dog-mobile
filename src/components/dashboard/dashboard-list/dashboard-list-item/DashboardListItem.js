@@ -114,14 +114,20 @@ DashboardListItem.propTypes = {
         id: PropTypes.number.isRequired,
         dogName: PropTypes.string.isRequired,
         dogBreed: PropTypes.string.isRequired,
-        dateLost: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
+        gender: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        age: PropTypes.number.isRequired,
         longitude: PropTypes.number.isRequired,
         latitude: PropTypes.number.isRequired,
+        dateLost: PropTypes.string.isRequired,
+        contactPhone: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
         city: PropTypes.string.isRequired,
         countryCode: PropTypes.string.isRequired,
         rawImage: PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    onListItemClicked: PropTypes.func.isRequired
 }
 
 export default DashboardListItem;
