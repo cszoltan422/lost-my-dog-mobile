@@ -20,7 +20,9 @@ const DashboardList = (props) => {
                 const lastItem = item.index === props.data.length - 1;
                 return (
                     <Fragment>
-                        <DashboardListItem dog={item.item} />
+                        <DashboardListItem
+                            dog={item.item}
+                            onListItemClicked={props.onListItemClicked} />
                         {(lastItem && props.fetchingNew &&
                             <LoadingCard /> )}
                         {(lastItem && props.hasNoMoreData &&

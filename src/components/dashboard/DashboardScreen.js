@@ -15,8 +15,9 @@ import {
     DASHBOARD_TITLE
 } from '../../i18n/i18n.keys';
 import i18n from '../../i18n/i18n';
+import {DETAILS_NAVIGATION_PARAM_NAME, DETAILS_NAVIGATION_SCREEN_NAME} from '../../application.constants';
 
-const DashboardScreen = () => {
+const DashboardScreen = (props) => {
 
     const loading = useSelector(state => state.dashboard.loading);
     const refreshing = useSelector(state => state.dashboard.refreshing);
@@ -54,7 +55,11 @@ const DashboardScreen = () => {
                     hasNoMoreData={hasNoMoreData}
                     isLoading={isLoading}
                     onDashboardFetchNewPage={() => dispatch(onDashboardFetchNewPage())}
-                    onDashboardRefreshPage={() => dispatch(onDashboardRefreshPage())} />}
+                    onDashboardRefreshPage={() => dispatch(onDashboardRefreshPage())}
+                    onListItemClicked={(item) => props.navigation.navigate({
+                        routeName: DETAILS_NAVIGATION_SCREEN_NAME,
+                        params: {[DETAILS_NAVIGATION_PARAM_NAME]: item}
+                    })} /> }
         </View>
     );
 };

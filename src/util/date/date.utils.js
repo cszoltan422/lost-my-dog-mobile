@@ -35,3 +35,9 @@ export const getTimeDifferenceString = (timeFromString) => {
     return result;
 
 };
+
+export const formatIsoTime = (isoTimeString) => {
+    const timeInLocalTimezone = moment(isoTimeString).tz(Localization.timezone);
+    return timeInLocalTimezone.format('YYYY. MM. DD, hh:mm');
+};
+

@@ -5,7 +5,7 @@ import colors from '../../../colors';
 
 const Card = (props) => {
     return (
-        <View style={styles.card}>
+        <View style={{...styles.card, ...props.styles}}>
             {props.children}
         </View>
     )
@@ -21,8 +21,7 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         backgroundColor: colors.white,
         marginBottom: 8,
-        padding: 8,
-        height: 110
+        padding: 8
     }
 });
 
