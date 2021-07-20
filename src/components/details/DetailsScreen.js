@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, Image, ScrollView, StyleSheet} from 'react-native';
+import {View, Text, Image, ScrollView, StyleSheet, Linking} from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import Card from '../common/card/Card';
 
@@ -12,6 +12,7 @@ import {
 import colors from '../../colors';
 import i18n from '../../i18n/i18n';
 import {
+    DETAILS_CALL_OWNER,
     DETAILS_DOG_AGE_LABEL_TITLE,
     DETAILS_DOG_AGE_YEARS,
     DETAILS_DOG_BREED_LABEL_TITLE,
@@ -20,13 +21,22 @@ import {
     DETAILS_DOG_DATE_LOST_LABEL_TITLE,
     DETAILS_DOG_NAME_LABEL_TITLE,
     DETAILS_DOG_SEX_LABEL_TITLE,
-    DETAILS_DOG_STATUS_LABEL_TITLE
+    DETAILS_DOG_STATUS_LABEL_TITLE,
+    DETAILS_SEND_MESSAGE
 } from '../../i18n/i18n.keys';
 import {formatIsoTime} from '../../util/date/date.utils';
 
 const DetailsScreen = (props) => {
 
     const dog = props.navigation.getParam(DETAILS_NAVIGATION_PARAM_NAME);
+
+    const onCallOwnerButtonPressed = () => {
+        Linking.openURL(`tel:${dog.contactPhone}`);
+    };
+
+    const onSendOwnerButtonPressed = () => {
+        Linking.openURL(`mailto:${dog.contactPhone}`);
+    };
 
     return (
         <ScrollView>
@@ -99,13 +109,13 @@ const DetailsScreen = (props) => {
                                             size={16}
                                             color={colors.white} />
                                     }
-                                    buttonStyle={{backgroundColor: colors.accentColor}}
+                                    buttonStyle={styles.buttonStyle}
                                     titleStyle={{color: colors.white}}
-                                    title='Send message' />
+                                    title={i18n.t(DETAILS_SEND_MESSAGE)}
+                                    onPress={onSendOwnerButtonPressed} />
                             </View>
                             <View style={styles.columnContainer}>
                                 <Button
-                                    style={styles.buttonStyle}
                                     icon={
                                         <Icon
                                             style={styles.iconStyle}
@@ -114,9 +124,10 @@ const DetailsScreen = (props) => {
                                             size={16}
                                             color={colors.white} />
                                     }
-                                    buttonStyle={{backgroundColor: colors.accentColor}}
+                                    buttonStyle={styles.buttonStyle}
                                     titleStyle={{color: colors.white}}
-                                    title='Call owner' />
+                                    title={i18n.t(DETAILS_CALL_OWNER)}
+                                    onPress={onCallOwnerButtonPressed} />
                             </View>
                         </View>
                     </Card>
@@ -169,7 +180,8 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         marginStart: 8,
-        marginEnd: 8
+        marginEnd: 8,
+        backgroundColor: colors.accentColor
     },
     iconStyle: {
         marginEnd: 8
