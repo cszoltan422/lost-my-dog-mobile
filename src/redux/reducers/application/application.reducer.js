@@ -1,5 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { ON_INITIALIZE_APPLICATION } from '../../actions/application/action-types/action.types';
+import {
+    ON_LOCATION_PERMISSION_CHECKED,
+    ON_INITIALIZE_APPLICATION
+} from '../../actions/application/action-types/action.types';
+import moment from 'moment';
 
 export const initialState = {
     applicationInitialized: false,
@@ -13,9 +17,19 @@ export const initialState = {
         details: null
     },
     permissions: {
-        location: false,
-        camera: false,
-        mediaLibrary: false
+        location: {
+            granted: false,
+            canAskAgain: false,
+            lastChecked: moment().milliseconds()
+        },
+        camera: {
+            granted: false,
+            canAskAgain: false,
+        },
+        mediaLibrary: {
+            granted: false,
+            canAskAgain: false
+        },
     }
 };
 
@@ -36,5 +50,8 @@ export const reducer = createReducer(initialState, {
             camera: action.payload.permissions.camera,
             mediaLibrary: action.payload.permissions.camera
         };
+    },
+    [ON_LOCATION_PERMISSION_CHECKED]: (state, action) => {
+        state.permissions.location = action.payload;
     }
 });

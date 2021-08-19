@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { View, ImageBackground, StyleSheet } from 'react-native';
 import {connect} from 'react-redux';
 import LostMyDogNavigator from './navigation/LostMyDogNavigator';
-import { onApplicationMounted } from '../redux/actions/application/action-creators/action.creators';
+import LocationPermissionInitScreen from './permissions/LocationPermissionInitScreen';
+import {
+    onApplicationMounted,
+    onCheckLocationPermission
+} from '../redux/actions/application/action-creators/action.creators';
 
 class ApplicationWrapper extends Component {
 
@@ -12,19 +16,25 @@ class ApplicationWrapper extends Component {
     }
 
     render() {
-        let content;
-        if (this.props.applicationInitialized) {
-            content = <LostMyDogNavigator />;
+        if (!this.props.applicationInitialized) {
+            return (
+                <ImageBackground
+                    source={require('../../assets/splash-screen.jpg')}
+                    style={styles.imageBackground} />
+            );
+        } else if (!this.props.locationPermission.granted) {
+            return (
+                <LocationPermissionInitScreen
+                    locationPermission={this.props.locationPermission}
+                    onCheckLocationPermission={this.props.onCheckLocationPermission} />
+            )
         } else {
-            content = (<ImageBackground
-                source={require('../../assets/splash-screen.jpg')}
-                style={styles.imageBackground} />);
+            return (
+                <View style={styles.content}>
+                    <LostMyDogNavigator />
+                </View>
+            );
         }
-        return (
-            <View style={styles.content}>
-                {content}
-            </View>
-        );
     }
 }
 
@@ -41,18 +51,25 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        applicationInitialized: state.application.applicationInitialized
+        applicationInitialized: state.application.applicationInitialized,
+        locationPermission: state.application.permissions.location,
     };
 };
 
 ApplicationWrapper.propTypes = {
     applicationInitialized: PropTypes.bool.isRequired,
-    onApplicationMounted: PropTypes.func.isRequired
+    locationPermission: PropTypes.shape({
+        granted: PropTypes.bool.isRequired,
+        canAskAgain: PropTypes.bool.isRequired
+    }).isRequired,
+    onApplicationMounted: PropTypes.func.isRequired,
+    onCheckLocationPermission: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onApplicationMounted: () => dispatch(onApplicationMounted())
+        onApplicationMounted: () => dispatch(onApplicationMounted()),
+        onCheckLocationPermission: () => dispatch(onCheckLocationPermission())
     };
 };
 

@@ -11,11 +11,24 @@ import {
     DASHBOARD_SEARCH_FOUND_TAB,
     DASHBOARD_SEARCH_LOST_WANDERING_TAB,
     DASHBOARD_SEARCH_PARAMETERS_DISTANCE,
-    DASHBOARD_TITLE, DETAILS_CALL_OWNER, DETAILS_DOG_AGE_LABEL_TITLE, DETAILS_DOG_AGE_YEARS,
-    DETAILS_DOG_BREED_LABEL_TITLE, DETAILS_DOG_CITY_LABEL_TITLE,
-    DETAILS_DOG_COLOR_LABEL_TITLE, DETAILS_DOG_DATE_LOST_LABEL_TITLE,
-    DETAILS_DOG_NAME_LABEL_TITLE, DETAILS_DOG_SEX_FEMALE,
-    DETAILS_DOG_SEX_LABEL_TITLE, DETAILS_DOG_SEX_MALE, DETAILS_DOG_STATUS_LABEL_TITLE, DETAILS_SEND_MESSAGE
+    DASHBOARD_TITLE,
+    DETAILS_CALL_OWNER,
+    DETAILS_DOG_AGE_LABEL_TITLE,
+    DETAILS_DOG_AGE_YEARS,
+    DETAILS_DOG_BREED_LABEL_TITLE,
+    DETAILS_DOG_CITY_LABEL_TITLE,
+    DETAILS_DOG_COLOR_LABEL_TITLE,
+    DETAILS_DOG_DATE_LOST_LABEL_TITLE,
+    DETAILS_DOG_NAME_LABEL_TITLE,
+    DETAILS_DOG_SEX_FEMALE,
+    DETAILS_DOG_SEX_LABEL_TITLE,
+    DETAILS_DOG_SEX_MALE,
+    DETAILS_DOG_STATUS_LABEL_TITLE,
+    DETAILS_SEND_MESSAGE, LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION,
+    LOCATION_PERMISSION_ASK_DESCRIPTION,
+    LOCATION_PERMISSION_BUTTON_TITLE, LOCATION_PERMISSION_DENIED_BUTTON_TITLE,
+    LOCATION_PERMISSION_DENIED_TITLE,
+    LOCATION_PERMISSION_TITLE
 } from '../i18n.keys';
 
 export default {
@@ -44,5 +57,11 @@ export default {
     [DETAILS_DOG_SEX_MALE]: 'Hím',
     [DETAILS_DOG_SEX_FEMALE]: 'Nőstény',
     [DETAILS_SEND_MESSAGE]: 'Üzenet küldése',
-    [DETAILS_CALL_OWNER]: 'Gazdi hívása'
+    [DETAILS_CALL_OWNER]: 'Gazdi hívása',
+    [LOCATION_PERMISSION_TITLE]: 'Helymeghatarozás engedélyezése',
+    [LOCATION_PERMISSION_BUTTON_TITLE]: 'Engedély megadása',
+    [LOCATION_PERMISSION_ASK_DESCRIPTION]: 'A Helymeghatarozás funkció szükséges a közelben levő megosztások megjelenítéséhez és az új megosztások megjelenítéséhez. Az alkalmazás használatának megkezdéséhez nyomja meg a „Hely engedélyezése” gombot. Ha nem működik, kérjük, látogassa meg az eszköz beállításait, és engedélyezze az alkalmazás hozzáférését a Helymeghatarozás funkcióhoz.',
+    [LOCATION_PERMISSION_DENIED_TITLE]: 'Hoppá',
+    [LOCATION_PERMISSION_DENIED_BUTTON_TITLE]: 'Beallitások megnyitása',
+    [LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION]: 'Az alkalmazás működéséhez szükséges Helymeghatarozás funkció. Nyomja meg a „Beállítások megnyitása” gombot, és engedélyezze a helymeghatározási funkciót ehhez az alkalmazáshoz.'
 };
