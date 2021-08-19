@@ -1,13 +1,23 @@
 import { takeLatest, select, call, put, delay } from 'redux-saga/effects';
-import { ON_APPLICATION_MOUNTED } from '../../actions/application/action-types/action.types';
+import {
+    ON_APPLICATION_MOUNTED,
+    ON_CHECK_LOCATION_PERMISSION
+} from '../../actions/application/action-types/action.types';
 import { USER_ASYNC_STORAGE_KEY } from '../../../application.constants';
-import { onInitializeApplication } from '../../actions/application/action-creators/action.creators';
+import {
+    onInitializeApplication, onLocationPermissionChecked
+} from '../../actions/application/action-creators/action.creators';
 import { getItem } from '../../../util/async-storage/async.storage';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
+import moment from 'moment';
 
 export function* applicationMountedWatcherSaga() {
     yield takeLatest([ON_APPLICATION_MOUNTED], applicationMountedSaga);
+}
+
+export function* onCheckLocationPermissionWatcherSaga() {
+    yield takeLatest([ON_CHECK_LOCATION_PERMISSION], onCheckLocationPermissionSaga);
 }
 
 function* applicationMountedSaga() {
@@ -21,9 +31,19 @@ function* applicationMountedSaga() {
         const mediaLibraryPermission = yield ImagePicker.getMediaLibraryPermissionsAsync();
 
         applicationInitializer.permissions = {
-            location: locationPermission.granted,
-            camera: cameraPermission.granted,
-            mediaLibrary: mediaLibraryPermission.granted
+            location: {
+                granted: locationPermission.granted,
+                canAskAgain: locationPermission.canAskAgain,
+                lastChecked: moment().milliseconds()
+            },
+            camera: {
+                granted: cameraPermission.granted,
+                canAskAgain: cameraPermission.canAskAgain
+            },
+            mediaLibrary: {
+                granted: mediaLibraryPermission.granted,
+                canAskAgain: mediaLibraryPermission.canAskAgain
+            }
         }
 
         const applicationUser = yield call(getItem, USER_ASYNC_STORAGE_KEY);
@@ -51,5 +71,18 @@ function* applicationMountedSaga() {
 
         yield delay(1000);
         yield put(onInitializeApplication(applicationInitializer));
+    }
+}
+
+function* onCheckLocationPermissionSaga() {
+    console.log('onCheckLocationPermissionSaga')
+    const location = yield select((state) => state.application.permissions.location);
+    if (!location.granted) {
+        const locationPermission = yield Location.getPermissionsAsync();
+        yield put(onLocationPermissionChecked({
+            granted: locationPermission.granted,
+            canAskAgain: locationPermission.canAskAgain,
+            lastChecked: moment().milliseconds()
+        }));
     }
 }
