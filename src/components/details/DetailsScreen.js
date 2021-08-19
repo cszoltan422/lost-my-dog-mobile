@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {View, Text, Image, ScrollView, StyleSheet, Linking} from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import Card from '../common/card/Card';
-
+import HeaderMenu from '../menu/HeaderMenu';
 import {
     DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS,
     DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS,
@@ -188,9 +188,10 @@ const styles = StyleSheet.create({
     }
 });
 
-DetailsScreen['navigationOptions'] = (navigationData) => ({
-    title: navigationData.navigation.getParam(DETAILS_NAVIGATION_PARAM_NAME).dogName,
-    headerBackTitleVisible: false
+DetailsScreen['navigationOptions'] = ({ navigation }) => ({
+    title: navigation.getParam(DETAILS_NAVIGATION_PARAM_NAME).dogName,
+    headerBackTitleVisible: false,
+    headerRight: () => <HeaderMenu navigation={navigation} /> // eslint-disable-line
 });
 
 DetailsScreen.propTypes = {
