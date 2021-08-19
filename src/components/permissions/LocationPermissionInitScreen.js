@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-evenly',
-        backgroundColor: colors.primaryColorLight,
+        backgroundColor: colors.white,
     },
     titleContainerStyle: {
         flex: 1,
