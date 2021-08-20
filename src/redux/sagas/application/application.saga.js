@@ -7,7 +7,7 @@ import { USER_ASYNC_STORAGE_KEY } from '../../../application.constants';
 import {
     onInitializeApplication, onLocationPermissionChecked
 } from '../../actions/application/action-creators/action.creators';
-import { getItem } from '../../../util/async-storage/async.storage';
+import {getItem} from '../../../util/async-storage/async.storage';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import moment from 'moment';
@@ -56,12 +56,13 @@ function* applicationMountedSaga() {
                 details: null
             };
         } else {
+            const user = JSON.parse(applicationUser);
             applicationInitializer.user = {
                 isLoggedIn: true,
-                token: applicationUser.token,
-                isAdmin: applicationUser.isAdmin,
-                isLocked: applicationUser.isLocked,
-                details: applicationUser.details
+                token: user.token,
+                isAdmin: user.isAdmin,
+                isLocked: user.isLocked,
+                details: user.details
             };
         }
 

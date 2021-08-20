@@ -1,7 +1,9 @@
 import {
     ON_CHECK_LOCATION_PERMISSION,
     ON_APPLICATION_MOUNTED,
-    ON_INITIALIZE_APPLICATION, ON_LOCATION_PERMISSION_CHECKED
+    ON_INITIALIZE_APPLICATION,
+    ON_LOCATION_PERMISSION_CHECKED,
+    ON_APPLICATION_SUCCESSFUL_LOGIN_PERSIST_USER
 } from '../action-types/action.types'
 
 export const onApplicationMounted = () => {
@@ -28,4 +30,11 @@ export const onLocationPermissionChecked = (locationPermission) => {
         type: ON_LOCATION_PERMISSION_CHECKED,
         payload: locationPermission
     };
+};
+
+export const onApplicationSuccessfulLoginPersistUser = (user) => {
+    return {
+        type: ON_APPLICATION_SUCCESSFUL_LOGIN_PERSIST_USER,
+        payload: user
+    }
 };

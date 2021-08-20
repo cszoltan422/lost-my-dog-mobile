@@ -15,6 +15,7 @@ import {
     LOGIN_PASSWORD_PLACEHOLDER, LOGIN_SIGN_UP_TEXT,
     LOGIN_USERNAME_PLACEHOLDER
 } from '../../i18n/i18n.keys';
+import {APPLICATION_NAME} from '../../application.constants';
 
 class LoginScreen extends Component {
 
@@ -25,7 +26,9 @@ class LoginScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.logoStyle}>LostMyDog</Text>
+                <Text style={styles.logoStyle}>
+                    {APPLICATION_NAME}
+                </Text>
                 {this.props.error ?
                     <Text style={styles.errorMessageStyle}>
                         {i18n.t(this.props.error)}
