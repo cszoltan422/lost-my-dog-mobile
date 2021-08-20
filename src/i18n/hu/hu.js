@@ -24,11 +24,17 @@ import {
     DETAILS_DOG_SEX_LABEL_TITLE,
     DETAILS_DOG_SEX_MALE,
     DETAILS_DOG_STATUS_LABEL_TITLE,
-    DETAILS_SEND_MESSAGE, LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION,
+    DETAILS_SEND_MESSAGE,
+    LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION,
     LOCATION_PERMISSION_ASK_DESCRIPTION,
-    LOCATION_PERMISSION_BUTTON_TITLE, LOCATION_PERMISSION_DENIED_BUTTON_TITLE,
+    LOCATION_PERMISSION_BUTTON_TITLE,
+    LOCATION_PERMISSION_DENIED_BUTTON_TITLE,
     LOCATION_PERMISSION_DENIED_TITLE,
-    LOCATION_PERMISSION_TITLE
+    LOCATION_PERMISSION_TITLE, LOGIN_EMPTY_PASSWORD_OR_USERNAME,
+    LOGIN_FORGOT_PASSWORD_PLACEHOLDER,
+    LOGIN_LOGIN_TEXT,
+    LOGIN_PASSWORD_PLACEHOLDER, LOGIN_SIGN_UP_TEXT,
+    LOGIN_USERNAME_PLACEHOLDER, LOGIN_WRONG_PASSWORD_OR_USERNAME
 } from '../i18n.keys';
 
 export default {
@@ -63,5 +69,12 @@ export default {
     [LOCATION_PERMISSION_ASK_DESCRIPTION]: 'A Helymeghatarozás funkció szükséges a közelben levő megosztások megjelenítéséhez és az új megosztások megjelenítéséhez. Az alkalmazás használatának megkezdéséhez nyomja meg a „Hely engedélyezése” gombot. Ha nem működik, kérjük, látogassa meg az eszköz beállításait, és engedélyezze az alkalmazás hozzáférését a Helymeghatarozás funkcióhoz.',
     [LOCATION_PERMISSION_DENIED_TITLE]: 'Hoppá',
     [LOCATION_PERMISSION_DENIED_BUTTON_TITLE]: 'Beallitások megnyitása',
-    [LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION]: 'Az alkalmazás működéséhez szükséges Helymeghatarozás funkció. Nyomja meg a „Beállítások megnyitása” gombot, és engedélyezze a helymeghatározási funkciót ehhez az alkalmazáshoz.'
+    [LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION]: 'Az alkalmazás működéséhez szükséges Helymeghatarozás funkció. Nyomja meg a „Beállítások megnyitása” gombot, és engedélyezze a helymeghatározási funkciót ehhez az alkalmazáshoz.',
+    [LOGIN_USERNAME_PLACEHOLDER]: 'Felhasználónév...',
+    [LOGIN_PASSWORD_PLACEHOLDER]: 'Jelszó...',
+    [LOGIN_FORGOT_PASSWORD_PLACEHOLDER]: 'Elfelejtetted a jelszavad?',
+    [LOGIN_LOGIN_TEXT]: 'Bejelentkezés',
+    [LOGIN_SIGN_UP_TEXT]: 'Regisztráció',
+    [LOGIN_EMPTY_PASSWORD_OR_USERNAME]: 'A felhasználónév vagy a jelszó üres',
+    [LOGIN_WRONG_PASSWORD_OR_USERNAME]: 'Hibás felhasználónév vagy a jelszó!',
 };

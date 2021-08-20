@@ -48,9 +48,7 @@ function* applicationMountedSaga() {
 
         const applicationUser = yield call(getItem, USER_ASYNC_STORAGE_KEY);
         if (!applicationUser) {
-            applicationInitializer.loginRequired = true;
             applicationInitializer.user = {
-                isPresent: false,
                 isLoggedIn: false,
                 token: null,
                 isAdmin: false,
@@ -58,9 +56,7 @@ function* applicationMountedSaga() {
                 details: null
             };
         } else {
-            applicationInitializer.loginRequired = false;
             applicationInitializer.user = {
-                isPresent: true,
                 isLoggedIn: true,
                 token: applicationUser.token,
                 isAdmin: applicationUser.isAdmin,
@@ -75,7 +71,6 @@ function* applicationMountedSaga() {
 }
 
 function* onCheckLocationPermissionSaga() {
-    console.log('onCheckLocationPermissionSaga')
     const location = yield select((state) => state.application.permissions.location);
     if (!location.granted) {
         const locationPermission = yield Location.getPermissionsAsync();

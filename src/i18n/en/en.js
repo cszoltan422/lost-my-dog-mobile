@@ -24,11 +24,17 @@ import {
     DETAILS_DOG_SEX_LABEL_TITLE,
     DETAILS_DOG_SEX_MALE,
     DETAILS_DOG_STATUS_LABEL_TITLE,
-    DETAILS_SEND_MESSAGE, LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION,
+    DETAILS_SEND_MESSAGE,
+    LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION,
     LOCATION_PERMISSION_ASK_DESCRIPTION,
-    LOCATION_PERMISSION_BUTTON_TITLE, LOCATION_PERMISSION_DENIED_BUTTON_TITLE,
+    LOCATION_PERMISSION_BUTTON_TITLE,
+    LOCATION_PERMISSION_DENIED_BUTTON_TITLE,
     LOCATION_PERMISSION_DENIED_TITLE,
-    LOCATION_PERMISSION_TITLE
+    LOCATION_PERMISSION_TITLE, LOGIN_EMPTY_PASSWORD_OR_USERNAME,
+    LOGIN_FORGOT_PASSWORD_PLACEHOLDER,
+    LOGIN_LOGIN_TEXT,
+    LOGIN_PASSWORD_PLACEHOLDER, LOGIN_SIGN_UP_TEXT,
+    LOGIN_USERNAME_PLACEHOLDER, LOGIN_WRONG_PASSWORD_OR_USERNAME
 } from '../i18n.keys';
 
 export default {
@@ -63,5 +69,12 @@ export default {
     [LOCATION_PERMISSION_ASK_DESCRIPTION]: 'Location is required in order to show posts nearby you and to let you post to your local area. Press „Allow location” to start using the app. If it doesn\'t work, please visit your device settings and allow access to location for this application.',
     [LOCATION_PERMISSION_DENIED_TITLE]: 'Ooops',
     [LOCATION_PERMISSION_DENIED_BUTTON_TITLE]: 'Open Settings',
-    [LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION]: 'Permission to use the Location is required for the application to function. Press „Open Settings” and allow Location permission for this application.'
+    [LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION]: 'Permission to use the Location is required for the application to function. Press „Open Settings” and allow Location permission for this application.',
+    [LOGIN_USERNAME_PLACEHOLDER]: 'Username...',
+    [LOGIN_PASSWORD_PLACEHOLDER]: 'Password...',
+    [LOGIN_FORGOT_PASSWORD_PLACEHOLDER]: 'Forgot password?',
+    [LOGIN_LOGIN_TEXT]: 'Login',
+    [LOGIN_SIGN_UP_TEXT]: 'Sign up',
+    [LOGIN_EMPTY_PASSWORD_OR_USERNAME]: 'The username or password is empty!',
+    [LOGIN_WRONG_PASSWORD_OR_USERNAME]: 'Incorrect username or password!',
 };

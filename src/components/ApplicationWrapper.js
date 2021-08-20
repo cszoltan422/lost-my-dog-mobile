@@ -56,6 +56,13 @@ const mapStateToProps = (state) => {
     };
 };
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onApplicationMounted: () => dispatch(onApplicationMounted()),
+        onCheckLocationPermission: () => dispatch(onCheckLocationPermission())
+    };
+};
+
 ApplicationWrapper.propTypes = {
     applicationInitialized: PropTypes.bool.isRequired,
     locationPermission: PropTypes.shape({
@@ -64,13 +71,6 @@ ApplicationWrapper.propTypes = {
     }).isRequired,
     onApplicationMounted: PropTypes.func.isRequired,
     onCheckLocationPermission: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onApplicationMounted: () => dispatch(onApplicationMounted()),
-        onCheckLocationPermission: () => dispatch(onCheckLocationPermission())
-    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicationWrapper);
