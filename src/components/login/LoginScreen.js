@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native';
+import {Button} from 'react-native-elements';
 import {connect} from 'react-redux';
 import {
     onLoginAttempted,
@@ -14,7 +15,6 @@ import {
     LOGIN_PASSWORD_PLACEHOLDER, LOGIN_SIGN_UP_TEXT,
     LOGIN_USERNAME_PLACEHOLDER
 } from '../../i18n/i18n.keys';
-import {Button} from 'react-native-elements';
 
 class LoginScreen extends Component {
 
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         justifyContent: 'center',
         padding: 20,
-        opacity: 0.8
+        opacity: 0.7
     },
     inputTextStyle: {
         height: 50,
