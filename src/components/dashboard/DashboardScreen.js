@@ -90,7 +90,7 @@ DashboardScreen.propTypes = {
     hasNoMoreData: PropTypes.bool.isRequired,
     searchParameters: PropTypes.object.isRequired,
     data: PropTypes.array.isRequired,
-    user: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired,
     onDashboardChangeRadiusSearchParam: PropTypes.func.isRequired,
     onDashboardChangeSearchTypeParam: PropTypes.func.isRequired,
     onDashboardMounted: PropTypes.func.isRequired,
