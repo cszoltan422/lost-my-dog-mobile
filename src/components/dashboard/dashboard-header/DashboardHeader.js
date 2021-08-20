@@ -65,7 +65,7 @@ const DashboardHeader = (props) => {
                     minimumValue={DASHBOARD_MIN_SEARCH_DISTANCE_IN_METERS}
                     maximumValue={DASHBOARD_MAX_SEARCH_DISTANCE_IN_METERS}
                     step={DASHBOARD_STEP_SEARCH_DISTANCE_IN_METERS}
-                    disabled={props.loading || props.refreshing || props.fetchingNew}
+                    disabled={props.isLoading()}
                     trackStyle={styles.trackStyle}
                     thumbStyle={styles.thumbStyle}
                     onSlidingComplete={(value) => onDashboardChangeSliderValue(value)} />
@@ -80,7 +80,6 @@ const DashboardHeader = (props) => {
 const styles = StyleSheet.create({
     tabsContainerStyle: {
         flexDirection: 'row',
-        elevation: 5,
         borderRadius: 16,
     },
     tabItemContainer: {
