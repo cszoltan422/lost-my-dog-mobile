@@ -26,18 +26,11 @@ class DashboardScreen extends Component {
 
     componentDidMount() {
         this.props.onDashboardMounted();
-        this.setUserParam();
     }
 
     isLoading = () => {
         return this.props.fetchingNew || this.props.loading || this.props.refreshing;
     };
-
-    setUserParam = () => {
-        this.props.navigation.setParams({
-            user: this.props.user
-        });
-    }
 
     render() {
         return (
@@ -90,7 +83,6 @@ DashboardScreen.propTypes = {
     hasNoMoreData: PropTypes.bool.isRequired,
     searchParameters: PropTypes.object.isRequired,
     data: PropTypes.array.isRequired,
-    user: PropTypes.object.isRequired,
     onDashboardChangeRadiusSearchParam: PropTypes.func.isRequired,
     onDashboardChangeSearchTypeParam: PropTypes.func.isRequired,
     onDashboardMounted: PropTypes.func.isRequired,
@@ -106,7 +98,6 @@ const mapStateToProps = (state) => {
         hasNoMoreData: state.dashboard.hasNoMoreData,
         searchParameters: state.dashboard.searchParameters,
         data: state.dashboard.data,
-        user: state.application.user
     };
 };
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import Menu, {MenuItem} from 'react-native-material-menu';
 import {Icon} from 'react-native-elements';
 import {LOGIN_NAVIGATION_SCREEN_NAME} from '../../application.constants';
@@ -32,10 +33,6 @@ class HeaderMenu extends Component {
     };
 
     render() {
-        let user = null;
-        if (this.props.navigation && this.props.navigation.getItem) {
-            user = this.props.navigation.getItem('user');
-        }
         return (
             <Menu
                 ref={this.setMenuRef}
@@ -46,7 +43,7 @@ class HeaderMenu extends Component {
                         color={colors.white}
                         onPress={this.showMenu} />
             }>
-                {!user || !user.isLoggedIn ?
+                {!this.props.user.isLoggedIn ?
                     <MenuItem onPress={() => this.navigateToScreen(LOGIN_NAVIGATION_SCREEN_NAME)}>
                         {i18n.t(LOGIN_LOGIN_TEXT)}
                     </MenuItem>
@@ -57,7 +54,14 @@ class HeaderMenu extends Component {
 }
 
 HeaderMenu.propTypes = {
-    navigation: PropTypes.object.isRequired
+    navigation: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
 };
 
-export default HeaderMenu;
+const mapStateToProps = (state) => {
+    return {
+        user: state.application.user
+    };
+};
+
+export default connect(mapStateToProps, null)(HeaderMenu);
