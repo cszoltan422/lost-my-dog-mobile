@@ -14,7 +14,7 @@ import {
     onDashboardRefreshing
 } from '../../actions/dashboard/action-creators/action.creators';
 import * as Location from 'expo-location';
-import {LocationAccuracy} from "expo-location";
+import {LocationAccuracy} from 'expo-location';
 
 const CLEAR_DATA_ACTIONS = [
     ON_DASHBOARD_MOUNTED,

@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View} from 'react-native';
-import { Slider, Tab } from 'react-native-elements';
+import {Button, Slider} from 'react-native-elements';
 import {
     DASHBOARD_MAX_SEARCH_DISTANCE_IN_METERS,
     DASHBOARD_MIN_SEARCH_DISTANCE_IN_METERS,
-    DASHBOARD_SEARCH_TYPES,
+    DASHBOARD_SEARCH_TYPE_FOUND,
+    DASHBOARD_SEARCH_TYPE_LOST,
     DASHBOARD_STEP_SEARCH_DISTANCE_IN_METERS
 } from '../../../application.constants';
 import i18n from '../../../i18n/i18n';
@@ -19,9 +20,8 @@ import colors from '../../../colors';
 const DashboardHeader = (props) => {
 
     const onTabValueChange = (value) => {
-        const currentValue = Object.keys(DASHBOARD_SEARCH_TYPES).find(key => DASHBOARD_SEARCH_TYPES[key] === props.searchParameters.searchType);
-        if (currentValue != value && !props.isLoading()) {
-            props.onDashboardChangeSearchTypeParam(DASHBOARD_SEARCH_TYPES[value]);
+        if (!props.isLoading()) {
+            props.onDashboardChangeSearchTypeParam(value);
         }
     }
 
@@ -33,27 +33,32 @@ const DashboardHeader = (props) => {
 
     return (
         <Fragment>
-            <Tab
-                indicatorStyle={styles.indicatorStyle}
-                value={Object.keys(DASHBOARD_SEARCH_TYPES).find(key => DASHBOARD_SEARCH_TYPES[key] === props.searchParameters.searchType)}
-                onChange={onTabValueChange}>
-                <Tab.Item
-                    title={i18n.t(DASHBOARD_SEARCH_LOST_WANDERING_TAB)}
-                    type='clear'
-                    color={colors.primaryColor}
-                    titleStyle={styles.titleStyle}
-                    buttonStyle={styles.buttonStyle}>
-                    <View />
-                </Tab.Item>
-                <Tab.Item
-                    title={i18n.t(DASHBOARD_SEARCH_FOUND_TAB)}
-                    type='clear'
-                    color={colors.primaryColor}
-                    titleStyle={styles.titleStyle}
-                    buttonStyle={styles.buttonStyle}>
-                    <View />
-                </Tab.Item>
-            </Tab>
+            <View style={styles.tabsContainerStyle}>
+                <View style={styles.tabItemContainer}>
+                    <Button
+                        buttonStyle={[
+                            styles.tabButtonStyle,
+                            DASHBOARD_SEARCH_TYPE_LOST === props.searchParameters.searchType ?
+                                styles.activeButtonStyle : null
+                        ]}
+                        titleStyle={styles.titleStyle}
+                        title={i18n.t(DASHBOARD_SEARCH_LOST_WANDERING_TAB)}
+                        disabled={props.isLoading()}
+                        onPress={() => onTabValueChange(DASHBOARD_SEARCH_TYPE_LOST)} />
+                </View>
+                <View style={styles.tabItemContainer}>
+                    <Button
+                        buttonStyle={[
+                            styles.tabButtonStyle,
+                            DASHBOARD_SEARCH_TYPE_FOUND === props.searchParameters.searchType ?
+                                styles.activeButtonStyle : null
+                        ]}
+                        titleStyle={styles.titleStyle}
+                        title={i18n.t(DASHBOARD_SEARCH_FOUND_TAB)}
+                        disabled={props.isLoading()}
+                        onPress={() => onTabValueChange(DASHBOARD_SEARCH_TYPE_FOUND)} />
+                </View>
+            </View>
             <View style={styles.sliderStyle}>
                 <Slider
                     value={props.searchParameters.radiusInMeters}
@@ -73,22 +78,31 @@ const DashboardHeader = (props) => {
 };
 
 const styles = StyleSheet.create({
+    tabsContainerStyle: {
+        flexDirection: 'row',
+        elevation: 5,
+        borderRadius: 16,
+    },
+    tabItemContainer: {
+        flex: 1
+    },
     titleStyle: {
         color: colors.accentColor,
         fontSize: 12,
         fontWeight: 'bold',
-        borderColor: colors.primaryColor
+        borderColor: colors.primaryColor,
+        textTransform: 'uppercase',
+        margin: 8
     },
-    buttonStyle: {
+    tabButtonStyle: {
         backgroundColor: colors.white,
         borderColor: colors.primaryColor
     },
-    indicatorStyle: {
-        borderColor: colors.primaryColor,
-        borderWidth: 1
+    activeButtonStyle: {
+        borderBottomWidth: 2,
+        borderColor: colors.primaryColor
     },
     sliderStyle: {
-        elevation: 5,
         borderRadius: 16,
         backgroundColor: colors.white,
         marginTop: 8,
