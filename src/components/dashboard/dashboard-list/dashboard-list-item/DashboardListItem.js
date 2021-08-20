@@ -11,7 +11,8 @@ import { getTimeDifferenceString } from '../../../../util/date/date.utils';
 
 const DashboardListItem = (props) => {
     return (
-        <TouchableOpacity onPress={() => props.onListItemClicked(props.dog)}>
+        <TouchableOpacity
+            onPress={() => props.onListItemClicked(props.dog)}>
             <Card>
                 <Fragment>
                     <View style={styles.headerContainer}>

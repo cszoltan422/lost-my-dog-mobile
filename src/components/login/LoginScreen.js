@@ -101,8 +101,7 @@ const styles = StyleSheet.create({
         height: 50,
         marginBottom: 20,
         justifyContent: 'center',
-        padding: 20,
-        opacity: 0.7
+        padding: 20
     },
     inputTextStyle: {
         height: 50,
@@ -112,18 +111,19 @@ const styles = StyleSheet.create({
         color: colors.accentColor
     },
     loginButtonStyle: {
-        width: '100%',
+        width: 200,
         backgroundColor: colors.accentColor,
         borderRadius: 25,
         height: 50,
         alignItems:'center',
         justifyContent:'center',
         marginTop: 40,
-        marginBottom: 10
+        marginBottom: 10,
+        textAlign: 'center'
     },
     loginTextStyle: {
         color: colors.white,
-        fontSize: 18
+        fontSize: 18,
     },
     signUpTextStyle: {
         color: colors.accentColor,
