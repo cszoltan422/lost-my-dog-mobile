@@ -38,7 +38,7 @@ const DetailsScreen = (props) => {
     };
 
     const onSendOwnerButtonPressed = () => {
-        Linking.openURL(`mailto:${dog.contactPhone}`);
+        Linking.openURL(`mailto:${dog.contactEmail}`);
     };
 
     return (
