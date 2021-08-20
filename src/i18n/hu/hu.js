@@ -34,7 +34,7 @@ import {
     LOGIN_FORGOT_PASSWORD_PLACEHOLDER,
     LOGIN_LOGIN_TEXT,
     LOGIN_PASSWORD_PLACEHOLDER, LOGIN_SIGN_UP_TEXT,
-    LOGIN_USERNAME_PLACEHOLDER, LOGIN_WRONG_PASSWORD_OR_USERNAME
+    LOGIN_USERNAME_PLACEHOLDER, LOGIN_WRONG_PASSWORD_OR_USERNAME, SUBMIT_DOG_TITLE
 } from '../i18n.keys';
 
 export default {
@@ -77,4 +77,5 @@ export default {
     [LOGIN_SIGN_UP_TEXT]: 'Regisztráció',
     [LOGIN_EMPTY_PASSWORD_OR_USERNAME]: 'A felhasználónév vagy a jelszó üres',
     [LOGIN_WRONG_PASSWORD_OR_USERNAME]: 'Hibás felhasználónév vagy a jelszó!',
+    [SUBMIT_DOG_TITLE]: 'Kutya beküldése'
 };

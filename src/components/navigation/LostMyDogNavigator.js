@@ -3,11 +3,12 @@ import { createStackNavigator } from 'react-navigation-stack';
 import DashboardScreen from '../dashboard/DashboardScreen';
 import DetailsScreen from '../details/DetailsScreen';
 import LoginScreen from '../login/LoginScreen';
+import SubmitFormScreen from '../submit-form/SubmitFormScreen';
 import colors from '../../colors';
 import {
     DASHBOARD_NAVIGATION_SCREEN_NAME,
     DETAILS_NAVIGATION_SCREEN_NAME,
-    LOGIN_NAVIGATION_SCREEN_NAME
+    LOGIN_NAVIGATION_SCREEN_NAME, SUBMIT_DOG_NAVIGATION_PARAM_NAME
 } from '../../application.constants';
 
 const routeConfigMap = {
@@ -19,6 +20,9 @@ const routeConfigMap = {
     },
     [LOGIN_NAVIGATION_SCREEN_NAME]: {
         screen: LoginScreen
+    },
+    [SUBMIT_DOG_NAVIGATION_PARAM_NAME]: {
+        screen: SubmitFormScreen
     }
 };
 

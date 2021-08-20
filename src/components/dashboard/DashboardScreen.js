@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import DashboardHeader from './dashboard-header/DashboardHeader';
 import DashboardList from './dashboard-list/DashboardList';
 import LoadingCard from '../common/loading-card/LoadingCard';
+import FloatingActionButton from '../common/floating-action-button/FloatingActionButton';
 import HeaderMenu from '../menu/HeaderMenu';
 import {
     onDashboardChangeRadiusSearchParam,
@@ -14,13 +15,14 @@ import {
     onDashboardRefreshPage
 } from '../../redux/actions/dashboard/action-creators/action.creators';
 import {
-    DASHBOARD_TITLE
+    DASHBOARD_TITLE, SUBMIT_DOG_TITLE
 } from '../../i18n/i18n.keys';
 import i18n from '../../i18n/i18n';
 import {
     DETAILS_NAVIGATION_PARAM_NAME,
-    DETAILS_NAVIGATION_SCREEN_NAME
+    DETAILS_NAVIGATION_SCREEN_NAME, SUBMIT_DOG_NAVIGATION_PARAM_NAME
 } from '../../application.constants';
+import colors from '../../colors';
 
 class DashboardScreen extends Component {
 
@@ -57,6 +59,22 @@ class DashboardScreen extends Component {
                             routeName: DETAILS_NAVIGATION_SCREEN_NAME,
                             params: {[DETAILS_NAVIGATION_PARAM_NAME]: item}
                         })} /> }
+                {this.props.user.isLoggedIn ?
+                    <FloatingActionButton
+                        color={colors.primaryColor}
+                        icon={{ name: 'add', color: colors.white }}
+                        openIcon={{ name: 'close', color: colors.white }}
+                        actions={[
+                            {
+                                title: i18n.t(SUBMIT_DOG_TITLE),
+                                icon: { name: 'add', color: colors.white },
+                                color: colors.primaryColor,
+                                pressHandler: () => this.props.navigation.navigate({
+                                    routeName: SUBMIT_DOG_NAVIGATION_PARAM_NAME
+                                })
+                            }
+                        ]} />
+                : null }
             </View>
         );
     }
@@ -83,6 +101,7 @@ DashboardScreen.propTypes = {
     hasNoMoreData: PropTypes.bool.isRequired,
     searchParameters: PropTypes.object.isRequired,
     data: PropTypes.array.isRequired,
+    user: PropTypes.object.isRequired,
     onDashboardChangeRadiusSearchParam: PropTypes.func.isRequired,
     onDashboardChangeSearchTypeParam: PropTypes.func.isRequired,
     onDashboardMounted: PropTypes.func.isRequired,
@@ -98,6 +117,7 @@ const mapStateToProps = (state) => {
         hasNoMoreData: state.dashboard.hasNoMoreData,
         searchParameters: state.dashboard.searchParameters,
         data: state.dashboard.data,
+        user: state.application.user,
     };
 };
 
