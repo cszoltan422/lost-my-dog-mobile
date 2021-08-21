@@ -1,15 +1,18 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import {useSelector} from "react-redux";
+import {useSelector} from 'react-redux';
 import {View, Text, Image, ScrollView, StyleSheet, Linking} from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import Card from '../common/card/Card';
 import HeaderMenu from '../menu/HeaderMenu';
 import FloatingActionButton from '../common/floating-action-button/FloatingActionButton';
+import MapsView from '../common/map-view/MapsView';
 import {
     DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS,
     DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS,
-    DETAILS_NAVIGATION_PARAM_NAME, SUBMIT_DOG_NAVIGATION_PARAM_NAME
+    DETAILS_NAVIGATION_PARAM_NAME,
+    LOGIN_NAVIGATION_SCREEN_NAME,
+    SUBMIT_DOG_NAVIGATION_PARAM_NAME
 } from '../../application.constants';
 import colors from '../../colors';
 import i18n from '../../i18n/i18n';
@@ -24,6 +27,7 @@ import {
     DETAILS_DOG_NAME_LABEL_TITLE,
     DETAILS_DOG_SEX_LABEL_TITLE,
     DETAILS_DOG_STATUS_LABEL_TITLE,
+    DETAILS_MAP_VIEW_MARKER_TITLE,
     DETAILS_SEND_MESSAGE, SUBMIT_DOG_TITLE
 } from '../../i18n/i18n.keys';
 import {formatIsoTime} from '../../util/date/date.utils';
@@ -99,61 +103,72 @@ const DetailsScreen = (props) => {
                             </View>
                         </View>
                     </Card>
-                    <View>
-                        <Card>
-                            <View style={styles.rowContainer}>
-                                <View style={styles.columnContainer}>
-                                    <Button
-                                        style={styles.buttonStyle}
-                                        icon={
-                                            <Icon
-                                                style={styles.iconStyle}
-                                                name='email'
-                                                type='material'
-                                                size={16}
-                                                color={colors.white} />
-                                        }
-                                        buttonStyle={styles.buttonStyle}
-                                        titleStyle={{color: colors.white}}
-                                        title={i18n.t(DETAILS_SEND_MESSAGE)}
-                                        onPress={onSendOwnerButtonPressed} />
-                                </View>
-                                <View style={styles.columnContainer}>
-                                    <Button
-                                        icon={
-                                            <Icon
-                                                style={styles.iconStyle}
-                                                name='phone'
-                                                type='material'
-                                                size={16}
-                                                color={colors.white} />
-                                        }
-                                        buttonStyle={styles.buttonStyle}
-                                        titleStyle={{color: colors.white}}
-                                        title={i18n.t(DETAILS_CALL_OWNER)}
-                                        onPress={onCallOwnerButtonPressed} />
-                                </View>
+                    <Card>
+                        <View style={styles.rowContainer}>
+                            <View style={styles.columnContainer}>
+                                <Button
+                                    style={styles.buttonStyle}
+                                    icon={
+                                        <Icon
+                                            style={styles.iconStyle}
+                                            name='email'
+                                            type='material'
+                                            size={16}
+                                            color={colors.white} />
+                                    }
+                                    buttonStyle={styles.buttonStyle}
+                                    titleStyle={{color: colors.white}}
+                                    title={i18n.t(DETAILS_SEND_MESSAGE)}
+                                    onPress={onSendOwnerButtonPressed} />
                             </View>
-                        </Card>
-                    </View>
+                            <View style={styles.columnContainer}>
+                                <Button
+                                    icon={
+                                        <Icon
+                                            style={styles.iconStyle}
+                                            name='phone'
+                                            type='material'
+                                            size={16}
+                                            color={colors.white} />
+                                    }
+                                    buttonStyle={styles.buttonStyle}
+                                    titleStyle={{color: colors.white}}
+                                    title={i18n.t(DETAILS_CALL_OWNER)}
+                                    onPress={onCallOwnerButtonPressed} />
+                            </View>
+                        </View>
+                    </Card>
+                    <Card>
+                        <MapsView
+                            longitude={dog.longitude}
+                            latitude={dog.latitude}
+                            markerTitle={i18n.t(DETAILS_MAP_VIEW_MARKER_TITLE)}
+                            iconType='font-awesome'
+                            iconName='paw'
+                            iconSize={24}
+                            iconColor={colors.accentColor}
+                        />
+                    </Card>
                 </View>
             </ScrollView>
-            {user.isLoggedIn ?
-                <FloatingActionButton
-                    color={colors.primaryColor}
-                    icon={{ name: 'add', color: colors.white }}
-                    openIcon={{ name: 'close', color: colors.white }}
-                    actions={[
-                        {
-                            title: i18n.t(SUBMIT_DOG_TITLE),
-                            icon: { name: 'add', color: colors.white },
-                            color: colors.primaryColor,
-                            pressHandler: () => props.navigation.navigate({
-                                routeName: SUBMIT_DOG_NAVIGATION_PARAM_NAME
-                            })
+            <FloatingActionButton
+                color={colors.primaryColor}
+                icon={{ name: 'add', color: colors.white }}
+                openIcon={{ name: 'close', color: colors.white }}
+                actions={[
+                    {
+                        title: i18n.t(SUBMIT_DOG_TITLE),
+                        icon: { name: 'add', color: colors.white },
+                        color: colors.primaryColor,
+                        pressHandler: () => {
+                            props.navigation.navigate({
+                                routeName: user.isLoggedIn ?
+                                    SUBMIT_DOG_NAVIGATION_PARAM_NAME
+                                    : LOGIN_NAVIGATION_SCREEN_NAME
+                            });
                         }
-                    ]} />
-                : null }
+                    }
+                ]} />
         </Fragment>
     );
 };
