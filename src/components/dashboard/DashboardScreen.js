@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
@@ -20,7 +20,9 @@ import {
 import i18n from '../../i18n/i18n';
 import {
     DETAILS_NAVIGATION_PARAM_NAME,
-    DETAILS_NAVIGATION_SCREEN_NAME, SUBMIT_DOG_NAVIGATION_PARAM_NAME
+    DETAILS_NAVIGATION_SCREEN_NAME,
+    LOGIN_NAVIGATION_SCREEN_NAME,
+    SUBMIT_DOG_NAVIGATION_PARAM_NAME
 } from '../../application.constants';
 import colors from '../../colors';
 
@@ -59,22 +61,24 @@ class DashboardScreen extends Component {
                             routeName: DETAILS_NAVIGATION_SCREEN_NAME,
                             params: {[DETAILS_NAVIGATION_PARAM_NAME]: item}
                         })} /> }
-                {this.props.user.isLoggedIn ?
-                    <FloatingActionButton
-                        color={colors.primaryColor}
-                        icon={{ name: 'add', color: colors.white }}
-                        openIcon={{ name: 'close', color: colors.white }}
-                        actions={[
-                            {
-                                title: i18n.t(SUBMIT_DOG_TITLE),
-                                icon: { name: 'add', color: colors.white },
-                                color: colors.primaryColor,
-                                pressHandler: () => this.props.navigation.navigate({
-                                    routeName: SUBMIT_DOG_NAVIGATION_PARAM_NAME
-                                })
+                <FloatingActionButton
+                    color={colors.primaryColor}
+                    icon={{ name: 'add', color: colors.white }}
+                    openIcon={{ name: 'close', color: colors.white }}
+                    actions={[
+                        {
+                            title: i18n.t(SUBMIT_DOG_TITLE),
+                            icon: { name: 'add', color: colors.white },
+                            color: colors.primaryColor,
+                            pressHandler: () => {
+                                this.props.navigation.navigate({
+                                    routeName: this.props.user.isLoggedIn ?
+                                        SUBMIT_DOG_NAVIGATION_PARAM_NAME
+                                        : LOGIN_NAVIGATION_SCREEN_NAME
+                                });
                             }
-                        ]} />
-                : null }
+                        }
+                    ]} />
             </View>
         );
     }

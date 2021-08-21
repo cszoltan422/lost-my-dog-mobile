@@ -5,7 +5,7 @@ const ENV = {
         API_URL: 'http://localhost:8080',
     },
     staging: {
-        API_URL: 'https://lost-my-dog-staging.herokuapp.com/',
+        API_URL: 'https://lost-my-dog-staging.herokuapp.com',
     },
     production: {
         API_URL: 'https://lost-my-dog-prod.herokuapp.com',
