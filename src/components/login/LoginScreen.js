@@ -26,16 +26,21 @@ class LoginScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.logoStyle}>
+                <Text
+                    testID='login-screen-application-name-text'
+                    style={styles.logoStyle}>
                     {APPLICATION_NAME}
                 </Text>
                 {this.props.error ?
-                    <Text style={styles.errorMessageStyle}>
+                    <Text
+                        testID='login-screen-login-error-text'
+                        style={styles.errorMessageStyle}>
                         {i18n.t(this.props.error)}
                     </Text>
                     : null}
                 <View style={styles.inputStyle} >
                     <TextInput
+                        testID='login-screen-username-text-input'
                         style={styles.inputTextStyle}
                         placeholder={i18n.t(LOGIN_USERNAME_PLACEHOLDER)}
                         placeholderTextColor={colors.white}
@@ -45,6 +50,7 @@ class LoginScreen extends Component {
                 </View>
                 <View style={styles.inputStyle} >
                     <TextInput
+                        testID='login-screen-password-text-input'
                         secureTextEntry
                         style={styles.inputTextStyle}
                         placeholder={i18n.t(LOGIN_PASSWORD_PLACEHOLDER)}
@@ -54,11 +60,14 @@ class LoginScreen extends Component {
                         onChangeText={password => this.props.onLoginPasswordChanged(password)} />
                 </View>
                 <TouchableOpacity>
-                    <Text style={styles.forgotPasswordStyle}>
+                    <Text
+                        testID='login-screen-forgot-password-text'
+                        style={styles.forgotPasswordStyle}>
                         {i18n.t(LOGIN_FORGOT_PASSWORD_PLACEHOLDER)}
                     </Text>
                 </TouchableOpacity>
                 <Button
+                    testID='login-screen-login-button'
                     buttonStyle={styles.loginButtonStyle}
                     titleStyle={styles.loginTextStyle}
                     title={i18n.t(LOGIN_LOGIN_TEXT)}
@@ -66,7 +75,9 @@ class LoginScreen extends Component {
                     disabled={this.props.loading || this.emptyInput()}
                     onPress={() => this.props.onLoginAttempted(this.props.navigation)} />
                 <TouchableOpacity>
-                    <Text style={styles.signUpTextStyle}>
+                    <Text
+                        testID='login-screen-signup-text'
+                        style={styles.signUpTextStyle}>
                         {i18n.t(LOGIN_SIGN_UP_TEXT)}
                     </Text>
                 </TouchableOpacity>

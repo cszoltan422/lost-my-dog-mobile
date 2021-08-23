@@ -65,13 +65,16 @@ const LocationPermissionInitScreen = (props) => {
         <View style={styles.screenStyle}>
             <View style={styles.contentStyle}>
                 <View style={styles.titleContainerStyle}>
-                    <Text style={styles.titleStyle}>
+                    <Text
+                        testID='location-permission-title-text'
+                        tyle={styles.titleStyle}>
                         {screenTitle}
                     </Text>
                 </View>
                 <View style={styles.bottomContainerStyle}>
                     <View style={styles.actionButtonContainerStyle}>
                         <Button
+                            testID='location-permission-button'
                             icon={
                                 <Icon
                                     style={styles.iconStyle}
@@ -86,7 +89,9 @@ const LocationPermissionInitScreen = (props) => {
                             onPress={buttonPressHandler} />
                     </View>
                     <View style={styles.descriptionContainerStyle}>
-                        <Text style={styles.descriptionStyle}>
+                        <Text
+                            testID='location-permission-description-text'
+                            style={styles.descriptionStyle}>
                             {description}
                         </Text>
                     </View>

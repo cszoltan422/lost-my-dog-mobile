@@ -7,9 +7,13 @@ import colors from '../../../../colors';
 const DashboardListEndIndicator = () => {
 
     return (
-        <View style={styles.container}>
+        <View
+            testID='dashboard-list-end-reached-indicator-container'
+            style={styles.container}>
             <View style={styles.separator} />
-            <Text style={styles.text}>{i18n.t(DASHBOARD_LIST_END_REACHED)}</Text>
+            <Text
+                testID='dashboard-list-end-reached-indicator-text'
+                style={styles.text}>{i18n.t(DASHBOARD_LIST_END_REACHED)}</Text>
         </View>
     );
 

@@ -14,9 +14,13 @@ const MapsView = (props) => {
     };
     return (
         <MapView
+            testID='map-view-container'
             style={styles.mapContainer}
             region={region}>
-            <Marker coordinate={region} title={props.markerTitle} >
+            <Marker
+                testID='map-view-marker'
+                coordinate={region}
+                title={props.markerTitle} >
                 <Icon
                     type={props.iconType}
                     name={props.iconName}

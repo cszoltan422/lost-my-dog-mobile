@@ -15,6 +15,7 @@ const DashboardList = (props) => {
 
     return (
         <FlatList
+            testID='dashboard-list-container'
             data={props.data}
             renderItem={(item) => {
                 const lastItem = item.index === props.data.length - 1;

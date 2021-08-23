@@ -16,13 +16,15 @@ export default {
         '**/*'
     ],
     ios: {
-        supportsTablet: true
+        supportsTablet: true,
+        bundleIdentifier: 'org.zenbot.lost-my-dog-mobile'
     },
     android: {
         adaptiveIcon: {
             foregroundImage: './assets/adaptive-icon.png',
             backgroundColor: '#FFFFFF'
-        }
+        },
+        package: 'org.zenbot.lost-my-dog-mobile',
     },
     web: {
         favicon: './assets/favicon.png'
