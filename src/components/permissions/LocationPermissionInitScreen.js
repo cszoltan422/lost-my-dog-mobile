@@ -67,7 +67,7 @@ const LocationPermissionInitScreen = (props) => {
                 <View style={styles.titleContainerStyle}>
                     <Text
                         testID='location-permission-title-text'
-                        tyle={styles.titleStyle}>
+                        style={styles.titleStyle}>
                         {screenTitle}
                     </Text>
                 </View>

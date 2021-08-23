@@ -24,7 +24,7 @@ export default {
             foregroundImage: './assets/adaptive-icon.png',
             backgroundColor: '#FFFFFF'
         },
-        package: 'org.zenbot.lost-my-dog-mobile',
+        package: 'org.zenbot.lostMyDogMobile',
     },
     web: {
         favicon: './assets/favicon.png'

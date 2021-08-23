@@ -169,8 +169,7 @@ const DetailsScreen = (props) => {
                             iconType='font-awesome'
                             iconName='paw'
                             iconSize={24}
-                            iconColor={colors.accentColor}
-                        />
+                            iconColor={colors.accentColor} />
                     </Card>
                 </View>
             </ScrollView>
