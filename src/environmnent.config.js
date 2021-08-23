@@ -2,7 +2,7 @@ import Constants from 'expo-constants';
 
 const ENV = {
     develop: {
-        API_URL: 'http://localhost:8080',
+        API_URL: 'http://192.168.1.70:8080',
     },
     staging: {
         API_URL: 'https://lost-my-dog-staging.herokuapp.com',
