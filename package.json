@@ -8,7 +8,11 @@
     "mockserver": "npm run mockserver/index.js",
     "eject": "expo eject",
     "lint": "eslint --ext .js,.jsx src/",
-    "lint:fix": "eslint --ext .js,.jsx src/ --fix"
+    "lint:fix": "eslint --ext .js,.jsx src/ --fix",
+    "build:ios": "npm run lint && expo build:ios",
+    "build:android": "npm run lint && expo build:android",
+    "e2e:ios": "detox test -c ios",
+    "e2e:android": "detox test -c android"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.13.4",

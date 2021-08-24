@@ -9,7 +9,7 @@
     },
     "android": {
       "type": "android.apk",
-      "binaryPath": "SPECIFY_PATH_TO_YOUR_APP_BINARY"
+      "binaryPath": "build/lost-my-dog-mobile.apk"
     }
   },
   "devices": {
@@ -22,7 +22,7 @@
     "emulator": {
       "type": "android.emulator",
       "device": {
-        "avdName": "Pixel_3a_API_30_x86"
+        "avdName": "Pixel_3a_API_31_arm64-v8a"
       }
     }
   },
