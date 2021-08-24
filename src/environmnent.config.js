@@ -25,6 +25,7 @@ const getEnvVars = (env = Constants.manifest.releaseChannel) => {
     }
     // using `indexOf` will let you pick up dev, develop, development, dev-v1, dev-v2, dev-v3, and so on..
     // Returns `-1` if the value is not found.
+    if (env.indexOf('e2e') !== -1) return ENV.e2e
     if (env.indexOf('dev') !== -1) return ENV.develop
     if (env.indexOf('staging') !== -1) return ENV.staging
     if (env.indexOf('prod') !== -1) return ENV.production
