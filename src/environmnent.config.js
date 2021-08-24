@@ -1,14 +1,21 @@
 import Constants from 'expo-constants';
 
 const ENV = {
+    e2e: {
+        API_URL: 'http://192.168.1.70:8080',
+        GET_DEVICE_LOCATION: false
+    },
     develop: {
         API_URL: 'http://192.168.1.70:8080',
+        GET_DEVICE_LOCATION: true
     },
     staging: {
         API_URL: 'https://lost-my-dog-staging.herokuapp.com',
+        GET_DEVICE_LOCATION: true
     },
     production: {
         API_URL: 'https://lost-my-dog-prod.herokuapp.com',
+        GET_DEVICE_LOCATION: true
     },
 }
 const getEnvVars = (env = Constants.manifest.releaseChannel) => {
