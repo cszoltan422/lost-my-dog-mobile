@@ -48,7 +48,7 @@ const LocationPermissionInitScreen = (props) => {
         icon = 'room';
         buttonPressHandler = onAskLocationPermission;
 
-        clearTimeout();
+        clearInterval();
     } else if (!granted && !canAskAgain) {
         screenTitle = i18n.t(LOCATION_PERMISSION_DENIED_TITLE);
         buttonTitle = i18n.t(LOCATION_PERMISSION_DENIED_BUTTON_TITLE);
@@ -56,7 +56,7 @@ const LocationPermissionInitScreen = (props) => {
         icon = 'settings';
         buttonPressHandler = onOpenSettingsApp;
 
-        setTimeout(() => {
+        setInterval(() => {
             props.onCheckLocationPermission();
         }, 1000);
     }
@@ -65,13 +65,16 @@ const LocationPermissionInitScreen = (props) => {
         <View style={styles.screenStyle}>
             <View style={styles.contentStyle}>
                 <View style={styles.titleContainerStyle}>
-                    <Text style={styles.titleStyle}>
+                    <Text
+                        testID='location-permission-title-text'
+                        style={styles.titleStyle}>
                         {screenTitle}
                     </Text>
                 </View>
                 <View style={styles.bottomContainerStyle}>
                     <View style={styles.actionButtonContainerStyle}>
                         <Button
+                            testID='location-permission-button'
                             icon={
                                 <Icon
                                     style={styles.iconStyle}
@@ -86,7 +89,9 @@ const LocationPermissionInitScreen = (props) => {
                             onPress={buttonPressHandler} />
                     </View>
                     <View style={styles.descriptionContainerStyle}>
-                        <Text style={styles.descriptionStyle}>
+                        <Text
+                            testID='location-permission-description-text'
+                            style={styles.descriptionStyle}>
                             {description}
                         </Text>
                     </View>

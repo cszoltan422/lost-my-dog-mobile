@@ -10,15 +10,20 @@ import { DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS } from '../../../../applicat
 import { getTimeDifferenceString } from '../../../../util/date/date.utils';
 
 const DashboardListItem = (props) => {
+
     return (
         <TouchableOpacity
+            testID={`dashboard-list-item-container-${props.index}`}
             onPress={() => props.onListItemClicked(props.dog)}>
             <Card>
                 <Fragment>
-                    <View style={styles.headerContainer}>
+                    <View
+                        testID={`dashboard-list-item-header-container-${props.index}`}
+                        style={styles.headerContainer}>
                         <View style={styles.imageTitleContainer}>
                             <View style={styles.imageContainer}>
                                 <Avatar
+                                    testID={`dashboard-list-item-header-image-${props.index}`}
                                     size='medium'
                                     rounded
                                     title={props.dog.dogName.charAt(0)}
@@ -27,34 +32,46 @@ const DashboardListItem = (props) => {
                                     }} />
                             </View>
                             <View style={styles.titleContainer}>
-                                <Text style={styles.title}>{props.dog.dogName}</Text>
+                                <Text
+                                    testID={`dashboard-list-item-header-dog-name-${props.index}`}
+                                    style={styles.title}>{props.dog.dogName}</Text>
                                 <View style={styles.rowContainer}>
                                     <Icon
                                         type='font-awesome'
                                         name='paw'
                                         color={colors.accentColor} />
-                                    <Text style={styles.dogBreed}>{props.dog.dogBreed}</Text>
+                                    <Text
+                                        testID={`dashboard-list-item-header-dog-breed-${props.index}`}
+                                        style={styles.dogBreed}>{props.dog.dogBreed}</Text>
                                 </View>
                             </View>
                         </View>
                         <View style={styles.statusChipContainer}>
-                            <Chip text={i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[props.dog.status])} />
+                            <Chip
+                                testID={`dashboard-list-item-header-dog-status-${props.index}`}
+                                text={i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[props.dog.status])} />
                         </View>
                     </View>
-                    <View style={styles.detailsContainer}>
+                    <View
+                        testID={`dashboard-list-item-details-container-${props.index}`}
+                        style={styles.detailsContainer}>
                         <View style={styles.rowContainer}>
                             <Icon
                                 type='material'
                                 name='room'
                                 color={colors.accentColor} />
-                            <Text style={styles.locationLost}>{props.dog.city}, {props.dog.countryCode}</Text>
+                            <Text
+                                testID={`dashboard-list-item-details-city-${props.index}`}
+                                style={styles.locationLost}>{props.dog.city}, {props.dog.countryCode}</Text>
                         </View>
                         <View style={styles.rowContainer}>
                             <Icon
                                 type='material'
                                 name='schedule'
                                 color={colors.accentColor} />
-                            <Text style={styles.dateLost}>{getTimeDifferenceString(props.dog.dateLost)}</Text>
+                            <Text
+                                testID={`dashboard-list-item-details-date-lost-${props.index}`}
+                                style={styles.dateLost}>{getTimeDifferenceString(props.dog.dateLost)}</Text>
                         </View>
                     </View>
                 </Fragment>
@@ -128,6 +145,7 @@ DashboardListItem.propTypes = {
         countryCode: PropTypes.string.isRequired,
         rawImage: PropTypes.string.isRequired
     }).isRequired,
+    index: PropTypes.number.isRequired,
     onListItemClicked: PropTypes.func.isRequired
 }
 

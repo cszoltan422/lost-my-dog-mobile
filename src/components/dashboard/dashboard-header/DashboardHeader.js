@@ -33,9 +33,12 @@ const DashboardHeader = (props) => {
 
     return (
         <Fragment>
-            <View style={styles.tabsContainerStyle}>
+            <View
+                testID='dashboard-header-tabs-container'
+                style={styles.tabsContainerStyle}>
                 <View style={styles.tabItemContainer}>
                     <Button
+                        testID='dashboard-header-tabs-lost-button'
                         buttonStyle={[
                             styles.tabButtonStyle,
                             DASHBOARD_SEARCH_TYPE_LOST === props.searchParameters.searchType ?
@@ -48,6 +51,7 @@ const DashboardHeader = (props) => {
                 </View>
                 <View style={styles.tabItemContainer}>
                     <Button
+                        testID='dashboard-header-tabs-found-button'
                         buttonStyle={[
                             styles.tabButtonStyle,
                             DASHBOARD_SEARCH_TYPE_FOUND === props.searchParameters.searchType ?
@@ -59,8 +63,11 @@ const DashboardHeader = (props) => {
                         onPress={() => onTabValueChange(DASHBOARD_SEARCH_TYPE_FOUND)} />
                 </View>
             </View>
-            <View style={styles.sliderStyle}>
+            <View
+                testID='dashboard-header-slider-container'
+                style={styles.sliderStyle}>
                 <Slider
+                    testID='dashboard-header-slider'
                     value={props.searchParameters.radiusInMeters}
                     minimumValue={DASHBOARD_MIN_SEARCH_DISTANCE_IN_METERS}
                     maximumValue={DASHBOARD_MAX_SEARCH_DISTANCE_IN_METERS}
@@ -69,7 +76,9 @@ const DashboardHeader = (props) => {
                     trackStyle={styles.trackStyle}
                     thumbStyle={styles.thumbStyle}
                     onSlidingComplete={(value) => onDashboardChangeSliderValue(value)} />
-                <Text style={styles.sliderValueStyle}>
+                <Text
+                    testID='dashboard-header-slider-distance-text'
+                    style={styles.sliderValueStyle}>
                     {i18n.t(DASHBOARD_SEARCH_PARAMETERS_DISTANCE)}: {props.searchParameters.radiusInMeters / 1000} km
                 </Text>
             </View>

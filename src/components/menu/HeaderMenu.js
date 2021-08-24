@@ -35,16 +35,20 @@ class HeaderMenu extends Component {
     render() {
         return (
             <Menu
+                testID='header-menu-container'
                 ref={this.setMenuRef}
                 button={
                     <Icon
+                        testID='header-menu-button-icon'
                         type='material'
                         name='more-vert'
                         color={colors.white}
                         onPress={this.showMenu} />
             }>
                 {!this.props.user.isLoggedIn ?
-                    <MenuItem onPress={() => this.navigateToScreen(LOGIN_NAVIGATION_SCREEN_NAME)}>
+                    <MenuItem
+                        testID='header-menu-login-option'
+                        onPress={() => this.navigateToScreen(LOGIN_NAVIGATION_SCREEN_NAME)}>
                         {i18n.t(LOGIN_LOGIN_TEXT)}
                     </MenuItem>
                     : null}

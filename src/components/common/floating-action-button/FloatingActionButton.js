@@ -8,6 +8,7 @@ const FloatingActionButton = (props) => {
 
     return (
         <SpeedDial
+            testID='floating-action-button'
             isOpen={open}
             color={props.color}
             icon={props.icon}
@@ -17,6 +18,7 @@ const FloatingActionButton = (props) => {
             {props.actions.map((action, index) => {
                 return (
                     <SpeedDial.Action
+                        testID='floating-action-button-new-submission-option'
                         key={index}
                         color={action.color}
                         icon={action.icon}

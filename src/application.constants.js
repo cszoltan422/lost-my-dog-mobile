@@ -29,3 +29,8 @@ export const DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS = {
     'MALE': DETAILS_DOG_SEX_MALE,
     'FEMALE': DETAILS_DOG_SEX_FEMALE
 };
+export const E2E_MOCK_LOCATION = {
+    longitude: -122.406417,
+    latitude: 37.785834
+
+}

@@ -4,7 +4,9 @@ import colors from '../../../colors';
 
 const LoadingCard = () => {
     return (
-        <SkeletonPlaceholder highlightColor={colors.white} backgroundColor={colors.placeholderGrey} >
+        <SkeletonPlaceholder
+            testID='loading-card-container'
+            highlightColor={colors.white} backgroundColor={colors.placeholderGrey} >
             <SkeletonPlaceholder.Item height={110} marginBottom={8} borderRadius={16} />
         </SkeletonPlaceholder>
     );

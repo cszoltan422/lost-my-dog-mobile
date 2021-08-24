@@ -15,6 +15,7 @@ const DashboardList = (props) => {
 
     return (
         <FlatList
+            testID='dashboard-list-container'
             data={props.data}
             renderItem={(item) => {
                 const lastItem = item.index === props.data.length - 1;
@@ -22,6 +23,7 @@ const DashboardList = (props) => {
                     <Fragment>
                         <DashboardListItem
                             dog={item.item}
+                            index={item.index}
                             onListItemClicked={props.onListItemClicked} />
                         {(lastItem && props.fetchingNew &&
                             <LoadingCard /> )}

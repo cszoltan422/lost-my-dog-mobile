@@ -47,15 +47,21 @@ const DetailsScreen = (props) => {
 
     return (
         <Fragment>
-            <ScrollView>
-                <View style={styles.container}>
+            <ScrollView
+                testID='details-screen-scroll-view' >
+                <View
+                    testID='details-screen-container'
+                    style={styles.container}>
                     <Card styles={styles.imageCardStyle}>
                         <Image
+                            testID='details-screen-image'
                             style={styles.imageStyle}
                             source={{uri: `data:image/png;base64,${dog.rawImage}`}} />
                     </Card>
                     <Card styles={styles.descriptionCardStyle}>
-                        <Text style={styles.descriptionTextStyle}>
+                        <Text
+                            testID='details-screen-description-text'
+                            style={styles.descriptionTextStyle}>
                             {`"${dog.description}"`}
                         </Text>
                     </Card>
@@ -63,42 +69,99 @@ const DetailsScreen = (props) => {
                         <View>
                             <View style={styles.rowContainer}>
                                 <View style={styles.columnContainer}>
-                                    <Text style={styles.labelTitle}>{i18n.t(DETAILS_DOG_NAME_LABEL_TITLE)}</Text>
-                                    <Text style={styles.labelValue}>{dog.dogName}</Text>
+                                    <Text
+                                        testID='details-screen-dog-name-text-label'
+                                        style={styles.labelTitle}>
+                                        {i18n.t(DETAILS_DOG_NAME_LABEL_TITLE)}
+                                    </Text>
+                                    <Text
+                                        testID='details-screen-dog-name-text'
+                                        style={styles.labelValue}>
+                                        {dog.dogName}
+                                    </Text>
                                 </View>
                                 <View style={styles.columnContainer}>
-                                    <Text style={styles.labelTitle}>{i18n.t(DETAILS_DOG_BREED_LABEL_TITLE)}</Text>
-                                    <Text style={styles.labelValue}>{dog.dogBreed}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.rowContainer}>
-                                <View style={styles.columnContainer}>
-                                    <Text style={styles.labelTitle}>{i18n.t(DETAILS_DOG_SEX_LABEL_TITLE)}</Text>
-                                    <Text style={styles.labelValue}>{i18n.t(DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS[dog.gender])}</Text>
-                                </View>
-                                <View style={styles.columnContainer}>
-                                    <Text style={styles.labelTitle}>{i18n.t(DETAILS_DOG_COLOR_LABEL_TITLE)}</Text>
-                                    <Text style={styles.labelValue}>{dog.color}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.rowContainer}>
-                                <View style={styles.columnContainer}>
-                                    <Text style={styles.labelTitle}>{i18n.t(DETAILS_DOG_STATUS_LABEL_TITLE)}</Text>
-                                    <Text style={styles.labelValue}>{i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[dog.status])}</Text>
-                                </View>
-                                <View style={styles.columnContainer}>
-                                    <Text style={styles.labelTitle}>{i18n.t(DETAILS_DOG_AGE_LABEL_TITLE)}</Text>
-                                    <Text style={styles.labelValue}>{dog.age} {i18n.t(DETAILS_DOG_AGE_YEARS)}</Text>
+                                    <Text
+                                        testID='details-screen-dog-breed-text-label'
+                                        style={styles.labelTitle}>
+                                        {i18n.t(DETAILS_DOG_BREED_LABEL_TITLE)}
+                                    </Text>
+                                    <Text
+                                        testID='details-screen-dog-breed-text'
+                                        style={styles.labelValue}>
+                                        {dog.dogBreed}
+                                    </Text>
                                 </View>
                             </View>
                             <View style={styles.rowContainer}>
                                 <View style={styles.columnContainer}>
-                                    <Text style={styles.labelTitle}>{i18n.t(DETAILS_DOG_CITY_LABEL_TITLE)}</Text>
-                                    <Text style={styles.labelValue}>{dog.city}, {dog.countryCode}</Text>
+                                    <Text
+                                        testID='details-screen-dog-gender-text-label'
+                                        style={styles.labelTitle}>
+                                        {i18n.t(DETAILS_DOG_SEX_LABEL_TITLE)}
+                                    </Text>
+                                    <Text
+                                        testID='details-screen-dog-gender-text'
+                                        style={styles.labelValue}>
+                                        {i18n.t(DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS[dog.gender])}
+                                    </Text>
                                 </View>
                                 <View style={styles.columnContainer}>
-                                    <Text style={styles.labelTitle}>{i18n.t(DETAILS_DOG_DATE_LOST_LABEL_TITLE)}</Text>
-                                    <Text style={styles.labelValue}>{formatIsoTime(dog.dateLost)}</Text>
+                                    <Text
+                                        testID='details-screen-dog-color-text-label'
+                                        style={styles.labelTitle}>
+                                        {i18n.t(DETAILS_DOG_COLOR_LABEL_TITLE)}
+                                    </Text>
+                                    <Text
+                                        testID='details-screen-dog-color-text'
+                                        style={styles.labelValue}>{dog.color}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.rowContainer}>
+                                <View style={styles.columnContainer}>
+                                    <Text
+                                        testID='details-screen-dog-status-text-label'
+                                        style={styles.labelTitle}>
+                                        {i18n.t(DETAILS_DOG_STATUS_LABEL_TITLE)}
+                                    </Text>
+                                    <Text
+                                        testID='details-screen-dog-status-text'
+                                        style={styles.labelValue}>{i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[dog.status])}</Text>
+                                </View>
+                                <View style={styles.columnContainer}>
+                                    <Text
+                                        testID='details-screen-dog-age-text-label'
+                                        style={styles.labelTitle}>
+                                        {i18n.t(DETAILS_DOG_AGE_LABEL_TITLE)}
+                                    </Text>
+                                    <Text
+                                        testID='details-screen-dog-age-text'
+                                        style={styles.labelValue}>
+                                        {dog.age} {i18n.t(DETAILS_DOG_AGE_YEARS)}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.rowContainer}>
+                                <View style={styles.columnContainer}>
+                                    <Text
+                                        testID='details-screen-dog-location-text-label'
+                                        style={styles.labelTitle}>
+                                        {i18n.t(DETAILS_DOG_CITY_LABEL_TITLE)}
+                                    </Text>
+                                    <Text
+                                        testID='details-screen-dog-location-text'
+                                        style={styles.labelValue}>{dog.city}, {dog.countryCode}</Text>
+                                </View>
+                                <View style={styles.columnContainer}>
+                                    <Text
+                                        testID='details-screen-dog-date-lost-text-label'
+                                        style={styles.labelTitle}>
+                                        {i18n.t(DETAILS_DOG_DATE_LOST_LABEL_TITLE)}
+                                    </Text>
+                                    <Text
+                                        testID='details-screen-dog-date-lost-text'
+                                        style={styles.labelValue}>{formatIsoTime(dog.dateLost)}</Text>
                                 </View>
                             </View>
                         </View>
@@ -107,6 +170,7 @@ const DetailsScreen = (props) => {
                         <View style={styles.rowContainer}>
                             <View style={styles.columnContainer}>
                                 <Button
+                                    testID='details-screen-send-email-button'
                                     style={styles.buttonStyle}
                                     icon={
                                         <Icon
@@ -123,6 +187,7 @@ const DetailsScreen = (props) => {
                             </View>
                             <View style={styles.columnContainer}>
                                 <Button
+                                    testID='details-screen-call-owner-button'
                                     icon={
                                         <Icon
                                             style={styles.iconStyle}
@@ -146,8 +211,7 @@ const DetailsScreen = (props) => {
                             iconType='font-awesome'
                             iconName='paw'
                             iconSize={24}
-                            iconColor={colors.accentColor}
-                        />
+                            iconColor={colors.accentColor} />
                     </Card>
                 </View>
             </ScrollView>
