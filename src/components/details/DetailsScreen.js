@@ -31,6 +31,7 @@ import {
     DETAILS_SEND_MESSAGE, SUBMIT_DOG_TITLE
 } from '../../i18n/i18n.keys';
 import {formatIsoTime} from '../../util/date/date.utils';
+import ENV from '../../environmnent.config';
 
 const DetailsScreen = (props) => {
 
@@ -56,7 +57,7 @@ const DetailsScreen = (props) => {
                         <Image
                             testID='details-screen-image'
                             style={styles.imageStyle}
-                            source={{uri: `data:image/png;base64,${dog.rawImage}`}} />
+                            source={{uri: `${ENV.API_URL}/image/${dog.avatarFilename}`,}} />
                     </Card>
                     <Card styles={styles.descriptionCardStyle}>
                         <Text

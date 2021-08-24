@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import ENV from '../../../../environmnent.config';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
 import Chip from '../../../common/chip/Chip';
@@ -28,7 +29,7 @@ const DashboardListItem = (props) => {
                                     rounded
                                     title={props.dog.dogName.charAt(0)}
                                     source={{
-                                        uri: `data:image/png;base64,${props.dog.rawImage}`,
+                                        uri: `${ENV.API_URL}/image/${props.dog.avatarFilename}`,
                                     }} />
                             </View>
                             <View style={styles.titleContainer}>
@@ -143,7 +144,7 @@ DashboardListItem.propTypes = {
         status: PropTypes.string.isRequired,
         city: PropTypes.string.isRequired,
         countryCode: PropTypes.string.isRequired,
-        rawImage: PropTypes.string.isRequired
+        avatarFilename: PropTypes.string.isRequired
     }).isRequired,
     index: PropTypes.number.isRequired,
     onListItemClicked: PropTypes.func.isRequired
