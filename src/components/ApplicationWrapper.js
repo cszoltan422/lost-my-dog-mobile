@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
+import SplashImage from './splash/SplashImage';
 import LostMyDogNavigator from './navigation/LostMyDogNavigator';
 import LocationPermissionInitScreen from './permissions/LocationPermissionInitScreen';
 import {
     onApplicationMounted,
     onCheckLocationPermission
 } from '../redux/actions/application/action-creators/action.creators';
-import SplashImage from './splash/SplashImage';
 
 class ApplicationWrapper extends Component {
 
@@ -32,7 +32,7 @@ class ApplicationWrapper extends Component {
     render() {
         if (!this.props.applicationInitialized || this.state.elapsedTime < 2000) {
             return (
-                <SplashImage elapsedTime={this.state.elapsedTime} />
+                <SplashImage />
             );
         } else if (!this.props.locationPermission.granted) {
             return (
@@ -51,10 +51,6 @@ class ApplicationWrapper extends Component {
 }
 
 const styles = StyleSheet.create({
-    imageBackground: {
-        width: '100%',
-        height: '100%'
-    },
     content: {
         flex: 1,
         justifyContent: 'center'

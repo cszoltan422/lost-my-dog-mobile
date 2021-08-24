@@ -1,19 +1,28 @@
 import React from 'react';
-import {Image, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 
-const SplashImage = (props) => {
+const SplashImage = () => {
 
     return (
-        <View style={{
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100%'}}>
+        <View style={styles.container}>
             <Image
                 source={require('../../../assets/splash.gif')}
-                style={{ width: 250, height: 250 }} />
+                style={styles.gif} />
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%'
+    },
+    gif: {
+        width: 250,
+        height: 250
+    }
+});
 
 export default SplashImage;
