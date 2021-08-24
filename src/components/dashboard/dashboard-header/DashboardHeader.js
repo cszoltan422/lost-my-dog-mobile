@@ -76,7 +76,9 @@ const DashboardHeader = (props) => {
                     trackStyle={styles.trackStyle}
                     thumbStyle={styles.thumbStyle}
                     onSlidingComplete={(value) => onDashboardChangeSliderValue(value)} />
-                <Text style={styles.sliderValueStyle}>
+                <Text
+                    testID='dashboard-header-slider-distance-text'
+                    style={styles.sliderValueStyle}>
                     {i18n.t(DASHBOARD_SEARCH_PARAMETERS_DISTANCE)}: {props.searchParameters.radiusInMeters / 1000} km
                 </Text>
             </View>

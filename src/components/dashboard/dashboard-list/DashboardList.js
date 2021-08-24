@@ -23,6 +23,7 @@ const DashboardList = (props) => {
                     <Fragment>
                         <DashboardListItem
                             dog={item.item}
+                            index={item.index}
                             onListItemClicked={props.onListItemClicked} />
                         {(lastItem && props.fetchingNew &&
                             <LoadingCard /> )}
