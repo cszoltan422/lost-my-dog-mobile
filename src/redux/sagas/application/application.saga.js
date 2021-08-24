@@ -1,4 +1,4 @@
-import { takeLatest, select, call, put, delay } from 'redux-saga/effects';
+import { takeLatest, select, call, put } from 'redux-saga/effects';
 import {
     ON_APPLICATION_MOUNTED,
     ON_CHECK_LOCATION_PERMISSION
@@ -66,7 +66,6 @@ function* applicationMountedSaga() {
             };
         }
 
-        yield delay(1000);
         yield put(onInitializeApplication(applicationInitializer));
     }
 }
