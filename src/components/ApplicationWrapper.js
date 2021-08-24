@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, ImageBackground, StyleSheet } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
+import SplashImage from './splash/SplashImage';
 import LostMyDogNavigator from './navigation/LostMyDogNavigator';
 import LocationPermissionInitScreen from './permissions/LocationPermissionInitScreen';
 import {
@@ -11,16 +12,27 @@ import {
 
 class ApplicationWrapper extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            elapsedTime: 0
+        }
+    }
+
     componentDidMount() {
+        setTimeout(() => {
+            this.setState({
+                elapsedTime: 2000
+            });
+        }, 2100);
         this.props.onApplicationMounted();
     }
 
     render() {
-        if (!this.props.applicationInitialized) {
+        if (!this.props.applicationInitialized || this.state.elapsedTime < 2000) {
             return (
-                <ImageBackground
-                    source={require('../../assets/splash-screen.jpg')}
-                    style={styles.imageBackground} />
+                <SplashImage />
             );
         } else if (!this.props.locationPermission.granted) {
             return (
@@ -39,10 +51,6 @@ class ApplicationWrapper extends Component {
 }
 
 const styles = StyleSheet.create({
-    imageBackground: {
-        width: '100%',
-        height: '100%'
-    },
     content: {
         flex: 1,
         justifyContent: 'center'
