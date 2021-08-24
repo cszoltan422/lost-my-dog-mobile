@@ -1,5 +1,5 @@
-import en from "../../../src/i18n/en/en";
-import {setLocation} from "../utils/utils";
+import en from '../../../src/i18n/en/en';
+import {setLocation} from '../utils/utils';
 import {
     DASHBOARD_LIST_END_REACHED,
     DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_OVER_A_MONTH_AGO,
@@ -12,16 +12,16 @@ import {
     DETAILS_DOG_NAME_LABEL_TITLE,
     DETAILS_DOG_SEX_LABEL_TITLE,
     DETAILS_DOG_STATUS_LABEL_TITLE
-} from "../../../src/i18n/i18n.keys";
+} from '../../../src/i18n/i18n.keys';
 import {
     expectActionsButtonsToBeVisible,
     expectDashboardHeaderIsVisibleWithDistanceLabel,
     expectDashboardListItemAtIndexIsVisibleWithValues, expectDetailsScreenDogDetailsAreVisibleWithLabels,
     expectDetailsScreenTopSectionIsVisible, expectMapsViewWithMarkerToBeVisible
-} from "../../support/assert/assertions";
+} from '../../support/assert/assertions';
 import {
     pressOnItemInDashboardListAtIndex, scrollOnViewByIdTo,
-} from "../../support/action/actions";
+} from '../../support/action/actions';
 
 describe('Details Screen - [en]', () => {
 
@@ -34,7 +34,7 @@ describe('Details Screen - [en]', () => {
         await device.reloadReactNative();
         await setLocation(37.785834, -122.406417, device);
 
-        await expectDashboardHeaderIsVisibleWithDistanceLabel(en[DASHBOARD_SEARCH_PARAMETERS_DISTANCE] + ": 30 km");
+        await expectDashboardHeaderIsVisibleWithDistanceLabel(en[DASHBOARD_SEARCH_PARAMETERS_DISTANCE] + ': 30 km');
         await expectDashboardListItemAtIndexIsVisibleWithValues(0, 'Watt', 'FOXI', en[DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_OVER_A_MONTH_AGO], en[DASHBOARD_LIST_END_REACHED]);
         await pressOnItemInDashboardListAtIndex(0);
         await expectDetailsScreenTopSectionIsVisible();

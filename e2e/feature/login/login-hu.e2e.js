@@ -1,16 +1,16 @@
 import {
     DASHBOARD_SEARCH_PARAMETERS_DISTANCE,
     LOGIN_FORGOT_PASSWORD_PLACEHOLDER, LOGIN_SIGN_UP_TEXT, LOGIN_WRONG_PASSWORD_OR_USERNAME
-} from "../../../src/i18n/i18n.keys";
-import {APPLICATION_NAME} from "../../../src/application.constants";
-import {setLocation} from "../utils/utils";
-import {attemptLoginWithCredentials, navigateToLoginScreen} from "../../support/action/actions";
+} from '../../../src/i18n/i18n.keys';
+import {APPLICATION_NAME} from '../../../src/application.constants';
+import {setLocation} from '../utils/utils';
+import {attemptLoginWithCredentials, navigateToLoginScreen} from '../../support/action/actions';
 import {
     expectDashboardHeaderIsVisibleWithDistanceLabel,
     expectLoginErrorTextToBeVisibleWithText,
     expectLoginScreenToBeVisibleWithTexts
-} from "../../support/assert/assertions";
-import hu from "../../../src/i18n/hu/hu";
+} from '../../support/assert/assertions';
+import hu from '../../../src/i18n/hu/hu';
 
 describe('Login Screen - [hu]', () => {
 
@@ -51,7 +51,7 @@ describe('Login Screen - [hu]', () => {
         await navigateToLoginScreen();
         await expectLoginScreenToBeVisibleWithTexts(APPLICATION_NAME, hu[LOGIN_FORGOT_PASSWORD_PLACEHOLDER], hu[LOGIN_SIGN_UP_TEXT]);
         await attemptLoginWithCredentials('testuser1', 'password');
-        await expectDashboardHeaderIsVisibleWithDistanceLabel(hu[DASHBOARD_SEARCH_PARAMETERS_DISTANCE] + ": 30 km");
+        await expectDashboardHeaderIsVisibleWithDistanceLabel(hu[DASHBOARD_SEARCH_PARAMETERS_DISTANCE] + ': 30 km');
     });
 });
 
