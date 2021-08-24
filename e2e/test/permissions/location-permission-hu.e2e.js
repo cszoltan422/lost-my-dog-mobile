@@ -4,6 +4,12 @@ import {
     LOCATION_PERMISSION_ASK_DESCRIPTION, LOCATION_PERMISSION_DENIED_TITLE,
     LOCATION_PERMISSION_TITLE
 } from "../../../src/i18n/i18n.keys";
+import {pressLocationPermissionButton} from "../../support/action/actions";
+import {
+    expectLocationPermissionButtonNotToBeFocused,
+    expectLocationPermissionButtonToBeVisible, expectLocationPermissionDescriptionTextToBeVisibleWithText,
+    expectLocationPermissionTitleTextToBeVisibleWithText
+} from "../../support/assert/assertions";
 
 describe('Location Permission Screen - [hu]', () => {
 
@@ -19,17 +25,11 @@ describe('Location Permission Screen - [hu]', () => {
         });
         await device.reloadReactNative();
 
-        await expect(element(by.id('location-permission-title-text'))).toBeVisible();
-        await expect(element(by.id('location-permission-title-text'))).toHaveText(hu[LOCATION_PERMISSION_TITLE]);
-
-        await expect(element(by.id('location-permission-button'))).toBeVisible();
-
-        await expect(element(by.id('location-permission-description-text'))).toBeVisible();
-        await expect(element(by.id('location-permission-description-text'))).toHaveText(hu[LOCATION_PERMISSION_ASK_DESCRIPTION]);
-
-        await element(by.id('location-permission-button')).tap();
-
-        await expect(element(by.id('location-permission-button'))).not.toBeFocused();
+        await expectLocationPermissionTitleTextToBeVisibleWithText(hu[LOCATION_PERMISSION_TITLE]);
+        await expectLocationPermissionButtonToBeVisible();
+        await expectLocationPermissionDescriptionTextToBeVisibleWithText(hu[LOCATION_PERMISSION_ASK_DESCRIPTION]);
+        await pressLocationPermissionButton();
+        await expectLocationPermissionButtonNotToBeFocused();
     });
 
     it('should open the location permissions screen to open settings if location permission is denied [hu]', async () => {
@@ -44,13 +44,9 @@ describe('Location Permission Screen - [hu]', () => {
         });
         await device.reloadReactNative();
 
-        await expect(element(by.id('location-permission-title-text'))).toBeVisible();
-        await expect(element(by.id('location-permission-title-text'))).toHaveText(hu[LOCATION_PERMISSION_DENIED_TITLE]);
-
-        await expect(element(by.id('location-permission-button'))).toBeVisible();
-
-        await expect(element(by.id('location-permission-description-text'))).toBeVisible();
-        await expect(element(by.id('location-permission-description-text'))).toHaveText(hu[LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION]);
+        await expectLocationPermissionTitleTextToBeVisibleWithText(hu[LOCATION_PERMISSION_DENIED_TITLE]);
+        await expectLocationPermissionButtonToBeVisible();
+        await expectLocationPermissionDescriptionTextToBeVisibleWithText(hu[LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION]);
     });
 });
 
