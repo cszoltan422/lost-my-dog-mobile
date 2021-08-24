@@ -47,7 +47,8 @@ const DetailsScreen = (props) => {
 
     return (
         <Fragment>
-            <ScrollView>
+            <ScrollView
+                testID='details-screen-scroll-view' >
                 <View
                     testID='details-screen-container'
                     style={styles.container}>

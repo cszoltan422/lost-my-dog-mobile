@@ -22,3 +22,11 @@ export const pressDashboardHeaderFoundTabButton = async () => {
 export const swipeDashboardHeaderSlider = async (direction, speed, percentage) => {
     await element(by.id('dashboard-header-slider')).swipe(direction, speed, percentage);
 };
+
+export const pressOnItemInDashboardListAtIndex = async (index) => {
+    await element(by.id(`dashboard-list-item-container-${index}`)).tap();
+};
+
+export const scrollOnViewByIdTo = async (elementId, direction) => {
+    await element(by.id(elementId)).swipe(direction);
+};

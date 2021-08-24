@@ -64,3 +64,44 @@ export const expectDashboardListItemAtIndexIsVisibleWithValues = async (index, d
     await expect(element(by.id(`dashboard-list-item-details-date-lost-${index}`))).toBeVisible();
     await expect(element(by.id(`dashboard-list-item-details-date-lost-${index}`))).toHaveText(dateLost);
 };
+
+export const expectDetailsScreenTopSectionIsVisible = async () => {
+    await expect(element(by.id('details-screen-image'))).toBeVisible();
+    await expect(element(by.id('details-screen-description-text'))).toBeVisible();
+};
+
+export const expectDetailsScreenDogDetailsAreVisibleWithLabels = async (labels) => {
+    await expect(element(by.id('details-screen-dog-name-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-name-text-label'))).toHaveText(labels.dogName);
+
+    await expect(element(by.id('details-screen-dog-breed-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-breed-text-label'))).toHaveText(labels.dogBreed);
+
+    await expect(element(by.id('details-screen-dog-gender-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-gender-text-label'))).toHaveText(labels.gender);
+
+    await expect(element(by.id('details-screen-dog-color-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-color-text-label'))).toHaveText(labels.color);
+
+    await expect(element(by.id('details-screen-dog-status-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-status-text-label'))).toHaveText(labels.status);
+
+    await expect(element(by.id('details-screen-dog-age-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-age-text-label'))).toHaveText(labels.dogAge);
+
+    await expect(element(by.id('details-screen-dog-location-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-location-text-label'))).toHaveText(labels.location);
+
+    await expect(element(by.id('details-screen-dog-date-lost-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-date-lost-text-label'))).toHaveText(labels.dateLost);
+};
+
+export const expectActionsButtonsToBeVisible = async () => {
+    await expect(element(by.id('details-screen-send-email-button'))).toBeVisible();
+    await expect(element(by.id('details-screen-call-owner-button'))).toBeVisible();
+};
+
+export const expectMapsViewWithMarkerToBeVisible = async () => {
+    await expect(element(by.id('map-view-container'))).toBeVisible();
+    await expect(element(by.id('map-view-marker'))).toBeVisible();
+};
