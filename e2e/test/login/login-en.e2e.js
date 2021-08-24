@@ -8,12 +8,13 @@ import {setLocation} from "../utils/utils";
 describe('Login Screen - [en]', () => {
 
     it('should open the login screen and show error if login was not successful [en]', async () => {
-        await setLocation(37.785834, 122.406417, device);
         await device.launchApp({
             permissions: {
                 location: 'always'
             },
         });
+        await device.reloadReactNative();
+        await setLocation(37.785834, 122.406417, device);
         //await device.setLocation(37.785834, 122.406417);
 
         await expect(element(by.id('floating-action-button'))).toBeVisible();

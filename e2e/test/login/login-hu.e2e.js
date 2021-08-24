@@ -45,7 +45,6 @@ describe('Login Screen - [hu]', () => {
     });
 
     it('should open the login screen and redirect to previous screen if login was successful [hu]', async () => {
-        await setLocation(37.785834, 122.406417, device);
         await device.launchApp({
             permissions: {
                 location: 'always'
@@ -55,6 +54,8 @@ describe('Login Screen - [hu]', () => {
                 locale: 'hu'
             }
         });
+        await device.reloadReactNative();
+        await setLocation(37.785834, 122.406417, device);
         //await device.setLocation(37.785834, 122.406417);
 
         await expect(element(by.id('dashboard-header-tabs-container'))).toBeVisible();
