@@ -4,7 +4,11 @@ import {
 } from '../../../src/i18n/i18n.keys';
 import {APPLICATION_NAME} from '../../../src/application.constants';
 import {setLocation} from '../utils/utils';
-import {attemptLoginWithCredentials, navigateToLoginScreen} from '../../support/action/actions';
+import {
+    attemptLoginWithCredentials,
+    navigateToLoginScreen,
+    waitForSplashAnimationToFinish
+} from '../../support/action/actions';
 import {
     expectDashboardHeaderIsVisibleWithDistanceLabel,
     expectLoginErrorTextToBeVisibleWithText,
@@ -27,6 +31,7 @@ describe('Login Screen - [hu]', () => {
         });
         await device.reloadReactNative();
         await setLocation(37.785834, -122.406417, device);
+        await waitForSplashAnimationToFinish('application-container');
 
         await navigateToLoginScreen();
         await expectLoginScreenToBeVisibleWithTexts(APPLICATION_NAME, hu[LOGIN_FORGOT_PASSWORD_PLACEHOLDER], hu[LOGIN_SIGN_UP_TEXT]);
@@ -47,6 +52,7 @@ describe('Login Screen - [hu]', () => {
         });
         await device.reloadReactNative();
         await setLocation(37.785834, -122.406417, device);
+        await waitForSplashAnimationToFinish('application-container');
 
         await navigateToLoginScreen();
         await expectLoginScreenToBeVisibleWithTexts(APPLICATION_NAME, hu[LOGIN_FORGOT_PASSWORD_PLACEHOLDER], hu[LOGIN_SIGN_UP_TEXT]);

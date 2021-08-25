@@ -4,7 +4,7 @@ import {
     LOCATION_PERMISSION_ASK_DESCRIPTION, LOCATION_PERMISSION_DENIED_TITLE,
     LOCATION_PERMISSION_TITLE
 } from '../../../src/i18n/i18n.keys';
-import {pressLocationPermissionButton} from '../../support/action/actions';
+import {pressLocationPermissionButton, waitForSplashAnimationToFinish} from '../../support/action/actions';
 import {
     expectLocationPermissionButtonNotToBeFocused,
     expectLocationPermissionButtonToBeVisible, expectLocationPermissionDescriptionTextToBeVisibleWithText,
@@ -20,6 +20,7 @@ describe('Location Permission Screen - [en]', () => {
             }
         });
         await device.reloadReactNative();
+        await waitForSplashAnimationToFinish('location-permission-screen-container');
 
         await expectLocationPermissionTitleTextToBeVisibleWithText(en[LOCATION_PERMISSION_TITLE]);
         await expectLocationPermissionButtonToBeVisible();
@@ -35,6 +36,7 @@ describe('Location Permission Screen - [en]', () => {
             }
         });
         await device.reloadReactNative();
+        await waitForSplashAnimationToFinish('location-permission-screen-container');
 
         await expectLocationPermissionTitleTextToBeVisibleWithText(en[LOCATION_PERMISSION_DENIED_TITLE]);
         await expectLocationPermissionButtonToBeVisible();

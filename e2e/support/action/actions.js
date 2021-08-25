@@ -30,3 +30,7 @@ export const pressOnItemInDashboardListAtIndex = async (index) => {
 export const scrollOnViewByIdTo = async (elementId, direction) => {
     await element(by.id(elementId)).swipe(direction);
 };
+
+export const waitForSplashAnimationToFinish = async (elementToWaitFor) => {
+    await waitFor(element(by.id(elementToWaitFor))).toBeVisible().withTimeout(6000);
+};

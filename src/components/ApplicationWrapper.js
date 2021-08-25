@@ -42,7 +42,9 @@ class ApplicationWrapper extends Component {
             )
         } else {
             return (
-                <View style={styles.content}>
+                <View
+                    testID='application-container'
+                    style={styles.content}>
                     <LostMyDogNavigator />
                 </View>
             );
