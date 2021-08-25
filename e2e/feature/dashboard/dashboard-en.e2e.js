@@ -9,7 +9,11 @@ import {
     expectDashboardHeaderIsVisibleWithDistanceLabel, expectDashboardListContainerIsVisibleWithText,
     expectDashboardListItemAtIndexIsVisibleWithValues
 } from '../../support/assert/assertions';
-import {pressDashboardHeaderFoundTabButton, swipeDashboardHeaderSlider} from '../../support/action/actions';
+import {
+    pressDashboardHeaderFoundTabButton,
+    swipeDashboardHeaderSlider,
+    waitForSplashAnimationToFinish
+} from '../../support/action/actions';
 
 describe('Dashboard Screen', () => {
 
@@ -21,6 +25,7 @@ describe('Dashboard Screen', () => {
         });
         await device.reloadReactNative();
         await setLocation(37.785834, -122.406417, device);
+        await waitForSplashAnimationToFinish('application-container');
 
         await expectDashboardHeaderIsVisibleWithDistanceLabel(en[DASHBOARD_SEARCH_PARAMETERS_DISTANCE] + ': 30 km');
         await expectDashboardListItemAtIndexIsVisibleWithValues(0, 'Watt', 'FOXI', en[DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_OVER_A_MONTH_AGO], en[DASHBOARD_LIST_END_REACHED]);
@@ -34,6 +39,7 @@ describe('Dashboard Screen', () => {
         });
         await device.reloadReactNative();
         await setLocation(37.785834, -122.406417, device);
+        await waitForSplashAnimationToFinish('application-container');
 
         await expectDashboardHeaderIsVisibleWithDistanceLabel(en[DASHBOARD_SEARCH_PARAMETERS_DISTANCE] + ': 30 km');
         await expectDashboardListContainerIsVisibleWithText(en[DASHBOARD_LIST_END_REACHED]);
@@ -49,6 +55,7 @@ describe('Dashboard Screen', () => {
         });
         await device.reloadReactNative();
         await setLocation(37.785834, -122.406417, device);
+        await waitForSplashAnimationToFinish('application-container');
 
         await expectDashboardHeaderIsVisibleWithDistanceLabel(en[DASHBOARD_SEARCH_PARAMETERS_DISTANCE] + ': 30 km');
         await expectDashboardListContainerIsVisibleWithText(en[DASHBOARD_LIST_END_REACHED]);

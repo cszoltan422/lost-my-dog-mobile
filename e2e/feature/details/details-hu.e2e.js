@@ -20,7 +20,7 @@ import {
     expectDetailsScreenTopSectionIsVisible, expectMapsViewWithMarkerToBeVisible
 } from '../../support/assert/assertions';
 import {
-    pressOnItemInDashboardListAtIndex, scrollOnViewByIdTo,
+    pressOnItemInDashboardListAtIndex, scrollOnViewByIdTo, waitForSplashAnimationToFinish,
 } from '../../support/action/actions';
 
 describe('Details Screen - [hu]', () => {
@@ -37,6 +37,7 @@ describe('Details Screen - [hu]', () => {
         });
         await device.reloadReactNative();
         await setLocation(37.785834, -122.406417, device);
+        await waitForSplashAnimationToFinish('application-container');
 
         await expectDashboardHeaderIsVisibleWithDistanceLabel(hu[DASHBOARD_SEARCH_PARAMETERS_DISTANCE] + ': 30 km');
         await expectDashboardListItemAtIndexIsVisibleWithValues(0, 'Watt', 'FOXI', hu[DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_OVER_A_MONTH_AGO], hu[DASHBOARD_LIST_END_REACHED]);

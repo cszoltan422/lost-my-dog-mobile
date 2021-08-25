@@ -62,7 +62,9 @@ const LocationPermissionInitScreen = (props) => {
     }
 
     return (
-        <View style={styles.screenStyle}>
+        <View
+            testID='location-permission-screen-container'
+            style={styles.screenStyle}>
             <View style={styles.contentStyle}>
                 <View style={styles.titleContainerStyle}>
                     <Text
