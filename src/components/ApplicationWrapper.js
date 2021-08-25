@@ -21,16 +21,24 @@ class ApplicationWrapper extends Component {
     }
 
     componentDidMount() {
-        setTimeout(() => {
-            this.setState({
-                elapsedTime: 2000
-            });
-        }, 2100);
+        setInterval(() => {
+            this.setState((prevState) => ({
+                elapsedTime: prevState.elapsedTime + 400
+            }));
+        }, 400);
         this.props.onApplicationMounted();
     }
 
+    componentWillUnmount() {
+        clearInterval();
+    }
+
     render() {
-        if (!this.props.applicationInitialized || this.state.elapsedTime < 2000) {
+        if (this.state.elapsedTime >= 1600) {
+            clearInterval();
+        }
+
+        if (!this.props.applicationInitialized || this.state.elapsedTime < 1600) {
             return (
                 <SplashImage />
             );

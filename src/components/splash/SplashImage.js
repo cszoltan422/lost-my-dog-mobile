@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View, Dimensions} from 'react-native';
 
 const SplashImage = () => {
 
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
         height: '100%'
     },
     gif: {
-        width: 250,
-        height: 250
+        width: Dimensions.get('window').width / 2,
+        height: Dimensions.get('window').width / 2,
     }
 });
 
