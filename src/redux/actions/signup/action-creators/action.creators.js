@@ -15,9 +15,10 @@ export const onSignupInputValueChanged = (inputKey, value) => {
     }
 };
 
-export const onSignupAttempted = () => {
+export const onSignupAttempted = (navigation) => {
     return {
-        type: ON_SIGNUP_ATTEMPTED
+        type: ON_SIGNUP_ATTEMPTED,
+        payload: navigation
     }
 };
 

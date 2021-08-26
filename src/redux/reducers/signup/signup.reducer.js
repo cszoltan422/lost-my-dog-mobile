@@ -30,12 +30,13 @@ import {
 export const initialState = {
     isValid: true,
     isLoading: false,
-    error: {},
+    error: '',
     inputs: {
         [SIGNUP_USERNAME_TEXT_INPUT_KEY]: {
             label: SIGNUP_USERNAME_PLACEHOLDER,
             labelTestID: 'signup-screen-username-text-input-label',
             inputTestID: 'signup-screen-username-text-input',
+            errorTestID: 'signup-screen-username-text-input-error',
             value: '',
             autoCapitalize: 'none',
             secureTextEntry: false,
@@ -43,38 +44,15 @@ export const initialState = {
             keyboardType: 'default',
             validationErrorKey: SIGNUP_USERNAME_VALIDATION_ERROR,
             isValid: true,
-            validator: (value) => value.replace(/\s/g, '').match(/^[a-zA-Z0-9]+$/) && value.replace(/\s/g, '').length > 4
-        },
-        [SIGNUP_PASSWORD_TEXT_INPUT_KEY]: {
-            label: SIGNUP_PASSWORD_PLACEHOLDER,
-            labelTestID: 'signup-screen-password-text-input-label',
-            inputTestID: 'signup-screen-password-text-input',
-            value: '',
-            autoCapitalize: 'none',
-            secureTextEntry: true,
-            autoCompleteType: 'password',
-            keyboardType: 'default',
-            validationErrorKey: SIGNUP_PASSWORD_VALIDATION_ERROR,
-            isValid: true,
-            validator: (value) => validator.isStrongPassword(value, { minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0, returnScore: false, pointsPerUnique: 1, pointsPerRepeat: 0.5, pointsForContainingLower: 10, pointsForContainingUpper: 10, pointsForContainingNumber: 10, pointsForContainingSymbol: 0 })
-        },
-        [SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY]: {
-            label: SIGNUP_CONFIRM_PASSWORD_PLACEHOLDER,
-            labelTestID: 'signup-screen-confirm-password-text-input-label',
-            inputTestID: 'signup-screen-confirm-password-text-input',
-            value: '',
-            autoCapitalize: 'none',
-            secureTextEntry: true,
-            autoCompleteType: 'password',
-            keyboardType: 'default',
-            validationErrorKey: SIGNUP_CONFIRM_PASSWORD_VALIDATION_ERROR,
-            isValid: true,
-            validator: (value) => validator.isStrongPassword(value, { minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0, returnScore: false, pointsPerUnique: 1, pointsPerRepeat: 0.5, pointsForContainingLower: 10, pointsForContainingUpper: 10, pointsForContainingNumber: 10, pointsForContainingSymbol: 0 })
+            validator: (value) =>
+                value.replace(/\s/g, '').match(/^[a-zA-Z0-9]+$/) &&
+                value.replace(/\s/g, '').length > 4
         },
         [SIGNUP_EMAIL_TEXT_INPUT_KEY]: {
             label: SIGNUP_EMAIL_PLACEHOLDER,
             labelTestID: 'signup-screen-email-text-input-label',
             inputTestID: 'signup-screen-email-text-input',
+            errorTestID: 'signup-screen-email-text-input-error',
             value: '',
             autoCapitalize: 'none',
             secureTextEntry: false,
@@ -88,6 +66,7 @@ export const initialState = {
             label: SIGNUP_FIRST_NAME_PLACEHOLDER,
             labelTestID: 'signup-screen-first-name-text-input-label',
             inputTestID: 'signup-screen-first-name-text-input',
+            errorTestID: 'signup-screen-first-name-text-input-error',
             value: '',
             autoCapitalize: 'words',
             secureTextEntry: false,
@@ -95,12 +74,13 @@ export const initialState = {
             keyboardType: 'default',
             validationErrorKey: SIGNUP_FIRST_NAME_VALIDATION_ERROR,
             isValid: true,
-            validator: (value) => value.length > 4
+            validator: (value) => value.length >= 4
         },
         [SIGNUP_LAST_NAME_TEXT_INPUT_KEY]: {
             label: SIGNUP_LAST_NAME_PLACEHOLDER,
             labelTestID: 'signup-screen-last-name-text-input-label',
             inputTestID: 'signup-screen-last-name-text-input',
+            errorTestID: 'signup-screen-last-name-text-input-error',
             value: '',
             autoCapitalize: 'words',
             secureTextEntry: false,
@@ -108,7 +88,48 @@ export const initialState = {
             keyboardType: 'default',
             validationErrorKey: SIGNUP_LAST_NAME_VALIDATION_ERROR,
             isValid: true,
-            validator: (value) => value.length > 4
+            validator: (value) => value.length >= 4
+        },
+        [SIGNUP_PASSWORD_TEXT_INPUT_KEY]: {
+            label: SIGNUP_PASSWORD_PLACEHOLDER,
+            labelTestID: 'signup-screen-password-text-input-label',
+            inputTestID: 'signup-screen-password-text-input',
+            errorTestID: 'signup-screen-password-text-input-error',
+            value: '',
+            autoCapitalize: 'none',
+            secureTextEntry: true,
+            autoCompleteType: 'password',
+            keyboardType: 'default',
+            validationErrorKey: SIGNUP_PASSWORD_VALIDATION_ERROR,
+            isValid: true,
+            validator: (value) => validator.isStrongPassword(value, {
+                minLength: 8,
+                minLowercase: 1,
+                minUppercase: 1,
+                minNumbers: 1,
+                minSymbols: 0,
+                returnScore: false,
+                pointsPerUnique: 1,
+                pointsPerRepeat: 0.5,
+                pointsForContainingLower: 10,
+                pointsForContainingUpper: 10,
+                pointsForContainingNumber: 10,
+                pointsForContainingSymbol: 0
+            })
+        },
+        [SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY]: {
+            label: SIGNUP_CONFIRM_PASSWORD_PLACEHOLDER,
+            labelTestID: 'signup-screen-confirm-password-text-input-label',
+            inputTestID: 'signup-screen-confirm-password-text-input',
+            errorTestID: 'signup-screen-confirm-password-text-input-error',
+            value: '',
+            autoCapitalize: 'none',
+            secureTextEntry: true,
+            autoCompleteType: 'password',
+            keyboardType: 'default',
+            validationErrorKey: SIGNUP_CONFIRM_PASSWORD_VALIDATION_ERROR,
+            isValid: true,
+            validator: null
         },
     }
 };
@@ -117,15 +138,16 @@ export const reducer = createReducer(initialState, {
     [ON_SIGNUP_INPUT_VALUE_CHANGED]: (state, action) => {
         state.inputs[action.payload.inputKey].value = action.payload.value;
         state.inputs[action.payload.inputKey].isValid = true;
+        state.isValid = true;
     },
     [ON_SIGNUP_VALIDATION_ERROR]: (state, action) => {
-        state.inputs[action.payload.type].isValid = false;
+        state.inputs[action.payload].isValid = false;
         state.isValid = false;
     },
     [ON_SIGNUP_SUCCESS]: (state) => {
         state.isValid = true;
         state.isLoading = false;
-        state.error = {};
+        state.error = '';
         Object.keys(state.inputs).forEach((inputKey) => {
             state.inputs[inputKey].value = '';
         });

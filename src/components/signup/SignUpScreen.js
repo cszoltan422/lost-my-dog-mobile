@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import {View, StyleSheet, ScrollView, Text, TextInput} from 'react-native';
+import PropTypes from 'prop-types';
+import {View, StyleSheet, ScrollView, Text, TextInput, Dimensions} from 'react-native';
 import HeaderMenu from '../menu/HeaderMenu';
-import {Button} from 'react-native-elements';
+import {Button, Icon, Tooltip} from 'react-native-elements';
 import {connect} from 'react-redux';
-import {
-    SIGN_UP_SCREEN_TITLE
-} from '../../i18n/i18n.keys';
+import { SIGN_UP_SCREEN_TITLE } from '../../i18n/i18n.keys';
 import i18n from '../../i18n/i18n';
 import colors from '../../colors';
 import {APPLICATION_NAME} from '../../application.constants';
@@ -13,24 +12,44 @@ import {onSignupAttempted, onSignupInputValueChanged} from '../../redux/actions/
 
 class SignUpScreen extends Component {
 
-    renderTextInputBox = (textInputParams) => {
+    renderTextInputBox = (inputKey, onChangeText) => {
         return (
-            <View style={{flex: 1, width: '100%', marginBottom: 10, alignItems: 'center'}}>
+            <View style={styles.textInputBoxContainerStyle}>
                 <Text
-                    testID={textInputParams.labelTestID}
-                    style={{marginEnd: 8, color: colors.accentColor, fontWeight: 'bold', alignSelf: 'center', width: '80%', marginStart: 20}}>
-                    {textInputParams.label}
+                    testID={this.props.inputs[inputKey].labelTestID}
+                    style={styles.textInputLabelStyle}>
+                    {i18n.t(this.props.inputs[inputKey].label)}
                 </Text>
-                <View style={styles.inputStyle}>
+                <View style={[
+                    styles.inputStyle,
+                    !this.props.inputs[inputKey].isValid ? styles.errorInputStyle : null
+                ]}>
                     <TextInput
-                        testID={textInputParams.inputTestID}
+                        testID={this.props.inputs[inputKey].inputTestID}
                         style={styles.inputTextStyle}
-                        placeholder={textInputParams.label}
+                        placeholder={i18n.t(this.props.inputs[inputKey].label)}
                         placeholderTextColor={colors.white}
-                        value={textInputParams.value}
-                        autoCapitalize={textInputParams.autoCapitalize}
-                        secureTextEntry={textInputParams.secureTextEntry}
-                        onChangeText={textInputParams.onChangeText} />
+                        value={this.props.inputs[inputKey].value}
+                        autoCapitalize={this.props.inputs[inputKey].autoCapitalize}
+                        secureTextEntry={this.props.inputs[inputKey].secureTextEntry}
+                        onChangeText={onChangeText} />
+                    {!this.props.inputs[inputKey].isValid ?
+                        <View style={styles.errorToolTipContainerStyle}>
+                            <Tooltip
+                                width={Dimensions.get('window').width}
+                                height={100}
+                                backgroundColor={colors.grey}
+                                popover={
+                                    <Text
+                                        testID={this.props.inputs[inputKey].errorTestID}
+                                        style={styles.errorTooltipTextStyle}>
+                                        {i18n.t(this.props.inputs[inputKey].validationErrorKey)}
+                                    </Text>}>
+                                <Icon name='report-problem' type='material' />
+                            </Tooltip>
+                        </View>
+                        : null
+                    }
                 </View>
             </View>
         );
@@ -38,7 +57,11 @@ class SignUpScreen extends Component {
 
     render() {
         return (
-            <ScrollView style={{flex: 1}} extraHeight={-64} contentContainerStyle={{ flexGrow: 1 }}>
+            <ScrollView
+                testID='signup-screen-scroll-view'
+                style={styles.scrollViewType}
+                contentContainerStyle={styles.scrollViewContentContainerStyle}
+                extraHeight={-64}>
                 <View style={styles.container}>
                     <Text
                         testID='signup-screen-title-text'
@@ -48,26 +71,31 @@ class SignUpScreen extends Component {
                     {Object.keys(this.props.inputs).map((inputKey) => {
                         return (
                             <Fragment key={inputKey}>
-                                {this.renderTextInputBox({
-                                    labelTestID: this.props.inputs[inputKey].labelTestID,
-                                    inputTestID: this.props.inputs[inputKey].inputTestID,
-                                    label: i18n.t(this.props.inputs[inputKey].label),
-                                    value: this.props.inputs[inputKey].value,
-                                    autoCapitalize: this.props.inputs[inputKey].autoCapitalize,
-                                    secureTextEntry: this.props.inputs[inputKey].secureTextEntry,
-                                    autoCompleteType: this.props.inputs[inputKey].autoCompleteType,
-                                    keyboardType: this.props.inputs[inputKey].keyboardType,
-                                    onChangeText: (value) => this.props.onSignupInputValueChanged(inputKey, value),
-                                })}
+                                {this.renderTextInputBox(
+                                    inputKey,
+                                    (value) => this.props.onSignupInputValueChanged(inputKey, value)
+                                )}
                             </Fragment>
                         );
                     })}
-                    <Button
-                        testID='signup-screen-signup-button'
-                        buttonStyle={styles.loginButtonStyle}
-                        titleStyle={styles.loginTextStyle}
-                        title={i18n.t(SIGN_UP_SCREEN_TITLE)}
-                        onPress={() => this.props.onSignupAttempted()} />
+                    <View style={styles.signupButtonContainerStyle}>
+                        {!this.props.isValid ?
+                            <Text
+                                testID='signup-global-error-text'
+                                style={styles.signupAttemptTextStyle}>
+                                {i18n.t(this.props.error)}
+                            </Text>
+                            : null
+                        }
+                        <Button
+                            testID='signup-screen-signup-button'
+                            buttonStyle={styles.signupButtonStyle}
+                            titleStyle={styles.signupTextStyle}
+                            title={i18n.t(SIGN_UP_SCREEN_TITLE)}
+                            loading={this.props.isLoading}
+                            disabled={!this.props.isValid}
+                            onPress={() => this.props.onSignupAttempted(this.props.navigation)} />
+                    </View>
                 </View>
             </ScrollView>
         );
@@ -76,6 +104,12 @@ class SignUpScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    scrollViewType: {
+        flex: 1
+    },
+    scrollViewContentContainerStyle: {
+        flexGrow: 1
+    },
     container: {
         flex: 1,
         backgroundColor: colors.white,
@@ -89,30 +123,65 @@ const styles = StyleSheet.create({
         marginBottom: 40,
         marginTop: 40,
     },
+    textInputBoxContainerStyle: {
+        flex: 1,
+        width: '100%',
+        marginBottom: 10,
+        alignItems: 'center'
+    },
+    textInputLabelStyle: {
+        marginEnd: 8,
+        color: colors.accentColor,
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        width: '80%',
+        marginStart: 20
+    },
     inputStyle: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         width: '80%',
         backgroundColor: colors.primaryColor,
         borderRadius: 25,
         height: 50,
-        justifyContent: 'center',
         padding: 20
     },
+    errorInputStyle: {
+        backgroundColor: colors.errorRed,
+        opacity: 0.9,
+    },
     inputTextStyle: {
+        flex: 1,
         height: 50,
         color: colors.white
     },
-    loginButtonStyle: {
+    errorToolTipContainerStyle: {
+        height: 50,
+        alignSelf: 'flex-start',
+        marginTop: -10
+    },
+    errorTooltipTextStyle: {
+        color: colors.white
+    },
+    signupButtonContainerStyle: {
+        marginTop: 20,
+        marginBottom: 20,
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    signupAttemptTextStyle: {
+        color: colors.errorRed,
+        fontWeight: 'bold'
+    },
+    signupButtonStyle: {
         width: 200,
         backgroundColor: colors.accentColor,
         borderRadius: 25,
         height: 50,
-        alignItems:'center',
-        justifyContent:'center',
-        marginTop: 40,
-        marginBottom: 20,
         textAlign: 'center'
     },
-    loginTextStyle: {
+    signupTextStyle: {
         color: colors.white,
         fontSize: 18,
     },
@@ -124,19 +193,29 @@ SignUpScreen['navigationOptions'] = ({ navigation }) => ({
     headerRight: () => <HeaderMenu navigation={navigation} /> // eslint-disable-line
 });
 
+SignUpScreen.propTypes = {
+    isValid: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    error: PropTypes.string.isRequired,
+    inputs: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired,
+    onSignupInputValueChanged: PropTypes.func.isRequired,
+    onSignupAttempted: PropTypes.func.isRequired
+};
+
 const mapStateToProps = (state) => {
     return {
         isValid: state.signup.isValid,
         isLoading: state.signup.isLoading,
         error: state.signup.error,
-        inputs: state.signup.inputs,
+        inputs: state.signup.inputs
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onSignupInputValueChanged: (inputKey, value) => dispatch(onSignupInputValueChanged(inputKey, value)),
-        onSignupAttempted: () => dispatch(onSignupAttempted())
+        onSignupAttempted: (navigation) => dispatch(onSignupAttempted(navigation))
     };
 };
 
