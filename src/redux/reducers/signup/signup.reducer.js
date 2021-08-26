@@ -31,7 +31,6 @@ export const initialState = {
     isValid: true,
     isLoading: false,
     error: '',
-    successfulSignup: false,
     inputs: {
         [SIGNUP_USERNAME_TEXT_INPUT_KEY]: {
             label: SIGNUP_USERNAME_PLACEHOLDER,
@@ -148,7 +147,6 @@ export const reducer = createReducer(initialState, {
     [ON_SIGNUP_SUCCESS]: (state) => {
         state.isValid = true;
         state.isLoading = false;
-        state.successfulSignup = true;
         state.error = '';
         Object.keys(state.inputs).forEach((inputKey) => {
             state.inputs[inputKey].value = '';
