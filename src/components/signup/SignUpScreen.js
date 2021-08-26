@@ -79,7 +79,7 @@ class SignUpScreen extends Component {
                         );
                     })}
                     <View style={styles.signupButtonContainerStyle}>
-                        {!this.props.isValid ?
+                        {this.props.error ?
                             <Text
                                 testID='signup-global-error-text'
                                 style={styles.signupAttemptTextStyle}>

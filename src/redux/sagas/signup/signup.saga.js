@@ -52,7 +52,7 @@ function* signupAttemptSaga(action) {
             const passwordsMath = validatePasswordMatch(inputs);
             if (passwordsMath) {
                 const signupResult = yield call(UserService.signup, {
-                    userName: inputs[SIGNUP_USERNAME_TEXT_INPUT_KEY].value,
+                    userName: inputs[SIGNUP_USERNAME_TEXT_INPUT_KEY].value.replace(/\s/g, ''),
                     password: inputs[SIGNUP_PASSWORD_TEXT_INPUT_KEY].value,
                     email: inputs[SIGNUP_EMAIL_TEXT_INPUT_KEY].value,
                     firstName: inputs[SIGNUP_FIRST_NAME_TEXT_INPUT_KEY].value,

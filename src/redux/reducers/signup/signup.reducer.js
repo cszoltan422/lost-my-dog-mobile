@@ -1,6 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import validator from 'validator';
 import {
+    EMOJI_REGEX,
     SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY,
     SIGNUP_EMAIL_TEXT_INPUT_KEY,
     SIGNUP_FIRST_NAME_TEXT_INPUT_KEY,
@@ -45,6 +46,8 @@ export const initialState = {
             validationErrorKey: SIGNUP_USERNAME_VALIDATION_ERROR,
             isValid: true,
             validator: (value) =>
+                !value.includes(' ') &&
+                !EMOJI_REGEX.test(value) &&
                 value.replace(/\s/g, '').match(/^[a-zA-Z0-9]+$/) &&
                 value.replace(/\s/g, '').length > 4
         },
@@ -60,7 +63,10 @@ export const initialState = {
             keyboardType: 'email-address',
             validationErrorKey: SIGNUP_EMAIL_VALIDATION_ERROR,
             isValid: true,
-            validator: (value) => validator.isEmail(value)
+            validator: (value) =>
+                !value.includes(' ') &&
+                !EMOJI_REGEX.test(value) &&
+                validator.isEmail(value.replace(/\s/g, ''))
         },
         [SIGNUP_FIRST_NAME_TEXT_INPUT_KEY]: {
             label: SIGNUP_FIRST_NAME_PLACEHOLDER,
@@ -102,7 +108,7 @@ export const initialState = {
             keyboardType: 'default',
             validationErrorKey: SIGNUP_PASSWORD_VALIDATION_ERROR,
             isValid: true,
-            validator: (value) => validator.isStrongPassword(value, {
+            validator: (value) => !EMOJI_REGEX.test(value) && validator.isStrongPassword(value, {
                 minLength: 8,
                 minLowercase: 1,
                 minUppercase: 1,
