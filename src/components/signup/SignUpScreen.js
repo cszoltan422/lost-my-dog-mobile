@@ -41,11 +41,14 @@ class SignUpScreen extends Component {
                                 backgroundColor={colors.grey}
                                 popover={
                                     <Text
-                                        testID={this.props.inputs[inputKey].errorTestID}
+                                        testID={this.props.inputs[inputKey].errorLabelTestID}
                                         style={styles.errorTooltipTextStyle}>
                                         {i18n.t(this.props.inputs[inputKey].validationErrorKey)}
                                     </Text>}>
-                                <Icon name='report-problem' type='material' />
+                                <Icon
+                                    testID={this.props.inputs[inputKey].errorIconTestID}
+                                    name='report-problem'
+                                    type='material' />
                             </Tooltip>
                         </View>
                         : null

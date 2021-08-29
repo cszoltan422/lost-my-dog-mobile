@@ -37,7 +37,8 @@ export const initialState = {
             label: SIGNUP_USERNAME_PLACEHOLDER,
             labelTestID: 'signup-screen-username-text-input-label',
             inputTestID: 'signup-screen-username-text-input',
-            errorTestID: 'signup-screen-username-text-input-error',
+            errorLabelTestID: 'signup-screen-username-text-input-error',
+            errorIconTestID: 'signup-screen-username-text-input-error-icon',
             value: '',
             autoCapitalize: 'none',
             secureTextEntry: false,
@@ -46,7 +47,7 @@ export const initialState = {
             validationErrorKey: SIGNUP_USERNAME_VALIDATION_ERROR,
             isValid: true,
             validator: (value) =>
-                !value.includes(' ') &&
+                !/\s/g.test(value) &&
                 !EMOJI_REGEX.test(value) &&
                 value.replace(/\s/g, '').match(/^[a-zA-Z0-9]+$/) &&
                 value.replace(/\s/g, '').length > 4
@@ -55,7 +56,8 @@ export const initialState = {
             label: SIGNUP_EMAIL_PLACEHOLDER,
             labelTestID: 'signup-screen-email-text-input-label',
             inputTestID: 'signup-screen-email-text-input',
-            errorTestID: 'signup-screen-email-text-input-error',
+            errorLabelTestID: 'signup-screen-email-text-input-error',
+            errorIconTestID: 'signup-screen-email-text-input-error-icon',
             value: '',
             autoCapitalize: 'none',
             secureTextEntry: false,
@@ -64,7 +66,7 @@ export const initialState = {
             validationErrorKey: SIGNUP_EMAIL_VALIDATION_ERROR,
             isValid: true,
             validator: (value) =>
-                !value.includes(' ') &&
+                !/\s/g.test(value) &&
                 !EMOJI_REGEX.test(value) &&
                 validator.isEmail(value.replace(/\s/g, ''))
         },
@@ -72,7 +74,8 @@ export const initialState = {
             label: SIGNUP_FIRST_NAME_PLACEHOLDER,
             labelTestID: 'signup-screen-first-name-text-input-label',
             inputTestID: 'signup-screen-first-name-text-input',
-            errorTestID: 'signup-screen-first-name-text-input-error',
+            errorLabelTestID: 'signup-screen-first-name-text-input-error',
+            errorIconTestID: 'signup-screen-first-name-text-input-error-icon',
             value: '',
             autoCapitalize: 'words',
             secureTextEntry: false,
@@ -80,13 +83,14 @@ export const initialState = {
             keyboardType: 'default',
             validationErrorKey: SIGNUP_FIRST_NAME_VALIDATION_ERROR,
             isValid: true,
-            validator: (value) => value.length >= 4
+            validator: (value) => !EMOJI_REGEX.test(value) && value.length >= 4
         },
         [SIGNUP_LAST_NAME_TEXT_INPUT_KEY]: {
             label: SIGNUP_LAST_NAME_PLACEHOLDER,
             labelTestID: 'signup-screen-last-name-text-input-label',
             inputTestID: 'signup-screen-last-name-text-input',
-            errorTestID: 'signup-screen-last-name-text-input-error',
+            errorLabelTestID: 'signup-screen-last-name-text-input-error',
+            errorIconTestID: 'signup-screen-last-name-text-input-error-icon',
             value: '',
             autoCapitalize: 'words',
             secureTextEntry: false,
@@ -94,13 +98,14 @@ export const initialState = {
             keyboardType: 'default',
             validationErrorKey: SIGNUP_LAST_NAME_VALIDATION_ERROR,
             isValid: true,
-            validator: (value) => value.length >= 4
+            validator: (value) => !EMOJI_REGEX.test(value) && value.length >= 4
         },
         [SIGNUP_PASSWORD_TEXT_INPUT_KEY]: {
             label: SIGNUP_PASSWORD_PLACEHOLDER,
             labelTestID: 'signup-screen-password-text-input-label',
             inputTestID: 'signup-screen-password-text-input',
-            errorTestID: 'signup-screen-password-text-input-error',
+            errorLabelTestID: 'signup-screen-password-text-input-error',
+            errorIconTestID: 'signup-screen-password-text-input-error-icon',
             value: '',
             autoCapitalize: 'none',
             secureTextEntry: true,
@@ -127,7 +132,8 @@ export const initialState = {
             label: SIGNUP_CONFIRM_PASSWORD_PLACEHOLDER,
             labelTestID: 'signup-screen-confirm-password-text-input-label',
             inputTestID: 'signup-screen-confirm-password-text-input',
-            errorTestID: 'signup-screen-confirm-password-text-input-error',
+            errorLabelTestID: 'signup-screen-confirm-password-text-input-error',
+            errorIconTestID: 'signup-screen-confirm-password-text-input-error-icon',
             value: '',
             autoCapitalize: 'none',
             secureTextEntry: true,

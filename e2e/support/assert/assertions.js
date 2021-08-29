@@ -12,10 +12,6 @@ export const expectLocationPermissionDescriptionTextToBeVisibleWithText = async 
     await expect(element(by.id('location-permission-description-text'))).toHaveText(text);
 };
 
-export const expectLocationPermissionButtonNotToBeFocused = async () => {
-    await expect(element(by.id('location-permission-button'))).not.toBeFocused();
-};
-
 export const expectLoginScreenToBeVisibleWithTexts = async (appName, forgotPasswordText, signUpText) => {
     await expect(element(by.id('login-screen-application-name-text'))).toBeVisible();
     await expect(element(by.id('login-screen-application-name-text'))).toHaveText(appName);
@@ -104,4 +100,58 @@ export const expectActionsButtonsToBeVisible = async () => {
 export const expectMapsViewWithMarkerToBeVisible = async () => {
     await expect(element(by.id('map-view-container'))).toBeVisible();
     await expect(element(by.id('map-view-marker'))).toBeVisible();
+};
+
+export const signupScreenToBeVisibleWithTexts = async (appName, usernameText, emailText, firstNameText, lastNameText, passwordText, confirmPasswordText) => {
+    await expect(element(by.id('signup-screen-title-text'))).toBeVisible();
+    await expect(element(by.id('signup-screen-title-text'))).toHaveText(appName);
+
+    await expect(element(by.id('signup-screen-username-text-input-label'))).toBeVisible();
+    await expect(element(by.id('signup-screen-username-text-input-label'))).toHaveText(usernameText);
+    await expect(element(by.id('signup-screen-username-text-input'))).toBeVisible();
+    await expect(element(by.id('signup-screen-username-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('signup-screen-email-text-input-label'))).toBeVisible();
+    await expect(element(by.id('signup-screen-email-text-input-label'))).toHaveText(emailText);
+    await expect(element(by.id('signup-screen-email-text-input'))).toBeVisible();
+    await expect(element(by.id('signup-screen-email-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('signup-screen-first-name-text-input-label'))).toBeVisible();
+    await expect(element(by.id('signup-screen-first-name-text-input-label'))).toHaveText(firstNameText);
+    await expect(element(by.id('signup-screen-first-name-text-input'))).toBeVisible();
+    await expect(element(by.id('signup-screen-first-name-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('signup-screen-last-name-text-input-label'))).toBeVisible();
+    await expect(element(by.id('signup-screen-last-name-text-input-label'))).toHaveText(lastNameText);
+    await expect(element(by.id('signup-screen-last-name-text-input'))).toBeVisible();
+    await expect(element(by.id('signup-screen-last-name-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('signup-screen-password-text-input-label'))).toBeVisible();
+    await expect(element(by.id('signup-screen-password-text-input-label'))).toHaveText(passwordText);
+    await expect(element(by.id('signup-screen-password-text-input'))).toBeVisible();
+    await expect(element(by.id('signup-screen-password-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('signup-screen-confirm-password-text-input-label'))).toBeVisible();
+    await expect(element(by.id('signup-screen-confirm-password-text-input-label'))).toHaveText(confirmPasswordText);
+    await expect(element(by.id('signup-screen-confirm-password-text-input'))).toBeVisible();
+    await expect(element(by.id('signup-screen-confirm-password-text-input-error'))).not.toBeVisible();
+};
+
+export const expectSignupScreenInputsHasError = async (errorExpectations) => {
+    for (const error of errorExpectations) {
+        await expect(element(by.id(error.iconTestID))).toBeVisible();
+        await element(by.id(error.iconTestID)).tap();
+        await expect(element(by.id(error.errorLabelTestID))).toBeVisible();
+        await expect(element(by.id(error.errorLabelTestID))).toHaveText(error.errorText);
+        await element(by.id(error.errorLabelTestID)).tap();
+    }
+};
+
+export const expectSignupScreenInputHasNoError = async (noErrorField) => {
+    await expect(element(by.id(noErrorField))).not.toBeVisible();
+};
+
+export const expectSignupAttemptHasFailedWithReason = async (errorText) => {
+    await expect(element(by.id('signup-global-error-text'))).toBeVisible();
+    await expect(element(by.id('signup-global-error-text'))).toHaveText(errorText);
 };
