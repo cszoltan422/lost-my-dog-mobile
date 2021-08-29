@@ -1,7 +1,3 @@
-export const pressLocationPermissionButton = async () => {
-    await element(by.id('location-permission-button')).tap();
-};
-
 export const navigateToLoginScreen = async () => {
     await expect(element(by.id('floating-action-button'))).toBeVisible();
     await element(by.id('floating-action-button')).tap();
@@ -33,4 +29,21 @@ export const scrollOnViewByIdTo = async (elementId, direction) => {
 
 export const waitForSplashAnimationToFinish = async (elementToWaitFor) => {
     await waitFor(element(by.id(elementToWaitFor))).toBeVisible().withTimeout(6000);
+};
+
+export const navigateToSignupScreen = async () => {
+    await expect(element(by.id('floating-action-button'))).toBeVisible();
+    await element(by.id('floating-action-button')).tap();
+    await expect(element(by.id('floating-action-button-new-submission-option'))).toBeVisible();
+    await element(by.id('floating-action-button-new-submission-option')).tap();
+    await element(by.id('login-screen-signup-text')).tap();
+};
+
+export const pressSignupButton = async () => {
+    await element(by.id('signup-screen-signup-button')).tap();
+};
+
+export const typeToSignupInputFieldValue = async (inputField, value) => {
+    await element(by.id(inputField)).clearText();
+    await element(by.id(inputField)).typeText(value);
 };

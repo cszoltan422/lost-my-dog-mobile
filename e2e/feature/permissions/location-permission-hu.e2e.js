@@ -4,9 +4,8 @@ import {
     LOCATION_PERMISSION_ASK_DESCRIPTION, LOCATION_PERMISSION_DENIED_TITLE,
     LOCATION_PERMISSION_TITLE
 } from '../../../src/i18n/i18n.keys';
-import {pressLocationPermissionButton, waitForSplashAnimationToFinish} from '../../support/action/actions';
+import {waitForSplashAnimationToFinish} from '../../support/action/actions';
 import {
-    expectLocationPermissionButtonNotToBeFocused,
     expectLocationPermissionButtonToBeVisible, expectLocationPermissionDescriptionTextToBeVisibleWithText,
     expectLocationPermissionTitleTextToBeVisibleWithText
 } from '../../support/assert/assertions';
@@ -29,8 +28,6 @@ describe('Location Permission Screen - [hu]', () => {
         await expectLocationPermissionTitleTextToBeVisibleWithText(hu[LOCATION_PERMISSION_TITLE]);
         await expectLocationPermissionButtonToBeVisible();
         await expectLocationPermissionDescriptionTextToBeVisibleWithText(hu[LOCATION_PERMISSION_ASK_DESCRIPTION]);
-        await pressLocationPermissionButton();
-        await expectLocationPermissionButtonNotToBeFocused();
     });
 
     it('should open the location permissions screen to open settings if location permission is denied [hu]', async () => {

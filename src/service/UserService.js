@@ -23,4 +23,14 @@ export default class UserService {
             }
         }).then(response => response.json())
     }
+
+    static signup(signupRequest) {
+        return fetch(`${ENV.API_URL}/api/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(signupRequest)
+        }).then(response => response.json())
+    }
 }
