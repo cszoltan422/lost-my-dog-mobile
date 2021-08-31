@@ -30,7 +30,7 @@ const DetailsScreen = (props) => {
     return (
         <Fragment>
             <LostDogDetails
-                isReadOnly={true}
+                isReadOnly
                 dog={dog}
                 onSendOwnerButtonPressed={onSendOwnerButtonPressed}
                 onCallOwnerButtonPressed={onCallOwnerButtonPressed} />

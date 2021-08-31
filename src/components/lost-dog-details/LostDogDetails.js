@@ -69,8 +69,8 @@ const LostDogDetails = (props) => {
                         <TextInput
                             testID='details-screen-description-text-input'
                             style={styles.descriptionTextInputStyle}
-                            multiline={true}
-                            placeholder={`${i18n.t(DETAILS_DOG_DESCRIPTION_LABEL_TITLE)}...`}/>,
+                            multiline
+                            placeholder={`${i18n.t(DETAILS_DOG_DESCRIPTION_LABEL_TITLE)}...`} />,
                         !!props.dog && props.isReadOnly
                     )}
                 </Card>
