@@ -2,29 +2,29 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
-import DashboardHeader from './dashboard-header/DashboardHeader';
-import DashboardList from './dashboard-list/DashboardList';
-import LoadingCard from '../common/loading-card/LoadingCard';
-import FloatingActionButton from '../common/floating-action-button/FloatingActionButton';
-import HeaderMenu from '../menu/HeaderMenu';
+import DashboardHeader from '../components/dashboard/dashboard-header/DashboardHeader';
+import DashboardList from '../components/dashboard/dashboard-list/DashboardList';
+import LoadingCard from '../components/common/loading-card/LoadingCard';
+import FloatingActionButton from '../components/common/floating-action-button/FloatingActionButton';
+import HeaderMenu from '../components/menu/HeaderMenu';
 import {
     onDashboardChangeRadiusSearchParam,
     onDashboardChangeSearchTypeParam,
     onDashboardFetchNewPage,
     onDashboardMounted,
     onDashboardRefreshPage
-} from '../../redux/actions/dashboard/action-creators/action.creators';
+} from '../redux/actions/dashboard/action-creators/action.creators';
 import {
     DASHBOARD_TITLE, SUBMIT_DOG_TITLE
-} from '../../i18n/i18n.keys';
-import i18n from '../../i18n/i18n';
+} from '../i18n/i18n.keys';
+import i18n from '../i18n/i18n';
 import {
     DETAILS_NAVIGATION_PARAM_NAME,
     DETAILS_NAVIGATION_SCREEN_NAME,
     LOGIN_NAVIGATION_SCREEN_NAME,
     SUBMIT_DOG_NAVIGATION_PARAM_NAME
-} from '../../application.constants';
-import colors from '../../colors';
+} from '../application.constants';
+import colors from '../colors';
 
 class DashboardScreen extends Component {
 

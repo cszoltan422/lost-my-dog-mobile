@@ -4,7 +4,7 @@ import {View, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import SplashImage from './splash/SplashImage';
 import LostMyDogNavigator from './navigation/LostMyDogNavigator';
-import LocationPermissionInitScreen from './permissions/LocationPermissionInitScreen';
+import LocationPermissionInitScreen from '../screens/LocationPermissionInitScreen';
 import {
     onApplicationMounted,
     onCheckLocationPermission

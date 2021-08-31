@@ -1,14 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet, ScrollView, Text, TextInput, Dimensions} from 'react-native';
-import HeaderMenu from '../menu/HeaderMenu';
+import HeaderMenu from '../components/menu/HeaderMenu';
 import {Button, Icon, Tooltip} from 'react-native-elements';
 import {connect} from 'react-redux';
-import { SIGN_UP_SCREEN_TITLE } from '../../i18n/i18n.keys';
-import i18n from '../../i18n/i18n';
-import colors from '../../colors';
-import {APPLICATION_NAME} from '../../application.constants';
-import {onSignupAttempted, onSignupInputValueChanged} from '../../redux/actions/signup/action-creators/action.creators';
+import { SIGN_UP_SCREEN_TITLE } from '../i18n/i18n.keys';
+import i18n from '../i18n/i18n';
+import colors from '../colors';
+import {APPLICATION_NAME} from '../application.constants';
+import {onSignupAttempted, onSignupInputValueChanged} from '../redux/actions/signup/action-creators/action.creators';
 
 class SignUpScreen extends Component {
 
