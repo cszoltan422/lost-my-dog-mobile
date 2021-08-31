@@ -1,20 +1,15 @@
-import React, { Component } from 'react';
+import React, {Fragment} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import HeaderMenu from '../components/menu/HeaderMenu';
-import {
-    SUBMIT_DOG_TITLE
-} from '../i18n/i18n.keys';
+import {SUBMIT_DOG_TITLE} from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
+import LostDogDetails from "../components/lost-dog-details/LostDogDetails";
 
-class SubmitLostDogScreen extends Component {
+const SubmitLostDogScreen = (props) => {
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text>SubmitFormScreen</Text>
-            </View>
-        );
-    }
+    return (
+        <LostDogDetails isReadOnly={false} />
+    );
 
 }
 

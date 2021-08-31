@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, View, TextInput} from 'react-native';
 import Card from '../common/card/Card';
 import ENV from '../../environmnent.config';
 import i18n from '../../i18n/i18n';
@@ -11,7 +11,7 @@ import {
     DETAILS_DOG_BREED_LABEL_TITLE,
     DETAILS_DOG_CITY_LABEL_TITLE,
     DETAILS_DOG_COLOR_LABEL_TITLE,
-    DETAILS_DOG_DATE_LOST_LABEL_TITLE,
+    DETAILS_DOG_DATE_LOST_LABEL_TITLE, DETAILS_DOG_DESCRIPTION_LABEL_TITLE,
     DETAILS_DOG_NAME_LABEL_TITLE,
     DETAILS_DOG_SEX_LABEL_TITLE,
     DETAILS_DOG_STATUS_LABEL_TITLE, DETAILS_MAP_VIEW_MARKER_TITLE, DETAILS_SEND_MESSAGE
@@ -26,24 +26,53 @@ import colors from '../../colors';
 import MapsView from '../common/map-view/MapsView';
 
 const LostDogDetails = (props) => {
+
+    const conditionalRender = (positiveComponent, negativeComponent, conditionValue) => {
+        return (
+            <>
+                {conditionValue ?
+                    positiveComponent
+                    : negativeComponent
+                }
+            </>
+        );
+    };
+    
+    let { dog } = props;
+    if (!dog) {
+        dog = {};
+    }
+    
     return (
         <ScrollView
             testID='details-screen-scroll-view' >
             <View
                 testID='details-screen-container'
                 style={styles.container}>
-                <Card styles={styles.imageCardStyle}>
-                    <Image
-                        testID='details-screen-image'
-                        style={styles.imageStyle}
-                        source={{uri: `${ENV.API_URL}/image/${props.dog.avatarFilename}`,}} />
+                <Card>
+                    {conditionalRender(
+                        <Image
+                            testID='details-screen-image'
+                            style={styles.imageStyle}
+                            source={{uri: `${ENV.API_URL}/image/${dog.avatarFilename}`,}} />,
+                        <TextInput />,
+                        !!props.dog && props.isReadOnly
+                    )}
                 </Card>
                 <Card styles={styles.descriptionCardStyle}>
-                    <Text
-                        testID='details-screen-description-text'
-                        style={styles.descriptionTextStyle}>
-                        {`"${props.dog.description}"`}
-                    </Text>
+                    {conditionalRender(
+                        <Text
+                            testID='details-screen-description-text'
+                            style={styles.descriptionTextStyle}>
+                            {`"${dog.description}"`}
+                        </Text>,
+                        <TextInput
+                            testID='details-screen-description-text-input'
+                            style={styles.descriptionTextInputStyle}
+                            multiline={true}
+                            placeholder={`${i18n.t(DETAILS_DOG_DESCRIPTION_LABEL_TITLE)}...`}/>,
+                        !!props.dog && props.isReadOnly
+                    )}
                 </Card>
                 <Card>
                     <View>
@@ -54,11 +83,18 @@ const LostDogDetails = (props) => {
                                     style={styles.labelTitle}>
                                     {i18n.t(DETAILS_DOG_NAME_LABEL_TITLE)}
                                 </Text>
-                                <Text
-                                    testID='details-screen-dog-name-text'
-                                    style={styles.labelValue}>
-                                    {props.dog.dogName}
-                                </Text>
+                                {conditionalRender(
+                                    <Text
+                                        testID='details-screen-dog-name-text'
+                                        style={styles.labelValue}>
+                                        {dog.dogName}
+                                    </Text>,
+                                    <TextInput
+                                        testID='details-screen-dog-name-text-input'
+                                        style={styles.textInputStyle}
+                                        placeholder={`${i18n.t(DETAILS_DOG_NAME_LABEL_TITLE)}...`} />,
+                                    !!props.dog && props.isReadOnly
+                                )}
                             </View>
                             <View style={styles.columnContainer}>
                                 <Text
@@ -66,11 +102,18 @@ const LostDogDetails = (props) => {
                                     style={styles.labelTitle}>
                                     {i18n.t(DETAILS_DOG_BREED_LABEL_TITLE)}
                                 </Text>
-                                <Text
-                                    testID='details-screen-dog-breed-text'
-                                    style={styles.labelValue}>
-                                    {props.dog.dogBreed}
-                                </Text>
+                                {conditionalRender(
+                                    <Text
+                                        testID='details-screen-dog-breed-text'
+                                        style={styles.labelValue}>
+                                        {dog.dogBreed}
+                                    </Text>,
+                                    <TextInput
+                                        testID='details-screen-dog-breed-text-input'
+                                        style={styles.textInputStyle}
+                                        placeholder={`${i18n.t(DETAILS_DOG_BREED_LABEL_TITLE)}...`} />,
+                                    !!props.dog && props.isReadOnly
+                                )}
                             </View>
                         </View>
                         <View style={styles.rowContainer}>
@@ -80,11 +123,18 @@ const LostDogDetails = (props) => {
                                     style={styles.labelTitle}>
                                     {i18n.t(DETAILS_DOG_SEX_LABEL_TITLE)}
                                 </Text>
-                                <Text
-                                    testID='details-screen-dog-gender-text'
-                                    style={styles.labelValue}>
-                                    {i18n.t(DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS[props.dog.gender])}
-                                </Text>
+                                {conditionalRender(
+                                    <Text
+                                        testID='details-screen-dog-gender-text'
+                                        style={styles.labelValue}>
+                                        {i18n.t(DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS[dog.gender])}
+                                    </Text>,
+                                    <TextInput
+                                        testID='details-screen-dog-gender-text-input'
+                                        style={styles.textInputStyle}
+                                        placeholder={`${i18n.t(DETAILS_DOG_SEX_LABEL_TITLE)}...`} />,
+                                    !!props.dog && props.isReadOnly
+                                )}
                             </View>
                             <View style={styles.columnContainer}>
                                 <Text
@@ -92,10 +142,18 @@ const LostDogDetails = (props) => {
                                     style={styles.labelTitle}>
                                     {i18n.t(DETAILS_DOG_COLOR_LABEL_TITLE)}
                                 </Text>
-                                <Text
-                                    testID='details-screen-dog-color-text'
-                                    style={styles.labelValue}>{props.dog.color}
-                                </Text>
+                                {conditionalRender(
+                                    <Text
+                                        testID='details-screen-dog-color-text'
+                                        style={styles.labelValue}>
+                                        {dog.color}
+                                    </Text>,
+                                    <TextInput
+                                        testID='details-screen-dog-color-text-input'
+                                        style={styles.textInputStyle}
+                                        placeholder={`${i18n.t(DETAILS_DOG_COLOR_LABEL_TITLE)}...`} />,
+                                    !!props.dog && props.isReadOnly
+                                )}
                             </View>
                         </View>
                         <View style={styles.rowContainer}>
@@ -105,9 +163,18 @@ const LostDogDetails = (props) => {
                                     style={styles.labelTitle}>
                                     {i18n.t(DETAILS_DOG_STATUS_LABEL_TITLE)}
                                 </Text>
-                                <Text
-                                    testID='details-screen-dog-status-text'
-                                    style={styles.labelValue}>{i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[props.dog.status])}</Text>
+                                {conditionalRender(
+                                    <Text
+                                        testID='details-screen-dog-status-text'
+                                        style={styles.labelValue}>
+                                        {i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[dog.status])}
+                                    </Text>,
+                                    <TextInput
+                                        testID='details-screen-dog-status-text-input'
+                                        style={styles.textInputStyle}
+                                        placeholder={`${i18n.t(DETAILS_DOG_STATUS_LABEL_TITLE)}...`} />,
+                                    !!props.dog && props.isReadOnly
+                                )}
                             </View>
                             <View style={styles.columnContainer}>
                                 <Text
@@ -115,84 +182,107 @@ const LostDogDetails = (props) => {
                                     style={styles.labelTitle}>
                                     {i18n.t(DETAILS_DOG_AGE_LABEL_TITLE)}
                                 </Text>
-                                <Text
-                                    testID='details-screen-dog-age-text'
-                                    style={styles.labelValue}>
-                                    {props.dog.age} {i18n.t(DETAILS_DOG_AGE_YEARS)}
-                                </Text>
+                                {conditionalRender(
+                                    <Text
+                                        testID='details-screen-dog-age-text'
+                                        style={styles.labelValue}>
+                                        {dog.age} {i18n.t(DETAILS_DOG_AGE_YEARS)}
+                                    </Text>,
+                                    <TextInput
+                                        testID='details-screen-dog-age-text'
+                                        style={styles.textInputStyle}
+                                        placeholder={`${i18n.t(DETAILS_DOG_AGE_LABEL_TITLE)}...`} />,
+                                    !!props.dog && props.isReadOnly
+                                )}
                             </View>
                         </View>
+                        {conditionalRender(
+                            <View style={styles.rowContainer}>
+                                <View style={styles.columnContainer}>
+                                    <Text
+                                        testID='details-screen-dog-location-text-label'
+                                        style={styles.labelTitle}>
+                                        {i18n.t(DETAILS_DOG_CITY_LABEL_TITLE)}
+                                    </Text>
+                                    <Text
+                                        testID='details-screen-dog-location-text'
+                                        style={styles.labelValue}>
+                                        {dog.city}, {dog.countryCode}
+                                    </Text>
+                                </View>
+                                <View style={styles.columnContainer}>
+                                    <Text
+                                        testID='details-screen-dog-date-lost-text-label'
+                                        style={styles.labelTitle}>
+                                        {i18n.t(DETAILS_DOG_DATE_LOST_LABEL_TITLE)}
+                                    </Text>
+                                    <Text
+                                        testID='details-screen-dog-date-lost-text'
+                                        style={styles.labelValue}>
+                                        {formatIsoTime(dog.dateLost)}
+                                    </Text>
+                                </View>
+                            </View>,
+                            null,
+                            !!props.dog && props.isReadOnly
+                        )}
+                    </View>
+                </Card>
+                {conditionalRender(
+                    <Card>
                         <View style={styles.rowContainer}>
                             <View style={styles.columnContainer}>
-                                <Text
-                                    testID='details-screen-dog-location-text-label'
-                                    style={styles.labelTitle}>
-                                    {i18n.t(DETAILS_DOG_CITY_LABEL_TITLE)}
-                                </Text>
-                                <Text
-                                    testID='details-screen-dog-location-text'
-                                    style={styles.labelValue}>{props.dog.city}, {props.dog.countryCode}</Text>
+                                <Button
+                                    testID='details-screen-send-email-button'
+                                    style={styles.buttonStyle}
+                                    icon={
+                                        <Icon
+                                            style={styles.iconStyle}
+                                            name='email'
+                                            type='material'
+                                            size={16}
+                                            color={colors.white} />
+                                    }
+                                    buttonStyle={styles.buttonStyle}
+                                    titleStyle={{color: colors.white}}
+                                    title={i18n.t(DETAILS_SEND_MESSAGE)}
+                                    onPress={props.onSendOwnerButtonPressed} />
                             </View>
                             <View style={styles.columnContainer}>
-                                <Text
-                                    testID='details-screen-dog-date-lost-text-label'
-                                    style={styles.labelTitle}>
-                                    {i18n.t(DETAILS_DOG_DATE_LOST_LABEL_TITLE)}
-                                </Text>
-                                <Text
-                                    testID='details-screen-dog-date-lost-text'
-                                    style={styles.labelValue}>{formatIsoTime(props.dog.dateLost)}</Text>
+                                <Button
+                                    testID='details-screen-call-owner-button'
+                                    icon={
+                                        <Icon
+                                            style={styles.iconStyle}
+                                            name='phone'
+                                            type='material'
+                                            size={16}
+                                            color={colors.white} />
+                                    }
+                                    buttonStyle={styles.buttonStyle}
+                                    titleStyle={{color: colors.white}}
+                                    title={i18n.t(DETAILS_CALL_OWNER)}
+                                    onPress={props.onCallOwnerButtonPressed} />
                             </View>
                         </View>
-                    </View>
-                </Card>
-                <Card>
-                    <View style={styles.rowContainer}>
-                        <View style={styles.columnContainer}>
-                            <Button
-                                testID='details-screen-send-email-button'
-                                style={styles.buttonStyle}
-                                icon={
-                                    <Icon
-                                        style={styles.iconStyle}
-                                        name='email'
-                                        type='material'
-                                        size={16}
-                                        color={colors.white} />
-                                }
-                                buttonStyle={styles.buttonStyle}
-                                titleStyle={{color: colors.white}}
-                                title={i18n.t(DETAILS_SEND_MESSAGE)}
-                                onPress={props.onSendOwnerButtonPressed} />
-                        </View>
-                        <View style={styles.columnContainer}>
-                            <Button
-                                testID='details-screen-call-owner-button'
-                                icon={
-                                    <Icon
-                                        style={styles.iconStyle}
-                                        name='phone'
-                                        type='material'
-                                        size={16}
-                                        color={colors.white} />
-                                }
-                                buttonStyle={styles.buttonStyle}
-                                titleStyle={{color: colors.white}}
-                                title={i18n.t(DETAILS_CALL_OWNER)}
-                                onPress={props.onCallOwnerButtonPressed} />
-                        </View>
-                    </View>
-                </Card>
-                <Card>
-                    <MapsView
-                        longitude={props.dog.longitude}
-                        latitude={props.dog.latitude}
-                        markerTitle={i18n.t(DETAILS_MAP_VIEW_MARKER_TITLE)}
-                        iconType='font-awesome'
-                        iconName='paw'
-                        iconSize={24}
-                        iconColor={colors.accentColor} />
-                </Card>
+                    </Card>,
+                    null,
+                    !!props.dog && props.isReadOnly
+                )}
+                {conditionalRender(
+                    <Card>
+                        <MapsView
+                            longitude={dog.longitude}
+                            latitude={dog.latitude}
+                            markerTitle={i18n.t(DETAILS_MAP_VIEW_MARKER_TITLE)}
+                            iconType='font-awesome'
+                            iconName='paw'
+                            iconSize={24}
+                            iconColor={colors.accentColor} />
+                    </Card>,
+                    null,
+                    !!props.dog && props.isReadOnly
+                )}
             </View>
         </ScrollView>
     )
@@ -203,12 +293,10 @@ const styles = StyleSheet.create({
         height: '100%',
         padding: 8
     },
-    imageCardStyle: {
-        height: 400
-    },
     imageStyle: {
         flex: 1,
-        resizeMode: 'cover'
+        resizeMode: 'cover',
+        height: 400
     },
     descriptionCardStyle: {
         height: 'auto',
@@ -219,6 +307,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
         fontStyle: 'italic'
+    },
+    descriptionTextInputStyle: {
+        color: colors.white,
+        fontWeight: 'bold',
+        fontSize: 14,
+        fontStyle: 'italic',
+        borderBottomWidth: 1
     },
     rowContainer: {
         flexDirection: 'row',
@@ -239,6 +334,13 @@ const styles = StyleSheet.create({
         color: colors.grey,
         fontSize: 16
     },
+    textInputStyle: {
+        color: colors.grey,
+        fontSize: 14,
+        borderBottomWidth: 1,
+        borderColor: colors.grey,
+        marginEnd: 16
+    },
     buttonStyle: {
         marginStart: 8,
         marginEnd: 8,
@@ -250,6 +352,7 @@ const styles = StyleSheet.create({
 });
 
 LostDogDetails.propTypes = {
+    isReadOnly: PropTypes.bool.isRequired,
     dog: PropTypes.shape({
         id: PropTypes.number.isRequired,
         dogName: PropTypes.string.isRequired,
@@ -267,8 +370,8 @@ LostDogDetails.propTypes = {
         countryCode: PropTypes.string.isRequired,
         avatarFilename: PropTypes.string.isRequired
     }),
-    onSendOwnerButtonPressed: PropTypes.func.isRequired,
-    onCallOwnerButtonPressed: PropTypes.func.isRequired
+    onSendOwnerButtonPressed: PropTypes.func,
+    onCallOwnerButtonPressed: PropTypes.func
 };
 
 export default LostDogDetails;
