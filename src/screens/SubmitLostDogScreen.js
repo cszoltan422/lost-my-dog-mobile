@@ -6,7 +6,7 @@ import {
 } from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
 
-class SubmitFormScreen extends Component {
+class SubmitLostDogScreen extends Component {
 
     render() {
         return (
@@ -25,9 +25,9 @@ const styles = StyleSheet.create({
     }
 });
 
-SubmitFormScreen['navigationOptions'] = ({ navigation }) => ({
+SubmitLostDogScreen['navigationOptions'] = ({ navigation }) => ({
     title: i18n.t(SUBMIT_DOG_TITLE),
     headerRight: () => <HeaderMenu navigation={navigation} /> // eslint-disable-line
 });
 
-export default SubmitFormScreen;
+export default SubmitLostDogScreen;

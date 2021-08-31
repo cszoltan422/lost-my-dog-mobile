@@ -4,7 +4,7 @@ import DashboardScreen from '../../screens/DashboardScreen';
 import DetailsScreen from '../../screens/DetailsScreen';
 import LoginScreen from '../../screens/LoginScreen';
 import SignUpScreen from '../../screens/SignUpScreen';
-import SubmitFormScreen from '../../screens/SubmitFormScreen';
+import SubmitLostDogScreen from '../../screens/SubmitLostDogScreen';
 import colors from '../../colors';
 import {
     DASHBOARD_NAVIGATION_SCREEN_NAME,
@@ -23,7 +23,7 @@ const routeConfigMap = {
         screen: LoginScreen
     },
     [SUBMIT_DOG_NAVIGATION_PARAM_NAME]: {
-        screen: SubmitFormScreen
+        screen: SubmitLostDogScreen
     },
     [SIGN_UP_NAVIGATION_PARAM_NAME]: {
         screen: SignUpScreen
