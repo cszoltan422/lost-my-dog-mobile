@@ -1,10 +1,10 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import DashboardScreen from '../dashboard/DashboardScreen';
-import DetailsScreen from '../details/DetailsScreen';
-import LoginScreen from '../login/LoginScreen';
-import SignUpScreen from '../signup/SignUpScreen';
-import SubmitFormScreen from '../submit-form/SubmitFormScreen';
+import DashboardScreen from '../../screens/DashboardScreen';
+import DetailsScreen from '../../screens/DetailsScreen';
+import LoginScreen from '../../screens/LoginScreen';
+import SignUpScreen from '../../screens/SignUpScreen';
+import SubmitFormScreen from '../../screens/SubmitFormScreen';
 import colors from '../../colors';
 import {
     DASHBOARD_NAVIGATION_SCREEN_NAME,

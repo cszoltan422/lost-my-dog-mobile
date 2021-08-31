@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import HeaderMenu from '../menu/HeaderMenu';
+import HeaderMenu from '../components/menu/HeaderMenu';
 import {
     SUBMIT_DOG_TITLE
-} from '../../i18n/i18n.keys';
-import i18n from '../../i18n/i18n';
+} from '../i18n/i18n.keys';
+import i18n from '../i18n/i18n';
 
 class SubmitFormScreen extends Component {
 

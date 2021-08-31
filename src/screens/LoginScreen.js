@@ -7,15 +7,15 @@ import {
     onLoginAttempted,
     onLoginPasswordChanged,
     onLoginUsernameChanged
-} from '../../redux/actions/login/action-creators/action.creators';
-import i18n from '../../i18n/i18n';
-import colors from '../../colors';
+} from '../redux/actions/login/action-creators/action.creators';
+import i18n from '../i18n/i18n';
+import colors from '../colors';
 import {
     LOGIN_FORGOT_PASSWORD_PLACEHOLDER, LOGIN_LOGIN_TEXT,
     LOGIN_PASSWORD_PLACEHOLDER, LOGIN_SIGN_UP_TEXT,
     LOGIN_USERNAME_PLACEHOLDER
-} from '../../i18n/i18n.keys';
-import {APPLICATION_NAME, SIGN_UP_NAVIGATION_PARAM_NAME} from '../../application.constants';
+} from '../i18n/i18n.keys';
+import {APPLICATION_NAME, SIGN_UP_NAVIGATION_PARAM_NAME} from '../application.constants';
 
 class LoginScreen extends Component {
 

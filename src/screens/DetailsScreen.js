@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {View, Text, Image, ScrollView, StyleSheet, Linking} from 'react-native';
 import { Button, Icon } from 'react-native-elements';
-import Card from '../common/card/Card';
-import HeaderMenu from '../menu/HeaderMenu';
-import FloatingActionButton from '../common/floating-action-button/FloatingActionButton';
-import MapsView from '../common/map-view/MapsView';
+import Card from '../components/common/card/Card';
+import HeaderMenu from '../components/menu/HeaderMenu';
+import FloatingActionButton from '../components/common/floating-action-button/FloatingActionButton';
+import MapsView from '../components/common/map-view/MapsView';
 import {
     DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS,
     DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS,
     DETAILS_NAVIGATION_PARAM_NAME,
     LOGIN_NAVIGATION_SCREEN_NAME,
     SUBMIT_DOG_NAVIGATION_PARAM_NAME
-} from '../../application.constants';
-import colors from '../../colors';
-import i18n from '../../i18n/i18n';
+} from '../application.constants';
+import colors from '../colors';
+import i18n from '../i18n/i18n';
 import {
     DETAILS_CALL_OWNER,
     DETAILS_DOG_AGE_LABEL_TITLE,
@@ -29,9 +29,9 @@ import {
     DETAILS_DOG_STATUS_LABEL_TITLE,
     DETAILS_MAP_VIEW_MARKER_TITLE,
     DETAILS_SEND_MESSAGE, SUBMIT_DOG_TITLE
-} from '../../i18n/i18n.keys';
-import {formatIsoTime} from '../../util/date/date.utils';
-import ENV from '../../environmnent.config';
+} from '../i18n/i18n.keys';
+import {formatIsoTime} from '../util/date/date.utils';
+import ENV from '../environmnent.config';
 
 const DetailsScreen = (props) => {
 

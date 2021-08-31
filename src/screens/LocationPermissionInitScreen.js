@@ -4,8 +4,8 @@ import * as Location from 'expo-location';
 import * as IntentLauncher from 'expo-intent-launcher';
 import {StyleSheet, Text, View, Linking, Platform} from 'react-native';
 import {Icon, Button} from 'react-native-elements';
-import colors from '../../colors';
-import i18n from '../../i18n/i18n';
+import colors from '../colors';
+import i18n from '../i18n/i18n';
 import {
     LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION,
     LOCATION_PERMISSION_ASK_DESCRIPTION,
@@ -13,7 +13,7 @@ import {
     LOCATION_PERMISSION_DENIED_BUTTON_TITLE,
     LOCATION_PERMISSION_DENIED_TITLE,
     LOCATION_PERMISSION_TITLE
-} from '../../i18n/i18n.keys';
+} from '../i18n/i18n.keys';
 
 const LocationPermissionInitScreen = (props) => {
 
