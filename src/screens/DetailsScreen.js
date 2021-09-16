@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Linking} from 'react-native';
-import LostDogDetails from '../components/lost-dog-details/LostDogDetails';
+import LostDogDetailsReadonly from "../components/lost-dog-details/LostDogDetailsReadonly";
 import HeaderMenu from '../components/menu/HeaderMenu';
 import FloatingActionButton from '../components/common/floating-action-button/FloatingActionButton';
 import {
@@ -29,8 +29,7 @@ const DetailsScreen = (props) => {
 
     return (
         <Fragment>
-            <LostDogDetails
-                isReadOnly
+            <LostDogDetailsReadonly
                 dog={dog}
                 onSendOwnerButtonPressed={onSendOwnerButtonPressed}
                 onCallOwnerButtonPressed={onCallOwnerButtonPressed} />

@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
 DashboardListItem.propTypes = {
     dog: PropTypes.shape({
         id: PropTypes.number.isRequired,
+        submittedByUserId: PropTypes.number.isRequired,
         dogName: PropTypes.string.isRequired,
         dogBreed: PropTypes.string.isRequired,
         gender: PropTypes.string.isRequired,
@@ -144,7 +145,10 @@ DashboardListItem.propTypes = {
         status: PropTypes.string.isRequired,
         city: PropTypes.string.isRequired,
         countryCode: PropTypes.string.isRequired,
-        avatarFilename: PropTypes.string.isRequired
+        avatarFilename: PropTypes.string.isRequired,
+        chippedStatus: PropTypes.string.isRequired,
+        chipNumber: PropTypes.string.isRequired,
+        specialPeculiarities: PropTypes.string.isRequired
     }).isRequired,
     index: PropTypes.number.isRequired,
     onListItemClicked: PropTypes.func.isRequired
