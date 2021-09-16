@@ -24,7 +24,7 @@ import {
     SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
     SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
     SUBMIT_FORM_STATUS_SELECT_INPUT_KEY
-} from "../../../application.constants";
+} from '../../../application.constants';
 
 const LostDogDetailsContent = (props) => {
 
@@ -147,7 +147,7 @@ const LostDogDetailsContent = (props) => {
                         </Text>
                         <Switch
                             testID='details-screen-dog-has-chip-toggle-input'
-                            style={{alignSelf: 'flex-start'}}
+                            style={styles.switchStyle}
                             trackColor={{ false: colors.grey, true: colors.primaryColor }}
                             thumbColor={colors.accentColor}
                             value={props.inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value}
@@ -164,7 +164,7 @@ const LostDogDetailsContent = (props) => {
                             style={styles.textInputStyle}
                             placeholder={`${i18n.t(DETAILS_DOG_CHIP_NUMBER)}...`}
                             value={props.inputs[SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY].value}
-                            onChangeText={(value) => props.onSubmitFormInputValueChanged(SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY, value)}/>
+                            onChangeText={(value) => props.onSubmitFormInputValueChanged(SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY, value)} />
                     </View>
                 </View>
             </View>
@@ -186,10 +186,6 @@ const styles = StyleSheet.create({
     labelTitle: {
         fontWeight: 'bold',
         color: colors.accentColor,
-        fontSize: 16
-    },
-    labelValue: {
-        color: colors.grey,
         fontSize: 16
     },
     textInputStyle: {
@@ -226,10 +222,17 @@ const styles = StyleSheet.create({
     dropdownTextHighlightStyle: {
         color: colors.accentColor,
         fontWeight: 'bold'
+    },
+    switchStyle: {
+        alignSelf: 'flex-start'
     }
 });
 
 LostDogDetailsContent.propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    isValid: PropTypes.bool.isRequired,
+    inputs: PropTypes.object.isRequired,
+    onSubmitFormInputValueChanged: PropTypes.func.isRequired
 };
 
 export default LostDogDetailsContent;

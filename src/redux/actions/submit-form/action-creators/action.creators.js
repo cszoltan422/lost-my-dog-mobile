@@ -6,7 +6,7 @@ import {
     ON_SUBMIT_FORM_SUBMITTED,
     ON_SUBMIT_FORM_SUCCESS,
     ON_SUBMIT_FORM_VALIDATION_ERROR
-} from "../action-types/action.types";
+} from '../action-types/action.types';
 
 export const onSubmitFormInputValueChanged = (inputKey, value) => {
     return {

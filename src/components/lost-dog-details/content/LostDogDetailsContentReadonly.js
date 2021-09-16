@@ -180,14 +180,7 @@ const styles = StyleSheet.create({
     labelValue: {
         color: colors.grey,
         fontSize: 16
-    },
-    textInputStyle: {
-        color: colors.grey,
-        fontSize: 14,
-        borderBottomWidth: 1,
-        borderColor: colors.grey,
-        marginEnd: 16
-    },
+    }
 });
 
 LostDogDetailsContentReadonly.propTypes = {

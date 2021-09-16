@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {StyleSheet, TextInput} from 'react-native';
 import Card from '../../common/card/Card';
 import i18n from '../../../i18n/i18n';
@@ -48,8 +47,5 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     }
 });
-
-LostDogDetailsHeader.propTypes = {
-};
 
 export default LostDogDetailsHeader;

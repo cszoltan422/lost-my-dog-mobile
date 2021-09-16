@@ -1,4 +1,4 @@
-import {createReducer} from "@reduxjs/toolkit";
+import {createReducer} from '@reduxjs/toolkit';
 import {
     SUBMIT_FORM_AGE_TEXT_INPUT_KEY,
     SUBMIT_FORM_BREED_TEXT_INPUT_KEY,
@@ -8,14 +8,14 @@ import {
     SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
     SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
     SUBMIT_FORM_STATUS_SELECT_INPUT_KEY
-} from "../../../application.constants";
+} from '../../../application.constants';
 import {
     DASHBOARD_DOG_STATUS_FOUND,
     DASHBOARD_DOG_STATUS_LOST,
     DASHBOARD_DOG_STATUS_WANDERING,
     DETAILS_DOG_SEX_FEMALE,
     DETAILS_DOG_SEX_MALE
-} from "../../../i18n/i18n.keys";
+} from '../../../i18n/i18n.keys';
 import {
     ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
     ON_SUBMIT_FORM_LOADING,
@@ -23,7 +23,7 @@ import {
     ON_SUBMIT_FORM_SUBMIT_ERROR,
     ON_SUBMIT_FORM_SUCCESS,
     ON_SUBMIT_FORM_VALIDATION_ERROR
-} from "../../actions/submit-form/action-types/action.types";
+} from '../../actions/submit-form/action-types/action.types';
 
 export const initialState = {
     isValid: true,

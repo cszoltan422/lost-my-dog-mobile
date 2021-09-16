@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import HeaderMenu from '../components/menu/HeaderMenu';
 import LostDogDetails from '../components/lost-dog-details/LostDogDetails';
 import {SUBMIT_DOG_TITLE} from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
-import {onSubmitFormInputValueChanged} from "../redux/actions/submit-form/action-creators/action.creators";
+import {onSubmitFormInputValueChanged} from '../redux/actions/submit-form/action-creators/action.creators';
 
 const SubmitLostDogScreen = () => {
 
@@ -22,7 +21,7 @@ const SubmitLostDogScreen = () => {
             isLoading={isLoading}
             error={error}
             inputs={inputs}
-            onSubmitFormInputValueChanged={(inputKey, value) => dispatch(onSubmitFormInputValueChanged(inputKey, value))}/>
+            onSubmitFormInputValueChanged={(inputKey, value) => dispatch(onSubmitFormInputValueChanged(inputKey, value))} />
     );
 
 }
