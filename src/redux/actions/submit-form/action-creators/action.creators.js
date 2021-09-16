@@ -1,6 +1,6 @@
 import {
     ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
-    ON_SUBMIT_FORM_LOADING,
+    ON_SUBMIT_FORM_LOADING, ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED,
     ON_SUBMIT_FORM_STOP_LOADING,
     ON_SUBMIT_FORM_SUBMIT_ERROR,
     ON_SUBMIT_FORM_SUBMITTED,
@@ -15,6 +15,13 @@ export const onSubmitFormInputValueChanged = (inputKey, value) => {
             inputKey: inputKey,
             value: value
         }
+    }
+};
+
+export const onSubmitFormLocationValueChanged = (coordinates) => {
+    return {
+        type: ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED,
+        payload: coordinates
     }
 };
 

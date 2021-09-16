@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 import { Dimensions, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import {Icon} from 'react-native-elements';
+import {MAPS_DEFAULT_LATLON_DELTA} from '../../../application.constants';
 
 const MapsView = (props) => {
 
     let region = {
         latitude: props.latitude,
         longitude: props.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        latitudeDelta: MAPS_DEFAULT_LATLON_DELTA.latitudeDelta,
+        longitudeDelta: MAPS_DEFAULT_LATLON_DELTA.longitudeDelta,
     };
+
     return (
         <MapView
             testID='map-view-container'

@@ -18,7 +18,7 @@ import {
 } from '../../../i18n/i18n.keys';
 import {
     ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
-    ON_SUBMIT_FORM_LOADING,
+    ON_SUBMIT_FORM_LOADING, ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED,
     ON_SUBMIT_FORM_STOP_LOADING,
     ON_SUBMIT_FORM_SUBMIT_ERROR,
     ON_SUBMIT_FORM_SUCCESS,
@@ -72,6 +72,11 @@ export const initialState = {
             initialValue: '',
             isValid: true
         }
+    },
+    location: {
+        isPresent: false,
+        latitude: 0,
+        longitude: 0
     }
 };
 
@@ -80,6 +85,13 @@ export const reducer = createReducer(initialState, {
         state.inputs[action.payload.inputKey].value = action.payload.value;
         state.inputs[action.payload.inputKey].isValid = true;
         state.isValid = true;
+    },
+    [ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED]: (state, action) => {
+        state.location = {
+            isPresent: true,
+            latitude: action.payload.latitude,
+            longitude: action.payload.longitude
+        };
     },
     [ON_SUBMIT_FORM_VALIDATION_ERROR]: (state, action) => {
         state.inputs[action.payload].isValid = false;
@@ -92,6 +104,11 @@ export const reducer = createReducer(initialState, {
         Object.keys(state.inputs).forEach((inputKey) => {
             state.inputs[inputKey].value = state.inputs[inputKey].initialValue;
         });
+        state.location = {
+            isPresent: false,
+            latitude: 0,
+            longitude: 0
+        };
     },
     [ON_SUBMIT_FORM_LOADING]: (state) => {
         state.isLoading = true;

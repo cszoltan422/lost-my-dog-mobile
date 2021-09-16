@@ -153,19 +153,21 @@ const LostDogDetailsContent = (props) => {
                             value={props.inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value}
                             onValueChange={(value) => props.onSubmitFormInputValueChanged(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY, value)} />
                     </View>
-                    <View style={styles.columnContainer}>
-                        <Text
-                            testID='details-screen-dog-chip-number-text-label'
-                            style={styles.labelTitle}>
-                            {i18n.t(DETAILS_DOG_CHIP_NUMBER)}
-                        </Text>
-                        <TextInput
-                            testID='details-screen-dog-chip-number-text-input'
-                            style={styles.textInputStyle}
-                            placeholder={`${i18n.t(DETAILS_DOG_CHIP_NUMBER)}...`}
-                            value={props.inputs[SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY].value}
-                            onChangeText={(value) => props.onSubmitFormInputValueChanged(SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY, value)} />
-                    </View>
+                    {props.inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value && (
+                        <View style={styles.columnContainer}>
+                            <Text
+                                testID='details-screen-dog-chip-number-text-label'
+                                style={styles.labelTitle}>
+                                {i18n.t(DETAILS_DOG_CHIP_NUMBER)}
+                            </Text>
+                            <TextInput
+                                testID='details-screen-dog-chip-number-text-input'
+                                style={styles.textInputStyle}
+                                placeholder={`${i18n.t(DETAILS_DOG_CHIP_NUMBER)}...`}
+                                value={props.inputs[SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY].value}
+                                onChangeText={(value) => props.onSubmitFormInputValueChanged(SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY, value)} />
+                        </View>
+                    )}
                 </View>
             </View>
         </Card>

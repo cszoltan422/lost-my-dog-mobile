@@ -44,6 +44,10 @@ export const E2E_MOCK_LOCATION = {
     latitude: 37.785834
 
 };
+export const MAPS_DEFAULT_LATLON_DELTA = {
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+};
 export const SIGNUP_SCREEN_NAME_ORDER_FIRST = 'FIRST';
 export const SIGNUP_SCREEN_NAME_ORDER_LAST = 'LAST';
 export const SIGNUP_USERNAME_TEXT_INPUT_KEY = 'SIGNUP_USERNAME_TEXT_INPUT_KEY';
