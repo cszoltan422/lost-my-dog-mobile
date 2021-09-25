@@ -1,8 +1,9 @@
 import {createReducer} from '@reduxjs/toolkit';
+import validator from 'validator';
 import {
     SUBMIT_FORM_AGE_TEXT_INPUT_KEY,
     SUBMIT_FORM_BREED_TEXT_INPUT_KEY,
-    SUBMIT_FORM_COLOR_TEXT_INPUT_KEY,
+    SUBMIT_FORM_COLOR_TEXT_INPUT_KEY, SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY,
     SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY,
     SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY,
     SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
@@ -31,37 +32,49 @@ export const initialState = {
     isLoading: false,
     error: '',
     inputs: {
+        [SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY]: {
+            value: '',
+            initialValue: '',
+            isValid: true,
+            validator: (value) => !!value && !validator.isEmpty(value)
+        },
         [SUBMIT_FORM_NAME_TEXT_INPUT_KEY]: {
             value: '',
             initialValue: '',
-            isValid: true
+            isValid: true,
+            validator: (value) => !!value && !validator.isEmpty(value)
         },
         [SUBMIT_FORM_BREED_TEXT_INPUT_KEY]: {
             value: '',
             initialValue: '',
-            isValid: true
+            isValid: true,
+            validator: (value) => !!value && !validator.isEmpty(value)
         },
         [SUBMIT_FORM_SEX_SELECT_INPUT_KEY]: {
             value: null,
             initialValue: null,
             options: [DETAILS_DOG_SEX_MALE, DETAILS_DOG_SEX_FEMALE],
-            isValid: true
+            isValid: true,
+            validator: (value) => !!value && !validator.isEmpty(value)
         },
         [SUBMIT_FORM_COLOR_TEXT_INPUT_KEY]: {
             value: '',
             initialValue: '',
-            isValid: true
+            isValid: true,
+            validator: (value) => !!value && !validator.isEmpty(value)
         },
         [SUBMIT_FORM_STATUS_SELECT_INPUT_KEY]: {
             value: null,
             initialValue: null,
             options: [DASHBOARD_DOG_STATUS_LOST, DASHBOARD_DOG_STATUS_WANDERING, DASHBOARD_DOG_STATUS_FOUND],
-            isValid: true
+            isValid: true,
+            validator: (value) => !!value && !validator.isEmpty(value)
         },
         [SUBMIT_FORM_AGE_TEXT_INPUT_KEY]: {
             value: '',
             initialValue: '',
-            isValid: true
+            isValid: true,
+            validator: (value) => !!value && !validator.isEmpty(value)
         },
         [SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY]: {
             value: false,

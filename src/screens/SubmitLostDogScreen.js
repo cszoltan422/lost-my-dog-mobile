@@ -8,7 +8,8 @@ import {
     onResetSubmitForm,
     onSubmitFormImageSelected,
     onSubmitFormInputValueChanged,
-    onSubmitFormLocationValueChanged
+    onSubmitFormLocationValueChanged,
+    onSubmitFormSubmitted
 } from '../redux/actions/submit-form/action-creators/action.creators';
 import {getLocation} from '../util/location/location.utils';
 
@@ -50,7 +51,8 @@ const SubmitLostDogScreen = () => {
             selectedImageUri={selectedImageUri}
             onInputValueChanged={(inputKey, value) => dispatch(onSubmitFormInputValueChanged(inputKey, value))}
             onLocationValueChanged={(coordinates) => dispatch(onSubmitFormLocationValueChanged(coordinates))}
-            onImageSelected={(selectedImageUri) => dispatch(onSubmitFormImageSelected(selectedImageUri))} />
+            onImageSelected={(selectedImageUri) => dispatch(onSubmitFormImageSelected(selectedImageUri))}
+            onSubmit={() => dispatch(onSubmitFormSubmitted())} />
     );
 
 }

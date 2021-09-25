@@ -27,9 +27,9 @@ import {
     DETAILS_DOG_SEX_FEMALE,
     DETAILS_DOG_SEX_LABEL_TITLE,
     DETAILS_DOG_SEX_MALE,
-    DETAILS_DOG_STATUS_LABEL_TITLE,
+    DETAILS_DOG_STATUS_LABEL_TITLE, DETAILS_INPUT_REQUIRED,
     DETAILS_MAP_VIEW_MARKER_TITLE,
-    DETAILS_SEND_MESSAGE,
+    DETAILS_SEND_MESSAGE, DETAILS_SUBMIT_BUTTON_TITLE,
     EMAIL_EXISTS,
     LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION,
     LOCATION_PERMISSION_ASK_DESCRIPTION,
@@ -128,6 +128,8 @@ export default {
     [USER_NAME_EXISTS]: 'A felhasználónév foglalt',
     [EMAIL_EXISTS]: 'A jelszó foglalt',
     [LOCATION_PICKER_INFO_DESCRIPTION]: 'Koppints a térképre, hogy a kutya utolsó ismert tartózkodási helyét megváltoztasd!',
-    [LOCATION_PICKER_CURRENT_COORDINATES]: 'Jelenlegi koordináták'
+    [LOCATION_PICKER_CURRENT_COORDINATES]: 'Jelenlegi koordináták: ',
+    [DETAILS_SUBMIT_BUTTON_TITLE]: 'Küldés',
+    [DETAILS_INPUT_REQUIRED]: 'Ez a mező nem lehet üres'
 };
 // á é í ú ü ű ó ő

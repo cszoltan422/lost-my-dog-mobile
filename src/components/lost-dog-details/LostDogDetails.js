@@ -7,7 +7,10 @@ import LocationPicker from '../common/location-picker/LocationPicker';
 import LostDogDetailsHeader from './header/LostDogDetailsHeader';
 import LostDogDetailsContent from './content/LostDogDetailsContent';
 import i18n from '../../i18n/i18n';
-import {DETAILS_MAP_VIEW_MARKER_TITLE} from '../../i18n/i18n.keys';
+import {
+    DETAILS_MAP_VIEW_MARKER_TITLE,
+    DETAILS_SUBMIT_BUTTON_TITLE
+} from '../../i18n/i18n.keys';
 import colors from '../../colors';
 
 const LostDogDetails = (props) => {
@@ -44,8 +47,10 @@ const LostDogDetails = (props) => {
                         testID='submit-screen-submit-button'
                         buttonStyle={styles.buttonStyle}
                         titleStyle={{color: colors.white}}
-                        title='Submit' // todo
-                        onPress={() => null} />
+                        title={i18n.t(DETAILS_SUBMIT_BUTTON_TITLE)}
+                        loading={props.isLoading}
+                        disabled={props.isLoading || !props.isValid}
+                        onPress={props.onSubmit} />
                 </Card>
             </View>
         </ScrollView>
@@ -77,6 +82,7 @@ LostDogDetails.propTypes = {
     onLocationValueChanged: PropTypes.func.isRequired,
     onInputValueChanged: PropTypes.func.isRequired,
     onImageSelected: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
 };
 
 export default LostDogDetails;
