@@ -5,6 +5,8 @@ import LostDogDetails from '../components/lost-dog-details/LostDogDetails';
 import {SUBMIT_DOG_TITLE} from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
 import {
+    onResetSubmitForm,
+    onSubmitFormImageSelected,
     onSubmitFormInputValueChanged,
     onSubmitFormLocationValueChanged
 } from '../redux/actions/submit-form/action-creators/action.creators';
@@ -17,6 +19,7 @@ const SubmitLostDogScreen = () => {
     const error = useSelector(state => state.submitForm.error);
     const inputs = useSelector(state => state.submitForm.inputs);
     const location = useSelector(state => state.submitForm.location);
+    const selectedImageUri = useSelector(state => state.submitForm.selectedImageUri);
 
     const dispatch = useDispatch();
 
@@ -27,7 +30,14 @@ const SubmitLostDogScreen = () => {
                 latitude: currentLocation.coords.latitude
             }));
         }
+
         getCurrentLocation();
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            dispatch(onResetSubmitForm());
+        }
     }, []);
 
     return (
@@ -37,8 +47,10 @@ const SubmitLostDogScreen = () => {
             error={error}
             inputs={inputs}
             location={location}
-            onSubmitFormInputValueChanged={(inputKey, value) => dispatch(onSubmitFormInputValueChanged(inputKey, value))}
-            onSubmitFormLocationValueChanged={(coordinates) => dispatch(onSubmitFormLocationValueChanged(coordinates))} />
+            selectedImageUri={selectedImageUri}
+            onInputValueChanged={(inputKey, value) => dispatch(onSubmitFormInputValueChanged(inputKey, value))}
+            onLocationValueChanged={(coordinates) => dispatch(onSubmitFormLocationValueChanged(coordinates))}
+            onImageSelected={(selectedImageUri) => dispatch(onSubmitFormImageSelected(selectedImageUri))} />
     );
 
 }

@@ -17,11 +17,12 @@ import {
     DETAILS_DOG_SEX_MALE
 } from '../../../i18n/i18n.keys';
 import {
+    ON_RESET_SUBMIT_FORM,
+    ON_SUBMIT_FORM_IMAGE_SELECTED,
     ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
     ON_SUBMIT_FORM_LOADING, ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED,
     ON_SUBMIT_FORM_STOP_LOADING,
     ON_SUBMIT_FORM_SUBMIT_ERROR,
-    ON_SUBMIT_FORM_SUCCESS,
     ON_SUBMIT_FORM_VALIDATION_ERROR
 } from '../../actions/submit-form/action-types/action.types';
 
@@ -77,7 +78,8 @@ export const initialState = {
         isPresent: false,
         latitude: 0,
         longitude: 0
-    }
+    },
+    selectedImageUri: null
 };
 
 export const reducer = createReducer(initialState, {
@@ -93,11 +95,24 @@ export const reducer = createReducer(initialState, {
             longitude: action.payload.longitude
         };
     },
+    [ON_SUBMIT_FORM_IMAGE_SELECTED]: (state, action) => {
+        state.selectedImageUri = action.payload;
+    },
     [ON_SUBMIT_FORM_VALIDATION_ERROR]: (state, action) => {
         state.inputs[action.payload].isValid = false;
         state.isValid = false;
     },
-    [ON_SUBMIT_FORM_SUCCESS]: (state) => {
+    [ON_SUBMIT_FORM_LOADING]: (state) => {
+        state.isLoading = true;
+    },
+    [ON_SUBMIT_FORM_STOP_LOADING]: (state) => {
+        state.isLoading = false;
+    },
+    [ON_SUBMIT_FORM_SUBMIT_ERROR]: (state, action) => {
+        state.error = action.payload;
+        state.isValid = false;
+    },
+    [ON_RESET_SUBMIT_FORM]: (state) => {
         state.isValid = true;
         state.isLoading = false;
         state.error = '';
@@ -109,15 +124,6 @@ export const reducer = createReducer(initialState, {
             latitude: 0,
             longitude: 0
         };
-    },
-    [ON_SUBMIT_FORM_LOADING]: (state) => {
-        state.isLoading = true;
-    },
-    [ON_SUBMIT_FORM_STOP_LOADING]: (state) => {
-        state.isLoading = false;
-    },
-    [ON_SUBMIT_FORM_SUBMIT_ERROR]: (state, action) => {
-        state.error = action.payload;
-        state.isValid = false;
+        state.selectedImageUri = null;
     }
 });

@@ -18,7 +18,6 @@ const LocationPicker = (props) => {
     });
 
     useEffect(() => {
-        console.log(props)
         setCoordinate({
             latitude: props.latitude,
             longitude: props.longitude,
@@ -29,7 +28,7 @@ const LocationPicker = (props) => {
 
     const handleOnPress = (event) => {
         const { coordinate } = event.nativeEvent;
-        props.onSubmitFormLocationValueChanged({
+        props.onLocationValueChanged({
             latitude: coordinate.latitude,
             longitude: coordinate.longitude
         });
@@ -115,7 +114,9 @@ const styles = StyleSheet.create({
     mapHeaderContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingStart: 8,
+        paddingEnd: 8
     },
     mapInfoTextStyle: {
         marginStart: 4,
@@ -125,7 +126,9 @@ const styles = StyleSheet.create({
         marginTop: 8,
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingStart: 8,
+        paddingEnd: 8
     },
     currentCoordinatesTextStyle: {
         color: colors.accentColor,
@@ -140,7 +143,7 @@ LocationPicker.propTypes = {
     iconName: PropTypes.string.isRequired,
     iconColor: PropTypes.string.isRequired,
     iconSize: PropTypes.number.isRequired,
-    onSubmitFormLocationValueChanged: PropTypes.func.isRequired
+    onLocationValueChanged: PropTypes.func.isRequired
 }
 
 export default LocationPicker;

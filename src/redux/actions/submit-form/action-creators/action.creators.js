@@ -1,10 +1,11 @@
 import {
+    ON_RESET_SUBMIT_FORM,
+    ON_SUBMIT_FORM_IMAGE_SELECTED,
     ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
     ON_SUBMIT_FORM_LOADING, ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED,
     ON_SUBMIT_FORM_STOP_LOADING,
     ON_SUBMIT_FORM_SUBMIT_ERROR,
     ON_SUBMIT_FORM_SUBMITTED,
-    ON_SUBMIT_FORM_SUCCESS,
     ON_SUBMIT_FORM_VALIDATION_ERROR
 } from '../action-types/action.types';
 
@@ -25,6 +26,13 @@ export const onSubmitFormLocationValueChanged = (coordinates) => {
     }
 };
 
+export const onSubmitFormImageSelected = (selectedImageUri) => {
+    return {
+        type: ON_SUBMIT_FORM_IMAGE_SELECTED,
+        payload: selectedImageUri
+    }
+};
+
 export const onSubmitFormSubmitted = (navigation) => {
     return {
         type: ON_SUBMIT_FORM_SUBMITTED,
@@ -36,12 +44,6 @@ export const onSubmitFormValidationError = (inputKey) => {
     return {
         type: ON_SUBMIT_FORM_VALIDATION_ERROR,
         payload: inputKey
-    }
-};
-
-export const onSubmitFormSuccess = () => {
-    return {
-        type: ON_SUBMIT_FORM_SUCCESS
     }
 };
 
@@ -61,5 +63,11 @@ export const onSubmitFormSubmitError = (error) => {
     return {
         type: ON_SUBMIT_FORM_SUBMIT_ERROR,
         payload: error
+    }
+};
+
+export const onResetSubmitForm = () => {
+    return {
+        type: ON_RESET_SUBMIT_FORM
     }
 };

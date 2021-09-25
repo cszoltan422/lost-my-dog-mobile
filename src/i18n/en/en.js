@@ -127,6 +127,6 @@ export default {
     [SIGNUP_LAST_NAME_VALIDATION_ERROR]: 'Please enter your last name.',
     [USER_NAME_EXISTS]: 'Username already taken',
     [EMAIL_EXISTS]: 'Email already taken',
-    [LOCATION_PICKER_INFO_DESCRIPTION]: 'Tap on the map to change the dog&apos;s last seen location',
-    [LOCATION_PICKER_CURRENT_COORDINATES]: 'Current coordinates'
+    [LOCATION_PICKER_INFO_DESCRIPTION]: 'Tap on the map to change the dog\'s last seen location!',
+    [LOCATION_PICKER_CURRENT_COORDINATES]: 'Current coordinates: '
 };

@@ -43,7 +43,7 @@ const LostDogDetailsContent = (props) => {
                             style={styles.textInputStyle}
                             placeholder={`${i18n.t(DETAILS_DOG_NAME_LABEL_TITLE)}...`}
                             value={props.inputs[SUBMIT_FORM_NAME_TEXT_INPUT_KEY].value}
-                            onChangeText={(value) => props.onSubmitFormInputValueChanged(SUBMIT_FORM_NAME_TEXT_INPUT_KEY, value)} />
+                            onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_NAME_TEXT_INPUT_KEY, value)} />
                     </View>
                     <View style={styles.columnContainer}>
                         <Text
@@ -56,7 +56,7 @@ const LostDogDetailsContent = (props) => {
                             style={styles.textInputStyle}
                             placeholder={`${i18n.t(DETAILS_DOG_BREED_LABEL_TITLE)}...`}
                             value={props.inputs[SUBMIT_FORM_BREED_TEXT_INPUT_KEY].value}
-                            onChangeText={(value) => props.onSubmitFormInputValueChanged(SUBMIT_FORM_BREED_TEXT_INPUT_KEY, value)} />
+                            onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_BREED_TEXT_INPUT_KEY, value)} />
                     </View>
                 </View>
                 <View style={styles.rowContainer}>
@@ -78,7 +78,7 @@ const LostDogDetailsContent = (props) => {
                                 return i18n.t(option);
                             })}
                             onSelect={(index) => {
-                                props.onSubmitFormInputValueChanged(
+                                props.onInputValueChanged(
                                     SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
                                     props.inputs[SUBMIT_FORM_SEX_SELECT_INPUT_KEY].options[index]
                                 )
@@ -95,7 +95,7 @@ const LostDogDetailsContent = (props) => {
                             style={styles.textInputStyle}
                             placeholder={`${i18n.t(DETAILS_DOG_COLOR_LABEL_TITLE)}...`}
                             value={props.inputs[SUBMIT_FORM_COLOR_TEXT_INPUT_KEY].value}
-                            onChangeText={(value) => props.onSubmitFormInputValueChanged(SUBMIT_FORM_COLOR_TEXT_INPUT_KEY, value)} />
+                            onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_COLOR_TEXT_INPUT_KEY, value)} />
                     </View>
                 </View>
                 <View style={styles.rowContainer}>
@@ -117,7 +117,7 @@ const LostDogDetailsContent = (props) => {
                                 return i18n.t(option);
                             })}
                             onSelect={(index) => {
-                                props.onSubmitFormInputValueChanged(
+                                props.onInputValueChanged(
                                     SUBMIT_FORM_STATUS_SELECT_INPUT_KEY,
                                     props.inputs[SUBMIT_FORM_STATUS_SELECT_INPUT_KEY].options[index]
                                 )
@@ -135,7 +135,7 @@ const LostDogDetailsContent = (props) => {
                             placeholder={`${i18n.t(DETAILS_DOG_AGE_LABEL_TITLE)}...`}
                             keyboardType = 'numeric'
                             value={props.inputs[SUBMIT_FORM_AGE_TEXT_INPUT_KEY].value}
-                            onChangeText={(value) => props.onSubmitFormInputValueChanged(SUBMIT_FORM_AGE_TEXT_INPUT_KEY, value)} />
+                            onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_AGE_TEXT_INPUT_KEY, value)} />
                     </View>
                 </View>
                 <View style={styles.rowContainer}>
@@ -151,7 +151,7 @@ const LostDogDetailsContent = (props) => {
                             trackColor={{ false: colors.grey, true: colors.primaryColor }}
                             thumbColor={colors.accentColor}
                             value={props.inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value}
-                            onValueChange={(value) => props.onSubmitFormInputValueChanged(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY, value)} />
+                            onValueChange={(value) => props.onInputValueChanged(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY, value)} />
                     </View>
                     {props.inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value && (
                         <View style={styles.columnContainer}>
@@ -165,7 +165,7 @@ const LostDogDetailsContent = (props) => {
                                 style={styles.textInputStyle}
                                 placeholder={`${i18n.t(DETAILS_DOG_CHIP_NUMBER)}...`}
                                 value={props.inputs[SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY].value}
-                                onChangeText={(value) => props.onSubmitFormInputValueChanged(SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY, value)} />
+                                onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY, value)} />
                         </View>
                     )}
                 </View>
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     },
     modalDropdownStyle: {
         width: '40%',
-        height: 'auto',
+        height: -1,
         borderWidth: 2,
         borderColor: colors.primaryColor
     },
@@ -234,7 +234,7 @@ LostDogDetailsContent.propTypes = {
     isLoading: PropTypes.bool.isRequired,
     isValid: PropTypes.bool.isRequired,
     inputs: PropTypes.object.isRequired,
-    onSubmitFormInputValueChanged: PropTypes.func.isRequired
+    onInputValueChanged: PropTypes.func.isRequired
 };
 
 export default LostDogDetailsContent;

@@ -36,7 +36,7 @@ import {
     LOCATION_PERMISSION_BUTTON_TITLE,
     LOCATION_PERMISSION_DENIED_BUTTON_TITLE,
     LOCATION_PERMISSION_DENIED_TITLE,
-    LOCATION_PERMISSION_TITLE,
+    LOCATION_PERMISSION_TITLE, LOCATION_PICKER_CURRENT_COORDINATES, LOCATION_PICKER_INFO_DESCRIPTION,
     LOGIN_EMPTY_PASSWORD_OR_USERNAME,
     LOGIN_FORGOT_PASSWORD_PLACEHOLDER,
     LOGIN_LOGIN_TEXT,
@@ -127,5 +127,7 @@ export default {
     [SIGNUP_LAST_NAME_VALIDATION_ERROR]: 'Kérjük adja meg a vezetéknevét',
     [USER_NAME_EXISTS]: 'A felhasználónév foglalt',
     [EMAIL_EXISTS]: 'A jelszó foglalt',
+    [LOCATION_PICKER_INFO_DESCRIPTION]: 'Koppints a térképre, hogy a kutya utolsó ismert tartózkodási helyét megváltoztasd!',
+    [LOCATION_PICKER_CURRENT_COORDINATES]: 'Jelenlegi koordináták'
 };
 // á é í ú ü ű ó ő

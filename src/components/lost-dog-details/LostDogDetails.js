@@ -18,12 +18,14 @@ const LostDogDetails = (props) => {
             <View
                 testID='details-screen-container'
                 style={styles.container}>
-                <LostDogDetailsHeader />
+                <LostDogDetailsHeader
+                    selectedImageUri={props.selectedImageUri}
+                    onImageSelected={props.onImageSelected} />
                 <LostDogDetailsContent
                     isLoading={props.isLoading}
                     isValid={props.isValid}
                     inputs={props.inputs}
-                    onSubmitFormInputValueChanged={props.onSubmitFormInputValueChanged} />
+                    onInputValueChanged={props.onInputValueChanged} />
                 {props.location.isPresent && (
                     <Card>
                         <LocationPicker
@@ -34,15 +36,15 @@ const LostDogDetails = (props) => {
                             iconName='paw'
                             iconSize={24}
                             iconColor={colors.accentColor}
-                            onSubmitFormLocationValueChanged={props.onSubmitFormLocationValueChanged} />
+                            onLocationValueChanged={props.onLocationValueChanged} />
                     </Card>
                 )}
                 <Card>
                     <Button
-                        testID='location-permission-button'
+                        testID='submit-screen-submit-button'
                         buttonStyle={styles.buttonStyle}
                         titleStyle={{color: colors.white}}
-                        title='Submit'
+                        title='Submit' // todo
                         onPress={() => null} />
                 </Card>
             </View>
@@ -71,8 +73,10 @@ LostDogDetails.propTypes = {
         latitude: PropTypes.number.isRequired,
         isPresent: PropTypes.bool.isRequired,
     }).isRequired,
-    onSubmitFormInputValueChanged: PropTypes.func.isRequired,
-    onSubmitFormLocationValueChanged: PropTypes.func.isRequired
+    selectedImageUri: PropTypes.string,
+    onLocationValueChanged: PropTypes.func.isRequired,
+    onInputValueChanged: PropTypes.func.isRequired,
+    onImageSelected: PropTypes.func.isRequired,
 };
 
 export default LostDogDetails;
