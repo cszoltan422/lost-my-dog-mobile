@@ -49,7 +49,7 @@ const LostDogDetails = (props) => {
                         titleStyle={{color: colors.white}}
                         title={i18n.t(DETAILS_SUBMIT_BUTTON_TITLE)}
                         loading={props.isLoading}
-                        disabled={props.isLoading || !props.isValid}
+                        disabled={!props.isValid}
                         onPress={props.onSubmit} />
                 </Card>
             </View>
