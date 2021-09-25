@@ -44,7 +44,7 @@ const LostDogDetails = (props) => {
                 )}
                 <Card>
                     <Button
-                        testID='submit-screen-submit-button'
+                        testID='details-screen-submit-button'
                         buttonStyle={styles.buttonStyle}
                         titleStyle={{color: colors.white}}
                         title={i18n.t(DETAILS_SUBMIT_BUTTON_TITLE)}
