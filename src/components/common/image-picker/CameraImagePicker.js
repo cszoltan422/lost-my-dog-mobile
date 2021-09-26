@@ -113,7 +113,12 @@ const styles = StyleSheet.create({
 });
 
 CameraImagePicker.propTypes = {
-    selectedImageUri: PropTypes.string,
+    selectedImage: PropTypes.shape({
+        uri: PropTypes.string.isRequired,
+        isPresent: PropTypes.bool.isRequired,
+        isValid: PropTypes.bool.isRequired,
+        errorKey: PropTypes.string.isRequired
+    }).isRequired,
     onImageSelected: PropTypes.func.isRequired
 };
 

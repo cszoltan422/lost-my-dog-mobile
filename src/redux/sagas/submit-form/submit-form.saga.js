@@ -7,7 +7,7 @@ import {
 } from '../../actions/submit-form/action-creators/action.creators';
 import * as FileSystem from 'expo-file-system';
 import * as ImageManipulator from 'expo-image-manipulator';
-import {DETAILS_IMAGE_NOT_SELECTED, DETAILS_IMAGE_SIZE_TOO_LARGE} from "../../../i18n/i18n.keys";
+import {DETAILS_IMAGE_NOT_SELECTED, DETAILS_IMAGE_SIZE_TOO_LARGE} from '../../../i18n/i18n.keys';
 import {
     DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS,
     DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS,
@@ -20,10 +20,10 @@ import {
     SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
     SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
     SUBMIT_FORM_STATUS_SELECT_INPUT_KEY
-} from "../../../application.constants";
-import UserService from "../../../service/UserService";
-import LostDogSubmissionService from "../../../service/LostDogSubmissionService";
-import {getCurrentTimeWithTimezone} from "../../../util/date/date.utils";
+} from '../../../application.constants';
+import UserService from '../../../service/UserService';
+import LostDogSubmissionService from '../../../service/LostDogSubmissionService';
+import {getCurrentTimeWithTimezone} from '../../../util/date/date.utils';
 
 export function* submitFormSubmittedWatcherSaga() {
     yield takeLatest([ON_SUBMIT_FORM_SUBMITTED], submitFormSubmittedSaga);
@@ -51,18 +51,18 @@ function* validateImage(selectedImage) {
 
     if (!selectedImage.isPresent) {
         yield put(onSubmitFormImageInvalid(DETAILS_IMAGE_NOT_SELECTED));
-        isImageValid =  false;
+        isImageValid = false;
     } else {
         let imageInfo = yield FileSystem.getInfoAsync(selectedImage.uri, { size: true });
         if (imageInfo.exists) {
             const imageSize = imageInfo.size;
             if (imageSize > ONE_GIGABYTE_IN_BYTES) {
                 yield put(onSubmitFormImageInvalid(DETAILS_IMAGE_SIZE_TOO_LARGE));
-                isImageValid =  false;
+                isImageValid = false;
             }
         } else {
             yield put(onSubmitFormImageInvalid(DETAILS_IMAGE_NOT_SELECTED));
-            isImageValid =  false;
+            isImageValid = false;
         }
     }
     return isImageValid;

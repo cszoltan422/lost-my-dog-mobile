@@ -31,24 +31,26 @@ const LostDogDetailsContent = (props) => {
     return (
         <>
             <Card styles={styles.descriptionCardStyle}>
-                <TextInput
-                    testID='details-screen-description-text-input'
-                    style={styles.descriptionTextInputStyle}
-                    editable={!props.isLoading}
-                    multiline
-                    placeholder={`${i18n.t(DETAILS_DOG_DESCRIPTION_LABEL_TITLE)}...`}
-                    value={props.inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].value}
-                    onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY, value)} />
-                {!props.inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].isValid && (
-                    <Text
-                        testID='details-screen-description-text-input-error'
-                        style={styles.errorLabel}>
-                        {i18n.t(DETAILS_INPUT_REQUIRED)}
-                    </Text>
-                )}
+                <>
+                    <TextInput
+                        testID='details-screen-description-text-input'
+                        style={styles.descriptionTextInputStyle}
+                        editable={!props.isLoading}
+                        multiline
+                        placeholder={`${i18n.t(DETAILS_DOG_DESCRIPTION_LABEL_TITLE)}...`}
+                        value={props.inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].value}
+                        onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY, value)} />
+                    {!props.inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].isValid && (
+                        <Text
+                            testID='details-screen-description-text-input-error'
+                            style={styles.errorLabel}>
+                            {i18n.t(DETAILS_INPUT_REQUIRED)}
+                        </Text>
+                    )}
+                </>
             </Card>
             <Card>
-                <View>
+                <>
                     <View style={styles.rowContainer}>
                         <View style={styles.columnContainer}>
                             <Text
@@ -251,7 +253,7 @@ const LostDogDetailsContent = (props) => {
                             </View>
                         )}
                     </View>
-                </View>
+                </>
             </Card>
         </>
     );

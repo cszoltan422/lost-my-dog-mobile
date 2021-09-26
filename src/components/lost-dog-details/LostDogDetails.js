@@ -79,10 +79,16 @@ LostDogDetails.propTypes = {
         latitude: PropTypes.number.isRequired,
         isPresent: PropTypes.bool.isRequired,
     }).isRequired,
-    selectedImageUri: PropTypes.string,
+    selectedImage: PropTypes.shape({
+        uri: PropTypes.string.isRequired,
+        isPresent: PropTypes.bool.isRequired,
+        errorKey: PropTypes.string.isRequired,
+        isValid: PropTypes.bool.isRequired
+    }).isRequired,
     onLocationValueChanged: PropTypes.func.isRequired,
     onInputValueChanged: PropTypes.func.isRequired,
     onImageSelected: PropTypes.func.isRequired,
+    onImageCleared: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
 };
 

@@ -12,16 +12,18 @@ const LostDogDetailsHeader = (props) => {
     return (
         <>
             <Card>
-                <CameraImagePicker
-                    selectedImage={props.selectedImage}
-                    onImageSelected={props.onImageSelected} />
-                {!props.selectedImage.isValid && (
-                    <Text
-                        testID='details-screen-header-image-error'
-                        style={styles.errorLabel}>
-                        {i18n.t(props.selectedImage.errorKey)}
-                    </Text>
-                )}
+                <>
+                    <CameraImagePicker
+                        selectedImage={props.selectedImage}
+                        onImageSelected={props.onImageSelected} />
+                    {!props.selectedImage.isValid && (
+                        <Text
+                            testID='details-screen-header-image-error'
+                            style={styles.errorLabel}>
+                            {i18n.t(props.selectedImage.errorKey)}
+                        </Text>
+                    )}
+                </>
             </Card>
             {props.selectedImage.isPresent && (
                 <Card>
@@ -56,8 +58,14 @@ const styles = StyleSheet.create({
 });
 
 LostDogDetailsHeader.propTypes = {
-    selectedImageUri: PropTypes.string,
-    onImageSelected: PropTypes.func.isRequired
+    selectedImage: PropTypes.shape({
+        uri: PropTypes.string.isRequired,
+        isPresent: PropTypes.bool.isRequired,
+        isValid: PropTypes.bool.isRequired,
+        errorKey: PropTypes.string.isRequired
+    }).isRequired,
+    onImageSelected: PropTypes.func.isRequired,
+    onImageCleared: PropTypes.func.isRequired
 };
 
 export default LostDogDetailsHeader;
