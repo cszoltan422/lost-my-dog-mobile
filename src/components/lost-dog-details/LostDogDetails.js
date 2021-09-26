@@ -22,8 +22,9 @@ const LostDogDetails = (props) => {
                 testID='details-screen-container'
                 style={styles.container}>
                 <LostDogDetailsHeader
-                    selectedImageUri={props.selectedImageUri}
-                    onImageSelected={props.onImageSelected} />
+                    selectedImage={props.selectedImage}
+                    onImageSelected={props.onImageSelected}
+                    onImageCleared={props.onImageCleared} />
                 <LostDogDetailsContent
                     isLoading={props.isLoading}
                     isValid={props.isValid}
@@ -49,7 +50,7 @@ const LostDogDetails = (props) => {
                         titleStyle={{color: colors.white}}
                         title={i18n.t(DETAILS_SUBMIT_BUTTON_TITLE)}
                         loading={props.isLoading}
-                        disabled={!props.isValid}
+                        disabled={!props.isValid || props.isLoading}
                         onPress={props.onSubmit} />
                 </Card>
             </View>

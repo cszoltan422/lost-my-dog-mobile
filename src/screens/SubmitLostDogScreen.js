@@ -5,7 +5,7 @@ import LostDogDetails from '../components/lost-dog-details/LostDogDetails';
 import {SUBMIT_DOG_TITLE} from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
 import {
-    onResetSubmitForm,
+    onResetSubmitForm, onSubmitFormImageCleared,
     onSubmitFormImageSelected,
     onSubmitFormInputValueChanged,
     onSubmitFormLocationValueChanged,
@@ -20,7 +20,7 @@ const SubmitLostDogScreen = () => {
     const error = useSelector(state => state.submitForm.error);
     const inputs = useSelector(state => state.submitForm.inputs);
     const location = useSelector(state => state.submitForm.location);
-    const selectedImageUri = useSelector(state => state.submitForm.selectedImageUri);
+    const selectedImage = useSelector(state => state.submitForm.selectedImage);
 
     const dispatch = useDispatch();
 
@@ -48,10 +48,11 @@ const SubmitLostDogScreen = () => {
             error={error}
             inputs={inputs}
             location={location}
-            selectedImageUri={selectedImageUri}
+            selectedImage={selectedImage}
             onInputValueChanged={(inputKey, value) => dispatch(onSubmitFormInputValueChanged(inputKey, value))}
             onLocationValueChanged={(coordinates) => dispatch(onSubmitFormLocationValueChanged(coordinates))}
             onImageSelected={(selectedImageUri) => dispatch(onSubmitFormImageSelected(selectedImageUri))}
+            onImageCleared={() => dispatch(onSubmitFormImageCleared())}
             onSubmit={() => dispatch(onSubmitFormSubmitted())} />
     );
 

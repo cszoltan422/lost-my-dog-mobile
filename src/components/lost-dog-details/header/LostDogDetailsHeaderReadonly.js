@@ -13,7 +13,7 @@ const LostDogDetailsHeaderReadonly = (props) => {
                 <Image
                     testID='details-screen-image'
                     style={styles.imageStyle}
-                    source={{uri: `${ENV.API_URL}/image/${props.dog.avatarFilename}`,}} />
+                    source={{uri: `${ENV.API_URL}/api/image/${props.dog.avatarFilename}`,}} />
             </Card>
             <Card styles={styles.descriptionCardStyle}>
                 <Text

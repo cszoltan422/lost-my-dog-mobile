@@ -27,7 +27,7 @@ import {
     DETAILS_DOG_SEX_FEMALE,
     DETAILS_DOG_SEX_LABEL_TITLE,
     DETAILS_DOG_SEX_MALE,
-    DETAILS_DOG_STATUS_LABEL_TITLE, DETAILS_INPUT_REQUIRED,
+    DETAILS_DOG_STATUS_LABEL_TITLE, DETAILS_IMAGE_NOT_SELECTED, DETAILS_IMAGE_SIZE_TOO_LARGE, DETAILS_INPUT_REQUIRED,
     DETAILS_MAP_VIEW_MARKER_TITLE,
     DETAILS_SEND_MESSAGE, DETAILS_SUBMIT_BUTTON_TITLE,
     EMAIL_EXISTS,
@@ -130,5 +130,7 @@ export default {
     [LOCATION_PICKER_INFO_DESCRIPTION]: 'Tap on the map to change the dog\'s last seen location!',
     [LOCATION_PICKER_CURRENT_COORDINATES]: 'Current coordinates: ',
     [DETAILS_SUBMIT_BUTTON_TITLE]: 'Submit',
-    [DETAILS_INPUT_REQUIRED]: 'This field can\'t be empty'
+    [DETAILS_INPUT_REQUIRED]: 'This field can\'t be empty',
+    [DETAILS_IMAGE_NOT_SELECTED]: 'Please select or take a picture of the dog!',
+    [DETAILS_IMAGE_SIZE_TOO_LARGE]: 'The size of the image must not exceed 1 Gb!'
 };

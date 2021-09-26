@@ -12,6 +12,8 @@ export const initialState = {
         token: null,
         isAdmin: false,
         isLocked: false,
+        username: null,
+        password: null,
         details: null
     },
     permissions: {
@@ -37,6 +39,8 @@ export const reducer = createReducer(initialState, {
         state.user = {
             isLoggedIn: action.payload.user.isLoggedIn,
             token: action.payload.user.token,
+            username: action.payload.user.username,
+            password: action.payload.user.password,
             isAdmin: action.payload.user.isAdmin,
             isLocked: action.payload.user.isLocked,
             details: action.payload.user.details
@@ -54,6 +58,8 @@ export const reducer = createReducer(initialState, {
         state.user = {
             isLoggedIn: true,
             token: action.payload.token,
+            username: action.payload.username,
+            password: action.payload.password,
             isAdmin: action.payload.isAdmin,
             isLocked: action.payload.isLocked,
             details: action.payload.details

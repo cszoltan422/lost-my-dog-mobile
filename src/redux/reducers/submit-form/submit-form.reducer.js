@@ -3,8 +3,9 @@ import validator from 'validator';
 import {
     SUBMIT_FORM_AGE_TEXT_INPUT_KEY,
     SUBMIT_FORM_BREED_TEXT_INPUT_KEY,
-    SUBMIT_FORM_COLOR_TEXT_INPUT_KEY, SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY,
-    SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY,
+    SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY,
+    SUBMIT_FORM_COLOR_TEXT_INPUT_KEY,
+    SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY,
     SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY,
     SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
     SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
@@ -19,9 +20,12 @@ import {
 } from '../../../i18n/i18n.keys';
 import {
     ON_RESET_SUBMIT_FORM,
+    ON_SUBMIT_FORM_IMAGE_CLEARED,
+    ON_SUBMIT_FORM_IMAGE_INVALID,
     ON_SUBMIT_FORM_IMAGE_SELECTED,
     ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
-    ON_SUBMIT_FORM_LOADING, ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED,
+    ON_SUBMIT_FORM_LOADING,
+    ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED,
     ON_SUBMIT_FORM_STOP_LOADING,
     ON_SUBMIT_FORM_SUBMIT_ERROR,
     ON_SUBMIT_FORM_VALIDATION_ERROR
@@ -81,7 +85,7 @@ export const initialState = {
             initialValue: false,
             isValid: true
         },
-        [SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY]: {
+        [SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY]: {
             value: '',
             initialValue: '',
             isValid: true
@@ -92,7 +96,12 @@ export const initialState = {
         latitude: 0,
         longitude: 0
     },
-    selectedImageUri: null
+    selectedImage: {
+        isPresent: false,
+        isValid: true,
+        errorKey: '',
+        uri: ''
+    },
 };
 
 export const reducer = createReducer(initialState, {
@@ -109,7 +118,24 @@ export const reducer = createReducer(initialState, {
         };
     },
     [ON_SUBMIT_FORM_IMAGE_SELECTED]: (state, action) => {
-        state.selectedImageUri = action.payload;
+        state.selectedImage.isPresent = true;
+        state.selectedImage.isValid = true;
+        state.selectedImage.errorKey = '';
+        state.selectedImage.uri = action.payload;
+
+        state.isValid = true;
+    },
+    [ON_SUBMIT_FORM_IMAGE_CLEARED]: (state) => {
+        state.selectedImage.isPresent = false;
+        state.selectedImage.isValid = true;
+        state.selectedImage.errorKey = '';
+        state.selectedImage.uri = '';
+    },
+    [ON_SUBMIT_FORM_IMAGE_INVALID]: (state, action) => {
+        state.selectedImage.isValid = false;
+        state.selectedImage.errorKey = action.payload;
+
+        state.isValid = false;
     },
     [ON_SUBMIT_FORM_VALIDATION_ERROR]: (state, action) => {
         state.inputs[action.payload].isValid = false;
@@ -131,12 +157,18 @@ export const reducer = createReducer(initialState, {
         state.error = '';
         Object.keys(state.inputs).forEach((inputKey) => {
             state.inputs[inputKey].value = state.inputs[inputKey].initialValue;
+            state.inputs[inputKey].isValid = true;
         });
         state.location = {
             isPresent: false,
             latitude: 0,
             longitude: 0
         };
-        state.selectedImageUri = null;
+        state.selectedImage = {
+            isPresent: false,
+            isValid: true,
+            errorKey: '',
+            uri: ''
+        };
     }
 });

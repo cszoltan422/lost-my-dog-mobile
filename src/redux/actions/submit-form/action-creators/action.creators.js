@@ -1,5 +1,5 @@
 import {
-    ON_RESET_SUBMIT_FORM,
+    ON_RESET_SUBMIT_FORM, ON_SUBMIT_FORM_IMAGE_CLEARED, ON_SUBMIT_FORM_IMAGE_INVALID,
     ON_SUBMIT_FORM_IMAGE_SELECTED,
     ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
     ON_SUBMIT_FORM_LOADING, ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED,
@@ -30,6 +30,12 @@ export const onSubmitFormImageSelected = (selectedImageUri) => {
     return {
         type: ON_SUBMIT_FORM_IMAGE_SELECTED,
         payload: selectedImageUri
+    }
+};
+
+export const onSubmitFormImageCleared = () => {
+    return {
+        type: ON_SUBMIT_FORM_IMAGE_CLEARED
     }
 };
 
@@ -71,3 +77,10 @@ export const onResetSubmitForm = () => {
         type: ON_RESET_SUBMIT_FORM
     }
 };
+
+export const onSubmitFormImageInvalid = (errorKey) => {
+    return {
+        type: ON_SUBMIT_FORM_IMAGE_INVALID,
+        payload: errorKey
+    }
+}

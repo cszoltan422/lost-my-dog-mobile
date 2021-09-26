@@ -19,7 +19,7 @@ import {
     SUBMIT_FORM_AGE_TEXT_INPUT_KEY,
     SUBMIT_FORM_BREED_TEXT_INPUT_KEY,
     SUBMIT_FORM_COLOR_TEXT_INPUT_KEY, SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY,
-    SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY,
+    SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY,
     SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY,
     SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
     SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
@@ -239,9 +239,9 @@ const LostDogDetailsContent = (props) => {
                                     style={styles.textInputStyle}
                                     editable={!props.isLoading}
                                     placeholder={`${i18n.t(DETAILS_DOG_CHIP_NUMBER)}...`}
-                                    value={props.inputs[SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY].value}
-                                    onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY, value)} />
-                                {!props.inputs[SUBMIT_FORM_HAS_CHIP_NUMBER_TEXT_INPUT_KEY].isValid && (
+                                    value={props.inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].value}
+                                    onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY, value)} />
+                                {!props.inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].isValid && (
                                     <Text
                                         testID='details-screen-dog-chip-number-text-input-error'
                                         style={styles.errorLabel}>

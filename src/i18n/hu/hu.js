@@ -27,7 +27,7 @@ import {
     DETAILS_DOG_SEX_FEMALE,
     DETAILS_DOG_SEX_LABEL_TITLE,
     DETAILS_DOG_SEX_MALE,
-    DETAILS_DOG_STATUS_LABEL_TITLE, DETAILS_INPUT_REQUIRED,
+    DETAILS_DOG_STATUS_LABEL_TITLE, DETAILS_IMAGE_NOT_SELECTED, DETAILS_IMAGE_SIZE_TOO_LARGE, DETAILS_INPUT_REQUIRED,
     DETAILS_MAP_VIEW_MARKER_TITLE,
     DETAILS_SEND_MESSAGE, DETAILS_SUBMIT_BUTTON_TITLE,
     EMAIL_EXISTS,
@@ -130,6 +130,8 @@ export default {
     [LOCATION_PICKER_INFO_DESCRIPTION]: 'Koppints a térképre, hogy a kutya utolsó ismert tartózkodási helyét megváltoztasd!',
     [LOCATION_PICKER_CURRENT_COORDINATES]: 'Jelenlegi koordináták: ',
     [DETAILS_SUBMIT_BUTTON_TITLE]: 'Küldés',
-    [DETAILS_INPUT_REQUIRED]: 'Ez a mező nem lehet üres'
+    [DETAILS_INPUT_REQUIRED]: 'Ez a mező nem lehet üres',
+    [DETAILS_IMAGE_NOT_SELECTED]: 'Készíts vagy válassz ki egy képet az elveszett kutyusról!',
+    [DETAILS_IMAGE_SIZE_TOO_LARGE]: 'A kép mérete nem lehet nagyobb mint 1 Gb!'
 };
 // á é í ú ü ű ó ő

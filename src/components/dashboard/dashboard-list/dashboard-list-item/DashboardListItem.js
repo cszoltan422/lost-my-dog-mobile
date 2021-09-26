@@ -29,7 +29,7 @@ const DashboardListItem = (props) => {
                                     rounded
                                     title={props.dog.dogName.charAt(0)}
                                     source={{
-                                        uri: `${ENV.API_URL}/image/${props.dog.avatarFilename}`,
+                                        uri: `${ENV.API_URL}/api/image/${props.dog.avatarFilename}`,
                                     }} />
                             </View>
                             <View style={styles.titleContainer}>

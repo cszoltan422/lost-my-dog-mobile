@@ -42,7 +42,6 @@ const CameraImagePicker = (props) => {
             mediaTypes: ImagePicker.MediaTypeOptions.Images
         });
         if (!cameraResult.cancelled) {
-            console.log(cameraResult)
             props.onImageSelected(cameraResult.uri);
         }
     };
@@ -52,7 +51,6 @@ const CameraImagePicker = (props) => {
             mediaTypes: ImagePicker.MediaTypeOptions.Images
         });
         if (!imagePickerResult.cancelled) {
-            console.log(imagePickerResult)
             props.onImageSelected(imagePickerResult.uri);
         }
 
@@ -60,11 +58,11 @@ const CameraImagePicker = (props) => {
 
     return (
         <View style={styles.container}>
-            {props.selectedImageUri ?
+            {props.selectedImage.isPresent ?
                 <>
                     <Image
                         style={styles.imageStyle}
-                        source={{uri: props.selectedImageUri,}} />
+                        source={{uri: props.selectedImage.uri,}} />
                 </>
             :
                 <>
