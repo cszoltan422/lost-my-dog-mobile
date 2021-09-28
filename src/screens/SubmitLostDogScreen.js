@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import HeaderMenu from '../components/menu/HeaderMenu';
 import LostDogDetails from '../components/lost-dog-details/LostDogDetails';
@@ -64,5 +65,9 @@ SubmitLostDogScreen['navigationOptions'] = ({ navigation }) => ({
     title: i18n.t(SUBMIT_DOG_TITLE),
     headerRight: () => <HeaderMenu navigation={navigation} /> // eslint-disable-line
 });
+
+SubmitLostDogScreen.propTypes = {
+    navigation: PropTypes.object.isRequired
+};
 
 export default SubmitLostDogScreen;
