@@ -25,7 +25,7 @@ import {
     ON_SUBMIT_FORM_IMAGE_SELECTED,
     ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
     ON_SUBMIT_FORM_LOADING,
-    ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED,
+    ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED, ON_SUBMIT_FORM_PUBLISH_LOADING_PROGRESS,
     ON_SUBMIT_FORM_STOP_LOADING,
     ON_SUBMIT_FORM_SUBMIT_ERROR,
     ON_SUBMIT_FORM_VALIDATION_ERROR
@@ -34,6 +34,10 @@ import {
 export const initialState = {
     isValid: true,
     isLoading: false,
+    loading: {
+        progress: 0,
+        stage: ''
+    },
     error: '',
     inputs: {
         [SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY]: {
@@ -146,6 +150,10 @@ export const reducer = createReducer(initialState, {
     },
     [ON_SUBMIT_FORM_STOP_LOADING]: (state) => {
         state.isLoading = false;
+        state.loading = {
+            progress: 0,
+            stage: ''
+        };
     },
     [ON_SUBMIT_FORM_SUBMIT_ERROR]: (state, action) => {
         state.error = action.payload;
@@ -154,6 +162,10 @@ export const reducer = createReducer(initialState, {
     [ON_RESET_SUBMIT_FORM]: (state) => {
         state.isValid = true;
         state.isLoading = false;
+        state.loading = {
+            progress: 0,
+            stage: ''
+        };
         state.error = '';
         Object.keys(state.inputs).forEach((inputKey) => {
             state.inputs[inputKey].value = state.inputs[inputKey].initialValue;
@@ -169,6 +181,12 @@ export const reducer = createReducer(initialState, {
             isValid: true,
             errorKey: '',
             uri: ''
+        };
+    },
+    [ON_SUBMIT_FORM_PUBLISH_LOADING_PROGRESS]: (state, action) => {
+        state.loading = {
+            progress: action.payload.progress,
+            stage: action.payload.stage
         };
     }
 });

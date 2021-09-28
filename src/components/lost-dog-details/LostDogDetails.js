@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Button} from 'react-native-elements';
+import ProgressBar from 'react-native-progress/Bar';
 import Card from '../common/card/Card';
 import LocationPicker from '../common/location-picker/LocationPicker';
 import LostDogDetailsHeader from './header/LostDogDetailsHeader';
@@ -9,7 +10,7 @@ import LostDogDetailsContent from './content/LostDogDetailsContent';
 import i18n from '../../i18n/i18n';
 import {
     DETAILS_MAP_VIEW_MARKER_TITLE,
-    DETAILS_SUBMIT_BUTTON_TITLE
+    DETAILS_SUBMIT_BUTTON_TITLE, DETAILS_SUBMITTED_LOADING_TEXT
 } from '../../i18n/i18n.keys';
 import colors from '../../colors';
 
@@ -44,14 +45,32 @@ const LostDogDetails = (props) => {
                     </Card>
                 )}
                 <Card>
-                    <Button
-                        testID='details-screen-submit-button'
-                        buttonStyle={styles.buttonStyle}
-                        titleStyle={{color: colors.white}}
-                        title={i18n.t(DETAILS_SUBMIT_BUTTON_TITLE)}
-                        loading={props.isLoading}
-                        disabled={!props.isValid || props.isLoading}
-                        onPress={props.onSubmit} />
+                    <>
+                        <Button
+                            testID='details-screen-submit-button'
+                            buttonStyle={styles.buttonStyle}
+                            titleStyle={{color: colors.white}}
+                            title={i18n.t(DETAILS_SUBMIT_BUTTON_TITLE)}
+                            loading={props.isLoading}
+                            disabled={!props.isValid || props.isLoading}
+                            onPress={props.onSubmit} />
+                        {props.isLoading && (
+                            <View style={styles.loadingProgressContainer}>
+                                <Text style={styles.loadingProgressInfoTextStyle}>
+                                    {i18n.t(DETAILS_SUBMITTED_LOADING_TEXT)}
+                                </Text>
+                                <Text style={styles.loadingProgressStageStyle}>
+                                    {i18n.t(props.loading.stage)}
+                                </Text>
+                                <View style={styles.progressbarContainer}>
+                                    <ProgressBar
+                                        width={null}
+                                        color={colors.accentColor}
+                                        progress={props.loading.progress} />
+                                </View>
+                            </View>
+                        )}
+                    </>
                 </Card>
             </View>
         </ScrollView>
@@ -68,6 +87,23 @@ const styles = StyleSheet.create({
         marginEnd: 8,
         backgroundColor: colors.accentColor
     },
+    loadingProgressContainer: {
+        marginTop: 8,
+        alignItems: 'center'
+    },
+    loadingProgressInfoTextStyle: {
+        color: colors.grey
+    },
+    loadingProgressStageStyle: {
+        fontSize: 16,
+        color: colors.accentColor,
+        fontWeight: 'bold'
+    },
+    progressbarContainer: {
+        marginTop: 8,
+        alignSelf: 'flex-start',
+        width: '100%'
+    }
 });
 
 LostDogDetails.propTypes = {

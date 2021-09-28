@@ -17,6 +17,7 @@ const SubmitLostDogScreen = () => {
 
     const isValid = useSelector(state => state.submitForm.isValid);
     const isLoading = useSelector(state => state.submitForm.isLoading);
+    const loading = useSelector(state => state.submitForm.loading);
     const error = useSelector(state => state.submitForm.error);
     const inputs = useSelector(state => state.submitForm.inputs);
     const location = useSelector(state => state.submitForm.location);
@@ -45,6 +46,7 @@ const SubmitLostDogScreen = () => {
         <LostDogDetails
             isValid={isValid}
             isLoading={isLoading}
+            loading={loading}
             error={error}
             inputs={inputs}
             location={location}
