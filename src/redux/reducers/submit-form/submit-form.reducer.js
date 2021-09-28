@@ -1,6 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
 import validator from 'validator';
 import {
+    EMOJI_REGEX,
     SUBMIT_FORM_AGE_TEXT_INPUT_KEY,
     SUBMIT_FORM_BREED_TEXT_INPUT_KEY,
     SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY,
@@ -44,45 +45,66 @@ export const initialState = {
             value: '',
             initialValue: '',
             isValid: true,
-            validator: (value) => !!value && !validator.isEmpty(value)
+            validator: (value) =>
+                !!value &&
+                !validator.isEmpty(value) &&
+                !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_NAME_TEXT_INPUT_KEY]: {
             value: '',
             initialValue: '',
             isValid: true,
-            validator: (value) => !!value && !validator.isEmpty(value)
+            validator: (value) =>
+                !!value &&
+                !validator.isEmpty(value) &&
+                !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_BREED_TEXT_INPUT_KEY]: {
             value: '',
             initialValue: '',
             isValid: true,
-            validator: (value) => !!value && !validator.isEmpty(value)
+            validator: (value) =>
+                !!value &&
+                !validator.isEmpty(value) &&
+                !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_SEX_SELECT_INPUT_KEY]: {
             value: null,
             initialValue: null,
             options: [DETAILS_DOG_SEX_MALE, DETAILS_DOG_SEX_FEMALE],
             isValid: true,
-            validator: (value) => !!value && !validator.isEmpty(value)
+            validator: (value) =>
+                !!value &&
+                !validator.isEmpty(value) &&
+                !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_COLOR_TEXT_INPUT_KEY]: {
             value: '',
             initialValue: '',
             isValid: true,
-            validator: (value) => !!value && !validator.isEmpty(value)
+            validator: (value) =>
+                !!value &&
+                !validator.isEmpty(value) &&
+                !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_STATUS_SELECT_INPUT_KEY]: {
             value: null,
             initialValue: null,
             options: [DASHBOARD_DOG_STATUS_LOST, DASHBOARD_DOG_STATUS_WANDERING, DASHBOARD_DOG_STATUS_FOUND],
             isValid: true,
-            validator: (value) => !!value && !validator.isEmpty(value)
+            validator: (value) =>
+                !!value &&
+                !validator.isEmpty(value) &&
+                !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_AGE_TEXT_INPUT_KEY]: {
             value: '',
             initialValue: '',
             isValid: true,
-            validator: (value) => !!value && !validator.isEmpty(value)
+            validator: (value) =>
+                !!value &&
+                !validator.isEmpty(value) &&
+                !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY]: {
             value: false,
