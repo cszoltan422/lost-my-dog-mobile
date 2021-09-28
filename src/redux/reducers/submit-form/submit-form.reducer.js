@@ -10,18 +10,27 @@ import {
     SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY,
     SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
     SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
-    SUBMIT_FORM_STATUS_SELECT_INPUT_KEY
+    SUBMIT_FORM_STATUS_SELECT_INPUT_KEY,
+    SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY,
+    SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY
 } from '../../../application.constants';
 import {
     DASHBOARD_DOG_STATUS_FOUND,
     DASHBOARD_DOG_STATUS_LOST,
-    DASHBOARD_DOG_STATUS_WANDERING, DETAILS_DOG_AGE_LABEL_TITLE,
-    DETAILS_DOG_BREED_LABEL_TITLE, DETAILS_DOG_CHIP_NUMBER,
-    DETAILS_DOG_COLOR_LABEL_TITLE, DETAILS_DOG_HAS_CHIP,
+    DASHBOARD_DOG_STATUS_WANDERING,
+    DETAILS_DOG_AGE_LABEL_TITLE,
+    DETAILS_DOG_BREED_LABEL_TITLE,
+    DETAILS_DOG_CHIP_NUMBER,
+    DETAILS_DOG_COLOR_LABEL_TITLE,
+    DETAILS_DOG_HAS_CHIP,
     DETAILS_DOG_NAME_LABEL_TITLE,
     DETAILS_DOG_SEX_FEMALE,
     DETAILS_DOG_SEX_LABEL_TITLE,
-    DETAILS_DOG_SEX_MALE, DETAILS_DOG_STATUS_LABEL_TITLE
+    DETAILS_DOG_SEX_MALE,
+    DETAILS_DOG_STATUS_LABEL_TITLE,
+    DETAILS_EMAIL_INVALID,
+    DETAILS_INPUT_REQUIRED,
+    DETAILS_PHONE_NUMBER_INVALID, DETAILS_SUBMITTER_EMAIL_ADDRESS, DETAILS_SUBMITTER_PHONE_NUMBER
 } from '../../../i18n/i18n.keys';
 import {
     ON_RESET_SUBMIT_FORM,
@@ -51,6 +60,7 @@ export const initialState = {
             initialValue: '',
             isRequired: true,
             isValid: true,
+            errorKey: DETAILS_INPUT_REQUIRED,
             validator: (value) =>
                 !!value &&
                 !validator.isEmpty(value) &&
@@ -62,11 +72,13 @@ export const initialState = {
             initialValue: '',
             isRequired: true,
             isValid: true,
+            errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-name-text-label',
             inputTestID: 'details-screen-dog-name-text-input',
             errorTestID: 'details-screen-dog-name-text-input-error',
             keyboardType: 'default',
             autoCapitalize: 'words',
+            contextMenuHidden: false,
             validator: (value) =>
                 !!value &&
                 !validator.isEmpty(value) &&
@@ -78,11 +90,13 @@ export const initialState = {
             initialValue: '',
             isRequired: true,
             isValid: true,
+            errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-breed-text-label',
             inputTestID: 'details-screen-dog-breed-text-input',
             errorTestID: 'details-screen-dog-breed-text-input-error',
             keyboardType: 'default',
             autoCapitalize: 'none',
+            contextMenuHidden: false,
             validator: (value) =>
                 !!value &&
                 !validator.isEmpty(value) &&
@@ -95,6 +109,7 @@ export const initialState = {
             isRequired: true,
             options: [DETAILS_DOG_SEX_MALE, DETAILS_DOG_SEX_FEMALE],
             isValid: true,
+            errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-gender-text-label',
             inputTestID: 'details-screen-dog-gender-select-input',
             errorTestID: 'details-screen-dog-gender-select-input-error',
@@ -109,11 +124,13 @@ export const initialState = {
             initialValue: '',
             isRequired: true,
             isValid: true,
+            errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-color-text-label',
             inputTestID: 'details-screen-dog-color-text-input',
             errorTestID: 'details-screen-dog-color-text-input-error',
             keyboardType: 'default',
             autoCapitalize: 'none',
+            contextMenuHidden: false,
             validator: (value) =>
                 !!value &&
                 !validator.isEmpty(value) &&
@@ -126,6 +143,7 @@ export const initialState = {
             isRequired: true,
             options: [DASHBOARD_DOG_STATUS_LOST, DASHBOARD_DOG_STATUS_WANDERING, DASHBOARD_DOG_STATUS_FOUND],
             isValid: true,
+            errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-status-text-label',
             inputTestID: 'details-screen-dog-status-select-input',
             errorTestID: 'details-screen-dog-status-select-input-error',
@@ -140,21 +158,25 @@ export const initialState = {
             initialValue: '',
             isRequired: true,
             isValid: true,
+            errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-age-text-label',
             inputTestID: 'details-screen-dog-age-text-input',
             errorTestID: 'details-screen-dog-age-text-input-error',
             keyboardType: 'numeric',
             autoCapitalize: 'none',
+            contextMenuHidden: true,
             validator: (value) =>
                 !!value &&
                 !validator.isEmpty(value) &&
-                !EMOJI_REGEX.test(value)
+                !EMOJI_REGEX.test(value) &&
+                validator.isNumeric(value)
         },
         [SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY]: {
             labelKey: DETAILS_DOG_HAS_CHIP,
             value: false,
             initialValue: false,
             isValid: true,
+            errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-has-chip-toggle-label',
             inputTestID: 'details-screen-dog-has-chip-toggle-input',
             errorTestID: 'details-screen-dog-has-chip-toggle-input-error',
@@ -165,11 +187,60 @@ export const initialState = {
             initialValue: '',
             isRequired: false,
             isValid: true,
+            errorKey: DETAILS_INPUT_REQUIRED,
             keyboardType: 'numeric',
             autoCapitalize: 'none',
+            contextMenuHidden: false,
             labelTestID: 'details-screen-dog-chip-number-text-label',
             inputTestID: 'details-screen-dog-chip-number-text-input',
             errorTestID: 'details-screen-dog-chip-number-text-input-error',
+        },
+        [SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY]: {
+            labelKey: DETAILS_SUBMITTER_EMAIL_ADDRESS,
+            value: '',
+            initialValue: '',
+            isRequired: false,
+            isValid: true,
+            errorKey: DETAILS_EMAIL_INVALID,
+            keyboardType: 'email-address',
+            autoCapitalize: 'none',
+            contextMenuHidden: false,
+            labelTestID: 'details-screen-submitter-email-text-label',
+            inputTestID: 'details-screen-submitter-email-text-input',
+            errorTestID: 'details-screen-submitter-email-text-input-error',
+            validator: (value) =>
+                !value ||
+                (
+                    !validator.isEmpty(value) &&
+                    !EMOJI_REGEX.test(value) &&
+                    validator.isEmail(
+                        value.replace(/\s/g, '')
+                    )
+                )
+        },
+        [SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY]: {
+            labelKey: DETAILS_SUBMITTER_PHONE_NUMBER,
+            value: '',
+            initialValue: '',
+            isRequired: false,
+            isValid: true,
+            errorKey: DETAILS_PHONE_NUMBER_INVALID,
+            keyboardType: 'phone-pad',
+            autoCapitalize: 'none',
+            contextMenuHidden: false,
+            labelTestID: 'details-screen-submitter-phone_number-text-label',
+            inputTestID: 'details-screen-submitter-phone-number-text-input',
+            errorTestID: 'details-screen-submitter-phone-number-text-input-error',
+            validator: (value) =>
+                !value ||
+                (
+                    !validator.isEmpty(value) &&
+                    !EMOJI_REGEX.test(value) &&
+                    validator.isMobilePhone(
+                        value.replace(/\s/g, '')
+                            .replace('-', '')
+                    )
+                )
         }
     },
     location: {

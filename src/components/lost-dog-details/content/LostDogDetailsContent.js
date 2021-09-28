@@ -13,12 +13,15 @@ import colors from '../../../colors';
 import {
     SUBMIT_FORM_AGE_TEXT_INPUT_KEY,
     SUBMIT_FORM_BREED_TEXT_INPUT_KEY,
-    SUBMIT_FORM_COLOR_TEXT_INPUT_KEY, SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY,
+    SUBMIT_FORM_COLOR_TEXT_INPUT_KEY,
+    SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY,
     SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY,
     SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY,
     SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
     SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
-    SUBMIT_FORM_STATUS_SELECT_INPUT_KEY
+    SUBMIT_FORM_STATUS_SELECT_INPUT_KEY,
+    SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY,
+    SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY
 } from '../../../application.constants';
 
 const LostDogDetailsContent = (props) => {
@@ -39,13 +42,14 @@ const LostDogDetailsContent = (props) => {
                     placeholder={`${i18n.t(props.inputs[inputKey].labelKey)}...`}
                     keyboardType={props.inputs[inputKey].keyboardType}
                     autoCapitalize={props.inputs[inputKey].autoCapitalize}
+                    contextMenuHidden={props.inputs[inputKey].contextMenuHidden}
                     value={props.inputs[inputKey].value}
                     onChangeText={(value) => props.onInputValueChanged(inputKey, value)} />
                 {!props.inputs[inputKey].isValid && (
                     <Text
                         testID={props.inputs[inputKey].errorTestID}
                         style={styles.errorLabel}>
-                        {i18n.t(DETAILS_INPUT_REQUIRED)}
+                        {i18n.t(props.inputs[inputKey].errorKey)}
                     </Text>
                 )}
             </>
@@ -185,6 +189,16 @@ const LostDogDetailsContent = (props) => {
                         </Text>
                     </View>
                 </>
+            </Card>
+            <Card>
+                <View style={styles.rowContainer}>
+                    <View style={styles.columnContainer}>
+                        {renderTextInput(SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY)}
+                    </View>
+                    <View style={styles.columnContainer}>
+                        {renderTextInput(SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY)}
+                    </View>
+                </View>
             </Card>
         </>
     );
