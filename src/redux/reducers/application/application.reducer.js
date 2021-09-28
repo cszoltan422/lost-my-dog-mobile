@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import {
     ON_LOCATION_PERMISSION_CHECKED,
-    ON_INITIALIZE_APPLICATION, ON_APPLICATION_SUCCESSFUL_LOGIN_PERSIST_USER
+    ON_INITIALIZE_APPLICATION, ON_APPLICATION_SUCCESSFUL_LOGIN_PERSIST_USER, ON_UPDATE_CURRENT_LOCATION
 } from '../../actions/application/action-types/action.types';
 import moment from 'moment';
 
@@ -15,6 +15,11 @@ export const initialState = {
         username: null,
         password: null,
         details: null
+    },
+    location: {
+        longitude: 0,
+        latitude: 0,
+        isPresent: false
     },
     permissions: {
         location: {
@@ -53,6 +58,13 @@ export const reducer = createReducer(initialState, {
     },
     [ON_LOCATION_PERMISSION_CHECKED]: (state, action) => {
         state.permissions.location = action.payload;
+    },
+    [ON_UPDATE_CURRENT_LOCATION]: (state, action) => {
+        state.location = {
+            longitude: action.payload.longitude,
+            latitude: action.payload.latitude,
+            isPresent: true
+        };
     },
     [ON_APPLICATION_SUCCESSFUL_LOGIN_PERSIST_USER]: (state, action) => {
         state.user = {

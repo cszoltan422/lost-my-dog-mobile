@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import HeaderMenu from '../components/menu/HeaderMenu';
 import LostDogDetails from '../components/lost-dog-details/LostDogDetails';
 import {SUBMIT_DOG_TITLE} from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
@@ -12,8 +11,7 @@ import {
     onSubmitFormLocationValueChanged,
     onSubmitFormSubmitted
 } from '../redux/actions/submit-form/action-creators/action.creators';
-import {getLocation} from '../util/location/location.utils';
-import {LocationAccuracy} from "expo-location";
+import {useComponentDidMount} from '../hooks/useComponentDidMount';
 
 const SubmitLostDogScreen = (props) => {
 
@@ -24,19 +22,16 @@ const SubmitLostDogScreen = (props) => {
     const inputs = useSelector(state => state.submitForm.inputs);
     const location = useSelector(state => state.submitForm.location);
     const selectedImage = useSelector(state => state.submitForm.selectedImage);
+    const currentLocation = useSelector(state => state.application.location);
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        async function getCurrentLocation() {let currentLocation = await getLocation(LocationAccuracy.High);
-            dispatch(onSubmitFormLocationValueChanged({
-                longitude: currentLocation.coords.longitude,
-                latitude: currentLocation.coords.latitude
-            }));
-        }
-
-        getCurrentLocation();
-    }, []);
+    useComponentDidMount(() => {
+        dispatch(onSubmitFormLocationValueChanged({
+            longitude: currentLocation.longitude,
+            latitude: currentLocation.latitude
+        }));
+    });
 
     useEffect(() => {
         return () => {
@@ -62,9 +57,8 @@ const SubmitLostDogScreen = (props) => {
 
 };
 
-SubmitLostDogScreen['navigationOptions'] = ({ navigation }) => ({
-    title: i18n.t(SUBMIT_DOG_TITLE),
-    headerRight: () => <HeaderMenu navigation={navigation} /> // eslint-disable-line
+SubmitLostDogScreen['navigationOptions'] = () => ({
+    title: i18n.t(SUBMIT_DOG_TITLE)
 });
 
 SubmitLostDogScreen.propTypes = {

@@ -3,7 +3,7 @@ import {
     ON_APPLICATION_MOUNTED,
     ON_INITIALIZE_APPLICATION,
     ON_LOCATION_PERMISSION_CHECKED,
-    ON_APPLICATION_SUCCESSFUL_LOGIN_PERSIST_USER
+    ON_APPLICATION_SUCCESSFUL_LOGIN_PERSIST_USER, ON_WATCH_CURRENT_LOCATION, ON_UPDATE_CURRENT_LOCATION
 } from '../action-types/action.types';
 
 export const onApplicationMounted = () => {
@@ -22,6 +22,19 @@ export const onInitializeApplication = (applicationInitializer) => {
 export const onCheckLocationPermission = () => {
     return {
       type: ON_CHECK_LOCATION_PERMISSION
+    };
+};
+
+export const onWatchCurrentLocation = () => {
+    return {
+        type: ON_WATCH_CURRENT_LOCATION
+    };
+};
+
+export const onUpdateCurrentLocation = (currentLocation) => {
+    return {
+        type: ON_UPDATE_CURRENT_LOCATION,
+        payload: currentLocation
     };
 };
 

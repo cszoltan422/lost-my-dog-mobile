@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Linking} from 'react-native';
 import LostDogDetailsReadonly from '../components/lost-dog-details/LostDogDetailsReadonly';
-import HeaderMenu from '../components/menu/HeaderMenu';
 import FloatingActionButton from '../components/common/floating-action-button/FloatingActionButton';
 import {
     DETAILS_NAVIGATION_PARAM_NAME,
@@ -57,8 +56,7 @@ const DetailsScreen = (props) => {
 
 DetailsScreen['navigationOptions'] = ({ navigation }) => ({
     title: navigation.getParam(DETAILS_NAVIGATION_PARAM_NAME).dogName,
-    headerBackTitleVisible: false,
-    headerRight: () => <HeaderMenu navigation={navigation} /> // eslint-disable-line
+    headerBackTitleVisible: false
 });
 
 DetailsScreen.propTypes = {
