@@ -13,6 +13,7 @@ import {
     onSubmitFormSubmitted
 } from '../redux/actions/submit-form/action-creators/action.creators';
 import {getLocation} from '../util/location/location.utils';
+import {LocationAccuracy} from "expo-location";
 
 const SubmitLostDogScreen = (props) => {
 
@@ -27,7 +28,7 @@ const SubmitLostDogScreen = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        async function getCurrentLocation() {let currentLocation = await getLocation();
+        async function getCurrentLocation() {let currentLocation = await getLocation(LocationAccuracy.High);
             dispatch(onSubmitFormLocationValueChanged({
                 longitude: currentLocation.coords.longitude,
                 latitude: currentLocation.coords.latitude

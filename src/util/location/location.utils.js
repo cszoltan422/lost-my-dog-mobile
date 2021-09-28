@@ -4,7 +4,7 @@ import {E2E_MOCK_LOCATION} from '../../application.constants';
 
 export const getLocation = async (accuracy) => {
     if (ENV.GET_DEVICE_LOCATION) {
-        return Location.getCurrentPositionAsync({
+        return Location.getLastKnownPositionAsync({
             accuracy: accuracy
         });
     } else {

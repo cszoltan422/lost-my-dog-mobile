@@ -7,7 +7,7 @@ const ENV = {
     },
     develop: {
         API_URL: 'http://192.168.1.70:8080',
-        GET_DEVICE_LOCATION: false
+        GET_DEVICE_LOCATION: true
     },
     staging: {
         API_URL: 'https://lost-my-dog-staging.herokuapp.com',
