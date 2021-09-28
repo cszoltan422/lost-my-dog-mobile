@@ -10,14 +10,14 @@ export const onLoginUsernameChanged = (username) => {
     return {
         type: ON_LOGIN_USERNAME_CHANGED,
         payload: username
-    }
+    };
 };
 
 export const onLoginPasswordChanged = (password) => {
     return {
         type: ON_LOGIN_PASSWORD_CHANGED,
         payload: password
-    }
+    };
 };
 
 export const onLoginAttempted = (navigation) => {
@@ -30,20 +30,20 @@ export const onLoginAttempted = (navigation) => {
 export const onLoginLoading = () => {
     return {
         type: ON_LOGIN_LOADING
-    }
+    };
 };
 
 export const onLoginStopLoading = () => {
     return {
         type: ON_LOGIN_STOP_LOADING
-    }
-}
+    };
+};
 
 export const onLoginSuccess = () => {
     return {
         type: ON_LOGIN_SUCCESS
-    }
-}
+    };
+};
 
 export const onLoginAttemptError = (error) => {
     return {

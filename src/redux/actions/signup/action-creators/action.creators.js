@@ -12,44 +12,44 @@ export const onSignupInputValueChanged = (inputKey, value) => {
             inputKey: inputKey,
             value: value
         }
-    }
+    };
 };
 
 export const onSignupAttempted = (navigation) => {
     return {
         type: ON_SIGNUP_ATTEMPTED,
         payload: navigation
-    }
+    };
 };
 
 export const onSignupValidationError = (inputKey) => {
     return {
         type: ON_SIGNUP_VALIDATION_ERROR,
         payload: inputKey
-    }
+    };
 };
 
 export const onSignupSuccess = () => {
     return {
         type: ON_SIGNUP_SUCCESS
-    }
+    };
 };
 
 export const onSignupLoading = () => {
     return {
         type: ON_SIGNUP_LOADING
-    }
+    };
 };
 
 export const onSignupStopLoading = () => {
     return {
         type: ON_SIGNUP_STOP_LOADING
-    }
+    };
 };
 
 export const onSignupAttemptError = (error) => {
     return {
         type: ON_SIGNUP_ATTEMPT_ERROR,
         payload: error
-    }
+    };
 };

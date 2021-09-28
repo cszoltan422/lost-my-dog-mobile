@@ -31,7 +31,7 @@ const ACTION_TYPE_STATUS_CHANGE_HANDLER = {
     [ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM]: onDashboardLoading,
     [ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM]: onDashboardLoading,
     [ON_SUBMIT_FORM_SUBMIT_SUCCESS]: onDashboardLoading,
-}
+};
 
 export function* dashboardFetchActionWatcherSaga() {
     yield takeLatest([

@@ -41,7 +41,7 @@ const LocationPicker = (props) => {
                 latitudeDelta: region.latitudeDelta,
                 longitudeDelta: region.longitudeDelta
         });
-    }
+    };
 
     const handleOnCoordinateTextPressed = () => {
         setCoordinate((currentState) => {
@@ -52,7 +52,7 @@ const LocationPicker = (props) => {
                 longitudeDelta: currentState.longitudeDelta
             };
         });
-    }
+    };
 
     return (
         <View>
@@ -144,6 +144,6 @@ LocationPicker.propTypes = {
     iconColor: PropTypes.string.isRequired,
     iconSize: PropTypes.number.isRequired,
     onLocationValueChanged: PropTypes.func.isRequired
-}
+};
 
 export default LocationPicker;

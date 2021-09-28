@@ -11,6 +11,6 @@ export default class LostDogSubmissionService {
             body: JSON.stringify({
                 ...submissionRequest
             })
-        }).then(response => response.json())
+        }).then(response => response.json());
     }
 }

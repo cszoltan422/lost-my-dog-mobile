@@ -30,7 +30,7 @@ const MapsView = (props) => {
                     color={props.iconColor} />
             </Marker>
         </MapView>
-    )
+    );
 };
 
 const styles = StyleSheet.create({
@@ -48,6 +48,6 @@ MapsView.propTypes = {
     iconName: PropTypes.string.isRequired,
     iconColor: PropTypes.string.isRequired,
     iconSize: PropTypes.number.isRequired,
-}
+};
 
 export default MapsView;

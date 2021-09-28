@@ -10,8 +10,8 @@ const Chip = (props) => {
                 {props.text}
             </Text>
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     chip: {
@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
 
 Chip.propTypes = {
     text: PropTypes.string.isRequired
-}
+};
 
 export default Chip;

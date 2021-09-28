@@ -11,7 +11,7 @@ const DashboardList = (props) => {
         if (!props.hasNoMoreData && !props.isLoading()) {
             props.onDashboardFetchNewPage();
         }
-    }
+    };
 
     return (
         <FlatList
@@ -65,6 +65,6 @@ DashboardList.propTypes = {
     onDashboardFetchNewPage: PropTypes.func.isRequired,
     onDashboardRefreshPage: PropTypes.func.isRequired,
     onListItemClicked: PropTypes.func.isRequired
-}
+};
 
 export default DashboardList;

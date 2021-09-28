@@ -7,4 +7,4 @@ export default {
     lightGrey: '#eceff1',
     black: '#000000',
     errorRed: '#ff7b7b'
-}
+};

@@ -73,7 +73,7 @@ const LostDogDetailsReadonly = (props) => {
                 </Card>
             </View>
         </ScrollView>
-    )
+    );
 };
 
 const styles = StyleSheet.create({

@@ -54,7 +54,7 @@ const LostDogDetailsContent = (props) => {
                 )}
             </>
         );
-    }
+    };
 
     const renderDropdown = (inputKey) => {
         return (
@@ -81,7 +81,7 @@ const LostDogDetailsContent = (props) => {
                         props.onInputValueChanged(
                             inputKey,
                             props.inputs[inputKey].options[index]
-                        )
+                        );
                     }} />
                 {!props.inputs[inputKey].isValid && (
                     <Text
@@ -92,7 +92,7 @@ const LostDogDetailsContent = (props) => {
                 )}
             </>
         );
-    }
+    };
 
     const renderSwitch = (inputKey) => {
         return (
@@ -119,8 +119,8 @@ const LostDogDetailsContent = (props) => {
                     </Text>
                 )}
             </>
-        )
-    }
+        );
+    };
 
     return (
         <>
