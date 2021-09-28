@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import {View, StyleSheet} from 'react-native';
-import {connect} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import SplashImage from './splash/SplashImage';
 import LostMyDogNavigator from './navigation/LostMyDogNavigator';
 import LocationPermissionInitScreen from '../screens/LocationPermissionInitScreen';
@@ -9,54 +8,49 @@ import {
     onApplicationMounted,
     onCheckLocationPermission
 } from '../redux/actions/application/action-creators/action.creators';
+import {useComponentDidMount} from "../hooks/useComponentDidMount";
+import {useComponentWillUnmount} from "../hooks/useComponentWillUnmount";
 
-class ApplicationWrapper extends Component {
+const ApplicationWrapper = () => {
 
-    constructor(props) {
-        super(props);
+    const [elapsedTime, setElapsedTime] = useState(0);
 
-        this.state = {
-            elapsedTime: 0
-        };
-    }
+    const applicationInitialized = useSelector(state => state.application.applicationInitialized);
+    const locationPermission = useSelector(state => state.application.permissions.location);
 
-    componentDidMount() {
+    const dispatch = useDispatch();
+
+    useComponentDidMount(() => {
+        dispatch(onApplicationMounted());
         setInterval(() => {
-            this.setState((prevState) => ({
-                elapsedTime: prevState.elapsedTime + 400
-            }));
+            setElapsedTime((prevState) => {
+                return prevState + 400
+            });
         }, 400);
-        this.props.onApplicationMounted();
-    }
+    });
 
-    componentWillUnmount() {
+    useComponentWillUnmount(() => {
         clearInterval();
-    }
+    });
 
-    render() {
-        if (this.state.elapsedTime >= 1600) {
-            clearInterval();
-        }
-
-        if (!this.props.applicationInitialized || this.state.elapsedTime < 1600) {
-            return (
-                <SplashImage />
-            );
-        } else if (!this.props.locationPermission.granted) {
-            return (
-                <LocationPermissionInitScreen
-                    locationPermission={this.props.locationPermission}
-                    onCheckLocationPermission={this.props.onCheckLocationPermission} />
-            );
-        } else {
-            return (
-                <View
-                    testID='application-container'
-                    style={styles.content}>
-                    <LostMyDogNavigator />
-                </View>
-            );
-        }
+    if (!applicationInitialized || elapsedTime < 1600) {
+        return (
+            <SplashImage />
+        );
+    } else if (!locationPermission.granted) {
+        return (
+            <LocationPermissionInitScreen
+                locationPermission={locationPermission}
+                onCheckLocationPermission={dispatch(onCheckLocationPermission())} />
+        );
+    } else {
+        return (
+            <View
+                testID='application-container'
+                style={styles.content}>
+                <LostMyDogNavigator />
+            </View>
+        );
     }
 }
 
@@ -67,28 +61,4 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = (state) => {
-    return {
-        applicationInitialized: state.application.applicationInitialized,
-        locationPermission: state.application.permissions.location,
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onApplicationMounted: () => dispatch(onApplicationMounted()),
-        onCheckLocationPermission: () => dispatch(onCheckLocationPermission())
-    };
-};
-
-ApplicationWrapper.propTypes = {
-    applicationInitialized: PropTypes.bool.isRequired,
-    locationPermission: PropTypes.shape({
-        granted: PropTypes.bool.isRequired,
-        canAskAgain: PropTypes.bool.isRequired
-    }).isRequired,
-    onApplicationMounted: PropTypes.func.isRequired,
-    onCheckLocationPermission: PropTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ApplicationWrapper);
+export default ApplicationWrapper;
