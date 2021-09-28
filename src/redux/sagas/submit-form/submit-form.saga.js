@@ -22,10 +22,14 @@ import {
     SUBMIT_FORM_BREED_TEXT_INPUT_KEY,
     SUBMIT_FORM_COLOR_TEXT_INPUT_KEY,
     SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY,
-    SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY, SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY,
+    SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY,
+    SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY,
     SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
     SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
-    SUBMIT_FORM_STATUS_SELECT_INPUT_KEY, SUBMIT_DOG_NAVIGATION_SCREEN_NAME
+    SUBMIT_FORM_STATUS_SELECT_INPUT_KEY,
+    SUBMIT_DOG_NAVIGATION_SCREEN_NAME,
+    SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY,
+    SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY
 } from '../../../application.constants';
 import UserService from '../../../service/UserService';
 import LostDogSubmissionService from '../../../service/LostDogSubmissionService';
@@ -113,8 +117,8 @@ function* submitFormSubmittedSaga(action) {
                     status: Object.keys(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS).find(key => DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[key] === inputs[SUBMIT_FORM_STATUS_SELECT_INPUT_KEY].value),
                     chippedStatus: inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value ? 'YES' : 'NO',
                     specialPeculiarities: '',
-                    contactPhone: '',
-                    contactEmail: '',
+                    contactPhone: inputs[SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY].value,
+                    contactEmail: inputs[SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY].value,
                     longitude: location.longitude,
                     latitude: location.latitude,
                     dateLost: getCurrentTimeWithTimezone(),
