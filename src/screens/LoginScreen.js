@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native';
 import {Button} from 'react-native-elements';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
     onLoginAttempted,
     onLoginPasswordChanged,
@@ -17,76 +17,81 @@ import {
 } from '../i18n/i18n.keys';
 import {APPLICATION_NAME, SIGN_UP_NAVIGATION_SCREEN_NAME} from '../application.constants';
 
-class LoginScreen extends Component {
+const LoginScreen = (props) => {
 
-    emptyInput = () => {
-        return !this.props.username || !this.props.password;
+    const username = useSelector(state => state.login.username);
+    const password = useSelector(state => state.login.password);
+    const loading = useSelector(state => state.login.loading);
+    const error = useSelector(state => state.login.error);
+
+    const dispatch = useDispatch();
+
+    const emptyInput = () => {
+        return !username || !password;
     }
 
-    render() {
-        return (
-            <View style={styles.container}>
+    return (
+        <View style={styles.container}>
+            <Text
+                testID='login-screen-application-name-text'
+                style={styles.logoStyle}>
+                {APPLICATION_NAME}
+            </Text>
+            {error ?
                 <Text
-                    testID='login-screen-application-name-text'
-                    style={styles.logoStyle}>
-                    {APPLICATION_NAME}
+                    testID='login-screen-login-error-text'
+                    style={styles.errorMessageStyle}>
+                    {i18n.t(error)}
                 </Text>
-                {this.props.error ?
-                    <Text
-                        testID='login-screen-login-error-text'
-                        style={styles.errorMessageStyle}>
-                        {i18n.t(this.props.error)}
-                    </Text>
-                    : null}
-                <View style={styles.inputStyle} >
-                    <TextInput
-                        testID='login-screen-username-text-input'
-                        style={styles.inputTextStyle}
-                        placeholder={i18n.t(LOGIN_USERNAME_PLACEHOLDER)}
-                        placeholderTextColor={colors.white}
-                        value={this.props.username}
-                        autoCapitalize='none'
-                        onChangeText={(username) => this.props.onLoginUsernameChanged(username)} />
-                </View>
-                <View style={styles.inputStyle} >
-                    <TextInput
-                        testID='login-screen-password-text-input'
-                        secureTextEntry
-                        style={styles.inputTextStyle}
-                        placeholder={i18n.t(LOGIN_PASSWORD_PLACEHOLDER)}
-                        placeholderTextColor={colors.white}
-                        value={this.props.password}
-                        autoCapitalize='none'
-                        onChangeText={password => this.props.onLoginPasswordChanged(password)} />
-                </View>
-                <TouchableOpacity>
-                    <Text
-                        testID='login-screen-forgot-password-text'
-                        style={styles.forgotPasswordStyle}>
-                        {i18n.t(LOGIN_FORGOT_PASSWORD_PLACEHOLDER)}
-                    </Text>
-                </TouchableOpacity>
-                <Button
-                    testID='login-screen-login-button'
-                    buttonStyle={styles.loginButtonStyle}
-                    titleStyle={styles.loginTextStyle}
-                    title={i18n.t(LOGIN_LOGIN_TEXT)}
-                    loading={this.props.loading}
-                    disabled={this.props.loading || this.emptyInput()}
-                    onPress={() => this.props.onLoginAttempted(this.props.navigation)} />
-                <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate({
-                        routeName: SIGN_UP_NAVIGATION_SCREEN_NAME
-                    })}>
-                    <Text
-                        testID='login-screen-signup-text'
-                        style={styles.signUpTextStyle}>
-                        {i18n.t(LOGIN_SIGN_UP_TEXT)}
-                    </Text>
-                </TouchableOpacity>
+                : null}
+            <View style={styles.inputStyle} >
+                <TextInput
+                    testID='login-screen-username-text-input'
+                    style={styles.inputTextStyle}
+                    placeholder={i18n.t(LOGIN_USERNAME_PLACEHOLDER)}
+                    placeholderTextColor={colors.white}
+                    value={username}
+                    autoCapitalize='none'
+                    onChangeText={(username) => dispatch(onLoginUsernameChanged(username))} />
             </View>
-        );
-    }
+            <View style={styles.inputStyle} >
+                <TextInput
+                    testID='login-screen-password-text-input'
+                    secureTextEntry
+                    style={styles.inputTextStyle}
+                    placeholder={i18n.t(LOGIN_PASSWORD_PLACEHOLDER)}
+                    placeholderTextColor={colors.white}
+                    value={password}
+                    autoCapitalize='none'
+                    onChangeText={password => dispatch(onLoginPasswordChanged(password))} />
+            </View>
+            <TouchableOpacity>
+                <Text
+                    testID='login-screen-forgot-password-text'
+                    style={styles.forgotPasswordStyle}>
+                    {i18n.t(LOGIN_FORGOT_PASSWORD_PLACEHOLDER)}
+                </Text>
+            </TouchableOpacity>
+            <Button
+                testID='login-screen-login-button'
+                buttonStyle={styles.loginButtonStyle}
+                titleStyle={styles.loginTextStyle}
+                title={i18n.t(LOGIN_LOGIN_TEXT)}
+                loading={loading}
+                disabled={loading || emptyInput()}
+                onPress={() => dispatch(onLoginAttempted(props.navigation))} />
+            <TouchableOpacity
+                onPress={() => props.navigation.navigate({
+                    routeName: SIGN_UP_NAVIGATION_SCREEN_NAME
+                })}>
+                <Text
+                    testID='login-screen-signup-text'
+                    style={styles.signUpTextStyle}>
+                    {i18n.t(LOGIN_SIGN_UP_TEXT)}
+                </Text>
+            </TouchableOpacity>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -151,31 +156,7 @@ LoginScreen['navigationOptions'] = () => ({
 });
 
 LoginScreen.propTypes = {
-    navigation: PropTypes.object.isRequired,
-    username: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-    loading: PropTypes.bool.isRequired,
-    error: PropTypes.string.isRequired,
-    onLoginAttempted: PropTypes.func.isRequired,
-    onLoginUsernameChanged: PropTypes.func.isRequired,
-    onLoginPasswordChanged: PropTypes.func.isRequired,
+    navigation: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => {
-    return {
-        username: state.login.username,
-        password: state.login.password,
-        loading: state.login.loading,
-        error: state.login.error
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onLoginUsernameChanged: (username) => dispatch(onLoginUsernameChanged(username)),
-        onLoginPasswordChanged: (password) => dispatch(onLoginPasswordChanged(password)),
-        onLoginAttempted: (navigation) => dispatch(onLoginAttempted(navigation))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+export default LoginScreen;
