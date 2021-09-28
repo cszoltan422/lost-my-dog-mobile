@@ -5,13 +5,13 @@ import {
     DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_HOURS_AGO,
     DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_MINUTES_AGO,
     DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_OVER_A_MONTH_AGO,
-    DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_WEEKS_AGO
+    DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_WEEKS_AGO, DASHBOARD_LIST_ITEM_DISAPPEARED_JUST_NOW
 } from '../../i18n/i18n.keys';
 import i18n from '../../i18n/i18n';
 
 export const getTimeDifferenceString = (timeFromString) => {
-    const timeFrom = moment(timeFromString).tz(Localization.timezone);
-    const timeTo = moment().tz(Localization.timezone);
+    const timeFrom = moment.utc(timeFromString).local();
+    const timeTo = moment.tz(moment(), Localization.timezone);
 
     const difference = moment.duration(timeTo.diff(timeFrom));
     const differenceInMinutes = Math.floor(difference.asMinutes());
@@ -20,7 +20,9 @@ export const getTimeDifferenceString = (timeFromString) => {
     const differenceInWeeks = Math.floor(difference.asWeeks());
 
     let result;
-    if (differenceInMinutes < 60) {
+    if (differenceInMinutes < 5) {
+        result = i18n.t(DASHBOARD_LIST_ITEM_DISAPPEARED_JUST_NOW);
+    } else if (differenceInMinutes < 60) {
         result = `${differenceInMinutes} ${i18n.t(DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_MINUTES_AGO)}`;
     } else if (differenceInHours < 24) {
         result = `${differenceInHours} ${i18n.t(DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_HOURS_AGO)}`;
@@ -37,12 +39,10 @@ export const getTimeDifferenceString = (timeFromString) => {
 };
 
 export const formatIsoTime = (isoTimeString) => {
-    const timeInLocalTimezone = moment(isoTimeString).tz(Localization.timezone);
+    const timeInLocalTimezone = moment.utc(isoTimeString).local();
     return timeInLocalTimezone.format('YYYY. MM. DD, HH:mm');
 };
 
 export const getCurrentTimeWithTimezone = () => {
-    let currentDateTime = moment().tz(Localization.timezone);
-    return currentDateTime.format();
-
+    return moment().tz(Localization.timezone).format();
 };
