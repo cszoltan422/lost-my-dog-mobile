@@ -117,6 +117,7 @@ LostDogDetailsReadonly.propTypes = {
         latitude: PropTypes.number.isRequired,
         dateLost: PropTypes.string.isRequired,
         contactPhone: PropTypes.string.isRequired,
+        contactEmail: PropTypes.string.isRequired,
         status: PropTypes.string.isRequired,
         city: PropTypes.string.isRequired,
         countryCode: PropTypes.string.isRequired,
