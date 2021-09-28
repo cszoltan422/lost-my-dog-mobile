@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet, ScrollView, Text, TextInput, Dimensions} from 'react-native';
-import HeaderMenu from '../components/menu/HeaderMenu';
 import {Button, Icon, Tooltip} from 'react-native-elements';
 import {connect} from 'react-redux';
 import { SIGN_UP_SCREEN_TITLE } from '../i18n/i18n.keys';
@@ -190,10 +189,9 @@ const styles = StyleSheet.create({
     },
 });
 
-SignUpScreen['navigationOptions'] = ({ navigation }) => ({
+SignUpScreen['navigationOptions'] = () => ({
     title: i18n.t(SIGN_UP_SCREEN_TITLE),
-    headerBackTitleVisible: false,
-    headerRight: () => <HeaderMenu navigation={navigation} /> // eslint-disable-line
+    headerBackTitleVisible: false
 });
 
 SignUpScreen.propTypes = {

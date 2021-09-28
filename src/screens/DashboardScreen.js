@@ -6,7 +6,6 @@ import DashboardHeader from '../components/dashboard/dashboard-header/DashboardH
 import DashboardList from '../components/dashboard/dashboard-list/DashboardList';
 import LoadingCard from '../components/common/loading-card/LoadingCard';
 import FloatingActionButton from '../components/common/floating-action-button/FloatingActionButton';
-import HeaderMenu from '../components/menu/HeaderMenu';
 import {
     onDashboardChangeRadiusSearchParam,
     onDashboardChangeSearchTypeParam,
@@ -92,9 +91,8 @@ const styles = StyleSheet.create({
     }
 });
 
-DashboardScreen['navigationOptions'] = ({ navigation }) => ({
-    title: i18n.t(DASHBOARD_TITLE),
-    headerRight: () => <HeaderMenu navigation={navigation} /> // eslint-disable-line
+DashboardScreen['navigationOptions'] = () => ({
+    title: i18n.t(DASHBOARD_TITLE)
 });
 
 DashboardScreen.propTypes = {

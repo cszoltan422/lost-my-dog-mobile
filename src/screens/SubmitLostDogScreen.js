@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import HeaderMenu from '../components/menu/HeaderMenu';
 import LostDogDetails from '../components/lost-dog-details/LostDogDetails';
 import {SUBMIT_DOG_TITLE} from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
@@ -58,9 +57,8 @@ const SubmitLostDogScreen = (props) => {
 
 };
 
-SubmitLostDogScreen['navigationOptions'] = ({ navigation }) => ({
-    title: i18n.t(SUBMIT_DOG_TITLE),
-    headerRight: () => <HeaderMenu navigation={navigation} /> // eslint-disable-line
+SubmitLostDogScreen['navigationOptions'] = () => ({
+    title: i18n.t(SUBMIT_DOG_TITLE)
 });
 
 SubmitLostDogScreen.propTypes = {
