@@ -7,7 +7,7 @@ import {
     ON_DASHBOARD_HIDE_ALERT,
     ON_DASHBOARD_LOADING,
     ON_DASHBOARD_MOUNTED, ON_DASHBOARD_REFRESH_PAGE,
-    ON_DASHBOARD_REFRESHING
+    ON_DASHBOARD_REFRESHING, ON_DASHBOARD_RESET_PAGINATION_DRY
 } from '../action-types/action.types';
 
 export const onDashboardMounted = () => {
@@ -43,6 +43,13 @@ export const onDashboardFetchNewPage = () => {
 export const onDashboardFetchingNewPage = () => {
     return {
         type: ON_DASHBOARD_FETCHING_NEW_PAGE
+    };
+};
+
+export const onDashboardResetPaginationDry = (page) => {
+    return {
+        type: ON_DASHBOARD_RESET_PAGINATION_DRY,
+        payload: page
     };
 };
 

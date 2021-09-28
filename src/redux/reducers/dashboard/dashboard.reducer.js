@@ -9,7 +9,7 @@ import {
     ON_DASHBOARD_REFRESH_PAGE,
     ON_DASHBOARD_FETCH_NEW_PAGE,
     ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
-    ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM
+    ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM, ON_DASHBOARD_RESET_PAGINATION_DRY
 } from '../../actions/dashboard/action-types/action.types';
 import {
     DASHBOARD_INITIAL_SEARCH_DISTANCE_IN_METERS,
@@ -49,6 +49,11 @@ export const reducer = createReducer(initialState, {
     [ON_DASHBOARD_FETCH_NEW_PAGE]: (state) => {
         state.pagination = {
             currentPage: state.pagination.currentPage + 1
+        };
+    },
+    [ON_DASHBOARD_RESET_PAGINATION_DRY]: (state, action) => {
+        state.pagination = {
+            currentPage: action.payload
         };
     },
     [ON_DASHBOARD_FETCHING_NEW_PAGE]: (state) => {
