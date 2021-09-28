@@ -2,7 +2,7 @@ import {takeLatest, select, put, call} from 'redux-saga/effects';
 import {ON_SUBMIT_FORM_SUBMITTED} from '../../actions/submit-form/action-types/action.types';
 import {
     onSubmitFormImageInvalid,
-    onSubmitFormLoading, onSubmitFormPublishLoadingProgress, onSubmitFormStopLoading,
+    onSubmitFormLoading, onSubmitFormPublishLoadingProgress, onSubmitFormStopLoading, onSubmitFormSubmitSuccess,
     onSubmitFormValidationError
 } from '../../actions/submit-form/action-creators/action.creators';
 import * as FileSystem from 'expo-file-system';
@@ -25,7 +25,7 @@ import {
     SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY, SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY,
     SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
     SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
-    SUBMIT_FORM_STATUS_SELECT_INPUT_KEY
+    SUBMIT_FORM_STATUS_SELECT_INPUT_KEY, SUBMIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../../../application.constants';
 import UserService from '../../../service/UserService';
 import LostDogSubmissionService from '../../../service/LostDogSubmissionService';
@@ -80,10 +80,11 @@ function* getCompressedImage(selectedImage) {
     return compressedImage;
 }
 
-function* submitFormSubmittedSaga() {
+function* submitFormSubmittedSaga(action) {
     try {
         yield put(onSubmitFormLoading());
 
+        const navigation = action.payload;
         const inputs = yield select((state) => state.submitForm.inputs);
         const location = yield select((state) => state.submitForm.location);
         const selectedImage = yield select((state) => state.submitForm.selectedImage);
@@ -101,7 +102,7 @@ function* submitFormSubmittedSaga() {
                 yield put(onSubmitFormPublishLoadingProgress(0.8, DETAILS_SUBMITTED_IN_PROGRESS_SENDING_REQUEST));
                 const loginResult = yield call(UserService.login, user.username, user.password); // todo only login again if token expired
 
-                const uploadImageResult = yield call(LostDogSubmissionService.submitLostDog, loginResult.token, {
+                yield call(LostDogSubmissionService.submitLostDog, loginResult.token, {
                     dogName: inputs[SUBMIT_FORM_NAME_TEXT_INPUT_KEY].value,
                     description: inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].value,
                     dogBreed: inputs[SUBMIT_FORM_BREED_TEXT_INPUT_KEY].value,
@@ -120,7 +121,11 @@ function* submitFormSubmittedSaga() {
                     base64Content: compressedImage.base64,
                     avatarImageType: 'jpg'
                 });
-                console.log(uploadImageResult);
+
+                if (navigation.state.routeName === SUBMIT_DOG_NAVIGATION_SCREEN_NAME) {
+                    navigation.goBack();
+                }
+                yield put(onSubmitFormSubmitSuccess());
             }
         }
     } catch (e) {

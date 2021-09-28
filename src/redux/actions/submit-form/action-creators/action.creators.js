@@ -4,7 +4,7 @@ import {
     ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
     ON_SUBMIT_FORM_LOADING, ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED, ON_SUBMIT_FORM_PUBLISH_LOADING_PROGRESS,
     ON_SUBMIT_FORM_STOP_LOADING,
-    ON_SUBMIT_FORM_SUBMIT_ERROR,
+    ON_SUBMIT_FORM_SUBMIT_ERROR, ON_SUBMIT_FORM_SUBMIT_SUCCESS,
     ON_SUBMIT_FORM_SUBMITTED,
     ON_SUBMIT_FORM_VALIDATION_ERROR
 } from '../action-types/action.types';
@@ -69,6 +69,12 @@ export const onSubmitFormSubmitError = (error) => {
     return {
         type: ON_SUBMIT_FORM_SUBMIT_ERROR,
         payload: error
+    }
+};
+
+export const onSubmitFormSubmitSuccess = () => {
+    return {
+        type: ON_SUBMIT_FORM_SUBMIT_SUCCESS
     }
 };
 

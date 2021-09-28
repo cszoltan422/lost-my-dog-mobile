@@ -13,7 +13,7 @@ import {
 } from '../redux/actions/submit-form/action-creators/action.creators';
 import {getLocation} from '../util/location/location.utils';
 
-const SubmitLostDogScreen = () => {
+const SubmitLostDogScreen = (props) => {
 
     const isValid = useSelector(state => state.submitForm.isValid);
     const isLoading = useSelector(state => state.submitForm.isLoading);
@@ -55,7 +55,7 @@ const SubmitLostDogScreen = () => {
             onLocationValueChanged={(coordinates) => dispatch(onSubmitFormLocationValueChanged(coordinates))}
             onImageSelected={(selectedImageUri) => dispatch(onSubmitFormImageSelected(selectedImageUri))}
             onImageCleared={() => dispatch(onSubmitFormImageCleared())}
-            onSubmit={() => dispatch(onSubmitFormSubmitted())} />
+            onSubmit={() => dispatch(onSubmitFormSubmitted(props.navigation))} />
     );
 
 }
