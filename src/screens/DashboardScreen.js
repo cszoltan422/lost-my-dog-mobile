@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import DashboardHeader from '../components/dashboard/dashboard-header/DashboardHeader';
 import DashboardList from '../components/dashboard/dashboard-list/DashboardList';
 import LoadingCard from '../components/common/loading-card/LoadingCard';
@@ -24,64 +24,72 @@ import {
     SUBMIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../application.constants';
 import colors from '../colors';
+import {useComponentDidMount} from "../hooks/useComponentDidMount";
 
-class DashboardScreen extends Component {
+const DashboardScreen = (props) => {
 
-    componentDidMount() {
-        this.props.onDashboardMounted();
-    }
+    const loading = useSelector(state => state.dashboard.loading);
+    const refreshing = useSelector(state => state.dashboard.refreshing);
+    const fetchingNew = useSelector(state => state.dashboard.fetchingNew);
+    const hasNoMoreData = useSelector(state => state.dashboard.hasNoMoreData);
+    const searchParameters = useSelector(state => state.dashboard.searchParameters);
+    const data = useSelector(state => state.dashboard.data);
+    const user = useSelector(state => state.application.user);
 
-    isLoading = () => {
-        return this.props.fetchingNew || this.props.loading || this.props.refreshing;
+    const dispatch = useDispatch();
+
+    useComponentDidMount(() => {
+        dispatch(onDashboardMounted());
+    });
+
+    const isLoading = () => {
+        return fetchingNew || loading || refreshing;
     };
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <DashboardHeader
-                    loading={this.props.loading}
-                    refreshing={this.props.refreshing}
-                    fetchingNew={this.props.fetchingNew}
-                    searchParameters={this.props.searchParameters}
-                    isLoading={this.isLoading}
-                    onDashboardChangeRadiusSearchParam={(radius) => this.props.onDashboardChangeRadiusSearchParam(radius)}
-                    onDashboardChangeSearchTypeParam={(searchType) => this.props.onDashboardChangeSearchTypeParam(searchType)} />
-                {this.props.loading ?
-                    <LoadingCard /> :
-                    <DashboardList
-                        data={this.props.data}
-                        fetchingNew={this.props.fetchingNew}
-                        refreshing={this.props.refreshing}
-                        hasNoMoreData={this.props.hasNoMoreData}
-                        isLoading={this.isLoading}
-                        onDashboardFetchNewPage={() => this.props.onDashboardFetchNewPage()}
-                        onDashboardRefreshPage={() => this.props.onDashboardRefreshPage()}
-                        onListItemClicked={(item) => this.props.navigation.navigate({
-                            routeName: DETAILS_NAVIGATION_SCREEN_NAME,
-                            params: {[DETAILS_NAVIGATION_PARAM_NAME]: item}
-                        })} /> }
-                <FloatingActionButton
-                    color={colors.primaryColor}
-                    icon={{ name: 'add', color: colors.white }}
-                    openIcon={{ name: 'close', color: colors.white }}
-                    actions={[
-                        {
-                            title: i18n.t(SUBMIT_DOG_TITLE),
-                            icon: { name: 'add', color: colors.white },
-                            color: colors.primaryColor,
-                            pressHandler: () => {
-                                this.props.navigation.navigate({
-                                    routeName: this.props.user.isLoggedIn ?
-                                        SUBMIT_DOG_NAVIGATION_SCREEN_NAME
-                                        : LOGIN_NAVIGATION_SCREEN_NAME
-                                });
-                            }
+    return (
+        <View style={styles.container}>
+            <DashboardHeader
+                loading={loading}
+                refreshing={refreshing}
+                fetchingNew={fetchingNew}
+                searchParameters={searchParameters}
+                isLoading={isLoading}
+                onDashboardChangeRadiusSearchParam={(radius) => dispatch(onDashboardChangeRadiusSearchParam(radius))}
+                onDashboardChangeSearchTypeParam={(searchType) => dispatch(onDashboardChangeSearchTypeParam(searchType))} />
+            {loading ?
+                <LoadingCard /> :
+                <DashboardList
+                    data={data}
+                    fetchingNew={fetchingNew}
+                    refreshing={refreshing}
+                    hasNoMoreData={hasNoMoreData}
+                    isLoading={isLoading}
+                    onDashboardFetchNewPage={() => dispatch(onDashboardFetchNewPage())}
+                    onDashboardRefreshPage={() => dispatch(onDashboardRefreshPage())}
+                    onListItemClicked={(item) => props.navigation.navigate({
+                        routeName: DETAILS_NAVIGATION_SCREEN_NAME,
+                        params: {[DETAILS_NAVIGATION_PARAM_NAME]: item}
+                    })} /> }
+            <FloatingActionButton
+                color={colors.primaryColor}
+                icon={{ name: 'add', color: colors.white }}
+                openIcon={{ name: 'close', color: colors.white }}
+                actions={[
+                    {
+                        title: i18n.t(SUBMIT_DOG_TITLE),
+                        icon: { name: 'add', color: colors.white },
+                        color: colors.primaryColor,
+                        pressHandler: () => {
+                            props.navigation.navigate({
+                                routeName: user.isLoggedIn ?
+                                    SUBMIT_DOG_NAVIGATION_SCREEN_NAME
+                                    : LOGIN_NAVIGATION_SCREEN_NAME
+                            });
                         }
-                    ]} />
-            </View>
-        );
-    }
-
+                    }
+                ]} />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -96,41 +104,7 @@ DashboardScreen['navigationOptions'] = () => ({
 });
 
 DashboardScreen.propTypes = {
-    navigation: PropTypes.object.isRequired,
-    loading: PropTypes.bool.isRequired,
-    refreshing: PropTypes.bool.isRequired,
-    fetchingNew: PropTypes.bool.isRequired,
-    hasNoMoreData: PropTypes.bool.isRequired,
-    searchParameters: PropTypes.object.isRequired,
-    data: PropTypes.array.isRequired,
-    user: PropTypes.object.isRequired,
-    onDashboardChangeRadiusSearchParam: PropTypes.func.isRequired,
-    onDashboardChangeSearchTypeParam: PropTypes.func.isRequired,
-    onDashboardMounted: PropTypes.func.isRequired,
-    onDashboardFetchNewPage: PropTypes.func.isRequired,
-    onDashboardRefreshPage: PropTypes.func.isRequired
+    navigation: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => {
-    return {
-        loading: state.dashboard.loading,
-        refreshing: state.dashboard.refreshing,
-        fetchingNew: state.dashboard.fetchingNew,
-        hasNoMoreData: state.dashboard.hasNoMoreData,
-        searchParameters: state.dashboard.searchParameters,
-        data: state.dashboard.data,
-        user: state.application.user,
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onDashboardChangeRadiusSearchParam: (radius) => dispatch(onDashboardChangeRadiusSearchParam(radius)),
-        onDashboardChangeSearchTypeParam: (searchType) => dispatch(onDashboardChangeSearchTypeParam(searchType)),
-        onDashboardMounted: () => dispatch(onDashboardMounted()),
-        onDashboardFetchNewPage: () => dispatch(onDashboardFetchNewPage()),
-        onDashboardRefreshPage: () => dispatch(onDashboardRefreshPage())
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardScreen);
+export default DashboardScreen;
