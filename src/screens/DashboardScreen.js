@@ -22,7 +22,7 @@ import {
     DETAILS_NAVIGATION_PARAM_NAME,
     DETAILS_NAVIGATION_SCREEN_NAME,
     LOGIN_NAVIGATION_SCREEN_NAME,
-    SUBMIT_DOG_NAVIGATION_PARAM_NAME
+    SUBMIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../application.constants';
 import colors from '../colors';
 
@@ -73,7 +73,7 @@ class DashboardScreen extends Component {
                             pressHandler: () => {
                                 this.props.navigation.navigate({
                                     routeName: this.props.user.isLoggedIn ?
-                                        SUBMIT_DOG_NAVIGATION_PARAM_NAME
+                                        SUBMIT_DOG_NAVIGATION_SCREEN_NAME
                                         : LOGIN_NAVIGATION_SCREEN_NAME
                                 });
                             }

@@ -8,7 +8,7 @@ import FloatingActionButton from '../components/common/floating-action-button/Fl
 import {
     DETAILS_NAVIGATION_PARAM_NAME,
     LOGIN_NAVIGATION_SCREEN_NAME,
-    SUBMIT_DOG_NAVIGATION_PARAM_NAME
+    SUBMIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../application.constants';
 import colors from '../colors';
 import i18n from '../i18n/i18n';
@@ -45,7 +45,7 @@ const DetailsScreen = (props) => {
                         pressHandler: () => {
                             props.navigation.navigate({
                                 routeName: user.isLoggedIn ?
-                                    SUBMIT_DOG_NAVIGATION_PARAM_NAME
+                                    SUBMIT_DOG_NAVIGATION_SCREEN_NAME
                                     : LOGIN_NAVIGATION_SCREEN_NAME
                             });
                         }
