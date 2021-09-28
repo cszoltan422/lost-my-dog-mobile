@@ -27,6 +27,7 @@
     "es6": true
   },
   "rules": {
+    "no-console": "error",
     "func-names": ["error", "never"],
     "no-multi-spaces": [2],
     "quotes": [2, "single", { "avoidEscape": true, "allowTemplateLiterals": true } ],

@@ -133,7 +133,7 @@ function* submitFormSubmittedSaga(action) {
             }
         }
     } catch (e) {
-        console.log('error: ', e)
+        console.log('error: ', e); // eslint-disable-line no-console
     } finally {
         yield put(onSubmitFormStopLoading());
     }

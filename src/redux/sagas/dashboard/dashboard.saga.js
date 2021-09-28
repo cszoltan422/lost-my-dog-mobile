@@ -64,6 +64,6 @@ function* dashboardFetchActionSaga(action) {
         const clearData = CLEAR_DATA_ACTIONS.includes(action.type);
         yield put(onDashboardDataFetched(clearData, data));
     } catch (e) {
-        console.log(e);
+        console.log(e); // eslint-disable-line no-console
     }
 }
