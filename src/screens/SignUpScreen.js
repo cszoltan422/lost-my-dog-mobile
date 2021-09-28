@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import {View, StyleSheet, ScrollView, Text, TextInput, Dimensions} from 'react-native';
 import {Button, Icon, Tooltip} from 'react-native-elements';
@@ -106,7 +107,7 @@ const SignUpScreen = (props) => {
         </ScrollView>
     );
 
-}
+};
 
 const styles = StyleSheet.create({
     scrollViewType: {
@@ -196,5 +197,9 @@ SignUpScreen['navigationOptions'] = () => ({
     title: i18n.t(SIGN_UP_SCREEN_TITLE),
     headerBackTitleVisible: false
 });
+
+SignUpScreen.propTypes = {
+    navigation: PropTypes.object.isRequired
+};
 
 export default SignUpScreen;

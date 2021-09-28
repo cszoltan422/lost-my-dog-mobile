@@ -11,7 +11,7 @@ import {
     onSubmitFormLocationValueChanged,
     onSubmitFormSubmitted
 } from '../redux/actions/submit-form/action-creators/action.creators';
-import {useComponentDidMount} from "../hooks/useComponentDidMount";
+import {useComponentDidMount} from '../hooks/useComponentDidMount';
 
 const SubmitLostDogScreen = (props) => {
 

@@ -8,8 +8,8 @@ import {
     onApplicationMounted,
     onCheckLocationPermission
 } from '../redux/actions/application/action-creators/action.creators';
-import {useComponentDidMount} from "../hooks/useComponentDidMount";
-import {useComponentWillUnmount} from "../hooks/useComponentWillUnmount";
+import {useComponentDidMount} from '../hooks/useComponentDidMount';
+import {useComponentWillUnmount} from '../hooks/useComponentWillUnmount';
 
 const ApplicationWrapper = () => {
 
@@ -24,7 +24,7 @@ const ApplicationWrapper = () => {
         dispatch(onApplicationMounted());
         setInterval(() => {
             setElapsedTime((prevState) => {
-                return prevState + 400
+                return prevState + 400;
             });
         }, 400);
     });
@@ -52,7 +52,7 @@ const ApplicationWrapper = () => {
             </View>
         );
     }
-}
+};
 
 const styles = StyleSheet.create({
     content: {

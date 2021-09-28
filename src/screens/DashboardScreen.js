@@ -24,7 +24,7 @@ import {
     SUBMIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../application.constants';
 import colors from '../colors';
-import {useComponentDidMount} from "../hooks/useComponentDidMount";
+import {useComponentDidMount} from '../hooks/useComponentDidMount';
 
 const DashboardScreen = (props) => {
 
@@ -90,7 +90,7 @@ const DashboardScreen = (props) => {
                 ]} />
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {

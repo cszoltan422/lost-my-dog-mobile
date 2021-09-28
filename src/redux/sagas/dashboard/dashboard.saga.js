@@ -65,7 +65,6 @@ function* dashboardFetchActionSaga(action) {
             latitude: currentLocation.latitude
         };
 
-        console.log(pagination);
         const data = yield call(SearchLostDogsService.searchLostDogs, pagination.currentPage, searchParameters, locationParameters);
 
         const clearData = CLEAR_DATA_ACTIONS.includes(action.type);

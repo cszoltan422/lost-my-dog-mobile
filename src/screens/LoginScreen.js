@@ -28,7 +28,7 @@ const LoginScreen = (props) => {
 
     const emptyInput = () => {
         return !username || !password;
-    }
+    };
 
     return (
         <View style={styles.container}>
@@ -92,7 +92,7 @@ const LoginScreen = (props) => {
             </TouchableOpacity>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {

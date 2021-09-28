@@ -11,8 +11,8 @@ import {getItem} from '../../../util/async-storage/async.storage';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import moment from 'moment';
-import {LocationAccuracy} from "expo-location";
-import ENV from "../../../environmnent.config";
+import {LocationAccuracy} from 'expo-location';
+import ENV from '../../../environmnent.config';
 
 export function* applicationMountedWatcherSaga() {
     yield takeLatest([ON_APPLICATION_MOUNTED], applicationMountedSaga);
@@ -43,7 +43,7 @@ function* applicationMountedSaga() {
                 yield put(onUpdateCurrentLocation({
                     longitude: E2E_MOCK_LOCATION.longitude,
                     latitude: E2E_MOCK_LOCATION.latitude
-                }))
+                }));
             }
         }
 
@@ -108,7 +108,7 @@ function* onCheckLocationPermissionSaga() {
                 yield put(onUpdateCurrentLocation({
                     longitude: E2E_MOCK_LOCATION.longitude,
                     latitude: E2E_MOCK_LOCATION.latitude
-                }))
+                }));
             }
         }
     }

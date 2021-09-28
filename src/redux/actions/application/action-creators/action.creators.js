@@ -28,14 +28,14 @@ export const onCheckLocationPermission = () => {
 export const onWatchCurrentLocation = () => {
     return {
         type: ON_WATCH_CURRENT_LOCATION
-    }
+    };
 };
 
 export const onUpdateCurrentLocation = (currentLocation) => {
     return {
         type: ON_UPDATE_CURRENT_LOCATION,
         payload: currentLocation
-    }
+    };
 };
 
 export const onLocationPermissionChecked = (locationPermission) => {
