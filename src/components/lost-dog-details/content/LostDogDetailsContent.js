@@ -5,14 +5,8 @@ import Card from '../../common/card/Card';
 import ModalDropdown from 'react-native-modal-dropdown';
 import i18n from '../../../i18n/i18n';
 import {
-    DETAILS_DOG_AGE_LABEL_TITLE,
-    DETAILS_DOG_BREED_LABEL_TITLE,
-    DETAILS_DOG_CHIP_NUMBER,
-    DETAILS_DOG_COLOR_LABEL_TITLE, DETAILS_DOG_DESCRIPTION_LABEL_TITLE,
-    DETAILS_DOG_HAS_CHIP,
-    DETAILS_DOG_NAME_LABEL_TITLE,
-    DETAILS_DOG_SEX_LABEL_TITLE,
-    DETAILS_DOG_STATUS_LABEL_TITLE, DETAILS_INPUT_REQUIRED
+    DETAILS_DOG_DESCRIPTION_LABEL_TITLE,
+    DETAILS_INPUT_REQUIRED
 } from '../../../i18n/i18n.keys';
 import colors from '../../../colors';
 import {
@@ -28,22 +22,121 @@ import {
 
 const LostDogDetailsContent = (props) => {
 
+    const renderTextInput = (inputKey) => {
+        return (
+            <>
+                <Text
+                    testID={props.inputs[inputKey].labelTestID}
+                    style={styles.labelTitle}>
+                    {i18n.t(props.inputs[inputKey].labelKey)}
+                    {props.inputs[inputKey].isRequired && '*'}
+                </Text>
+                <TextInput
+                    testID={props.inputs[inputKey].inputTestID}
+                    style={styles.textInputStyle}
+                    editable={!props.isLoading}
+                    placeholder={`${i18n.t(props.inputs[inputKey].labelKey)}...`}
+                    keyboardType={props.inputs[inputKey].keyboardType}
+                    autoCapitalize={props.inputs[inputKey].autoCapitalize}
+                    value={props.inputs[inputKey].value}
+                    onChangeText={(value) => props.onInputValueChanged(inputKey, value)} />
+                {!props.inputs[inputKey].isValid && (
+                    <Text
+                        testID={props.inputs[inputKey].errorTestID}
+                        style={styles.errorLabel}>
+                        {i18n.t(DETAILS_INPUT_REQUIRED)}
+                    </Text>
+                )}
+            </>
+        );
+    }
+
+    const renderDropdown = (inputKey) => {
+        return (
+            <>
+                <Text
+                    testID={props.inputs[inputKey].labelTestID}
+                    style={styles.labelTitle}>
+                    {i18n.t(props.inputs[inputKey].labelKey)}
+                    {props.inputs[inputKey].isRequired && '*'}
+                </Text>
+                <ModalDropdown
+                    testID={props.inputs[inputKey].inputTestID}
+                    style={styles.modalDropdownContainerStyle}
+                    disabled={props.isLoading}
+                    dropdownStyle={styles.modalDropdownStyle}
+                    textStyle={styles.modalDropdownTextStyle}
+                    dropdownTextStyle={styles.dropdownTextStyle}
+                    dropdownTextHighlightStyle={styles.dropdownTextHighlightStyle}
+                    defaultValue={`${i18n.t(props.inputs[inputKey].labelKey)}...`}
+                    options={props.inputs[inputKey].options.map((option) => {
+                        return i18n.t(option);
+                    })}
+                    onSelect={(index) => {
+                        props.onInputValueChanged(
+                            inputKey,
+                            props.inputs[inputKey].options[index]
+                        )
+                    }} />
+                {!props.inputs[inputKey].isValid && (
+                    <Text
+                        testID={props.inputs[inputKey].errorTestID}
+                        style={styles.errorLabel}>
+                        {i18n.t(DETAILS_INPUT_REQUIRED)}
+                    </Text>
+                )}
+            </>
+        );
+    }
+
+    const renderSwitch = (inputKey) => {
+        return (
+            <>
+                <Text
+                    testID={props.inputs[inputKey].labelTestID}
+                    style={styles.labelTitle}>
+                    {i18n.t(props.inputs[inputKey].labelKey)}
+                    {props.inputs[inputKey].isRequired && '*'}
+                </Text>
+                <Switch
+                    testID={props.inputs[inputKey].inputTestID}
+                    style={styles.switchStyle}
+                    disabled={props.isLoading}
+                    trackColor={{ false: colors.grey, true: colors.primaryColor }}
+                    thumbColor={colors.accentColor}
+                    value={props.inputs[inputKey].value}
+                    onValueChange={(value) => props.onInputValueChanged(inputKey, value)} />
+                {!props.inputs[inputKey].isValid && (
+                    <Text
+                        testID={props.inputs[inputKey].errorTestID}
+                        style={styles.errorLabel}>
+                        {i18n.t(DETAILS_INPUT_REQUIRED)}
+                    </Text>
+                )}
+            </>
+        )
+    }
+
     return (
         <>
-            <Card styles={styles.descriptionCardStyle}>
+            <Card styles={
+                props.inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].isValid ?
+                    styles.descriptionCardStyle
+                    : styles.descriptionCardErrorStyle
+            }>
                 <>
                     <TextInput
                         testID='details-screen-description-text-input'
                         style={styles.descriptionTextInputStyle}
                         editable={!props.isLoading}
                         multiline
-                        placeholder={`${i18n.t(DETAILS_DOG_DESCRIPTION_LABEL_TITLE)}...`}
+                        placeholder={`${i18n.t(DETAILS_DOG_DESCRIPTION_LABEL_TITLE)}*...`}
                         value={props.inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].value}
                         onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY, value)} />
                     {!props.inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].isValid && (
                         <Text
                             testID='details-screen-description-text-input-error'
-                            style={styles.errorLabel}>
+                            style={styles.errorLabelWhite}>
                             {i18n.t(DETAILS_INPUT_REQUIRED)}
                         </Text>
                     )}
@@ -53,203 +146,35 @@ const LostDogDetailsContent = (props) => {
                 <>
                     <View style={styles.rowContainer}>
                         <View style={styles.columnContainer}>
-                            <Text
-                                testID='details-screen-dog-name-text-label'
-                                style={styles.labelTitle}>
-                                {i18n.t(DETAILS_DOG_NAME_LABEL_TITLE)}
-                            </Text>
-                            <TextInput
-                                testID='details-screen-dog-name-text-input'
-                                style={styles.textInputStyle}
-                                editable={!props.isLoading}
-                                placeholder={`${i18n.t(DETAILS_DOG_NAME_LABEL_TITLE)}...`}
-                                value={props.inputs[SUBMIT_FORM_NAME_TEXT_INPUT_KEY].value}
-                                onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_NAME_TEXT_INPUT_KEY, value)} />
-                            {!props.inputs[SUBMIT_FORM_NAME_TEXT_INPUT_KEY].isValid && (
-                                <Text
-                                    testID='details-screen-dog-name-text-input-error'
-                                    style={styles.errorLabel}>
-                                    {i18n.t(DETAILS_INPUT_REQUIRED)}
-                                </Text>
-                            )}
+                            {renderTextInput(SUBMIT_FORM_NAME_TEXT_INPUT_KEY)}
                         </View>
                         <View style={styles.columnContainer}>
-                            <Text
-                                testID='details-screen-dog-breed-text-label'
-                                style={styles.labelTitle}>
-                                {i18n.t(DETAILS_DOG_BREED_LABEL_TITLE)}
-                            </Text>
-                            <TextInput
-                                testID='details-screen-dog-breed-text-input'
-                                style={styles.textInputStyle}
-                                editable={!props.isLoading}
-                                placeholder={`${i18n.t(DETAILS_DOG_BREED_LABEL_TITLE)}...`}
-                                value={props.inputs[SUBMIT_FORM_BREED_TEXT_INPUT_KEY].value}
-                                onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_BREED_TEXT_INPUT_KEY, value)} />
-                            {!props.inputs[SUBMIT_FORM_BREED_TEXT_INPUT_KEY].isValid && (
-                                <Text
-                                    testID='details-screen-dog-breed-text-input-error'
-                                    style={styles.errorLabel}>
-                                    {i18n.t(DETAILS_INPUT_REQUIRED)}
-                                </Text>
-                            )}
+                            {renderTextInput(SUBMIT_FORM_BREED_TEXT_INPUT_KEY)}
                         </View>
                     </View>
                     <View style={styles.rowContainer}>
                         <View style={styles.columnContainer}>
-                            <Text
-                                testID='details-screen-dog-gender-text-label'
-                                style={styles.labelTitle}>
-                                {i18n.t(DETAILS_DOG_SEX_LABEL_TITLE)}
-                            </Text>
-                            <ModalDropdown
-                                testID='details-screen-dog-gender-select-input'
-                                style={styles.modalDropdownContainerStyle}
-                                disabled={props.isLoading}
-                                dropdownStyle={styles.modalDropdownStyle}
-                                textStyle={styles.modalDropdownTextStyle}
-                                dropdownTextStyle={styles.dropdownTextStyle}
-                                dropdownTextHighlightStyle={styles.dropdownTextHighlightStyle}
-                                defaultValue={`${i18n.t(DETAILS_DOG_SEX_LABEL_TITLE)}...`}
-                                options={props.inputs[SUBMIT_FORM_SEX_SELECT_INPUT_KEY].options.map((option) => {
-                                    return i18n.t(option);
-                                })}
-                                onSelect={(index) => {
-                                    props.onInputValueChanged(
-                                        SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
-                                        props.inputs[SUBMIT_FORM_SEX_SELECT_INPUT_KEY].options[index]
-                                    )
-                                }} />
-                            {!props.inputs[SUBMIT_FORM_SEX_SELECT_INPUT_KEY].isValid && (
-                                <Text
-                                    testID='details-screen-dog-gender-select-input-error'
-                                    style={styles.errorLabel}>
-                                    {i18n.t(DETAILS_INPUT_REQUIRED)}
-                                </Text>
-                            )}
+                            {renderDropdown(SUBMIT_FORM_SEX_SELECT_INPUT_KEY)}
                         </View>
                         <View style={styles.columnContainer}>
-                            <Text
-                                testID='details-screen-dog-color-text-label'
-                                style={styles.labelTitle}>
-                                {i18n.t(DETAILS_DOG_COLOR_LABEL_TITLE)}
-                            </Text>
-                            <TextInput
-                                testID='details-screen-dog-color-text-input'
-                                style={styles.textInputStyle}
-                                editable={!props.isLoading}
-                                placeholder={`${i18n.t(DETAILS_DOG_COLOR_LABEL_TITLE)}...`}
-                                value={props.inputs[SUBMIT_FORM_COLOR_TEXT_INPUT_KEY].value}
-                                onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_COLOR_TEXT_INPUT_KEY, value)} />
-                            {!props.inputs[SUBMIT_FORM_COLOR_TEXT_INPUT_KEY].isValid && (
-                                <Text
-                                    testID='details-screen-dog-color-text-input-error'
-                                    style={styles.errorLabel}>
-                                    {i18n.t(DETAILS_INPUT_REQUIRED)}
-                                </Text>
-                            )}
+                            {renderTextInput(SUBMIT_FORM_COLOR_TEXT_INPUT_KEY)}
                         </View>
                     </View>
                     <View style={styles.rowContainer}>
                         <View style={styles.columnContainer}>
-                            <Text
-                                testID='details-screen-dog-status-text-label'
-                                style={styles.labelTitle}>
-                                {i18n.t(DETAILS_DOG_STATUS_LABEL_TITLE)}
-                            </Text>
-                            <ModalDropdown
-                                testID='details-screen-dog-status-select-input'
-                                style={styles.modalDropdownContainerStyle}
-                                disabled={props.isLoading}
-                                dropdownStyle={styles.modalDropdownStyle}
-                                textStyle={styles.modalDropdownTextStyle}
-                                dropdownTextStyle={styles.dropdownTextStyle}
-                                dropdownTextHighlightStyle={styles.dropdownTextHighlightStyle}
-                                defaultValue={`${i18n.t(DETAILS_DOG_STATUS_LABEL_TITLE)}...`}
-                                options={props.inputs[SUBMIT_FORM_STATUS_SELECT_INPUT_KEY].options.map((option) => {
-                                    return i18n.t(option);
-                                })}
-                                onSelect={(index) => {
-                                    props.onInputValueChanged(
-                                        SUBMIT_FORM_STATUS_SELECT_INPUT_KEY,
-                                        props.inputs[SUBMIT_FORM_STATUS_SELECT_INPUT_KEY].options[index]
-                                    )
-                                }} />
-                            {!props.inputs[SUBMIT_FORM_STATUS_SELECT_INPUT_KEY].isValid && (
-                                <Text
-                                    testID='details-screen-dog-status-select-input-error'
-                                    style={styles.errorLabel}>
-                                    {i18n.t(DETAILS_INPUT_REQUIRED)}
-                                </Text>
-                            )}
+                            {renderDropdown(SUBMIT_FORM_STATUS_SELECT_INPUT_KEY)}
                         </View>
                         <View style={styles.columnContainer}>
-                            <Text
-                                testID='details-screen-dog-age-text-label'
-                                style={styles.labelTitle}>
-                                {i18n.t(DETAILS_DOG_AGE_LABEL_TITLE)}
-                            </Text>
-                            <TextInput
-                                testID='details-screen-dog-age-text-input'
-                                style={styles.textInputStyle}
-                                editable={!props.isLoading}
-                                placeholder={`${i18n.t(DETAILS_DOG_AGE_LABEL_TITLE)}...`}
-                                keyboardType = 'numeric'
-                                value={props.inputs[SUBMIT_FORM_AGE_TEXT_INPUT_KEY].value}
-                                onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_AGE_TEXT_INPUT_KEY, value)} />
-                            {!props.inputs[SUBMIT_FORM_AGE_TEXT_INPUT_KEY].isValid && (
-                                <Text
-                                    testID='details-screen-dog-age-text-input-error'
-                                    style={styles.errorLabel}>
-                                    {i18n.t(DETAILS_INPUT_REQUIRED)}
-                                </Text>
-                            )}
+                            {renderTextInput(SUBMIT_FORM_AGE_TEXT_INPUT_KEY)}
                         </View>
                     </View>
                     <View style={styles.rowContainer}>
                         <View style={styles.columnContainer}>
-                            <Text
-                                testID='details-screen-dog-has-chip-text-label'
-                                style={styles.labelTitle}>
-                                {i18n.t(DETAILS_DOG_HAS_CHIP)}
-                            </Text>
-                            <Switch
-                                testID='details-screen-dog-has-chip-toggle-input'
-                                style={styles.switchStyle}
-                                disabled={props.isLoading}
-                                trackColor={{ false: colors.grey, true: colors.primaryColor }}
-                                thumbColor={colors.accentColor}
-                                value={props.inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value}
-                                onValueChange={(value) => props.onInputValueChanged(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY, value)} />
-                            {!props.inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].isValid && (
-                                <Text
-                                    testID='details-screen-dog-has-chip-toggle-input-error'
-                                    style={styles.errorLabel}>
-                                    {i18n.t(DETAILS_INPUT_REQUIRED)}
-                                </Text>
-                            )}
+                            {renderSwitch(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY)}
                         </View>
                         {props.inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value && (
                             <View style={styles.columnContainer}>
-                                <Text
-                                    testID='details-screen-dog-chip-number-text-label'
-                                    style={styles.labelTitle}>
-                                    {i18n.t(DETAILS_DOG_CHIP_NUMBER)}
-                                </Text>
-                                <TextInput
-                                    testID='details-screen-dog-chip-number-text-input'
-                                    style={styles.textInputStyle}
-                                    editable={!props.isLoading}
-                                    placeholder={`${i18n.t(DETAILS_DOG_CHIP_NUMBER)}...`}
-                                    value={props.inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].value}
-                                    onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY, value)} />
-                                {!props.inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].isValid && (
-                                    <Text
-                                        testID='details-screen-dog-chip-number-text-input-error'
-                                        style={styles.errorLabel}>
-                                        {i18n.t(DETAILS_INPUT_REQUIRED)}
-                                    </Text>
-                                )}
+                                {renderTextInput(SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY)}
                             </View>
                         )}
                     </View>
@@ -263,6 +188,10 @@ const styles = StyleSheet.create({
     descriptionCardStyle: {
         height: 'auto',
         backgroundColor: colors.accentColor
+    },
+    descriptionCardErrorStyle: {
+        height: 'auto',
+        backgroundColor: colors.errorRed
     },
     descriptionTextStyle: {
         color: colors.white,
@@ -295,6 +224,10 @@ const styles = StyleSheet.create({
     errorLabel: {
         fontSize: 12,
         color: colors.errorRed
+    },
+    errorLabelWhite: {
+        fontSize: 12,
+        color: colors.white
     },
     textInputStyle: {
         color: colors.grey,

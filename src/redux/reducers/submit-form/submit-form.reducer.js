@@ -15,9 +15,13 @@ import {
 import {
     DASHBOARD_DOG_STATUS_FOUND,
     DASHBOARD_DOG_STATUS_LOST,
-    DASHBOARD_DOG_STATUS_WANDERING,
+    DASHBOARD_DOG_STATUS_WANDERING, DETAILS_DOG_AGE_LABEL_TITLE,
+    DETAILS_DOG_BREED_LABEL_TITLE, DETAILS_DOG_CHIP_NUMBER,
+    DETAILS_DOG_COLOR_LABEL_TITLE, DETAILS_DOG_HAS_CHIP,
+    DETAILS_DOG_NAME_LABEL_TITLE,
     DETAILS_DOG_SEX_FEMALE,
-    DETAILS_DOG_SEX_MALE
+    DETAILS_DOG_SEX_LABEL_TITLE,
+    DETAILS_DOG_SEX_MALE, DETAILS_DOG_STATUS_LABEL_TITLE
 } from '../../../i18n/i18n.keys';
 import {
     ON_RESET_SUBMIT_FORM,
@@ -42,8 +46,10 @@ export const initialState = {
     error: '',
     inputs: {
         [SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY]: {
+            labelKey: '',
             value: '',
             initialValue: '',
+            isRequired: true,
             isValid: true,
             validator: (value) =>
                 !!value &&
@@ -51,70 +57,119 @@ export const initialState = {
                 !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_NAME_TEXT_INPUT_KEY]: {
+            labelKey: DETAILS_DOG_NAME_LABEL_TITLE,
             value: '',
             initialValue: '',
+            isRequired: true,
             isValid: true,
+            labelTestID: 'details-screen-dog-name-text-label',
+            inputTestID: 'details-screen-dog-name-text-input',
+            errorTestID: 'details-screen-dog-name-text-input-error',
+            keyboardType: 'default',
+            autoCapitalize: 'words',
             validator: (value) =>
                 !!value &&
                 !validator.isEmpty(value) &&
                 !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_BREED_TEXT_INPUT_KEY]: {
+            labelKey: DETAILS_DOG_BREED_LABEL_TITLE,
             value: '',
             initialValue: '',
+            isRequired: true,
             isValid: true,
+            labelTestID: 'details-screen-dog-breed-text-label',
+            inputTestID: 'details-screen-dog-breed-text-input',
+            errorTestID: 'details-screen-dog-breed-text-input-error',
+            keyboardType: 'default',
+            autoCapitalize: 'none',
             validator: (value) =>
                 !!value &&
                 !validator.isEmpty(value) &&
                 !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_SEX_SELECT_INPUT_KEY]: {
+            labelKey: DETAILS_DOG_SEX_LABEL_TITLE,
             value: null,
             initialValue: null,
+            isRequired: true,
             options: [DETAILS_DOG_SEX_MALE, DETAILS_DOG_SEX_FEMALE],
             isValid: true,
+            labelTestID: 'details-screen-dog-gender-text-label',
+            inputTestID: 'details-screen-dog-gender-select-input',
+            errorTestID: 'details-screen-dog-gender-select-input-error',
             validator: (value) =>
                 !!value &&
                 !validator.isEmpty(value) &&
                 !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_COLOR_TEXT_INPUT_KEY]: {
+            labelKey: DETAILS_DOG_COLOR_LABEL_TITLE,
             value: '',
             initialValue: '',
+            isRequired: true,
             isValid: true,
+            labelTestID: 'details-screen-dog-color-text-label',
+            inputTestID: 'details-screen-dog-color-text-input',
+            errorTestID: 'details-screen-dog-color-text-input-error',
+            keyboardType: 'default',
+            autoCapitalize: 'none',
             validator: (value) =>
                 !!value &&
                 !validator.isEmpty(value) &&
                 !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_STATUS_SELECT_INPUT_KEY]: {
+            labelKey: DETAILS_DOG_STATUS_LABEL_TITLE,
             value: null,
             initialValue: null,
+            isRequired: true,
             options: [DASHBOARD_DOG_STATUS_LOST, DASHBOARD_DOG_STATUS_WANDERING, DASHBOARD_DOG_STATUS_FOUND],
             isValid: true,
+            labelTestID: 'details-screen-dog-status-text-label',
+            inputTestID: 'details-screen-dog-status-select-input',
+            errorTestID: 'details-screen-dog-status-select-input-error',
             validator: (value) =>
                 !!value &&
                 !validator.isEmpty(value) &&
                 !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_AGE_TEXT_INPUT_KEY]: {
+            labelKey: DETAILS_DOG_AGE_LABEL_TITLE,
             value: '',
             initialValue: '',
+            isRequired: true,
             isValid: true,
+            labelTestID: 'details-screen-dog-age-text-label',
+            inputTestID: 'details-screen-dog-age-text-input',
+            errorTestID: 'details-screen-dog-age-text-input-error',
+            keyboardType: 'numeric',
+            autoCapitalize: 'none',
             validator: (value) =>
                 !!value &&
                 !validator.isEmpty(value) &&
                 !EMOJI_REGEX.test(value)
         },
         [SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY]: {
+            labelKey: DETAILS_DOG_HAS_CHIP,
             value: false,
             initialValue: false,
-            isValid: true
+            isValid: true,
+            labelTestID: 'details-screen-dog-has-chip-toggle-label',
+            inputTestID: 'details-screen-dog-has-chip-toggle-input',
+            errorTestID: 'details-screen-dog-has-chip-toggle-input-error',
         },
         [SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY]: {
+            labelKey: DETAILS_DOG_CHIP_NUMBER,
             value: '',
             initialValue: '',
-            isValid: true
+            isRequired: false,
+            isValid: true,
+            keyboardType: 'numeric',
+            autoCapitalize: 'none',
+            labelTestID: 'details-screen-dog-chip-number-text-label',
+            inputTestID: 'details-screen-dog-chip-number-text-input',
+            errorTestID: 'details-screen-dog-chip-number-text-input-error',
         }
     },
     location: {
@@ -135,6 +190,10 @@ export const reducer = createReducer(initialState, {
         state.inputs[action.payload.inputKey].value = action.payload.value;
         state.inputs[action.payload.inputKey].isValid = true;
         state.isValid = true;
+
+        if (action.payload.inputKey === SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY && action.payload.value === false) {
+            state.inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].value = state.inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].initialValue;
+        }
     },
     [ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED]: (state, action) => {
         state.location = {
