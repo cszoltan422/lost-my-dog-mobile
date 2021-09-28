@@ -5,6 +5,7 @@ import Card from '../../common/card/Card';
 import ModalDropdown from 'react-native-modal-dropdown';
 import i18n from '../../../i18n/i18n';
 import {
+    DETAILS_ASTERISK_EXPLANATION,
     DETAILS_DOG_DESCRIPTION_LABEL_TITLE,
     DETAILS_INPUT_REQUIRED
 } from '../../../i18n/i18n.keys';
@@ -178,6 +179,11 @@ const LostDogDetailsContent = (props) => {
                             </View>
                         )}
                     </View>
+                    <View style={styles.rowContainer}>
+                        <Text style={styles.asteriskExplanationStyle}>
+                            {i18n.t(DETAILS_ASTERISK_EXPLANATION)}
+                        </Text>
+                    </View>
                 </>
             </Card>
         </>
@@ -260,6 +266,10 @@ const styles = StyleSheet.create({
     },
     switchStyle: {
         alignSelf: 'flex-start'
+    },
+    asteriskExplanationStyle: {
+        color: colors.accentColor,
+        fontSize: 12
     }
 });
 
