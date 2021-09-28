@@ -14,6 +14,8 @@ import colors from '../../colors';
 
 const LostDogDetailsReadonly = (props) => {
 
+    console.log(props.dog);
+
     return (
         <ScrollView
             testID='details-screen-scroll-view' >
@@ -39,6 +41,7 @@ const LostDogDetailsReadonly = (props) => {
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={{color: colors.white}}
                                 title={i18n.t(DETAILS_SEND_MESSAGE)}
+                                disabled={props.dog.contactEmail === ''}
                                 onPress={props.onSendOwnerButtonPressed} />
                         </View>
                         <View style={styles.columnContainer}>
@@ -55,6 +58,7 @@ const LostDogDetailsReadonly = (props) => {
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={{color: colors.white}}
                                 title={i18n.t(DETAILS_CALL_OWNER)}
+                                disabled={props.dog.contactPhone === ''}
                                 onPress={props.onCallOwnerButtonPressed} />
                         </View>
                     </View>
