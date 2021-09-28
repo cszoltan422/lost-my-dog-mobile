@@ -1,38 +1,44 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {View, StyleSheet, ScrollView, Text, TextInput, Dimensions} from 'react-native';
 import {Button, Icon, Tooltip} from 'react-native-elements';
-import {connect} from 'react-redux';
 import { SIGN_UP_SCREEN_TITLE } from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
 import colors from '../colors';
 import {APPLICATION_NAME} from '../application.constants';
 import {onSignupAttempted, onSignupInputValueChanged} from '../redux/actions/signup/action-creators/action.creators';
 
-class SignUpScreen extends Component {
+const SignUpScreen = (props) => {
 
-    renderTextInputBox = (inputKey, onChangeText) => {
+    const isValid = useSelector(state => state.signup.isValid);
+    const isLoading = useSelector(state => state.signup.isLoading);
+    const error = useSelector(state => state.signup.error);
+    const inputs = useSelector(state => state.signup.inputs);
+
+    const dispatch = useDispatch();
+
+    const renderTextInputBox = (inputKey, onChangeText) => {
         return (
             <View style={styles.textInputBoxContainerStyle}>
                 <Text
-                    testID={this.props.inputs[inputKey].labelTestID}
+                    testID={inputs[inputKey].labelTestID}
                     style={styles.textInputLabelStyle}>
-                    {i18n.t(this.props.inputs[inputKey].label)}
+                    {i18n.t(inputs[inputKey].label)}
                 </Text>
                 <View style={[
                     styles.inputStyle,
-                    !this.props.inputs[inputKey].isValid ? styles.errorInputStyle : null
+                    !inputs[inputKey].isValid ? styles.errorInputStyle : null
                 ]}>
                     <TextInput
-                        testID={this.props.inputs[inputKey].inputTestID}
+                        testID={inputs[inputKey].inputTestID}
                         style={styles.inputTextStyle}
-                        placeholder={i18n.t(this.props.inputs[inputKey].label)}
+                        placeholder={i18n.t(inputs[inputKey].label)}
                         placeholderTextColor={colors.white}
-                        value={this.props.inputs[inputKey].value}
-                        autoCapitalize={this.props.inputs[inputKey].autoCapitalize}
-                        secureTextEntry={this.props.inputs[inputKey].secureTextEntry}
+                        value={inputs[inputKey].value}
+                        autoCapitalize={inputs[inputKey].autoCapitalize}
+                        secureTextEntry={inputs[inputKey].secureTextEntry}
                         onChangeText={onChangeText} />
-                    {!this.props.inputs[inputKey].isValid ?
+                    {!inputs[inputKey].isValid ?
                         <View style={styles.errorToolTipContainerStyle}>
                             <Tooltip
                                 width={Dimensions.get('window').width}
@@ -40,12 +46,12 @@ class SignUpScreen extends Component {
                                 backgroundColor={colors.grey}
                                 popover={
                                     <Text
-                                        testID={this.props.inputs[inputKey].errorLabelTestID}
+                                        testID={inputs[inputKey].errorLabelTestID}
                                         style={styles.errorTooltipTextStyle}>
-                                        {i18n.t(this.props.inputs[inputKey].validationErrorKey)}
+                                        {i18n.t(inputs[inputKey].validationErrorKey)}
                                     </Text>}>
                                 <Icon
-                                    testID={this.props.inputs[inputKey].errorIconTestID}
+                                    testID={inputs[inputKey].errorIconTestID}
                                     name='report-problem'
                                     type='material' />
                             </Tooltip>
@@ -57,51 +63,48 @@ class SignUpScreen extends Component {
         );
     };
 
-    render() {
-        return (
-            <ScrollView
-                testID='signup-screen-scroll-view'
-                style={styles.scrollViewType}
-                contentContainerStyle={styles.scrollViewContentContainerStyle}
-                extraHeight={-64}>
-                <View style={styles.container}>
-                    <Text
-                        testID='signup-screen-title-text'
-                        style={styles.signUpTitleStyle}>
-                        {APPLICATION_NAME}
-                    </Text>
-                    {Object.keys(this.props.inputs).map((inputKey) => {
-                        return (
-                            <Fragment key={inputKey}>
-                                {this.renderTextInputBox(
-                                    inputKey,
-                                    (value) => this.props.onSignupInputValueChanged(inputKey, value)
-                                )}
-                            </Fragment>
-                        );
-                    })}
-                    <View style={styles.signupButtonContainerStyle}>
-                        {this.props.error ?
-                            <Text
-                                testID='signup-global-error-text'
-                                style={styles.signupAttemptTextStyle}>
-                                {i18n.t(this.props.error)}
-                            </Text>
-                            : null
-                        }
-                        <Button
-                            testID='signup-screen-signup-button'
-                            buttonStyle={styles.signupButtonStyle}
-                            titleStyle={styles.signupTextStyle}
-                            title={i18n.t(SIGN_UP_SCREEN_TITLE)}
-                            loading={this.props.isLoading}
-                            disabled={!this.props.isValid}
-                            onPress={() => this.props.onSignupAttempted(this.props.navigation)} />
-                    </View>
+    return (
+        <ScrollView
+            testID='signup-screen-scroll-view'
+            style={styles.scrollViewType}
+            contentContainerStyle={styles.scrollViewContentContainerStyle}
+            extraHeight={-64}>
+            <View style={styles.container}>
+                <Text
+                    testID='signup-screen-title-text'
+                    style={styles.signUpTitleStyle}>
+                    {APPLICATION_NAME}
+                </Text>
+                {Object.keys(inputs).map((inputKey) => {
+                    return (
+                        <Fragment key={inputKey}>
+                            {renderTextInputBox(
+                                inputKey,
+                                (value) => dispatch(onSignupInputValueChanged(inputKey, value))
+                            )}
+                        </Fragment>
+                    );
+                })}
+                <View style={styles.signupButtonContainerStyle}>
+                    {error && (
+                        <Text
+                            testID='signup-global-error-text'
+                            style={styles.signupAttemptTextStyle}>
+                            {i18n.t(error)}
+                        </Text>
+                    )}
+                    <Button
+                        testID='signup-screen-signup-button'
+                        buttonStyle={styles.signupButtonStyle}
+                        titleStyle={styles.signupTextStyle}
+                        title={i18n.t(SIGN_UP_SCREEN_TITLE)}
+                        loading={isLoading}
+                        disabled={!isValid}
+                        onPress={() => dispatch(onSignupAttempted(props.navigation))} />
                 </View>
-            </ScrollView>
-        );
-    }
+            </View>
+        </ScrollView>
+    );
 
 }
 
@@ -194,30 +197,4 @@ SignUpScreen['navigationOptions'] = () => ({
     headerBackTitleVisible: false
 });
 
-SignUpScreen.propTypes = {
-    isValid: PropTypes.bool.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    error: PropTypes.string.isRequired,
-    inputs: PropTypes.object.isRequired,
-    navigation: PropTypes.object.isRequired,
-    onSignupInputValueChanged: PropTypes.func.isRequired,
-    onSignupAttempted: PropTypes.func.isRequired
-};
-
-const mapStateToProps = (state) => {
-    return {
-        isValid: state.signup.isValid,
-        isLoading: state.signup.isLoading,
-        error: state.signup.error,
-        inputs: state.signup.inputs
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onSignupInputValueChanged: (inputKey, value) => dispatch(onSignupInputValueChanged(inputKey, value)),
-        onSignupAttempted: (navigation) => dispatch(onSignupAttempted(navigation))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpScreen);
+export default SignUpScreen;
