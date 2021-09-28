@@ -13,8 +13,6 @@ import {
     onDashboardLoading,
     onDashboardRefreshing
 } from '../../actions/dashboard/action-creators/action.creators';
-import {LocationAccuracy} from 'expo-location';
-import {getLocation} from '../../../util/location/location.utils';
 import {ON_SUBMIT_FORM_SUBMIT_SUCCESS} from '../../actions/submit-form/action-types/action.types';
 
 const CLEAR_DATA_ACTIONS = [
@@ -53,10 +51,10 @@ function* dashboardFetchActionSaga(action) {
     try {
         const pagination = yield select((state) => state.dashboard.pagination);
         const searchParameters = yield select((state) => state.dashboard.searchParameters);
-        const currentLocation = yield getLocation(LocationAccuracy.High);
+        const currentLocation = yield select((state) => state.application.location);
         const locationParameters = {
-            longitude: currentLocation.coords.longitude,
-            latitude: currentLocation.coords.latitude
+            longitude: currentLocation.longitude,
+            latitude: currentLocation.latitude
         };
 
         const data = yield call(SearchLostDogsService.searchLostDogs, pagination.currentPage, searchParameters, locationParameters);

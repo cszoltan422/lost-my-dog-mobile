@@ -12,8 +12,7 @@ import {
     onSubmitFormLocationValueChanged,
     onSubmitFormSubmitted
 } from '../redux/actions/submit-form/action-creators/action.creators';
-import {getLocation} from '../util/location/location.utils';
-import {LocationAccuracy} from "expo-location";
+import {useComponentDidMount} from "../hooks/useComponentDidMount";
 
 const SubmitLostDogScreen = (props) => {
 
@@ -24,19 +23,16 @@ const SubmitLostDogScreen = (props) => {
     const inputs = useSelector(state => state.submitForm.inputs);
     const location = useSelector(state => state.submitForm.location);
     const selectedImage = useSelector(state => state.submitForm.selectedImage);
+    const currentLocation = useSelector(state => state.application.location);
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        async function getCurrentLocation() {let currentLocation = await getLocation(LocationAccuracy.High);
-            dispatch(onSubmitFormLocationValueChanged({
-                longitude: currentLocation.coords.longitude,
-                latitude: currentLocation.coords.latitude
-            }));
-        }
-
-        getCurrentLocation();
-    }, []);
+    useComponentDidMount(() => {
+        dispatch(onSubmitFormLocationValueChanged({
+            longitude: currentLocation.longitude,
+            latitude: currentLocation.latitude
+        }));
+    });
 
     useEffect(() => {
         return () => {
