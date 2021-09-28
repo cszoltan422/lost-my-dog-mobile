@@ -110,6 +110,10 @@ LostDogDetails.propTypes = {
     isLoading: PropTypes.bool.isRequired,
     isValid: PropTypes.bool.isRequired,
     inputs: PropTypes.object.isRequired,
+    loading: PropTypes.shape({
+        progress: PropTypes.number.isRequired,
+        stage: PropTypes.string.isRequired
+    }).isRequired,
     location: PropTypes.shape({
         longitude: PropTypes.number.isRequired,
         latitude: PropTypes.number.isRequired,

@@ -39,11 +39,6 @@ const LostDogDetailsHeader = (props) => {
 };
 
 const styles = StyleSheet.create({
-    imageStyle: {
-        flex: 1,
-        resizeMode: 'cover',
-        height: 400
-    },
     errorLabel: {
         fontSize: 12,
         color: colors.errorRed

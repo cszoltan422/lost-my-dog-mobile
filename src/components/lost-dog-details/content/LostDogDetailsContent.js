@@ -193,12 +193,6 @@ const styles = StyleSheet.create({
         height: 'auto',
         backgroundColor: colors.errorRed
     },
-    descriptionTextStyle: {
-        color: colors.white,
-        fontWeight: 'bold',
-        fontSize: 16,
-        fontStyle: 'italic'
-    },
     descriptionTextInputStyle: {
         color: colors.white,
         fontWeight: 'bold',

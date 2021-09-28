@@ -41,13 +41,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
         fontStyle: 'italic'
-    },
-    descriptionTextInputStyle: {
-        color: colors.white,
-        fontWeight: 'bold',
-        fontSize: 14,
-        fontStyle: 'italic',
-        borderBottomWidth: 1
     }
 });
 
