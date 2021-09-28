@@ -44,7 +44,7 @@ function* applicationMountedSaga() {
                 granted: mediaLibraryPermission.granted,
                 canAskAgain: mediaLibraryPermission.canAskAgain
             }
-        }
+        };
 
         const applicationUser = yield call(getItem, USER_ASYNC_STORAGE_KEY);
         if (!applicationUser) {

@@ -30,7 +30,7 @@ const FloatingActionButton = (props) => {
                 );
             })}
         </SpeedDial>
-    )
+    );
 };
 
 FloatingActionButton.propTypes = {
@@ -52,6 +52,6 @@ FloatingActionButton.propTypes = {
         }).isRequired,
         pressHandler: PropTypes.func.isRequired
     })).isRequired
-}
+};
 
 export default FloatingActionButton;

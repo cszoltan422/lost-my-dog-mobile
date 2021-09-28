@@ -40,7 +40,7 @@ const SubmitLostDogScreen = (props) => {
     useEffect(() => {
         return () => {
             dispatch(onResetSubmitForm());
-        }
+        };
     }, []);
 
     return (
@@ -59,7 +59,7 @@ const SubmitLostDogScreen = (props) => {
             onSubmit={() => dispatch(onSubmitFormSubmitted(props.navigation))} />
     );
 
-}
+};
 
 SubmitLostDogScreen['navigationOptions'] = ({ navigation }) => ({
     title: i18n.t(SUBMIT_DOG_TITLE),

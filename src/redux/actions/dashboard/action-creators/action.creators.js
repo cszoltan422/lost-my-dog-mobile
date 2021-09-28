@@ -50,14 +50,14 @@ export const onDashboardChangeRadiusSearchParam = (radius) => {
     return {
         type: ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
         payload: radius
-    }
+    };
 };
 
 export const onDashboardChangeSearchTypeParam = (searchType) => {
     return {
         type: ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM,
         payload: searchType
-    }
+    };
 };
 
 export const onDashboardDataFetched = (clearData, data) => {

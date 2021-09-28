@@ -20,7 +20,7 @@ const LocationPermissionInitScreen = (props) => {
     const onAskLocationPermission = async () => {
         await Location.requestPermissionsAsync();
         props.onCheckLocationPermission();
-    }
+    };
 
     const onOpenSettingsApp = async () => {
         if (Platform.OS === 'ios') {
@@ -28,7 +28,7 @@ const LocationPermissionInitScreen = (props) => {
         } else {
             await IntentLauncher.startActivityAsync(IntentLauncher.ACTION_APPLICATION_SETTINGS);
         }
-    }
+    };
 
     const granted = props.locationPermission.granted;
     const canAskAgain = props.locationPermission.canAskAgain;

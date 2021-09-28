@@ -14,8 +14,6 @@ import colors from '../../colors';
 
 const LostDogDetailsReadonly = (props) => {
 
-    console.log(props.dog);
-
     return (
         <ScrollView
             testID='details-screen-scroll-view' >
@@ -75,7 +73,7 @@ const LostDogDetailsReadonly = (props) => {
                 </Card>
             </View>
         </ScrollView>
-    )
+    );
 };
 
 const styles = StyleSheet.create({

@@ -152,6 +152,6 @@ DashboardListItem.propTypes = {
     }).isRequired,
     index: PropTypes.number.isRequired,
     onListItemClicked: PropTypes.func.isRequired
-}
+};
 
 export default DashboardListItem;

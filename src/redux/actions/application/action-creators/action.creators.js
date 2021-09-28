@@ -4,19 +4,19 @@ import {
     ON_INITIALIZE_APPLICATION,
     ON_LOCATION_PERMISSION_CHECKED,
     ON_APPLICATION_SUCCESSFUL_LOGIN_PERSIST_USER
-} from '../action-types/action.types'
+} from '../action-types/action.types';
 
 export const onApplicationMounted = () => {
     return {
         type: ON_APPLICATION_MOUNTED
-    }
+    };
 };
 
 export const onInitializeApplication = (applicationInitializer) => {
     return {
         type: ON_INITIALIZE_APPLICATION,
         payload: applicationInitializer
-    }
+    };
 };
 
 export const onCheckLocationPermission = () => {
@@ -36,5 +36,5 @@ export const onApplicationSuccessfulLoginPersistUser = (user) => {
     return {
         type: ON_APPLICATION_SUCCESSFUL_LOGIN_PERSIST_USER,
         payload: user
-    }
+    };
 };

@@ -17,7 +17,7 @@ class ApplicationWrapper extends Component {
 
         this.state = {
             elapsedTime: 0
-        }
+        };
     }
 
     componentDidMount() {
@@ -47,7 +47,7 @@ class ApplicationWrapper extends Component {
                 <LocationPermissionInitScreen
                     locationPermission={this.props.locationPermission}
                     onCheckLocationPermission={this.props.onCheckLocationPermission} />
-            )
+            );
         } else {
             return (
                 <View

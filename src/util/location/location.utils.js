@@ -13,6 +13,6 @@ export const getLocation = async (accuracy) => {
                 longitude: E2E_MOCK_LOCATION.longitude,
                 latitude: E2E_MOCK_LOCATION.latitude
             }
-        }
+        };
     }
-}
+};

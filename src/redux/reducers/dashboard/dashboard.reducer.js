@@ -49,7 +49,7 @@ export const reducer = createReducer(initialState, {
     [ON_DASHBOARD_FETCH_NEW_PAGE]: (state) => {
         state.pagination = {
             currentPage: state.pagination.currentPage + 1
-        }
+        };
     },
     [ON_DASHBOARD_FETCHING_NEW_PAGE]: (state) => {
         state.fetchingNew = true;

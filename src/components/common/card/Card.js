@@ -8,8 +8,8 @@ const Card = (props) => {
         <View style={{...styles.card, ...props.styles}}>
             {props.children}
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     card: {
@@ -27,6 +27,6 @@ const styles = StyleSheet.create({
 Card.propTypes = {
     children: PropTypes.object.isRequired,
     styles: PropTypes.object
-}
+};
 
 export default Card;

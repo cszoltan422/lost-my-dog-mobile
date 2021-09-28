@@ -89,7 +89,7 @@ const CameraImagePicker = (props) => {
                 </>
             }
         </View>
-    )
+    );
 };
 
 const styles = StyleSheet.create({

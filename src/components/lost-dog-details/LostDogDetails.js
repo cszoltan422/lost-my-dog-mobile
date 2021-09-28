@@ -74,7 +74,7 @@ const LostDogDetails = (props) => {
                 </Card>
             </View>
         </ScrollView>
-    )
+    );
 };
 
 const styles = StyleSheet.create({

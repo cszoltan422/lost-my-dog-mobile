@@ -14,6 +14,6 @@ export default class SearchLostDogsService {
                 searchStatus: searchParams.searchType,
                 page: page,
               })
-          }).then(response => response.json())
+          }).then(response => response.json());
     }
 }

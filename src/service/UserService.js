@@ -11,7 +11,7 @@ export default class UserService {
                 userName: username,
                 password: password
             })
-        }).then(response => response.json())
+        }).then(response => response.json());
     }
 
     static fetchUserDetails(token) {
@@ -21,7 +21,7 @@ export default class UserService {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
-        }).then(response => response.json())
+        }).then(response => response.json());
     }
 
     static signup(signupRequest) {
@@ -31,6 +31,6 @@ export default class UserService {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(signupRequest)
-        }).then(response => response.json())
+        }).then(response => response.json());
     }
 }

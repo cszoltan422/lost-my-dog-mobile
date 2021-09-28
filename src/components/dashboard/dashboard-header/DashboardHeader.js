@@ -23,13 +23,13 @@ const DashboardHeader = (props) => {
         if (!props.isLoading()) {
             props.onDashboardChangeSearchTypeParam(value);
         }
-    }
+    };
 
     const onDashboardChangeSliderValue = (value) => {
         if (!props.isLoading()) {
             props.onDashboardChangeRadiusSearchParam(value);
         }
-    }
+    };
 
     return (
         <Fragment>
@@ -144,6 +144,6 @@ DashboardHeader.propTypes = {
     }).isRequired,
     onDashboardChangeRadiusSearchParam: PropTypes.func.isRequired,
     onDashboardChangeSearchTypeParam: PropTypes.func.isRequired
-}
+};
 
 export default DashboardHeader;
