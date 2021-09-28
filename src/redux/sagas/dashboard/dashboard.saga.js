@@ -15,19 +15,22 @@ import {
 } from '../../actions/dashboard/action-creators/action.creators';
 import {LocationAccuracy} from 'expo-location';
 import {getLocation} from '../../../util/location/location.utils';
+import {ON_SUBMIT_FORM_SUBMIT_SUCCESS} from '../../actions/submit-form/action-types/action.types';
 
 const CLEAR_DATA_ACTIONS = [
     ON_DASHBOARD_MOUNTED,
     ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
     ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM,
-    ON_DASHBOARD_REFRESH_PAGE
+    ON_DASHBOARD_REFRESH_PAGE,
+    ON_SUBMIT_FORM_SUBMIT_SUCCESS
 ];
 const ACTION_TYPE_STATUS_CHANGE_HANDLER = {
-    ON_DASHBOARD_MOUNTED: onDashboardLoading,
-    ON_DASHBOARD_REFRESH_PAGE: onDashboardRefreshing,
-    ON_DASHBOARD_FETCH_NEW_PAGE: onDashboardFetchingNewPage,
-    ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM: onDashboardLoading,
-    ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM: onDashboardLoading,
+    [ON_DASHBOARD_MOUNTED]: onDashboardLoading,
+    [ON_DASHBOARD_REFRESH_PAGE]: onDashboardRefreshing,
+    [ON_DASHBOARD_FETCH_NEW_PAGE]: onDashboardFetchingNewPage,
+    [ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM]: onDashboardLoading,
+    [ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM]: onDashboardLoading,
+    [ON_SUBMIT_FORM_SUBMIT_SUCCESS]: onDashboardLoading,
 }
 
 export function* dashboardFetchActionWatcherSaga() {
@@ -36,7 +39,8 @@ export function* dashboardFetchActionWatcherSaga() {
         ON_DASHBOARD_REFRESH_PAGE,
         ON_DASHBOARD_FETCH_NEW_PAGE,
         ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
-        ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM
+        ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM,
+        ON_SUBMIT_FORM_SUBMIT_SUCCESS
     ], dashboardFetchActionSaga);
 }
 

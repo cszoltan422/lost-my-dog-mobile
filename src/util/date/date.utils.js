@@ -41,3 +41,8 @@ export const formatIsoTime = (isoTimeString) => {
     return timeInLocalTimezone.format('YYYY. MM. DD, hh:mm');
 };
 
+export const getCurrentTimeWithTimezone = () => {
+    let currentDateTime = moment().tz(Localization.timezone);
+    return currentDateTime.format();
+
+};

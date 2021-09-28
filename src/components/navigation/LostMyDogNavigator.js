@@ -4,12 +4,12 @@ import DashboardScreen from '../../screens/DashboardScreen';
 import DetailsScreen from '../../screens/DetailsScreen';
 import LoginScreen from '../../screens/LoginScreen';
 import SignUpScreen from '../../screens/SignUpScreen';
-import SubmitFormScreen from '../../screens/SubmitFormScreen';
+import SubmitLostDogScreen from '../../screens/SubmitLostDogScreen';
 import colors from '../../colors';
 import {
     DASHBOARD_NAVIGATION_SCREEN_NAME,
     DETAILS_NAVIGATION_SCREEN_NAME,
-    LOGIN_NAVIGATION_SCREEN_NAME, SIGN_UP_NAVIGATION_PARAM_NAME, SUBMIT_DOG_NAVIGATION_PARAM_NAME
+    LOGIN_NAVIGATION_SCREEN_NAME, SIGN_UP_NAVIGATION_SCREEN_NAME, SUBMIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../../application.constants';
 
 const routeConfigMap = {
@@ -22,10 +22,10 @@ const routeConfigMap = {
     [LOGIN_NAVIGATION_SCREEN_NAME]: {
         screen: LoginScreen
     },
-    [SUBMIT_DOG_NAVIGATION_PARAM_NAME]: {
-        screen: SubmitFormScreen
+    [SUBMIT_DOG_NAVIGATION_SCREEN_NAME]: {
+        screen: SubmitLostDogScreen
     },
-    [SIGN_UP_NAVIGATION_PARAM_NAME]: {
+    [SIGN_UP_NAVIGATION_SCREEN_NAME]: {
         screen: SignUpScreen
     }
 };

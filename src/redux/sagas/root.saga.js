@@ -3,6 +3,7 @@ import {applicationMountedWatcherSaga, onCheckLocationPermissionWatcherSaga} fro
 import { dashboardFetchActionWatcherSaga } from './dashboard/dashboard.saga';
 import {loginAttemptWatcherSaga} from './login/login.saga';
 import {signupAttemptWatcherSaga} from './signup/signup.saga';
+import {submitFormSubmittedWatcherSaga} from './submit-form/submit-form.saga';
 
 export default function* rootSaga() {
     yield all([
@@ -10,6 +11,7 @@ export default function* rootSaga() {
         dashboardFetchActionWatcherSaga(),
         onCheckLocationPermissionWatcherSaga(),
         loginAttemptWatcherSaga(),
-        signupAttemptWatcherSaga()
+        signupAttemptWatcherSaga(),
+        submitFormSubmittedWatcherSaga()
     ]);
 }

@@ -51,6 +51,8 @@ function* applicationMountedSaga() {
             applicationInitializer.user = {
                 isLoggedIn: false,
                 token: null,
+                username: null,
+                password: null,
                 isAdmin: false,
                 isLocked: false,
                 details: null
@@ -60,6 +62,8 @@ function* applicationMountedSaga() {
             applicationInitializer.user = {
                 isLoggedIn: true,
                 token: user.token,
+                username: user.username,
+                password: user.password,
                 isAdmin: user.isAdmin,
                 isLocked: user.isLocked,
                 details: user.details

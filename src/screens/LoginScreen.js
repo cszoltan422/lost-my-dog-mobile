@@ -15,7 +15,7 @@ import {
     LOGIN_PASSWORD_PLACEHOLDER, LOGIN_SIGN_UP_TEXT,
     LOGIN_USERNAME_PLACEHOLDER
 } from '../i18n/i18n.keys';
-import {APPLICATION_NAME, SIGN_UP_NAVIGATION_PARAM_NAME} from '../application.constants';
+import {APPLICATION_NAME, SIGN_UP_NAVIGATION_SCREEN_NAME} from '../application.constants';
 
 class LoginScreen extends Component {
 
@@ -76,7 +76,7 @@ class LoginScreen extends Component {
                     onPress={() => this.props.onLoginAttempted(this.props.navigation)} />
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate({
-                        routeName: SIGN_UP_NAVIGATION_PARAM_NAME
+                        routeName: SIGN_UP_NAVIGATION_SCREEN_NAME
                     })}>
                     <Text
                         testID='login-screen-signup-text'

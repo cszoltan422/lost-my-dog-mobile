@@ -29,7 +29,7 @@ const DashboardListItem = (props) => {
                                     rounded
                                     title={props.dog.dogName.charAt(0)}
                                     source={{
-                                        uri: `${ENV.API_URL}/image/${props.dog.avatarFilename}`,
+                                        uri: `${ENV.API_URL}/api/image/${props.dog.avatarFilename}`,
                                     }} />
                             </View>
                             <View style={styles.titleContainer}>
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
 DashboardListItem.propTypes = {
     dog: PropTypes.shape({
         id: PropTypes.number.isRequired,
+        submittedByUserId: PropTypes.number.isRequired,
         dogName: PropTypes.string.isRequired,
         dogBreed: PropTypes.string.isRequired,
         gender: PropTypes.string.isRequired,
@@ -144,7 +145,10 @@ DashboardListItem.propTypes = {
         status: PropTypes.string.isRequired,
         city: PropTypes.string.isRequired,
         countryCode: PropTypes.string.isRequired,
-        avatarFilename: PropTypes.string.isRequired
+        avatarFilename: PropTypes.string.isRequired,
+        chippedStatus: PropTypes.string.isRequired,
+        chipNumber: PropTypes.string.isRequired,
+        specialPeculiarities: PropTypes.string.isRequired
     }).isRequired,
     index: PropTypes.number.isRequired,
     onListItemClicked: PropTypes.func.isRequired

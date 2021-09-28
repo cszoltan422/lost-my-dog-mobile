@@ -31,6 +31,8 @@ function* loginAttemptSaga(action) {
 
             const user = {
                 token: loginResult.token,
+                username: username,
+                password: password,
                 isAdmin: userDetails.roles.includes(USER_ROLE_ADMIN_VALUE),
                 isLocked: userDetails.locked,
                 details: userDetails
