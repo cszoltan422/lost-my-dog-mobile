@@ -85,6 +85,12 @@ export const expectDetailsScreenDogDetailsAreVisibleWithLabels = async (labels) 
     await expect(element(by.id('details-screen-dog-age-text-label'))).toBeVisible();
     await expect(element(by.id('details-screen-dog-age-text-label'))).toHaveText(labels.dogAge);
 
+    await expect(element(by.id('details-screen-dog-has-chip-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-has-chip-text-label'))).toHaveText(labels.hasChip);
+
+    await expect(element(by.id('details-screen-dog-chip-number-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-chip-number-text-label'))).toHaveText(labels.chipNumber);
+
     await expect(element(by.id('details-screen-dog-location-text-label'))).toBeVisible();
     await expect(element(by.id('details-screen-dog-location-text-label'))).toHaveText(labels.location);
 
