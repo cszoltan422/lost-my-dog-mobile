@@ -39,6 +39,10 @@ export const navigateToSignupScreen = async () => {
     await element(by.id('login-screen-signup-text')).tap();
 };
 
+export const closeInputView = async (elementToTap) => {
+    await element(by.id(elementToTap)).tap();
+};
+
 export const pressSignupButton = async () => {
     await element(by.id('signup-screen-signup-button')).tap();
 };

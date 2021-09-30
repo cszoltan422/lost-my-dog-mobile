@@ -155,3 +155,7 @@ export const expectSignupAttemptHasFailedWithReason = async (errorText) => {
     await expect(element(by.id('signup-global-error-text'))).toBeVisible();
     await expect(element(by.id('signup-global-error-text'))).toHaveText(errorText);
 };
+
+export const expectSignupScreenServerErrorIsNotVisible = async () => {
+    await expect(element(by.id('signup-global-error-text'))).not.toBeVisible();
+};

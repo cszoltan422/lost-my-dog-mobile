@@ -1,5 +1,4 @@
 import hu from '../../../src/i18n/hu/hu';
-import {setLocation} from '../utils/utils';
 import {
     DASHBOARD_LIST_END_REACHED,
     DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_OVER_A_MONTH_AGO,
@@ -28,7 +27,7 @@ describe('Dashboard Screen - [hu]', () => {
             }
         });
         await device.reloadReactNative();
-        await setLocation(37.785834, -122.406417, device);
+        
         await waitForSplashAnimationToFinish('application-container');
 
         await expectDashboardHeaderIsVisibleWithDistanceLabel(hu[DASHBOARD_SEARCH_PARAMETERS_DISTANCE] + ': 30 km');
@@ -46,7 +45,7 @@ describe('Dashboard Screen - [hu]', () => {
             }
         });
         await device.reloadReactNative();
-        await setLocation(37.785834, -122.406417, device);
+        
         await waitForSplashAnimationToFinish('application-container');
 
         await expectDashboardHeaderIsVisibleWithDistanceLabel(hu[DASHBOARD_SEARCH_PARAMETERS_DISTANCE] + ': 30 km');
@@ -66,7 +65,7 @@ describe('Dashboard Screen - [hu]', () => {
             }
         });
         await device.reloadReactNative();
-        await setLocation(37.785834, -122.406417, device);
+        
         await waitForSplashAnimationToFinish('application-container');
 
         await expectDashboardHeaderIsVisibleWithDistanceLabel(hu[DASHBOARD_SEARCH_PARAMETERS_DISTANCE] + ': 30 km');
@@ -77,7 +76,7 @@ describe('Dashboard Screen - [hu]', () => {
 
         await expectDashboardHeaderIsVisibleWithDistanceLabel(hu[DASHBOARD_SEARCH_PARAMETERS_DISTANCE] + ': 100 km');
         await expectDashboardListContainerIsVisibleWithText(hu[DASHBOARD_LIST_END_REACHED]);
-        await expectDashboardListItemAtIndexIsVisibleWithValues(0, 'Watt', 'FOXI', hu[DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_OVER_A_MONTH_AGO]);
-        await expectDashboardListItemAtIndexIsVisibleWithValues(1, 'Watt Far away', 'BORDER COLLIE', hu[DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_OVER_A_MONTH_AGO]);
+        await expectDashboardListItemAtIndexIsVisibleWithValues(0, 'Watt Far away', 'BORDER COLLIE', hu[DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_OVER_A_MONTH_AGO]);
+        await expectDashboardListItemAtIndexIsVisibleWithValues(1, 'Watt', 'FOXI', hu[DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_OVER_A_MONTH_AGO]);
     });
 });
