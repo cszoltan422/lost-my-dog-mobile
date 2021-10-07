@@ -1,9 +1,7 @@
-name: Static code analysis
+name: Expo Publish - staging
 
 on:
   push:
-    branches: [ development ]
-  pull_request:
     branches: [ development ]
 
 jobs:
@@ -17,5 +15,9 @@ jobs:
         with:
           node-version: 16.x
           cache: 'npm'
+      - uses: expo/expo-github-action@v6
+        with:
+          expo-version: 4.x
+          token: ${{ secrets.EXPO_TOKEN }}
       - run: npm ci
-      - run: npm run build
+      - run: 'npm run publish:staging'
