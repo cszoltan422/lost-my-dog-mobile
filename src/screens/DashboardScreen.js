@@ -28,6 +28,7 @@ import {useComponentDidMount} from '../hooks/useComponentDidMount';
 
 const DashboardScreen = (props) => {
 
+    const dataFetched = useSelector(state => state.dashboard.dataFetched);
     const loading = useSelector(state => state.dashboard.loading);
     const refreshing = useSelector(state => state.dashboard.refreshing);
     const fetchingNew = useSelector(state => state.dashboard.fetchingNew);
@@ -59,6 +60,7 @@ const DashboardScreen = (props) => {
             {loading ?
                 <LoadingCard /> :
                 <DashboardList
+                    dataFetched={dataFetched}
                     data={data}
                     fetchingNew={fetchingNew}
                     refreshing={refreshing}

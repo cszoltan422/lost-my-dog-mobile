@@ -17,6 +17,7 @@ import {
 } from '../../../application.constants';
 
 export const initialState = {
+    dataFetched: false,
     loading: false,
     refreshing: false,
     fetchingNew: false,
@@ -68,6 +69,7 @@ export const reducer = createReducer(initialState, {
         state.pagination.currentPage = 0;
     },
     [ON_DASHBOARD_DATA_FETCHED]: (state, action) => {
+        state.dataFetched = true;
         state.loading = false;
         state.refreshing = false;
         state.fetchingNew = false;

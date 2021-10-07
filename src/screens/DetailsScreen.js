@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Linking} from 'react-native';
@@ -27,7 +27,7 @@ const DetailsScreen = (props) => {
     };
 
     return (
-        <Fragment>
+        <>
             <LostDogDetailsReadonly
                 dog={dog}
                 onSendOwnerButtonPressed={onSendOwnerButtonPressed}
@@ -50,7 +50,7 @@ const DetailsScreen = (props) => {
                         }
                     }
                 ]} />
-        </Fragment>
+        </>
     );
 };
 
