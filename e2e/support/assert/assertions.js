@@ -165,3 +165,163 @@ export const expectSignupAttemptHasFailedWithReason = async (errorText) => {
 export const expectSignupScreenServerErrorIsNotVisible = async () => {
     await expect(element(by.id('signup-global-error-text'))).not.toBeVisible();
 };
+
+export const expectImagePickerToBeVisible = async () => {
+    await expect(element(by.id('image-picker-container'))).toBeVisible();
+    await expect(element(by.id('image-picker-image-media-library-icon'))).toBeVisible();
+    await expect(element(by.id('image-picker-image-camera-icon'))).toBeVisible();
+};
+
+export const expectInputFormWithDefaultLabelsToBeVisible = async (dogNameText, dogBreedText, dogGenderText, dogColorText, dogStatusText, dogAgeText, hasChipText, emailAddressText, phoneNumberText) => {
+    await expect(element(by.id('details-screen-description-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-description-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-name-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-name-text-label'))).toHaveText(dogNameText);
+    await expect(element(by.id('details-screen-dog-name-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-name-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-breed-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-breed-text-label'))).toHaveText(dogBreedText);
+    await expect(element(by.id('details-screen-dog-breed-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-breed-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-gender-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-gender-text-label'))).toHaveText(dogGenderText);
+    await expect(element(by.id('details-screen-dog-gender-select-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-gender-select-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-color-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-color-text-label'))).toHaveText(dogColorText);
+    await expect(element(by.id('details-screen-dog-color-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-color-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-status-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-status-text-label'))).toHaveText(dogStatusText);
+    await expect(element(by.id('details-screen-dog-status-select-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-status-select-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-age-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-age-text-label'))).toHaveText(dogAgeText);
+    await expect(element(by.id('details-screen-dog-age-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-age-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-has-chip-toggle-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-has-chip-toggle-label'))).toHaveText(hasChipText);
+    await expect(element(by.id('details-screen-dog-has-chip-toggle-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-has-chip-toggle-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-chip-number-text-label'))).not.toBeVisible();
+    await expect(element(by.id('details-screen-dog-chip-number-text-input'))).not.toBeVisible();
+    await expect(element(by.id('details-screen-dog-chip-number-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-submitter-email-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-submitter-email-text-label'))).toHaveText(emailAddressText);
+    await expect(element(by.id('details-screen-submitter-email-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-submitter-email-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-submitter-phone-number-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-submitter-phone-number-text-label'))).toHaveText(phoneNumberText);
+    await expect(element(by.id('details-screen-submitter-phone-number-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-submitter-phone-number-text-input-error'))).not.toBeVisible();
+};
+
+export const expectLocationPickerToBeVisible = async (mapInfoText, currentCoordinatesText) => {
+    await expect(element(by.id('location-picket-container'))).toBeVisible();
+
+    await expect(element(by.id('location-picker-map-info-text'))).toBeVisible();
+    await expect(element(by.id('location-picker-map-info-text'))).toHaveText(mapInfoText);
+
+    await expect(element(by.id('location-picker-current-coordinates-text'))).toBeVisible();
+    await expect(element(by.id('location-picker-current-coordinates-text'))).toHaveText(currentCoordinatesText);
+
+    await expect(element(by.id('location-picker-current-coordinates-text'))).toBeVisible();
+
+    await expect(element(by.id('map-view-container'))).toBeVisible();
+    await expect(element(by.id('map-view-marker'))).toBeVisible();
+};
+
+export const expectSubmitScreenSubmitButtonToBeVisible = async () => {
+    await expect(element(by.id('details-screen-submit-button'))).toBeVisible();
+};
+
+export const expectInputFormWithExtraLabelsToBeVisible = async (dogNameText, dogBreedText, dogGenderText, dogColorText, dogStatusText, dogAgeText, hasChipText,chipNumberText, emailAddressText, phoneNumberText) => {
+    await expect(element(by.id('details-screen-description-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-description-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-name-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-name-text-label'))).toHaveText(dogNameText);
+    await expect(element(by.id('details-screen-dog-name-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-name-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-breed-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-breed-text-label'))).toHaveText(dogBreedText);
+    await expect(element(by.id('details-screen-dog-breed-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-breed-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-gender-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-gender-text-label'))).toHaveText(dogGenderText);
+    await expect(element(by.id('details-screen-dog-gender-select-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-gender-select-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-color-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-color-text-label'))).toHaveText(dogColorText);
+    await expect(element(by.id('details-screen-dog-color-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-color-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-status-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-status-text-label'))).toHaveText(dogStatusText);
+    await expect(element(by.id('details-screen-dog-status-select-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-status-select-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-age-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-age-text-label'))).toHaveText(dogAgeText);
+    await expect(element(by.id('details-screen-dog-age-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-age-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-has-chip-toggle-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-has-chip-toggle-label'))).toHaveText(hasChipText);
+    await expect(element(by.id('details-screen-dog-has-chip-toggle-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-has-chip-toggle-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-dog-chip-number-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-chip-number-text-label'))).toHaveText(chipNumberText);
+    await expect(element(by.id('details-screen-dog-chip-number-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-chip-number-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-submitter-email-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-submitter-email-text-label'))).toHaveText(emailAddressText);
+    await expect(element(by.id('details-screen-submitter-email-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-submitter-email-text-input-error'))).not.toBeVisible();
+
+    await expect(element(by.id('details-screen-submitter-phone-number-text-label'))).toBeVisible();
+    await expect(element(by.id('details-screen-submitter-phone-number-text-label'))).toHaveText(phoneNumberText);
+    await expect(element(by.id('details-screen-submitter-phone-number-text-input'))).toBeVisible();
+    await expect(element(by.id('details-screen-submitter-phone-number-text-input-error'))).not.toBeVisible();
+};
+
+export const expectInputFormErrorsToBeVisible = async (errorText) => {
+    await expect(element(by.id('details-screen-description-text-input-error'))).toBeVisible();
+    await expect(element(by.id('details-screen-description-text-input-error'))).toHaveText(errorText);
+
+    await expect(element(by.id('details-screen-description-text-input-error'))).toBeVisible();
+    await expect(element(by.id('details-screen-description-text-input-error'))).toHaveText(errorText);
+
+    await expect(element(by.id('details-screen-dog-name-text-input-error'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-name-text-input-error'))).toHaveText(errorText);
+
+    await expect(element(by.id('details-screen-dog-breed-text-input-error'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-breed-text-input-error'))).toHaveText(errorText);
+
+    await expect(element(by.id('details-screen-dog-gender-select-input-error'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-gender-select-input-error'))).toHaveText(errorText);
+
+    await expect(element(by.id('details-screen-dog-color-text-input-error'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-color-text-input-error'))).toHaveText(errorText);
+
+    await expect(element(by.id('details-screen-dog-status-select-input-error'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-status-select-input-error'))).toHaveText(errorText);
+
+    await expect(element(by.id('details-screen-dog-age-text-input-error'))).toBeVisible();
+    await expect(element(by.id('details-screen-dog-age-text-input-error'))).toHaveText(errorText);
+};
