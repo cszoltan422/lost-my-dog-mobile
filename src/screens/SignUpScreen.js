@@ -87,7 +87,7 @@ const SignUpScreen = (props) => {
                     );
                 })}
                 <View style={styles.signupButtonContainerStyle}>
-                    {error && (
+                    {error !== '' && (
                         <Text
                             testID='signup-global-error-text'
                             style={styles.signupAttemptTextStyle}>

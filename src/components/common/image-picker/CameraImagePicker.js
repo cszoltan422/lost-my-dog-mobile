@@ -57,16 +57,20 @@ const CameraImagePicker = (props) => {
     };
 
     return (
-        <View style={styles.container}>
+        <View
+            testID='image-picker-container'
+            style={styles.container}>
             {props.selectedImage.isPresent ?
                 <>
                     <Image
+                        testID='image-picker-selected-image'
                         style={styles.imageStyle}
                         source={{uri: props.selectedImage.uri,}} />
                 </>
             :
                 <>
                     <TouchableOpacity
+                        testID='image-picker-image-media-library-icon'
                         style={styles.columnContainer}
                         onPress={!imagePicker.isDenied ? handleImagePickerIconPressed : null}>
                         <View>
@@ -77,6 +81,7 @@ const CameraImagePicker = (props) => {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
+                        testID='image-picker-image-camera-icon'
                         style={styles.columnContainer}
                         onPress={!camera.isDenied ? handleOnCameraIconPressed : null}>
                         <View>

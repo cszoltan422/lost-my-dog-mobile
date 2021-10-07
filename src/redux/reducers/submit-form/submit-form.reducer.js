@@ -228,7 +228,7 @@ export const initialState = {
             keyboardType: 'phone-pad',
             autoCapitalize: 'none',
             contextMenuHidden: false,
-            labelTestID: 'details-screen-submitter-phone_number-text-label',
+            labelTestID: 'details-screen-submitter-phone-number-text-label',
             inputTestID: 'details-screen-submitter-phone-number-text-input',
             errorTestID: 'details-screen-submitter-phone-number-text-input-error',
             validator: (value) =>

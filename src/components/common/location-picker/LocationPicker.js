@@ -55,31 +55,34 @@ const LocationPicker = (props) => {
     };
 
     return (
-        <View>
-            <View>
-                <View style={styles.mapHeaderContainer}>
-                    <Icon
-                        type='material'
-                        name='info'
-                        color={props.iconColor} />
-                    <Text style={styles.mapInfoTextStyle}>
-                        {i18n.t(LOCATION_PICKER_INFO_DESCRIPTION)}
-                    </Text>
-                </View>
-                <View style={styles.currentCoordinatesContainer}>
-                    <Icon
-                        type='material'
-                        name='room'
-                        color={props.iconColor} />
-                    <Text style={styles.mapInfoTextStyle}>
-                        {i18n.t(LOCATION_PICKER_CURRENT_COORDINATES)}
-                    </Text>
-                    <Text
-                        style={styles.currentCoordinatesTextStyle}
-                        onPress={handleOnCoordinateTextPressed}>
-                        {props.longitude.toFixed(5)}, {props.latitude.toFixed(5)}
-                    </Text>
-                </View>
+        <View testID='location-picket-container'>
+            <View style={styles.mapHeaderContainer}>
+                <Icon
+                    type='material'
+                    name='info'
+                    color={props.iconColor} />
+                <Text
+                    testID='location-picker-map-info-text'
+                    style={styles.mapInfoTextStyle}>
+                    {i18n.t(LOCATION_PICKER_INFO_DESCRIPTION)}
+                </Text>
+            </View>
+            <View
+                style={styles.currentCoordinatesContainer}>
+                <Icon
+                    type='material'
+                    name='room'
+                    color={props.iconColor} />
+                <Text
+                    testID='location-picker-current-coordinates-text'
+                    style={styles.mapInfoTextStyle}>
+                    {i18n.t(LOCATION_PICKER_CURRENT_COORDINATES)}
+                </Text>
+                <Text
+                    style={styles.currentCoordinatesTextStyle}
+                    onPress={handleOnCoordinateTextPressed}>
+                    {props.longitude.toFixed(5)}, {props.latitude.toFixed(5)}
+                </Text>
             </View>
             <MapView
                 testID='map-view-container'

@@ -124,7 +124,9 @@ const LostDogDetailsContent = (props) => {
 
     return (
         <>
-            <Card styles={
+            <Card
+                testID='lost-dog-details-content-description-card'
+                styles={
                 props.inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].isValid ?
                     styles.descriptionCardStyle
                     : styles.descriptionCardErrorStyle
@@ -147,7 +149,7 @@ const LostDogDetailsContent = (props) => {
                     )}
                 </>
             </Card>
-            <Card>
+            <Card testID='lost-dog-details-content-inputs-card'>
                 <>
                     <View style={styles.rowContainer}>
                         <View style={styles.columnContainer}>
@@ -190,7 +192,7 @@ const LostDogDetailsContent = (props) => {
                     </View>
                 </>
             </Card>
-            <Card>
+            <Card testID='lost-dog-details-content-contact-inputs-card'>
                 <View style={styles.rowContainer}>
                     <View style={styles.columnContainer}>
                         {renderTextInput(SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY)}

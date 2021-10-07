@@ -1,8 +1,8 @@
 import {
-    navigateToSignupScreen, pressSignupButton, typeToSignupInputFieldValue,
+    closeInputView,
+    navigateToSignupScreen, pressSignupButton, scrollOnViewByIdTo, typeToSignupInputFieldValue,
     waitForSplashAnimationToFinish
 } from '../../support/action/actions';
-import {setLocation} from "../utils/utils";
 import {
     EMAIL_EXISTS, LOGIN_FORGOT_PASSWORD_PLACEHOLDER, LOGIN_SIGN_UP_TEXT,
     SIGNUP_CONFIRM_PASSWORD_PLACEHOLDER, SIGNUP_CONFIRM_PASSWORD_VALIDATION_ERROR,
@@ -19,7 +19,7 @@ import {
     expectLoginScreenToBeVisibleWithTexts,
     expectSignupAttemptHasFailedWithReason,
     expectSignupScreenInputHasNoError,
-    expectSignupScreenInputsHasError,
+    expectSignupScreenInputsHasError, expectSignupScreenServerErrorIsNotVisible,
     signupScreenToBeVisibleWithTexts
 } from "../../support/assert/assertions";
 import {APPLICATION_NAME} from "../../../src/application.constants";
@@ -38,7 +38,7 @@ describe('Signup Screen - [hu]', () => {
             }
         });
         await device.reloadReactNative();
-        await setLocation(37.785834, -122.406417, device);
+        
         await waitForSplashAnimationToFinish('application-container');
 
         await navigateToSignupScreen();
@@ -80,6 +80,7 @@ describe('Signup Screen - [hu]', () => {
                 errorText: hu[SIGNUP_PASSWORD_VALIDATION_ERROR],
             },
         ]);
+        await expectSignupScreenServerErrorIsNotVisible();
     });
 
     it('it should open the signup screen and validate the username field [hu]', async () => {
@@ -93,7 +94,7 @@ describe('Signup Screen - [hu]', () => {
             }
         });
         await device.reloadReactNative();
-        await setLocation(37.785834, -122.406417, device);
+        
         await waitForSplashAnimationToFinish('application-container');
 
         await navigateToSignupScreen();
@@ -106,10 +107,13 @@ describe('Signup Screen - [hu]', () => {
             hu[SIGNUP_PASSWORD_PLACEHOLDER],
             hu[SIGNUP_CONFIRM_PASSWORD_PLACEHOLDER]
         );
+        await expectSignupScreenServerErrorIsNotVisible();
 
         await typeToSignupInputFieldValue('signup-screen-username-text-input', 'text with spaces');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-username-text-input-error-icon',
@@ -119,8 +123,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-username-text-input', 'u$sername');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-username-text-input-error-icon',
@@ -130,8 +136,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-username-text-input', 'usernamewith😃');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-username-text-input-error-icon',
@@ -141,8 +149,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-username-text-input', 'nan');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-username-text-input-error-icon',
@@ -152,8 +162,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-username-text-input', 'testuser');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputHasNoError('signup-screen-username-text-input-error-icon');
     });
 
@@ -168,7 +180,7 @@ describe('Signup Screen - [hu]', () => {
             }
         });
         await device.reloadReactNative();
-        await setLocation(37.785834, -122.406417, device);
+        
         await waitForSplashAnimationToFinish('application-container');
 
         await navigateToSignupScreen();
@@ -181,12 +193,15 @@ describe('Signup Screen - [hu]', () => {
             hu[SIGNUP_PASSWORD_PLACEHOLDER],
             hu[SIGNUP_CONFIRM_PASSWORD_PLACEHOLDER]
         );
+        await expectSignupScreenServerErrorIsNotVisible();
 
         await typeToSignupInputFieldValue('signup-screen-username-text-input', 'testuser');
 
         await typeToSignupInputFieldValue('signup-screen-email-text-input', 'text with spaces');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-email-text-input-error-icon',
@@ -196,8 +211,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-email-text-input', 'notanemail');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-email-text-input-error-icon',
@@ -207,8 +224,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-email-text-input', 'test😃@user1.com');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-email-text-input-error-icon',
@@ -218,8 +237,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-email-text-input', 'test@user1.com');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputHasNoError('signup-screen-email-text-input-error-icon');
     });
 
@@ -234,7 +255,7 @@ describe('Signup Screen - [hu]', () => {
             }
         });
         await device.reloadReactNative();
-        await setLocation(37.785834, -122.406417, device);
+        
         await waitForSplashAnimationToFinish('application-container');
 
         await navigateToSignupScreen();
@@ -247,13 +268,16 @@ describe('Signup Screen - [hu]', () => {
             hu[SIGNUP_PASSWORD_PLACEHOLDER],
             hu[SIGNUP_CONFIRM_PASSWORD_PLACEHOLDER]
         );
+        await expectSignupScreenServerErrorIsNotVisible();
 
         await typeToSignupInputFieldValue('signup-screen-username-text-input', 'testuser');
         await typeToSignupInputFieldValue('signup-screen-email-text-input', 'test@user1.com');
 
         await typeToSignupInputFieldValue('signup-screen-first-name-text-input', 'nan');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-first-name-text-input-error-icon',
@@ -263,8 +287,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-first-name-text-input', 'Test😃');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-first-name-text-input-error-icon',
@@ -274,8 +300,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-first-name-text-input', 'Test');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputHasNoError('signup-screen-first-name-text-input-error-icon');
     });
 
@@ -290,7 +318,7 @@ describe('Signup Screen - [hu]', () => {
             }
         });
         await device.reloadReactNative();
-        await setLocation(37.785834, -122.406417, device);
+        
         await waitForSplashAnimationToFinish('application-container');
 
         await navigateToSignupScreen();
@@ -303,14 +331,17 @@ describe('Signup Screen - [hu]', () => {
             hu[SIGNUP_PASSWORD_PLACEHOLDER],
             hu[SIGNUP_CONFIRM_PASSWORD_PLACEHOLDER]
         );
+        await expectSignupScreenServerErrorIsNotVisible();
 
         await typeToSignupInputFieldValue('signup-screen-username-text-input', 'testuser');
         await typeToSignupInputFieldValue('signup-screen-email-text-input', 'test@user1.com');
         await typeToSignupInputFieldValue('signup-screen-first-name-text-input', 'Test');
 
         await typeToSignupInputFieldValue('signup-screen-last-name-text-input', 'nan');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-last-name-text-input-error-icon',
@@ -320,8 +351,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-last-name-text-input', 'User😃');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-last-name-text-input-error-icon',
@@ -331,8 +364,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-last-name-text-input', 'User');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputHasNoError('signup-screen-last-name-text-input-error-icon');
     });
 
@@ -347,7 +382,7 @@ describe('Signup Screen - [hu]', () => {
             }
         });
         await device.reloadReactNative();
-        await setLocation(37.785834, -122.406417, device);
+        
         await waitForSplashAnimationToFinish('application-container');
 
         await navigateToSignupScreen();
@@ -360,6 +395,7 @@ describe('Signup Screen - [hu]', () => {
             hu[SIGNUP_PASSWORD_PLACEHOLDER],
             hu[SIGNUP_CONFIRM_PASSWORD_PLACEHOLDER]
         );
+        await expectSignupScreenServerErrorIsNotVisible();
 
         await typeToSignupInputFieldValue('signup-screen-username-text-input', 'testuser');
         await typeToSignupInputFieldValue('signup-screen-email-text-input', 'test@user1.com');
@@ -367,8 +403,10 @@ describe('Signup Screen - [hu]', () => {
         await typeToSignupInputFieldValue('signup-screen-last-name-text-input', 'User');
 
         await typeToSignupInputFieldValue('signup-screen-password-text-input', 'password😃');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-password-text-input-error-icon',
@@ -378,8 +416,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-password-text-input', 'ALLUPPERCASE123');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-password-text-input-error-icon',
@@ -389,8 +429,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-password-text-input', 'alllowercase123');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-password-text-input-error-icon',
@@ -400,8 +442,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-password-text-input', 'noNumbers');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-password-text-input-error-icon',
@@ -411,8 +455,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-password-text-input', 'Short12');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-password-text-input-error-icon',
@@ -422,8 +468,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-password-text-input', 'Password123');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputHasNoError('signup-screen-password-text-input-error-icon');
         await expectSignupScreenInputsHasError([
             {
@@ -434,8 +482,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-confirm-password-text-input', 'Password12');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputsHasError([
             {
                 iconTestID: 'signup-screen-confirm-password-text-input-error-icon',
@@ -445,8 +495,10 @@ describe('Signup Screen - [hu]', () => {
         ]);
 
         await typeToSignupInputFieldValue('signup-screen-confirm-password-text-input', 'Password123');
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupScreenInputHasNoError('signup-screen-confirm-password-text-input-error-icon');
     });
 
@@ -461,7 +513,7 @@ describe('Signup Screen - [hu]', () => {
             }
         });
         await device.reloadReactNative();
-        await setLocation(37.785834, -122.406417, device);
+        
         await waitForSplashAnimationToFinish('application-container');
 
         await navigateToSignupScreen();
@@ -474,6 +526,7 @@ describe('Signup Screen - [hu]', () => {
             hu[SIGNUP_PASSWORD_PLACEHOLDER],
             hu[SIGNUP_CONFIRM_PASSWORD_PLACEHOLDER]
         );
+        await expectSignupScreenServerErrorIsNotVisible();
 
         await typeToSignupInputFieldValue('signup-screen-username-text-input', 'testuser');
         await typeToSignupInputFieldValue('signup-screen-email-text-input', 'test@user1.com');
@@ -482,8 +535,10 @@ describe('Signup Screen - [hu]', () => {
         await typeToSignupInputFieldValue('signup-screen-password-text-input', 'Password123');
         await typeToSignupInputFieldValue('signup-screen-confirm-password-text-input', 'Password123');
 
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
 
         await expectSignupScreenInputHasNoError('signup-screen-username-text-input-error-icon');
         await expectSignupScreenInputHasNoError('signup-screen-email-text-input-error-icon');
@@ -494,12 +549,15 @@ describe('Signup Screen - [hu]', () => {
         await expectSignupAttemptHasFailedWithReason(hu[USER_NAME_EXISTS]);
 
         await typeToSignupInputFieldValue('signup-screen-username-text-input', `testuser${new Date().getTime()}`);
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
-        await pressSignupButton();
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'down');
         await expectSignupAttemptHasFailedWithReason(hu[EMAIL_EXISTS]);
 
         await typeToSignupInputFieldValue('signup-screen-email-text-input', `test${new Date().getTime()}@user.com`);
-        await pressSignupButton();
+        await closeInputView('signup-screen-scroll-view');
+        await scrollOnViewByIdTo('signup-screen-scroll-view', 'up');
         await pressSignupButton();
         await expectLoginScreenToBeVisibleWithTexts(APPLICATION_NAME, hu[LOGIN_FORGOT_PASSWORD_PLACEHOLDER], hu[LOGIN_SIGN_UP_TEXT]);
     });

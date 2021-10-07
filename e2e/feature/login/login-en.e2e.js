@@ -4,7 +4,6 @@ import {
     LOGIN_FORGOT_PASSWORD_PLACEHOLDER, LOGIN_SIGN_UP_TEXT, LOGIN_WRONG_PASSWORD_OR_USERNAME
 } from '../../../src/i18n/i18n.keys';
 import {APPLICATION_NAME} from '../../../src/application.constants';
-import {setLocation} from '../utils/utils';
 import {
     attemptLoginWithCredentials,
     navigateToLoginScreen,
@@ -26,7 +25,7 @@ describe('Login Screen - [en]', () => {
             },
         });
         await device.reloadReactNative();
-        await setLocation(37.785834, -122.406417, device);
+        
         await waitForSplashAnimationToFinish('application-container');
 
         await navigateToLoginScreen();
@@ -43,7 +42,7 @@ describe('Login Screen - [en]', () => {
             },
         });
         await device.reloadReactNative();
-        await setLocation(37.785834, -122.406417, device);
+        
         await waitForSplashAnimationToFinish('application-container');
 
         await navigateToLoginScreen();

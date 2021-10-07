@@ -41,7 +41,7 @@ const ApplicationWrapper = () => {
         return (
             <LocationPermissionInitScreen
                 locationPermission={locationPermission}
-                onCheckLocationPermission={dispatch(onCheckLocationPermission())} />
+                onCheckLocationPermission={() => dispatch(onCheckLocationPermission())} />
         );
     } else {
         return (
