@@ -1,8 +1,6 @@
 name: Static code analysis
 
 on:
-  push:
-    branches: [ development ]
   pull_request:
     branches: [ development ]
 
