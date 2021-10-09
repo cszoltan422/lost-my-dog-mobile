@@ -70,7 +70,7 @@ import {
     SIGNUP_PASSWORD_VALIDATION_ERROR,
     SIGNUP_USERNAME_PLACEHOLDER,
     SIGNUP_USERNAME_VALIDATION_ERROR,
-    SUBMIT_DOG_TITLE,
+    SUBMIT_DOG_TITLE, TOAST_ERROR_HEADER_TEXT, ERROR_UNKNOWN_SERVER_ERROR,
     USER_NAME_EXISTS
 } from '../i18n.keys';
 import {SIGNUP_SCREEN_NAME_ORDER_LAST} from '../../application.constants';
@@ -155,6 +155,8 @@ export default {
     [DETAILS_SUBMITTED_IN_PROGRESS_VALIDATING_FORM]: 'Beviteli mezők ellenőrzése',
     [DETAILS_SUBMITTED_IN_PROGRESS_COMPRESS_IMAGE]: 'Kép tömörítése',
     [DETAILS_SUBMITTED_IN_PROGRESS_SENDING_REQUEST]: 'Kérés küldése',
-    [DETAILS_ASTERISK_EXPLANATION]: '* kötelező mező'
+    [DETAILS_ASTERISK_EXPLANATION]: '* kötelező mező',
+    [TOAST_ERROR_HEADER_TEXT]: 'Probléma történt',
+    [ERROR_UNKNOWN_SERVER_ERROR]: 'Ismeretlen hiba történt. Próbáld újra'
 };
 // á é í ú ü ű ó ö ő

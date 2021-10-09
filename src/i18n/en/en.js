@@ -70,7 +70,7 @@ import {
     SIGNUP_PASSWORD_VALIDATION_ERROR,
     SIGNUP_USERNAME_PLACEHOLDER,
     SIGNUP_USERNAME_VALIDATION_ERROR,
-    SUBMIT_DOG_TITLE,
+    SUBMIT_DOG_TITLE, TOAST_ERROR_HEADER_TEXT, ERROR_UNKNOWN_SERVER_ERROR,
     USER_NAME_EXISTS
 } from '../i18n.keys';
 import {SIGNUP_SCREEN_NAME_ORDER_FIRST} from '../../application.constants';
@@ -155,5 +155,7 @@ export default {
     [DETAILS_SUBMITTED_IN_PROGRESS_VALIDATING_FORM]: 'Validating form',
     [DETAILS_SUBMITTED_IN_PROGRESS_COMPRESS_IMAGE]: 'Compressing image',
     [DETAILS_SUBMITTED_IN_PROGRESS_SENDING_REQUEST]: 'Sending the request',
-    [DETAILS_ASTERISK_EXPLANATION]: '* required field'
+    [DETAILS_ASTERISK_EXPLANATION]: '* required field',
+    [TOAST_ERROR_HEADER_TEXT]: 'Something went wrong',
+    [ERROR_UNKNOWN_SERVER_ERROR]: 'Unknown error occurred. Please try again'
 };

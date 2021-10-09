@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -6,20 +6,22 @@ import DashboardHeader from '../components/dashboard/dashboard-header/DashboardH
 import DashboardList from '../components/dashboard/dashboard-list/DashboardList';
 import LoadingCard from '../components/common/loading-card/LoadingCard';
 import FloatingActionButton from '../components/common/floating-action-button/FloatingActionButton';
+import Toast from 'react-native-toast-message';
 import {
     onDashboardChangeRadiusSearchParam,
     onDashboardChangeSearchTypeParam,
     onDashboardFetchNewPage,
+    onDashboardHideAlert,
     onDashboardMounted,
     onDashboardRefreshPage
 } from '../redux/actions/dashboard/action-creators/action.creators';
 import {
-    DASHBOARD_TITLE, SUBMIT_DOG_TITLE
+    DASHBOARD_TITLE, SUBMIT_DOG_TITLE, TOAST_ERROR_HEADER_TEXT
 } from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
 import {
     DETAILS_NAVIGATION_PARAM_NAME,
-    DETAILS_NAVIGATION_SCREEN_NAME,
+    DETAILS_NAVIGATION_SCREEN_NAME, ERROR_MESSAGE_TRANSLATION_CODES,
     LOGIN_NAVIGATION_SCREEN_NAME,
     SUBMIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../application.constants';
@@ -35,6 +37,7 @@ const DashboardScreen = (props) => {
     const hasNoMoreData = useSelector(state => state.dashboard.hasNoMoreData);
     const searchParameters = useSelector(state => state.dashboard.searchParameters);
     const data = useSelector(state => state.dashboard.data);
+    const error = useSelector(state => state.dashboard.error);
     const user = useSelector(state => state.application.user);
 
     const dispatch = useDispatch();
@@ -42,6 +45,19 @@ const DashboardScreen = (props) => {
     useComponentDidMount(() => {
         dispatch(onDashboardMounted());
     });
+
+    useEffect(() => {
+        if (error.show) {
+            Toast.show({
+                position: 'bottom',
+                type: 'error',
+                text1: i18n.t(TOAST_ERROR_HEADER_TEXT),
+                text2: i18n.t(ERROR_MESSAGE_TRANSLATION_CODES[error.message] || 'ERROR_UNKNOWN_SERVER_ERROR'),
+                autoHide: false,
+                onHide: () => dispatch(onDashboardHideAlert()),
+            });
+        }
+    }, [error]);
 
     const isLoading = () => {
         return fetchingNew || loading || refreshing;
