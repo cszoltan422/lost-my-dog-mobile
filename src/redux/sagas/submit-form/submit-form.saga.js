@@ -2,7 +2,11 @@ import {takeLatest, select, put, call} from 'redux-saga/effects';
 import {ON_SUBMIT_FORM_SUBMITTED} from '../../actions/submit-form/action-types/action.types';
 import {
     onSubmitFormImageInvalid,
-    onSubmitFormLoading, onSubmitFormPublishLoadingProgress, onSubmitFormStopLoading, onSubmitFormSubmitSuccess,
+    onSubmitFormLoading,
+    onSubmitFormPublishLoadingProgress,
+    onSubmitFormStopLoading,
+    onSubmitFormSubmitError,
+    onSubmitFormSubmitSuccess,
     onSubmitFormValidationError
 } from '../../actions/submit-form/action-creators/action.creators';
 import * as FileSystem from 'expo-file-system';
@@ -85,58 +89,56 @@ function* getCompressedImage(selectedImage) {
 }
 
 function* submitFormSubmittedSaga(action) {
-    try {
-        yield put(onSubmitFormLoading());
+    yield put(onSubmitFormLoading());
 
-        const navigation = action.payload;
-        const inputs = yield select((state) => state.submitForm.inputs);
-        const location = yield select((state) => state.submitForm.location);
-        const selectedImage = yield select((state) => state.submitForm.selectedImage);
-        const user = yield select((state) => state.application.user);
+    const navigation = action.payload;
+    const inputs = yield select((state) => state.submitForm.inputs);
+    const location = yield select((state) => state.submitForm.location);
+    const selectedImage = yield select((state) => state.submitForm.selectedImage);
+    const user = yield select((state) => state.application.user);
 
-        yield put(onSubmitFormPublishLoadingProgress(0.2, DETAILS_SUBMITTED_IN_PROGRESS_VALIDATING_FORM));
-        const isValidForm = yield* validateFormInputs(inputs);
+    yield put(onSubmitFormPublishLoadingProgress(0.2, DETAILS_SUBMITTED_IN_PROGRESS_VALIDATING_FORM));
+    const isValidForm = yield* validateFormInputs(inputs);
 
-        if (isValidForm && user.isLoggedIn) {
-            yield put(onSubmitFormPublishLoadingProgress(0.4, DETAILS_SUBMITTED_IN_PROGRESS_COMPRESS_IMAGE));
-            let compressedImage = yield* getCompressedImage(selectedImage);
-            const isImageValid = yield* validateImage(compressedImage);
+    if (isValidForm && user.isLoggedIn) {
+        yield put(onSubmitFormPublishLoadingProgress(0.4, DETAILS_SUBMITTED_IN_PROGRESS_COMPRESS_IMAGE));
+        let compressedImage = yield* getCompressedImage(selectedImage);
+        const isImageValid = yield* validateImage(compressedImage);
 
-            if (isImageValid) {
-                yield put(onSubmitFormPublishLoadingProgress(0.8, DETAILS_SUBMITTED_IN_PROGRESS_SENDING_REQUEST));
-                const loginResult = yield call(UserService.login, user.username, user.password); // todo only login again if token expired
+        if (isImageValid) {
+            yield put(onSubmitFormPublishLoadingProgress(0.8, DETAILS_SUBMITTED_IN_PROGRESS_SENDING_REQUEST));
+            const loginResult = yield call(UserService.login, user.username, user.password); // todo only login again if token expired
 
-                yield call(LostDogSubmissionService.submitLostDog, loginResult.token, {
-                    dogName: inputs[SUBMIT_FORM_NAME_TEXT_INPUT_KEY].value,
-                    description: inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].value,
-                    dogBreed: inputs[SUBMIT_FORM_BREED_TEXT_INPUT_KEY].value,
-                    age: inputs[SUBMIT_FORM_AGE_TEXT_INPUT_KEY].value,
-                    color: inputs[SUBMIT_FORM_COLOR_TEXT_INPUT_KEY].value,
-                    chipNumber: inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].value,
-                    gender: Object.keys(DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS).find(key => DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS[key] === inputs[SUBMIT_FORM_SEX_SELECT_INPUT_KEY].value),
-                    status: Object.keys(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS).find(key => DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[key] === inputs[SUBMIT_FORM_STATUS_SELECT_INPUT_KEY].value),
-                    chippedStatus: inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value ? 'YES' : 'NO',
-                    specialPeculiarities: '',
-                    contactPhone: inputs[SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY].value,
-                    contactEmail: inputs[SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY].value,
-                    longitude: location.longitude,
-                    latitude: location.latitude,
-                    dateLost: getCurrentTimeWithTimezone(),
-                    base64Content: compressedImage.base64,
-                    avatarImageType: 'jpg'
-                });
+            const result = yield call(LostDogSubmissionService.submitLostDog, loginResult.token, {
+                dogName: inputs[SUBMIT_FORM_NAME_TEXT_INPUT_KEY].value,
+                description: inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].value,
+                dogBreed: inputs[SUBMIT_FORM_BREED_TEXT_INPUT_KEY].value,
+                age: inputs[SUBMIT_FORM_AGE_TEXT_INPUT_KEY].value,
+                color: inputs[SUBMIT_FORM_COLOR_TEXT_INPUT_KEY].value,
+                chipNumber: inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].value,
+                gender: Object.keys(DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS).find(key => DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS[key] === inputs[SUBMIT_FORM_SEX_SELECT_INPUT_KEY].value),
+                status: Object.keys(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS).find(key => DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[key] === inputs[SUBMIT_FORM_STATUS_SELECT_INPUT_KEY].value),
+                chippedStatus: inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value ? 'YES' : 'NO',
+                specialPeculiarities: '',
+                contactPhone: inputs[SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY].value,
+                contactEmail: inputs[SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY].value,
+                longitude: location.longitude,
+                latitude: location.latitude,
+                dateLost: getCurrentTimeWithTimezone(),
+                base64Content: compressedImage.base64,
+                avatarImageType: 'jpg'
+            });
 
+            if (!result.errorMessage) {
                 if (navigation.state.routeName === SUBMIT_DOG_NAVIGATION_SCREEN_NAME) {
                     navigation.goBack();
                 }
                 yield put(onSubmitFormSubmitSuccess());
+            } else {
+                yield put(onSubmitFormSubmitError(result));
             }
         }
-    } catch (e) {
-        console.log('error: ', e); // eslint-disable-line no-console
-    } finally {
+
         yield put(onSubmitFormStopLoading());
     }
-
-
 }

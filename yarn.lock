@@ -10206,6 +10206,13 @@
   dependencies:
     "pretty-format" "^26.0.1"
 
+"react-native-toast-message@^1.6.0":
+  "integrity" "sha512-EDXSGyuhRdy5/S4bDlfJ/fkKXM7Gxz6OTx0obBS5kyGq+ci8rvrrOVJkYhgYyjdppYdzCMIvNuIxkUkCjk80fw=="
+  "resolved" "https://registry.npmjs.org/react-native-toast-message/-/react-native-toast-message-1.6.0.tgz"
+  "version" "1.6.0"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "react-native-vector-icons@>7.0.0":
   "integrity" "sha512-V2a1zJ4i+kS8O4j183gIwX14St9AxxXabxwYpFBgRhvr2NDXyFcjHDEAgrOYYlt2W57e20aN1tBDU/I+wn9WtQ=="
   "resolved" "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-7.1.0.tgz"

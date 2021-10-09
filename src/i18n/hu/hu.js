@@ -1,7 +1,7 @@
 import {
     DASHBOARD_DOG_STATUS_FOUND,
     DASHBOARD_DOG_STATUS_LOST,
-    DASHBOARD_DOG_STATUS_WANDERING,
+    DASHBOARD_DOG_STATUS_WANDERING, DASHBOARD_EMPTY_RESULT,
     DASHBOARD_LIST_END_REACHED,
     DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_DAYS_AGO,
     DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_HOURS_AGO,
@@ -70,7 +70,7 @@ import {
     SIGNUP_PASSWORD_VALIDATION_ERROR,
     SIGNUP_USERNAME_PLACEHOLDER,
     SIGNUP_USERNAME_VALIDATION_ERROR,
-    SUBMIT_DOG_TITLE,
+    SUBMIT_DOG_TITLE, TOAST_ERROR_HEADER_TEXT, ERROR_UNKNOWN_SERVER_ERROR,
     USER_NAME_EXISTS
 } from '../i18n.keys';
 import {SIGNUP_SCREEN_NAME_ORDER_LAST} from '../../application.constants';
@@ -90,6 +90,7 @@ export default {
     [DASHBOARD_DOG_STATUS_LOST]: 'Elveszett',
     [DASHBOARD_DOG_STATUS_WANDERING]: 'Kóbor',
     [DASHBOARD_DOG_STATUS_FOUND]: 'Talált',
+    [DASHBOARD_EMPTY_RESULT]: 'Jó hír! Nem találtunk elveszett vagy talált kutyát a közelben!',
     [DETAILS_DOG_DESCRIPTION_LABEL_TITLE]: 'Leírás',
     [DETAILS_DOG_NAME_LABEL_TITLE]: 'Név',
     [DETAILS_DOG_BREED_LABEL_TITLE]: 'Fajta',
@@ -141,7 +142,7 @@ export default {
     [SIGNUP_FIRST_NAME_VALIDATION_ERROR]: 'Kérjük adja meg a keresztnevét',
     [SIGNUP_LAST_NAME_VALIDATION_ERROR]: 'Kérjük adja meg a vezetéknevét',
     [USER_NAME_EXISTS]: 'A felhasználónév foglalt',
-    [EMAIL_EXISTS]: 'A jelszó foglalt',
+    [EMAIL_EXISTS]: 'A email cím foglalt',
     [LOCATION_PICKER_INFO_DESCRIPTION]: 'Koppints a térképre, hogy a kutya utolsó ismert tartózkodási helyét megváltoztasd!',
     [LOCATION_PICKER_CURRENT_COORDINATES]: 'Jelenlegi koordináták: ',
     [DETAILS_SUBMIT_BUTTON_TITLE]: 'Küldés',
@@ -154,6 +155,8 @@ export default {
     [DETAILS_SUBMITTED_IN_PROGRESS_VALIDATING_FORM]: 'Beviteli mezők ellenőrzése',
     [DETAILS_SUBMITTED_IN_PROGRESS_COMPRESS_IMAGE]: 'Kép tömörítése',
     [DETAILS_SUBMITTED_IN_PROGRESS_SENDING_REQUEST]: 'Kérés küldése',
-    [DETAILS_ASTERISK_EXPLANATION]: '* kötelező mező'
+    [DETAILS_ASTERISK_EXPLANATION]: '* kötelező mező',
+    [TOAST_ERROR_HEADER_TEXT]: 'Probléma történt',
+    [ERROR_UNKNOWN_SERVER_ERROR]: 'Ismeretlen hiba történt. Próbáld újra'
 };
 // á é í ú ü ű ó ö ő

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ENV from '../../../../environmnent.config';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
@@ -17,7 +17,7 @@ const DashboardListItem = (props) => {
             testID={`dashboard-list-item-container-${props.index}`}
             onPress={() => props.onListItemClicked(props.dog)}>
             <Card>
-                <Fragment>
+                <>
                     <View
                         testID={`dashboard-list-item-header-container-${props.index}`}
                         style={styles.headerContainer}>
@@ -75,7 +75,7 @@ const DashboardListItem = (props) => {
                                 style={styles.dateLost}>{getTimeDifferenceString(props.dog.dateLost)}</Text>
                         </View>
                     </View>
-                </Fragment>
+                </>
             </Card>
         </TouchableOpacity>
     );

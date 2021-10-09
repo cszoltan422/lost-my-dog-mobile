@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View} from 'react-native';
 import {Button, Slider} from 'react-native-elements';
@@ -32,7 +32,7 @@ const DashboardHeader = (props) => {
     };
 
     return (
-        <Fragment>
+        <>
             <View
                 testID='dashboard-header-tabs-container'
                 style={styles.tabsContainerStyle}>
@@ -82,7 +82,7 @@ const DashboardHeader = (props) => {
                     {i18n.t(DASHBOARD_SEARCH_PARAMETERS_DISTANCE)}: {props.searchParameters.radiusInMeters / 1000} km
                 </Text>
             </View>
-        </Fragment>
+        </>
     );
 };
 

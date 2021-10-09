@@ -11,7 +11,9 @@ import {
     onDashboardDataFetched,
     onDashboardFetchingNewPage,
     onDashboardLoading,
-    onDashboardRefreshing, onDashboardResetPaginationDry
+    onDashboardRefreshing,
+    onDashboardResetPaginationDry,
+    onDashboardDataFetchError
 } from '../../actions/dashboard/action-creators/action.creators';
 import {ON_SUBMIT_FORM_SUBMIT_SUCCESS} from '../../actions/submit-form/action-types/action.types';
 
@@ -50,26 +52,26 @@ function* dashboardFetchActionSaga(action) {
         }
     }
 
-    try {
-        const pagination = yield select((state) => state.dashboard.pagination);
-        const searchParameters = yield select((state) => state.dashboard.searchParameters);
-        let currentLocation = yield select((state) => state.application.location);
-        if (!currentLocation.isPresent) {
-            while (!currentLocation.isPresent) {
-                yield delay(1000);
-                currentLocation = yield select((state) => state.application.location);
-            }
+    const pagination = yield select((state) => state.dashboard.pagination);
+    const searchParameters = yield select((state) => state.dashboard.searchParameters);
+    let currentLocation = yield select((state) => state.application.location);
+    if (!currentLocation.isPresent) {
+        while (!currentLocation.isPresent) {
+            yield delay(1000);
+            currentLocation = yield select((state) => state.application.location);
         }
-        const locationParameters = {
-            longitude: currentLocation.longitude,
-            latitude: currentLocation.latitude
-        };
+    }
+    const locationParameters = {
+        longitude: currentLocation.longitude,
+        latitude: currentLocation.latitude
+    };
 
-        const data = yield call(SearchLostDogsService.searchLostDogs, pagination.currentPage, searchParameters, locationParameters);
+    const result = yield call(SearchLostDogsService.searchLostDogs, pagination.currentPage, searchParameters, locationParameters);
 
+    if (!result.errorCode) {
         const clearData = CLEAR_DATA_ACTIONS.includes(action.type);
-        yield put(onDashboardDataFetched(clearData, data));
-    } catch (e) {
-        console.log(e); // eslint-disable-line no-console
+        yield put(onDashboardDataFetched(clearData, result));
+    } else {
+        yield put(onDashboardDataFetchError(result));
     }
 }

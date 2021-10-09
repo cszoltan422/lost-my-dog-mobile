@@ -1,5 +1,5 @@
 import {
-    ON_RESET_SUBMIT_FORM, ON_SUBMIT_FORM_IMAGE_CLEARED, ON_SUBMIT_FORM_IMAGE_INVALID,
+    ON_RESET_SUBMIT_FORM, ON_SUBMIT_FORM_HIDE_ALERT, ON_SUBMIT_FORM_IMAGE_CLEARED, ON_SUBMIT_FORM_IMAGE_INVALID,
     ON_SUBMIT_FORM_IMAGE_SELECTED,
     ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
     ON_SUBMIT_FORM_LOADING, ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED, ON_SUBMIT_FORM_PUBLISH_LOADING_PROGRESS,
@@ -98,5 +98,11 @@ export const onSubmitFormPublishLoadingProgress = (progress, stage) => {
             progress: progress,
             stage: stage
         }
+    };
+};
+
+export const onSubmitFormHideAlert = () => {
+    return {
+        type: ON_SUBMIT_FORM_HIDE_ALERT
     };
 };

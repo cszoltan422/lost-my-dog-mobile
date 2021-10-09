@@ -33,7 +33,7 @@ import {
     DETAILS_PHONE_NUMBER_INVALID, DETAILS_SUBMITTER_EMAIL_ADDRESS, DETAILS_SUBMITTER_PHONE_NUMBER
 } from '../../../i18n/i18n.keys';
 import {
-    ON_RESET_SUBMIT_FORM,
+    ON_RESET_SUBMIT_FORM, ON_SUBMIT_FORM_HIDE_ALERT,
     ON_SUBMIT_FORM_IMAGE_CLEARED,
     ON_SUBMIT_FORM_IMAGE_INVALID,
     ON_SUBMIT_FORM_IMAGE_SELECTED,
@@ -52,7 +52,11 @@ export const initialState = {
         progress: 0,
         stage: ''
     },
-    error: '',
+    error: {
+        code: '',
+        message: '',
+        show: false,
+    },
     inputs: {
         [SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY]: {
             labelKey: '',
@@ -308,8 +312,12 @@ export const reducer = createReducer(initialState, {
         };
     },
     [ON_SUBMIT_FORM_SUBMIT_ERROR]: (state, action) => {
-        state.error = action.payload;
-        state.isValid = false;
+        state.isLoading = false;
+        state.error = {
+            show: true,
+            code: action.payload.errorCode,
+            message: action.payload.errorMessage
+        };
     },
     [ON_RESET_SUBMIT_FORM]: (state) => {
         state.isValid = true;
@@ -340,5 +348,8 @@ export const reducer = createReducer(initialState, {
             progress: action.payload.progress,
             stage: action.payload.stage
         };
+    },
+    [ON_SUBMIT_FORM_HIDE_ALERT]: (state) => {
+        state.error.show = false;
     }
 });

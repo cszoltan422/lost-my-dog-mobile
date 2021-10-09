@@ -17,6 +17,7 @@ import {
 } from '../../../application.constants';
 
 export const initialState = {
+    dataFetched: false,
     loading: false,
     refreshing: false,
     fetchingNew: false,
@@ -68,6 +69,7 @@ export const reducer = createReducer(initialState, {
         state.pagination.currentPage = 0;
     },
     [ON_DASHBOARD_DATA_FETCHED]: (state, action) => {
+        state.dataFetched = true;
         state.loading = false;
         state.refreshing = false;
         state.fetchingNew = false;
@@ -79,10 +81,11 @@ export const reducer = createReducer(initialState, {
         }
     },
     [ON_DASHBOARD_DATA_FETCH_ERROR]: (state, action) => {
+        state.loading = false;
         state.error = {
             show: true,
-            code: action.payload.code,
-            message: action.payload.message
+            code: action.payload.errorCode,
+            message: action.payload.errorMessage
         };
     },
     [ON_DASHBOARD_HIDE_ALERT]: (state) => {
