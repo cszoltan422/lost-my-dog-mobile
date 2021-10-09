@@ -1,4 +1,4 @@
-name: Expo Publish - staging
+name: Expo Publish - production
 
 on:
   push:
