@@ -2,16 +2,19 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import LostDogDetails from '../components/lost-dog-details/LostDogDetails';
-import {SUBMIT_DOG_TITLE} from '../i18n/i18n.keys';
+import Toast from "react-native-toast-message";
+import {SUBMIT_DOG_TITLE, TOAST_ERROR_HEADER_TEXT} from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
 import {
-    onResetSubmitForm, onSubmitFormImageCleared,
+    onResetSubmitForm, onSubmitFormHideAlert, onSubmitFormImageCleared,
     onSubmitFormImageSelected,
     onSubmitFormInputValueChanged,
     onSubmitFormLocationValueChanged,
     onSubmitFormSubmitted
 } from '../redux/actions/submit-form/action-creators/action.creators';
 import {useComponentDidMount} from '../hooks/useComponentDidMount';
+import {useComponentWillUnmount} from "../hooks/useComponentWillUnmount";
+import {ERROR_MESSAGE_TRANSLATION_CODES} from "../application.constants";
 
 const SubmitLostDogScreen = (props) => {
 
@@ -33,18 +36,28 @@ const SubmitLostDogScreen = (props) => {
         }));
     });
 
+    useComponentWillUnmount(() => {
+        dispatch(onResetSubmitForm());
+    });
+
     useEffect(() => {
-        return () => {
-            dispatch(onResetSubmitForm());
-        };
-    }, []);
+        if (error.show) {
+            Toast.show({
+                position: 'bottom',
+                type: 'error',
+                text1: i18n.t(TOAST_ERROR_HEADER_TEXT),
+                text2: i18n.t(ERROR_MESSAGE_TRANSLATION_CODES[error.message] || 'ERROR_UNKNOWN_SERVER_ERROR'),
+                autoHide: false,
+                onHide: () => dispatch(onSubmitFormHideAlert()),
+            });
+        }
+    }, [error]);
 
     return (
         <LostDogDetails
             isValid={isValid}
             isLoading={isLoading}
             loading={loading}
-            error={error}
             inputs={inputs}
             location={location}
             selectedImage={selectedImage}
