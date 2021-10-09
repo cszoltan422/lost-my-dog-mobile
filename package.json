@@ -5,18 +5,91 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "lint": "eslint --ext .js,.jsx src/",
+    "lint:fix": "eslint --ext .js,.jsx src/ --fix",
+    "test": "echo test",
+    "build": "npm run lint && npm run test",
+    "build:ios:e2e": "npm run build && expo build:ios --release-channel e2e",
+    "build:ios:develop": "npm run build && expo build:ios --release-channel develop",
+    "build:ios:staging": "npm run build && expo build:ios --release-channel staging",
+    "build:ios:production": "npm run build && expo build:ios --release-channel production",
+    "build:android:e2e": "npm run build && expo build:android --release-channel e2e",
+    "build:android:develop": "npm run build && expo build:android --release-channel develop",
+    "build:android:staging": "npm run build && expo build:android --release-channel staging",
+    "build:android:production": "npm run build && expo build:android --release-channel production",
+    "publish:e2e": "npm run build && expo publish --release-channel e2e",
+    "publish:develop": "npm run build && expo publish --release-channel develop",
+    "publish:staging": "npm run build && expo publish --release-channel staging",
+    "publish:production": "npm run build && expo publish --release-channel production",
+    "mockserver": "npm run mockserver/index.js",
+    "e2e:ios": "detox test -c ios",
+    "e2e:android": "detox test -c android"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.13.4",
+    "@react-native-community/masked-view": "^0.1.10",
+    "@reduxjs/toolkit": "1.5.0",
     "expo": "~40.0.0",
+    "expo-constants": "~9.3.3",
+    "expo-file-system": "~9.3.0",
+    "expo-image-manipulator": "~8.4.0",
+    "expo-image-picker": "~9.2.0",
+    "expo-intent-launcher": "~8.4.0",
+    "expo-localization": "~9.1.0",
+    "expo-location": "~10.0.0",
     "expo-status-bar": "~1.0.3",
+    "i18n-js": "^3.8.0",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
-    "react-native-web": "~0.13.12"
+    "react-native-elements": "^3.4.2",
+    "react-native-gesture-handler": "~1.8.0",
+    "react-native-maps": "0.27.1",
+    "react-native-material-menu": "^1.2.0",
+    "react-native-modal-dropdown": "^1.0.2",
+    "react-native-progress": "^5.0.0",
+    "react-native-reanimated": "~1.13.0",
+    "react-native-safe-area-context": "3.1.9",
+    "react-native-skeleton-placeholder": "^3.0.4",
+    "react-native-toast-message": "^1.6.0",
+    "react-native-web": "~0.13.12",
+    "react-navigation": "^4.4.4",
+    "react-navigation-header-buttons": "^7.0.0",
+    "react-navigation-stack": "^2.10.4",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "redux-saga": "1.1.3",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0"
+    "@babel/core": "~7.9.0",
+    "babel-eslint": "^10.1.0",
+    "detox": "^18.20.2",
+    "detox-expo-helpers": "^0.6.0",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-native": "^3.10.0",
+    "expo-detox-hook": "^1.0.10",
+    "jest-expo": "^42.1.0",
+    "react-native-testing-library": "2.2.0",
+    "react-test-renderer": "16.13.1"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "detox": {
+    "configurations": {
+      "ios.sim": {
+        "binaryPath": "bin/Exponent.app",
+        "type": "ios.simulator",
+        "name": "iPhone 11",
+        "os": "iOS 14.5"
+      }
+    }
   },
   "private": true
 }
