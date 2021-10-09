@@ -4,7 +4,7 @@ import { FlatList } from 'react-native';
 import DashboardListItem from './dashboard-list-item/DashboardListItem';
 import LoadingCard from '../../common/loading-card/LoadingCard';
 import DashboardListEndIndicator from './dashboard-list-end-indicator/DashboardListEndIndicator';
-import DashboardListEmptyResult from "./dashboard-list-empty-result/DashboardListEmptyResult";
+import DashboardListEmptyResult from './dashboard-list-empty-result/DashboardListEmptyResult';
 
 const DashboardList = (props) => {
 

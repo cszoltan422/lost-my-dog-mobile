@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import LostDogDetails from '../components/lost-dog-details/LostDogDetails';
-import Toast from "react-native-toast-message";
+import Toast from 'react-native-toast-message';
 import {SUBMIT_DOG_TITLE, TOAST_ERROR_HEADER_TEXT} from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
 import {
@@ -13,8 +13,8 @@ import {
     onSubmitFormSubmitted
 } from '../redux/actions/submit-form/action-creators/action.creators';
 import {useComponentDidMount} from '../hooks/useComponentDidMount';
-import {useComponentWillUnmount} from "../hooks/useComponentWillUnmount";
-import {ERROR_MESSAGE_TRANSLATION_CODES} from "../application.constants";
+import {useComponentWillUnmount} from '../hooks/useComponentWillUnmount';
+import {ERROR_MESSAGE_TRANSLATION_CODES} from '../application.constants';
 
 const SubmitLostDogScreen = (props) => {
 

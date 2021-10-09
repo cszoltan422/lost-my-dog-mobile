@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text, View} from "react-native";
-import {Icon} from "react-native-elements";
+import {StyleSheet, Text, View} from 'react-native';
+import {Icon} from 'react-native-elements';
 import i18n from '../../../../i18n/i18n';
-import colors from "../../../../colors";
-import {DASHBOARD_EMPTY_RESULT} from "../../../../i18n/i18n.keys";
+import colors from '../../../../colors';
+import {DASHBOARD_EMPTY_RESULT} from '../../../../i18n/i18n.keys';
 
 const DashboardListEmptyResult = () => {
 

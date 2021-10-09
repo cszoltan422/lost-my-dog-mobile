@@ -104,5 +104,5 @@ export const onSubmitFormPublishLoadingProgress = (progress, stage) => {
 export const onSubmitFormHideAlert = () => {
     return {
         type: ON_SUBMIT_FORM_HIDE_ALERT
-    }
-}
+    };
+};
