@@ -71,7 +71,7 @@ import {
     SIGNUP_USERNAME_PLACEHOLDER,
     SIGNUP_USERNAME_VALIDATION_ERROR,
     SUBMIT_DOG_TITLE, TOAST_ERROR_HEADER_TEXT, ERROR_UNKNOWN_SERVER_ERROR,
-    USER_NAME_EXISTS
+    USER_NAME_EXISTS, ERROR_UNSAFE_IMAGE, ERROR_NOT_A_DOG
 } from '../i18n.keys';
 import {SIGNUP_SCREEN_NAME_ORDER_FIRST} from '../../application.constants';
 
@@ -157,5 +157,7 @@ export default {
     [DETAILS_SUBMITTED_IN_PROGRESS_SENDING_REQUEST]: 'Sending the request',
     [DETAILS_ASTERISK_EXPLANATION]: '* required field',
     [TOAST_ERROR_HEADER_TEXT]: 'Something went wrong',
-    [ERROR_UNKNOWN_SERVER_ERROR]: 'Unknown error occurred. Please try again'
+    [ERROR_UNKNOWN_SERVER_ERROR]: 'Unknown error occurred. Please try again',
+    [ERROR_UNSAFE_IMAGE]: 'The selected image has an unsafe content!',
+    [ERROR_NOT_A_DOG]: 'Cannot recognize dog on the image. Please try again with a different image!'
 };

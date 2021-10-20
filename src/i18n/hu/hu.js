@@ -71,7 +71,7 @@ import {
     SIGNUP_USERNAME_PLACEHOLDER,
     SIGNUP_USERNAME_VALIDATION_ERROR,
     SUBMIT_DOG_TITLE, TOAST_ERROR_HEADER_TEXT, ERROR_UNKNOWN_SERVER_ERROR,
-    USER_NAME_EXISTS
+    USER_NAME_EXISTS, ERROR_UNSAFE_IMAGE, ERROR_NOT_A_DOG
 } from '../i18n.keys';
 import {SIGNUP_SCREEN_NAME_ORDER_LAST} from '../../application.constants';
 
@@ -157,6 +157,8 @@ export default {
     [DETAILS_SUBMITTED_IN_PROGRESS_SENDING_REQUEST]: 'Kérés küldése',
     [DETAILS_ASTERISK_EXPLANATION]: '* kötelező mező',
     [TOAST_ERROR_HEADER_TEXT]: 'Probléma történt',
-    [ERROR_UNKNOWN_SERVER_ERROR]: 'Ismeretlen hiba történt. Próbáld újra'
+    [ERROR_UNKNOWN_SERVER_ERROR]: 'Ismeretlen hiba történt. Próbáld újra',
+    [ERROR_UNSAFE_IMAGE]: 'A kiválasztott kép tartalma nem biztonságos!',
+    [ERROR_NOT_A_DOG]: 'Nem tudtuk a kutyát felismerni a képen. Válassz ki egy másik képet a kutyáról és próbáld újra!'
 };
 // á é í ú ü ű ó ö ő
