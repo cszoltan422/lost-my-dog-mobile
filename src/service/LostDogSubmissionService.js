@@ -13,4 +13,17 @@ export default class LostDogSubmissionService {
             })
         }).then(response => response.json());
     }
+
+    static updateLostDog(token, updateRequest) {
+        return fetch(`${ENV.API_URL}/api/lost-dog/update`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                ...updateRequest
+            })
+        }).then(response => response.json());
+    }
 }

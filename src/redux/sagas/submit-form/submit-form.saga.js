@@ -33,7 +33,9 @@ import {
     SUBMIT_FORM_STATUS_SELECT_INPUT_KEY,
     SUBMIT_DOG_NAVIGATION_SCREEN_NAME,
     SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY,
-    SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY
+    SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY,
+    SUBMIT_FORM_EDIT_MODE,
+    EDIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../../../application.constants';
 import UserService from '../../../service/UserService';
 import LostDogSubmissionService from '../../../service/LostDogSubmissionService';
@@ -88,6 +90,10 @@ function* getCompressedImage(selectedImage) {
     return compressedImage;
 }
 
+function getValueOptionally(value, hasChangedInEditMode, mode) {
+    return mode === SUBMIT_FORM_EDIT_MODE && !hasChangedInEditMode ? undefined : value
+}
+
 function* submitFormSubmittedSaga(action) {
     yield put(onSubmitFormLoading());
 
@@ -95,6 +101,8 @@ function* submitFormSubmittedSaga(action) {
     const inputs = yield select((state) => state.submitForm.inputs);
     const location = yield select((state) => state.submitForm.location);
     const selectedImage = yield select((state) => state.submitForm.selectedImage);
+    const mode = yield select((state) => state.submitForm.mode);
+    const dogId = yield select((state) => state.submitForm.dogId);
     const user = yield select((state) => state.application.user);
 
     yield put(onSubmitFormPublishLoadingProgress(0.2, DETAILS_SUBMITTED_IN_PROGRESS_VALIDATING_FORM));
@@ -109,28 +117,92 @@ function* submitFormSubmittedSaga(action) {
             yield put(onSubmitFormPublishLoadingProgress(0.8, DETAILS_SUBMITTED_IN_PROGRESS_SENDING_REQUEST));
             const loginResult = yield call(UserService.login, user.username, user.password); // todo only login again if token expired
 
-            const result = yield call(LostDogSubmissionService.submitLostDog, loginResult.token, {
-                dogName: inputs[SUBMIT_FORM_NAME_TEXT_INPUT_KEY].value,
-                description: inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].value,
-                dogBreed: inputs[SUBMIT_FORM_BREED_TEXT_INPUT_KEY].value,
-                age: inputs[SUBMIT_FORM_AGE_TEXT_INPUT_KEY].value,
-                color: inputs[SUBMIT_FORM_COLOR_TEXT_INPUT_KEY].value,
-                chipNumber: inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].value,
-                gender: Object.keys(DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS).find(key => DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS[key] === inputs[SUBMIT_FORM_SEX_SELECT_INPUT_KEY].value),
-                status: Object.keys(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS).find(key => DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[key] === inputs[SUBMIT_FORM_STATUS_SELECT_INPUT_KEY].value),
-                chippedStatus: inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value ? 'YES' : 'NO',
-                specialPeculiarities: '',
-                contactPhone: inputs[SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY].value,
-                contactEmail: inputs[SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY].value,
-                longitude: location.longitude,
-                latitude: location.latitude,
+            const payload = {
+                id: mode === SUBMIT_FORM_EDIT_MODE ? dogId : undefined,
                 dateLost: getCurrentTimeWithTimezone(),
-                base64Content: compressedImage.base64,
-                avatarImageType: 'jpg'
-            });
+                dogName: getValueOptionally(
+                    inputs[SUBMIT_FORM_NAME_TEXT_INPUT_KEY].value,
+                    inputs[SUBMIT_FORM_NAME_TEXT_INPUT_KEY].hasChangedInEditMode,
+                    mode
+                ),
+                description: getValueOptionally(
+                    inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].value,
+                    inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].hasChangedInEditMode,
+                    mode
+                ),
+                dogBreed: getValueOptionally(
+                    inputs[SUBMIT_FORM_BREED_TEXT_INPUT_KEY].value,
+                    inputs[SUBMIT_FORM_BREED_TEXT_INPUT_KEY].hasChangedInEditMode,
+                    mode
+                ),
+                age: getValueOptionally(
+                    inputs[SUBMIT_FORM_AGE_TEXT_INPUT_KEY].value,
+                    inputs[SUBMIT_FORM_AGE_TEXT_INPUT_KEY].hasChangedInEditMode,
+                    mode
+                ),
+                color: getValueOptionally(
+                    inputs[SUBMIT_FORM_COLOR_TEXT_INPUT_KEY].value,
+                    inputs[SUBMIT_FORM_COLOR_TEXT_INPUT_KEY].hasChangedInEditMode,
+                    mode
+                ),
+                chipNumber: getValueOptionally(
+                    inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].value,
+                    inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].hasChangedInEditMode,
+                    mode
+                ),
+                gender: getValueOptionally(
+                    Object.keys(DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS).find(key => DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS[key] === inputs[SUBMIT_FORM_SEX_SELECT_INPUT_KEY].value),
+                    inputs[SUBMIT_FORM_SEX_SELECT_INPUT_KEY].hasChangedInEditMode,
+                    mode
+                ),
+                status: getValueOptionally(
+                    Object.keys(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS).find(key => DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[key] === inputs[SUBMIT_FORM_STATUS_SELECT_INPUT_KEY].value),
+                    inputs[SUBMIT_FORM_STATUS_SELECT_INPUT_KEY].hasChangedInEditMode,
+                    mode
+                ),
+                chippedStatus: getValueOptionally(
+                    inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value ? 'YES' : 'NO',
+                    inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].hasChangedInEditMode,
+                    mode
+                ),
+                specialPeculiarities: '',
+                contactPhone: getValueOptionally(
+                    inputs[SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY].value,
+                    inputs[SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY].hasChangedInEditMode,
+                    mode
+                ),
+                contactEmail: getValueOptionally(
+                    inputs[SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY].value,
+                    inputs[SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY].hasChangedInEditMode,
+                    mode
+                ),
+                longitude: getValueOptionally(
+                    location.longitude,
+                    location.hasChangedInEditMode,
+                    mode
+                ),
+                latitude: getValueOptionally(
+                    location.latitude,
+                    location.hasChangedInEditMode,
+                    mode
+                ),
+                base64Content: getValueOptionally(
+                    compressedImage.base64,
+                    selectedImage.hasChangedInEditMode,
+                    mode
+                ),
+                avatarImageType: getValueOptionally(
+                    'jpg',
+                    selectedImage.hasChangedInEditMode,
+                    mode
+                )
+            };
 
-            if (!result.errorMessage) {
-                if (navigation.state.routeName === SUBMIT_DOG_NAVIGATION_SCREEN_NAME) {
+            const fn = mode === SUBMIT_FORM_EDIT_MODE ? LostDogSubmissionService.updateLostDog : LostDogSubmissionService.submitLostDog;
+            const result = yield call(fn, loginResult.token, payload);
+
+            if (!result.errorCode) {
+                if (navigation.state.routeName === SUBMIT_DOG_NAVIGATION_SCREEN_NAME || EDIT_DOG_NAVIGATION_SCREEN_NAME) {
                     navigation.goBack();
                 }
                 yield put(onSubmitFormSubmitSuccess());
