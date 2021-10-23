@@ -6,7 +6,9 @@ import {
     SUBMIT_FORM_BREED_TEXT_INPUT_KEY,
     SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY,
     SUBMIT_FORM_COLOR_TEXT_INPUT_KEY,
+    SUBMIT_FORM_CREATE_MODE,
     SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY,
+    SUBMIT_FORM_EDIT_MODE,
     SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY,
     SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
     SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
@@ -30,22 +32,30 @@ import {
     DETAILS_DOG_STATUS_LABEL_TITLE,
     DETAILS_EMAIL_INVALID,
     DETAILS_INPUT_REQUIRED,
-    DETAILS_PHONE_NUMBER_INVALID, DETAILS_SUBMITTER_EMAIL_ADDRESS, DETAILS_SUBMITTER_PHONE_NUMBER
+    DETAILS_PHONE_NUMBER_INVALID,
+    DETAILS_SUBMITTER_EMAIL_ADDRESS,
+    DETAILS_SUBMITTER_PHONE_NUMBER
 } from '../../../i18n/i18n.keys';
 import {
-    ON_RESET_SUBMIT_FORM, ON_SUBMIT_FORM_HIDE_ALERT,
+    ON_RESET_SUBMIT_FORM,
+    ON_SUBMIT_FORM_CHANGE_MODE,
+    ON_SUBMIT_FORM_HIDE_ALERT,
     ON_SUBMIT_FORM_IMAGE_CLEARED,
     ON_SUBMIT_FORM_IMAGE_INVALID,
     ON_SUBMIT_FORM_IMAGE_SELECTED,
     ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
     ON_SUBMIT_FORM_LOADING,
-    ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED, ON_SUBMIT_FORM_PUBLISH_LOADING_PROGRESS,
+    ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED,
+    ON_SUBMIT_FORM_PUBLISH_LOADING_PROGRESS,
+    ON_SUBMIT_FORM_SET_DOG_ID,
     ON_SUBMIT_FORM_STOP_LOADING,
     ON_SUBMIT_FORM_SUBMIT_ERROR,
     ON_SUBMIT_FORM_VALIDATION_ERROR
 } from '../../actions/submit-form/action-types/action.types';
 
 export const initialState = {
+    mode: SUBMIT_FORM_CREATE_MODE,
+    dogId: -1,
     isValid: true,
     isLoading: false,
     loading: {
@@ -53,7 +63,7 @@ export const initialState = {
         stage: ''
     },
     error: {
-        code: '',
+        code: 0,
         message: '',
         show: false,
     },
@@ -64,6 +74,7 @@ export const initialState = {
             initialValue: '',
             isRequired: true,
             isValid: true,
+            hasChangedInEditMode: false,
             errorKey: DETAILS_INPUT_REQUIRED,
             validator: (value) =>
                 !!value &&
@@ -76,6 +87,7 @@ export const initialState = {
             initialValue: '',
             isRequired: true,
             isValid: true,
+            hasChangedInEditMode: false,
             errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-name-text-label',
             inputTestID: 'details-screen-dog-name-text-input',
@@ -94,6 +106,7 @@ export const initialState = {
             initialValue: '',
             isRequired: true,
             isValid: true,
+            hasChangedInEditMode: false,
             errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-breed-text-label',
             inputTestID: 'details-screen-dog-breed-text-input',
@@ -113,6 +126,7 @@ export const initialState = {
             isRequired: true,
             options: [DETAILS_DOG_SEX_MALE, DETAILS_DOG_SEX_FEMALE],
             isValid: true,
+            hasChangedInEditMode: false,
             errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-gender-text-label',
             inputTestID: 'details-screen-dog-gender-select-input',
@@ -128,6 +142,7 @@ export const initialState = {
             initialValue: '',
             isRequired: true,
             isValid: true,
+            hasChangedInEditMode: false,
             errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-color-text-label',
             inputTestID: 'details-screen-dog-color-text-input',
@@ -147,6 +162,7 @@ export const initialState = {
             isRequired: true,
             options: [DASHBOARD_DOG_STATUS_LOST, DASHBOARD_DOG_STATUS_WANDERING, DASHBOARD_DOG_STATUS_FOUND],
             isValid: true,
+            hasChangedInEditMode: false,
             errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-status-text-label',
             inputTestID: 'details-screen-dog-status-select-input',
@@ -162,6 +178,7 @@ export const initialState = {
             initialValue: '',
             isRequired: true,
             isValid: true,
+            hasChangedInEditMode: false,
             errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-age-text-label',
             inputTestID: 'details-screen-dog-age-text-input',
@@ -180,6 +197,7 @@ export const initialState = {
             value: false,
             initialValue: false,
             isValid: true,
+            hasChangedInEditMode: false,
             errorKey: DETAILS_INPUT_REQUIRED,
             labelTestID: 'details-screen-dog-has-chip-toggle-label',
             inputTestID: 'details-screen-dog-has-chip-toggle-input',
@@ -191,6 +209,7 @@ export const initialState = {
             initialValue: '',
             isRequired: false,
             isValid: true,
+            hasChangedInEditMode: false,
             errorKey: DETAILS_INPUT_REQUIRED,
             keyboardType: 'numeric',
             autoCapitalize: 'none',
@@ -205,6 +224,7 @@ export const initialState = {
             initialValue: '',
             isRequired: false,
             isValid: true,
+            hasChangedInEditMode: false,
             errorKey: DETAILS_EMAIL_INVALID,
             keyboardType: 'email-address',
             autoCapitalize: 'none',
@@ -228,6 +248,7 @@ export const initialState = {
             initialValue: '',
             isRequired: false,
             isValid: true,
+            hasChangedInEditMode: false,
             errorKey: DETAILS_PHONE_NUMBER_INVALID,
             keyboardType: 'phone-pad',
             autoCapitalize: 'none',
@@ -250,13 +271,15 @@ export const initialState = {
     location: {
         isPresent: false,
         latitude: 0,
-        longitude: 0
+        longitude: 0,
+        hasChangedInEditMode: false
     },
     selectedImage: {
         isPresent: false,
         isValid: true,
         errorKey: '',
-        uri: ''
+        uri: '',
+        hasChangedInEditMode: false
     },
 };
 
@@ -266,15 +289,16 @@ export const reducer = createReducer(initialState, {
         state.inputs[action.payload.inputKey].isValid = true;
         state.isValid = true;
 
-        if (action.payload.inputKey === SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY && action.payload.value === false) {
-            state.inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].value = state.inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].initialValue;
+        if (state.mode === SUBMIT_FORM_EDIT_MODE) {
+            state.inputs[action.payload.inputKey].hasChangedInEditMode = true;
         }
     },
     [ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED]: (state, action) => {
         state.location = {
             isPresent: true,
             latitude: action.payload.latitude,
-            longitude: action.payload.longitude
+            longitude: action.payload.longitude,
+            hasChangedInEditMode: state.mode === SUBMIT_FORM_EDIT_MODE
         };
     },
     [ON_SUBMIT_FORM_IMAGE_SELECTED]: (state, action) => {
@@ -282,6 +306,7 @@ export const reducer = createReducer(initialState, {
         state.selectedImage.isValid = true;
         state.selectedImage.errorKey = '';
         state.selectedImage.uri = action.payload;
+        state.selectedImage.hasChangedInEditMode = state.mode === SUBMIT_FORM_EDIT_MODE;
 
         state.isValid = true;
     },
@@ -320,27 +345,35 @@ export const reducer = createReducer(initialState, {
         };
     },
     [ON_RESET_SUBMIT_FORM]: (state) => {
+        state.dogId = -1;
         state.isValid = true;
         state.isLoading = false;
         state.loading = {
             progress: 0,
             stage: ''
         };
-        state.error = '';
+        state.error = {
+            code: 0,
+            message: '',
+            show: false,
+        };
         Object.keys(state.inputs).forEach((inputKey) => {
             state.inputs[inputKey].value = state.inputs[inputKey].initialValue;
             state.inputs[inputKey].isValid = true;
+            state.inputs[inputKey].hasChangedInEditMode = false;
         });
         state.location = {
             isPresent: false,
             latitude: 0,
-            longitude: 0
+            longitude: 0,
+            hasChangedInEditMode: false
         };
         state.selectedImage = {
             isPresent: false,
             isValid: true,
             errorKey: '',
-            uri: ''
+            uri: '',
+            hasChangedInEditMode: false
         };
     },
     [ON_SUBMIT_FORM_PUBLISH_LOADING_PROGRESS]: (state, action) => {
@@ -351,5 +384,11 @@ export const reducer = createReducer(initialState, {
     },
     [ON_SUBMIT_FORM_HIDE_ALERT]: (state) => {
         state.error.show = false;
+    },
+    [ON_SUBMIT_FORM_CHANGE_MODE]: (state, action) => {
+        state.mode = action.payload;
+    },
+    [ON_SUBMIT_FORM_SET_DOG_ID]: (state, action) => {
+        state.dogId = action.payload;
     }
 });
