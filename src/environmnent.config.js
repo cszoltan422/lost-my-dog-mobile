@@ -6,7 +6,7 @@ const ENV = {
         GET_DEVICE_LOCATION: false
     },
     develop: {
-        API_URL: 'http://192.168.1.70:8080',
+        API_URL: 'http://192.168.1.68:8080',
         GET_DEVICE_LOCATION: true
     },
     staging: {
