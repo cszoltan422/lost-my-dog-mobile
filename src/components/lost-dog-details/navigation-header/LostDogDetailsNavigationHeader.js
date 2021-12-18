@@ -19,9 +19,8 @@ const LostDogDetailsNavigationHeader = (props) => {
                     type='material'
                     name='mode-edit'
                     color={colors.white}
-                    onPress={() => props.navigation.replace({
-                        routeName: EDIT_DOG_NAVIGATION_SCREEN_NAME,
-                        params: {[EDIT_DOG_NAVIGATION_SCREEN_NAME]: props.dog}
+                    onPress={() => props.navigation.replace(EDIT_DOG_NAVIGATION_SCREEN_NAME, {
+                        dog: props.dog
                     })} />
             )}
         </View>

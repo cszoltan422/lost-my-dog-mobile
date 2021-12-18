@@ -97,7 +97,7 @@ function getValueOptionally(value, hasChangedInEditMode, mode) {
 function* submitFormSubmittedSaga(action) {
     yield put(onSubmitFormLoading());
 
-    const navigation = action.payload;
+    const { route, navigation } = action.payload;
     const inputs = yield select((state) => state.submitForm.inputs);
     const location = yield select((state) => state.submitForm.location);
     const selectedImage = yield select((state) => state.submitForm.selectedImage);
@@ -202,7 +202,7 @@ function* submitFormSubmittedSaga(action) {
             const result = yield call(fn, loginResult.token, payload);
 
             if (!result.errorCode) {
-                if (navigation.state.routeName === SUBMIT_DOG_NAVIGATION_SCREEN_NAME || EDIT_DOG_NAVIGATION_SCREEN_NAME) {
+                if (route.name === SUBMIT_DOG_NAVIGATION_SCREEN_NAME || route.name === EDIT_DOG_NAVIGATION_SCREEN_NAME) {
                     navigation.goBack();
                 }
                 yield put(onSubmitFormSubmitSuccess());

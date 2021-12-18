@@ -46,10 +46,13 @@ export const onSubmitFormImageCleared = () => {
     };
 };
 
-export const onSubmitFormSubmitted = (navigation) => {
+export const onSubmitFormSubmitted = (route, navigation) => {
     return {
         type: ON_SUBMIT_FORM_SUBMITTED,
-        payload: navigation
+        payload: {
+            navigation,
+            route
+        }
     };
 };
 

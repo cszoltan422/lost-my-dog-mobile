@@ -17,7 +17,6 @@ import {useComponentWillUnmount} from '../hooks/useComponentWillUnmount';
 import {
     DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS,
     DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS,
-    EDIT_DOG_NAVIGATION_SCREEN_NAME,
     ERROR_MESSAGE_TRANSLATION_CODES,
     SUBMIT_FORM_AGE_TEXT_INPUT_KEY,
     SUBMIT_FORM_BREED_TEXT_INPUT_KEY,
@@ -31,7 +30,9 @@ import {
 } from '../application.constants';
 import ENV from '../environmnent.config';
 
-const EditLostDogScreen = (props) => {
+const EditLostDogScreen = ({ route, navigation }) => {
+
+    const { dog } = route.params;
 
     const isValid = useSelector(state => state.submitForm.isValid);
     const isLoading = useSelector(state => state.submitForm.isLoading);
@@ -40,8 +41,6 @@ const EditLostDogScreen = (props) => {
     const inputs = useSelector(state => state.submitForm.inputs);
     const location = useSelector(state => state.submitForm.location);
     const selectedImage = useSelector(state => state.submitForm.selectedImage);
-
-    const dog = props.navigation.getParam(EDIT_DOG_NAVIGATION_SCREEN_NAME);
 
     const dispatch = useDispatch();
 
@@ -99,17 +98,13 @@ const EditLostDogScreen = (props) => {
             onLocationValueChanged={(coordinates) => dispatch(onSubmitFormLocationValueChanged(coordinates))}
             onImageSelected={(selectedImageUri) => dispatch(onSubmitFormImageSelected(selectedImageUri))}
             onImageCleared={() => dispatch(onSubmitFormImageCleared())}
-            onSubmit={() => dispatch(onSubmitFormSubmitted(props.navigation))} />
+            onSubmit={() => dispatch(onSubmitFormSubmitted(route, navigation))} />
     );
 };
 
-EditLostDogScreen['navigationOptions'] = ({ navigation }) => ({
-    title: navigation.getParam(EDIT_DOG_NAVIGATION_SCREEN_NAME).dogName,
-    headerBackTitleVisible: false,
-});
-
 EditLostDogScreen.propTypes = {
-    navigation: PropTypes.object.isRequired
+    route: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired,
 };
 
 export default EditLostDogScreen;
