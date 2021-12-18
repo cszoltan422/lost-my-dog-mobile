@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import LostDogDetails from '../components/lost-dog-details/LostDogDetails';
 import Toast from 'react-native-toast-message';
-import {SUBMIT_DOG_TITLE, TOAST_ERROR_HEADER_TEXT} from '../i18n/i18n.keys';
+import {TOAST_ERROR_HEADER_TEXT} from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
 import {
     onResetSubmitForm, onSubmitFormHideAlert, onSubmitFormImageCleared,
@@ -16,7 +16,7 @@ import {useComponentDidMount} from '../hooks/useComponentDidMount';
 import {useComponentWillUnmount} from '../hooks/useComponentWillUnmount';
 import {ERROR_MESSAGE_TRANSLATION_CODES} from '../application.constants';
 
-const SubmitLostDogScreen = (props) => {
+const SubmitLostDogScreen = ({ route, navigation }) => {
 
     const isValid = useSelector(state => state.submitForm.isValid);
     const isLoading = useSelector(state => state.submitForm.isLoading);
@@ -65,17 +65,14 @@ const SubmitLostDogScreen = (props) => {
             onLocationValueChanged={(coordinates) => dispatch(onSubmitFormLocationValueChanged(coordinates))}
             onImageSelected={(selectedImageUri) => dispatch(onSubmitFormImageSelected(selectedImageUri))}
             onImageCleared={() => dispatch(onSubmitFormImageCleared())}
-            onSubmit={() => dispatch(onSubmitFormSubmitted(props.navigation))} />
+            onSubmit={() => dispatch(onSubmitFormSubmitted(route, navigation))} />
     );
 
 };
 
-SubmitLostDogScreen['navigationOptions'] = () => ({
-    title: i18n.t(SUBMIT_DOG_TITLE)
-});
-
 SubmitLostDogScreen.propTypes = {
-    navigation: PropTypes.object.isRequired
+    route: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired,
 };
 
 export default SubmitLostDogScreen;

@@ -16,11 +16,10 @@ import {
     onDashboardRefreshPage
 } from '../redux/actions/dashboard/action-creators/action.creators';
 import {
-    DASHBOARD_TITLE, SUBMIT_DOG_TITLE, TOAST_ERROR_HEADER_TEXT
+    SUBMIT_DOG_TITLE, TOAST_ERROR_HEADER_TEXT
 } from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
 import {
-    DETAILS_NAVIGATION_PARAM_NAME,
     DETAILS_NAVIGATION_SCREEN_NAME, ERROR_MESSAGE_TRANSLATION_CODES,
     LOGIN_NAVIGATION_SCREEN_NAME,
     SUBMIT_DOG_NAVIGATION_SCREEN_NAME
@@ -29,6 +28,8 @@ import colors from '../colors';
 import {useComponentDidMount} from '../hooks/useComponentDidMount';
 
 const DashboardScreen = (props) => {
+
+    const { navigation } = props;
 
     const dataFetched = useSelector(state => state.dashboard.dataFetched);
     const loading = useSelector(state => state.dashboard.loading);
@@ -84,10 +85,10 @@ const DashboardScreen = (props) => {
                     isLoading={isLoading}
                     onDashboardFetchNewPage={() => dispatch(onDashboardFetchNewPage())}
                     onDashboardRefreshPage={() => dispatch(onDashboardRefreshPage())}
-                    onListItemClicked={(item) => props.navigation.navigate({
-                        routeName: DETAILS_NAVIGATION_SCREEN_NAME,
-                        params: {[DETAILS_NAVIGATION_PARAM_NAME]: item}
-                    })} /> }
+                    onListItemClicked={(item) => props.navigation.navigate(
+                        DETAILS_NAVIGATION_SCREEN_NAME, {
+                            dog: item
+                        }, null, null)} /> }
             <FloatingActionButton
                 color={colors.primaryColor}
                 icon={{ name: 'add', color: colors.white }}
@@ -98,11 +99,10 @@ const DashboardScreen = (props) => {
                         icon: { name: 'add', color: colors.white },
                         color: colors.primaryColor,
                         pressHandler: () => {
-                            props.navigation.navigate({
-                                routeName: user.isLoggedIn ?
-                                    SUBMIT_DOG_NAVIGATION_SCREEN_NAME
-                                    : LOGIN_NAVIGATION_SCREEN_NAME
-                            });
+                            navigation.navigate(user.isLoggedIn ?
+                                SUBMIT_DOG_NAVIGATION_SCREEN_NAME
+                                : LOGIN_NAVIGATION_SCREEN_NAME
+                            );
                         }
                     }
                 ]} />
@@ -115,10 +115,6 @@ const styles = StyleSheet.create({
         height: '100%',
         padding: 8
     }
-});
-
-DashboardScreen['navigationOptions'] = () => ({
-    title: i18n.t(DASHBOARD_TITLE)
 });
 
 DashboardScreen.propTypes = {

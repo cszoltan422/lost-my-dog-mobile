@@ -81,9 +81,7 @@ const LoginScreen = (props) => {
                 disabled={loading || emptyInput()}
                 onPress={() => dispatch(onLoginAttempted(props.navigation))} />
             <TouchableOpacity
-                onPress={() => props.navigation.navigate({
-                    routeName: SIGN_UP_NAVIGATION_SCREEN_NAME
-                })}>
+                onPress={() => props.navigation.navigate(SIGN_UP_NAVIGATION_SCREEN_NAME)}>
                 <Text
                     testID='login-screen-signup-text'
                     style={styles.signUpTextStyle}>
@@ -148,11 +146,6 @@ const styles = StyleSheet.create({
         color: colors.accentColor,
         fontSize: 16
     }
-});
-
-LoginScreen['navigationOptions'] = () => ({
-    title: i18n.t(LOGIN_LOGIN_TEXT),
-    headerBackTitleVisible: false,
 });
 
 LoginScreen.propTypes = {

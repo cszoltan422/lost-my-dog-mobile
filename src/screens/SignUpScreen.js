@@ -193,11 +193,6 @@ const styles = StyleSheet.create({
     },
 });
 
-SignUpScreen['navigationOptions'] = () => ({
-    title: i18n.t(SIGN_UP_SCREEN_TITLE),
-    headerBackTitleVisible: false
-});
-
 SignUpScreen.propTypes = {
     navigation: PropTypes.object.isRequired
 };

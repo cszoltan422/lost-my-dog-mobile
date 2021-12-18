@@ -4,10 +4,7 @@ import {useSelector} from 'react-redux';
 import {Linking} from 'react-native';
 import FloatingActionButton from '../components/common/floating-action-button/FloatingActionButton';
 import LostDogDetailsReadonly from '../components/lost-dog-details/LostDogDetailsReadonly';
-import LostDogDetailsNavigationHeader
-    from '../components/lost-dog-details/navigation-header/LostDogDetailsNavigationHeader';
 import {
-    DETAILS_NAVIGATION_PARAM_NAME,
     LOGIN_NAVIGATION_SCREEN_NAME,
     SUBMIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../application.constants';
@@ -15,9 +12,9 @@ import colors from '../colors';
 import i18n from '../i18n/i18n';
 import {SUBMIT_DOG_TITLE} from '../i18n/i18n.keys';
 
-const DetailsScreen = (props) => {
+const DetailsScreen = ({ route, navigation }) => {
 
-    const dog = props.navigation.getParam(DETAILS_NAVIGATION_PARAM_NAME);
+    const { dog } = route.params;
     const user = useSelector(state => state.application.user);
 
     const onCallOwnerButtonPressed = () => {
@@ -44,11 +41,10 @@ const DetailsScreen = (props) => {
                         icon: { name: 'add', color: colors.white },
                         color: colors.primaryColor,
                         pressHandler: () => {
-                            props.navigation.navigate({
-                                routeName: user.isLoggedIn ?
-                                    SUBMIT_DOG_NAVIGATION_SCREEN_NAME
-                                    : LOGIN_NAVIGATION_SCREEN_NAME
-                            });
+                            navigation.navigate(user.isLoggedIn ?
+                                SUBMIT_DOG_NAVIGATION_SCREEN_NAME
+                                : LOGIN_NAVIGATION_SCREEN_NAME
+                            );
                         }
                     }
                 ]} />
@@ -56,15 +52,9 @@ const DetailsScreen = (props) => {
     );
 };
 
-DetailsScreen['navigationOptions'] = ({ navigation }) => ({
-    title: navigation.getParam(DETAILS_NAVIGATION_PARAM_NAME).dogName,
-    headerBackTitleVisible: false,
-    // eslint-disable-next-line
-    headerRight: () => <LostDogDetailsNavigationHeader navigation={navigation} dog={navigation.getParam(DETAILS_NAVIGATION_PARAM_NAME)} />
-});
-
 DetailsScreen.propTypes = {
-    navigation: PropTypes.object.isRequired
+    route: PropTypes.object.isRequired,
+    navigation: PropTypes.object.isRequired,
 };
 
 export default DetailsScreen;
