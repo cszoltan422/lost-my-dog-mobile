@@ -5,10 +5,11 @@ import DetailsScreen from '../../screens/DetailsScreen';
 import LoginScreen from '../../screens/LoginScreen';
 import SignUpScreen from '../../screens/SignUpScreen';
 import SubmitLostDogScreen from '../../screens/SubmitLostDogScreen';
+import EditLostDogScreen from '../../screens/EditLostDogScreen';
 import colors from '../../colors';
 import {
     DASHBOARD_NAVIGATION_SCREEN_NAME,
-    DETAILS_NAVIGATION_SCREEN_NAME,
+    DETAILS_NAVIGATION_SCREEN_NAME, EDIT_DOG_NAVIGATION_SCREEN_NAME,
     LOGIN_NAVIGATION_SCREEN_NAME, SIGN_UP_NAVIGATION_SCREEN_NAME, SUBMIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../../application.constants';
 
@@ -24,6 +25,9 @@ const routeConfigMap = {
     },
     [SUBMIT_DOG_NAVIGATION_SCREEN_NAME]: {
         screen: SubmitLostDogScreen
+    },
+    [EDIT_DOG_NAVIGATION_SCREEN_NAME]: {
+        screen: EditLostDogScreen
     },
     [SIGN_UP_NAVIGATION_SCREEN_NAME]: {
         screen: SignUpScreen

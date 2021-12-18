@@ -57,6 +57,9 @@ const LostDogDetailsContent = (props) => {
     };
 
     const renderDropdown = (inputKey) => {
+        const defaultValue = props.inputs[inputKey].value ?
+            i18n.t(props.inputs[inputKey].value)
+            : `${i18n.t(props.inputs[inputKey].labelKey)}...`;
         return (
             <>
                 <Text
@@ -73,7 +76,7 @@ const LostDogDetailsContent = (props) => {
                     textStyle={styles.modalDropdownTextStyle}
                     dropdownTextStyle={styles.dropdownTextStyle}
                     dropdownTextHighlightStyle={styles.dropdownTextHighlightStyle}
-                    defaultValue={`${i18n.t(props.inputs[inputKey].labelKey)}...`}
+                    defaultValue={defaultValue}
                     options={props.inputs[inputKey].options.map((option) => {
                         return i18n.t(option);
                     })}

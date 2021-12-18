@@ -50,6 +50,7 @@ const DashboardList = (props) => {
 DashboardList.propTypes = {
     data: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number.isRequired,
+        submittedByUserId: PropTypes.number.isRequired,
         dogName: PropTypes.string.isRequired,
         dogBreed: PropTypes.string.isRequired,
         gender: PropTypes.string.isRequired,
@@ -60,10 +61,14 @@ DashboardList.propTypes = {
         latitude: PropTypes.number.isRequired,
         dateLost: PropTypes.string.isRequired,
         contactPhone: PropTypes.string.isRequired,
+        contactEmail: PropTypes.string.isRequired,
         status: PropTypes.string.isRequired,
         city: PropTypes.string.isRequired,
         countryCode: PropTypes.string.isRequired,
-        avatarFilename: PropTypes.string.isRequired
+        avatarFilename: PropTypes.string.isRequired,
+        chippedStatus: PropTypes.string.isRequired,
+        chipNumber: PropTypes.string.isRequired,
+        specialPeculiarities: PropTypes.string.isRequired
     })).isRequired,
     dataFetched: PropTypes.bool.isRequired,
     fetchingNew: PropTypes.bool.isRequired,
