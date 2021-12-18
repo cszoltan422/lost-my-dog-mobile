@@ -91,7 +91,7 @@ function* getCompressedImage(selectedImage) {
 }
 
 function getValueOptionally(value, hasChangedInEditMode, mode) {
-    return mode === SUBMIT_FORM_EDIT_MODE && !hasChangedInEditMode ? undefined : value
+    return mode === SUBMIT_FORM_EDIT_MODE && !hasChangedInEditMode ? undefined : value;
 }
 
 function* submitFormSubmittedSaga(action) {
@@ -210,7 +210,6 @@ function* submitFormSubmittedSaga(action) {
                 yield put(onSubmitFormSubmitError(result));
             }
         }
-
-        yield put(onSubmitFormStopLoading());
     }
+    yield put(onSubmitFormStopLoading());
 }

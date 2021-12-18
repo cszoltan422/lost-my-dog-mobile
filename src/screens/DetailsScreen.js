@@ -5,7 +5,7 @@ import {Linking} from 'react-native';
 import FloatingActionButton from '../components/common/floating-action-button/FloatingActionButton';
 import LostDogDetailsReadonly from '../components/lost-dog-details/LostDogDetailsReadonly';
 import LostDogDetailsNavigationHeader
-    from "../components/lost-dog-details/navigation-header/LostDogDetailsNavigationHeader";
+    from '../components/lost-dog-details/navigation-header/LostDogDetailsNavigationHeader';
 import {
     DETAILS_NAVIGATION_PARAM_NAME,
     LOGIN_NAVIGATION_SCREEN_NAME,
@@ -59,9 +59,8 @@ const DetailsScreen = (props) => {
 DetailsScreen['navigationOptions'] = ({ navigation }) => ({
     title: navigation.getParam(DETAILS_NAVIGATION_PARAM_NAME).dogName,
     headerBackTitleVisible: false,
-    headerRight: () => <LostDogDetailsNavigationHeader
-        navigation={navigation}
-        dog={navigation.getParam(DETAILS_NAVIGATION_PARAM_NAME)} />
+    // eslint-disable-next-line
+    headerRight: () => <LostDogDetailsNavigationHeader navigation={navigation} dog={navigation.getParam(DETAILS_NAVIGATION_PARAM_NAME)} />
 });
 
 DetailsScreen.propTypes = {

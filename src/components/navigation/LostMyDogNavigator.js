@@ -5,7 +5,7 @@ import DetailsScreen from '../../screens/DetailsScreen';
 import LoginScreen from '../../screens/LoginScreen';
 import SignUpScreen from '../../screens/SignUpScreen';
 import SubmitLostDogScreen from '../../screens/SubmitLostDogScreen';
-import EditLostDogScreen from "../../screens/EditLostDogScreen";
+import EditLostDogScreen from '../../screens/EditLostDogScreen';
 import colors from '../../colors';
 import {
     DASHBOARD_NAVIGATION_SCREEN_NAME,

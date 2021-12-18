@@ -118,12 +118,12 @@ export const onSubmitFormChangeMode = (mode) => {
     return {
         type: ON_SUBMIT_FORM_CHANGE_MODE,
         payload: mode
-    }
+    };
 };
 
 export const onSubmitFormSetDogId = (dogId) => {
     return {
         type: ON_SUBMIT_FORM_SET_DOG_ID,
         payload: dogId
-    }
+    };
 };

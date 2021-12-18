@@ -29,7 +29,7 @@ import {
     SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY,
     SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY
 } from '../application.constants';
-import ENV from "../environmnent.config";
+import ENV from '../environmnent.config';
 
 const EditLostDogScreen = (props) => {
 
