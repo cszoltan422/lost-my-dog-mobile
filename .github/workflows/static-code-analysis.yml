@@ -10,9 +10,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        name: checking out code
       - uses: borales/actions-yarn@v2.3.0
+        name: running yarn install
         with:
           cmd: install # will run `yarn install` command
       - uses: borales/actions-yarn@v2.3.0
+        name: running yarn build
         with:
           cmd: build # will run `yarn build` command
