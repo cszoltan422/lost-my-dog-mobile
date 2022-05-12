@@ -12,13 +12,6 @@ import {
 import * as FileSystem from 'expo-file-system';
 import * as ImageManipulator from 'expo-image-manipulator';
 import {
-    DETAILS_IMAGE_NOT_SELECTED,
-    DETAILS_IMAGE_SIZE_TOO_LARGE,
-    DETAILS_SUBMITTED_IN_PROGRESS_COMPRESS_IMAGE,
-    DETAILS_SUBMITTED_IN_PROGRESS_SENDING_REQUEST,
-    DETAILS_SUBMITTED_IN_PROGRESS_VALIDATING_FORM
-} from '../../../i18n/i18n.keys';
-import {
     DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS,
     DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS,
     ONE_GIGABYTE_IN_BYTES,
@@ -68,11 +61,11 @@ function* validateImage(compressedImage) {
         let imageInfo = yield FileSystem.getInfoAsync(compressedImage.uri, { size: true });
         const imageSize = imageInfo.size;
         if (imageSize > ONE_GIGABYTE_IN_BYTES) {
-            yield put(onSubmitFormImageInvalid(DETAILS_IMAGE_SIZE_TOO_LARGE));
+            yield put(onSubmitFormImageInvalid('submitForm.validation.imageTooLarge'));
             isImageValid = false;
         }
     } else {
-        yield put(onSubmitFormImageInvalid(DETAILS_IMAGE_NOT_SELECTED));
+        yield put(onSubmitFormImageInvalid('submitForm.validation.noImage'));
         isImageValid = false;
     }
     return isImageValid;
@@ -105,16 +98,16 @@ function* submitFormSubmittedSaga(action) {
     const dogId = yield select((state) => state.submitForm.dogId);
     const user = yield select((state) => state.application.user);
 
-    yield put(onSubmitFormPublishLoadingProgress(0.2, DETAILS_SUBMITTED_IN_PROGRESS_VALIDATING_FORM));
+    yield put(onSubmitFormPublishLoadingProgress(0.2, 'submitForm.loading.validatingForm'));
     const isValidForm = yield* validateFormInputs(inputs);
 
     if (isValidForm && user.isLoggedIn) {
-        yield put(onSubmitFormPublishLoadingProgress(0.4, DETAILS_SUBMITTED_IN_PROGRESS_COMPRESS_IMAGE));
+        yield put(onSubmitFormPublishLoadingProgress(0.4, 'submitForm.loading.compressingImage'));
         let compressedImage = yield* getCompressedImage(selectedImage);
         const isImageValid = yield* validateImage(compressedImage);
 
         if (isImageValid) {
-            yield put(onSubmitFormPublishLoadingProgress(0.8, DETAILS_SUBMITTED_IN_PROGRESS_SENDING_REQUEST));
+            yield put(onSubmitFormPublishLoadingProgress(0.8, 'submitForm.loading.sendingRequest'));
             const loginResult = yield call(UserService.login, user.username, user.password); // todo only login again if token expired
 
             const payload = {

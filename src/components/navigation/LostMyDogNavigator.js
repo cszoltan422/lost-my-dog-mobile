@@ -13,7 +13,6 @@ import {
     LOGIN_NAVIGATION_SCREEN_NAME, SIGN_UP_NAVIGATION_SCREEN_NAME, SUBMIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../../application.constants';
 import i18n from '../../i18n/i18n';
-import {DASHBOARD_TITLE, LOGIN_LOGIN_TEXT, SIGN_UP_SCREEN_TITLE, SUBMIT_DOG_TITLE} from '../../i18n/i18n.keys';
 import LostDogDetailsNavigationHeader from '../lost-dog-details/navigation-header/LostDogDetailsNavigationHeader';
 
 const Stack = createNativeStackNavigator();
@@ -30,7 +29,7 @@ const LostMyDogNavigator = () => {
                 name={DASHBOARD_NAVIGATION_SCREEN_NAME}
                 component={DashboardScreen}
                 options={{
-                    title: i18n.t(DASHBOARD_TITLE)
+                    title: i18n.t('general.dashboard')
                 }} />
             <Stack.Screen
                 name={DETAILS_NAVIGATION_SCREEN_NAME}
@@ -52,7 +51,7 @@ const LostMyDogNavigator = () => {
                 name={SUBMIT_DOG_NAVIGATION_SCREEN_NAME}
                 component={SubmitLostDogScreen}
                 options={{
-                    title: i18n.t(SUBMIT_DOG_TITLE)
+                    title: i18n.t('general.submitLostDog')
                 }} />
             <Stack.Screen
                 name={EDIT_DOG_NAVIGATION_SCREEN_NAME}
@@ -68,14 +67,14 @@ const LostMyDogNavigator = () => {
                 name={SIGN_UP_NAVIGATION_SCREEN_NAME}
                 component={SignUpScreen}
                 options={{
-                    title: i18n.t(SIGN_UP_SCREEN_TITLE),
+                    title: i18n.t('general.signUp'),
                     headerBackTitleVisible: false
                 }} />
             <Stack.Screen
                 name={LOGIN_NAVIGATION_SCREEN_NAME}
                 component={LoginScreen}
                 options={{
-                    title: i18n.t(LOGIN_LOGIN_TEXT),
+                    title: i18n.t('general.login'),
                     headerBackTitleVisible: false,
                 }} />
         </Stack.Navigator>

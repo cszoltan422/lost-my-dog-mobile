@@ -4,11 +4,6 @@ import {StyleSheet, Text, TextInput, View, Switch} from 'react-native';
 import Card from '../../common/card/Card';
 import ModalDropdown from 'react-native-modal-dropdown';
 import i18n from '../../../i18n/i18n';
-import {
-    DETAILS_ASTERISK_EXPLANATION,
-    DETAILS_DOG_DESCRIPTION_LABEL_TITLE,
-    DETAILS_INPUT_REQUIRED
-} from '../../../i18n/i18n.keys';
 import colors from '../../../colors';
 import {
     SUBMIT_FORM_AGE_TEXT_INPUT_KEY,
@@ -90,7 +85,7 @@ const LostDogDetailsContent = (props) => {
                     <Text
                         testID={props.inputs[inputKey].errorTestID}
                         style={styles.errorLabel}>
-                        {i18n.t(DETAILS_INPUT_REQUIRED)}
+                        {i18n.t('submitForm.validation.fieldEmpty')}
                     </Text>
                 )}
             </>
@@ -118,7 +113,7 @@ const LostDogDetailsContent = (props) => {
                     <Text
                         testID={props.inputs[inputKey].errorTestID}
                         style={styles.errorLabel}>
-                        {i18n.t(DETAILS_INPUT_REQUIRED)}
+                        {i18n.t('submitForm.validation.fieldEmpty')}
                     </Text>
                 )}
             </>
@@ -140,14 +135,14 @@ const LostDogDetailsContent = (props) => {
                         style={styles.descriptionTextInputStyle}
                         editable={!props.isLoading}
                         multiline
-                        placeholder={`${i18n.t(DETAILS_DOG_DESCRIPTION_LABEL_TITLE)}*...`}
+                        placeholder={`${i18n.t('general.description')}*...`}
                         value={props.inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].value}
                         onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY, value)} />
                     {!props.inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].isValid && (
                         <Text
                             testID='details-screen-description-text-input-error'
                             style={styles.errorLabelWhite}>
-                            {i18n.t(DETAILS_INPUT_REQUIRED)}
+                            {i18n.t('submitForm.validation.fieldEmpty')}
                         </Text>
                     )}
                 </>
@@ -190,7 +185,7 @@ const LostDogDetailsContent = (props) => {
                     </View>
                     <View style={styles.rowContainer}>
                         <Text style={styles.asteriskExplanationStyle}>
-                            {i18n.t(DETAILS_ASTERISK_EXPLANATION)}
+                            {i18n.t('general.requiredField')}
                         </Text>
                     </View>
                 </>

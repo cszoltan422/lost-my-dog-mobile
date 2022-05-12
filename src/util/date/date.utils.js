@@ -1,12 +1,5 @@
 import moment from 'moment-timezone';
 import * as Localization from 'expo-localization';
-import {
-    DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_DAYS_AGO,
-    DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_HOURS_AGO,
-    DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_MINUTES_AGO,
-    DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_OVER_A_MONTH_AGO,
-    DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_WEEKS_AGO, DASHBOARD_LIST_ITEM_DISAPPEARED_JUST_NOW
-} from '../../i18n/i18n.keys';
 import i18n from '../../i18n/i18n';
 
 export const getTimeDifferenceString = (timeFromString) => {
@@ -21,17 +14,17 @@ export const getTimeDifferenceString = (timeFromString) => {
 
     let result;
     if (differenceInMinutes < 5) {
-        result = i18n.t(DASHBOARD_LIST_ITEM_DISAPPEARED_JUST_NOW);
+        result = i18n.t('dashboard.card.submittedTimes.justNow');
     } else if (differenceInMinutes < 60) {
-        result = `${differenceInMinutes} ${i18n.t(DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_MINUTES_AGO)}`;
+        result = `${differenceInMinutes} ${i18n.t('dashboard.card.submittedTimes.minutesAgo')}`;
     } else if (differenceInHours < 24) {
-        result = `${differenceInHours} ${i18n.t(DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_HOURS_AGO)}`;
+        result = `${differenceInHours} ${i18n.t('dashboard.card.submittedTimes.hoursAgo')}`;
     } else if (differenceInDays < 7) {
-        result = `${differenceInDays} ${i18n.t(DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_DAYS_AGO)}`;
+        result = `${differenceInDays} ${i18n.t('dashboard.card.submittedTimes.daysAgo')}`;
     } else if (differenceInWeeks < 4) {
-        result = `${differenceInWeeks} ${i18n.t(DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_WEEKS_AGO)}`;
+        result = `${differenceInWeeks} ${i18n.t('dashboard.card.submittedTimes.weeksAgo')}`;
     } else {
-        result = `${i18n.t(DASHBOARD_LIST_ITEM_DISAPPEARED_DATE_OVER_A_MONTH_AGO)}`;
+        result = `${i18n.t('dashboard.card.submittedTimes.monthsAgo')}`;
     }
 
     return result;

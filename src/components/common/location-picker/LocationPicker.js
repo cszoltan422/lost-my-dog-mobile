@@ -5,7 +5,6 @@ import MapView, { Marker } from 'react-native-maps';
 import {Icon} from 'react-native-elements';
 import {MAPS_DEFAULT_LATLON_DELTA} from '../../../application.constants';
 import i18n from '../../../i18n/i18n';
-import {LOCATION_PICKER_CURRENT_COORDINATES, LOCATION_PICKER_INFO_DESCRIPTION} from '../../../i18n/i18n.keys';
 import colors from '../../../colors';
 
 const LocationPicker = (props) => {
@@ -64,7 +63,7 @@ const LocationPicker = (props) => {
                 <Text
                     testID='location-picker-map-info-text'
                     style={styles.mapInfoTextStyle}>
-                    {i18n.t(LOCATION_PICKER_INFO_DESCRIPTION)}
+                    {i18n.t('locationPicker.usageInfo')}
                 </Text>
             </View>
             <View
@@ -76,7 +75,7 @@ const LocationPicker = (props) => {
                 <Text
                     testID='location-picker-current-coordinates-text'
                     style={styles.mapInfoTextStyle}>
-                    {i18n.t(LOCATION_PICKER_CURRENT_COORDINATES)}
+                    {i18n.t('locationPicker.currentCoordinates')}
                 </Text>
                 <Text
                     style={styles.currentCoordinatesTextStyle}

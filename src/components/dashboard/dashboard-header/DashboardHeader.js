@@ -10,11 +10,6 @@ import {
     DASHBOARD_STEP_SEARCH_DISTANCE_IN_METERS
 } from '../../../application.constants';
 import i18n from '../../../i18n/i18n';
-import {
-    DASHBOARD_SEARCH_FOUND_TAB,
-    DASHBOARD_SEARCH_LOST_WANDERING_TAB,
-    DASHBOARD_SEARCH_PARAMETERS_DISTANCE
-} from '../../../i18n/i18n.keys';
 import colors from '../../../colors';
 
 const DashboardHeader = (props) => {
@@ -45,7 +40,7 @@ const DashboardHeader = (props) => {
                                 styles.activeButtonStyle : null
                         ]}
                         titleStyle={styles.titleStyle}
-                        title={i18n.t(DASHBOARD_SEARCH_LOST_WANDERING_TAB)}
+                        title={`${i18n.t('general.lost')} / ${i18n.t('general.wandering')}`}
                         disabled={props.isLoading()}
                         onPress={() => onTabValueChange(DASHBOARD_SEARCH_TYPE_LOST)} />
                 </View>
@@ -58,7 +53,7 @@ const DashboardHeader = (props) => {
                                 styles.activeButtonStyle : null
                         ]}
                         titleStyle={styles.titleStyle}
-                        title={i18n.t(DASHBOARD_SEARCH_FOUND_TAB)}
+                        title={i18n.t('general.found')}
                         disabled={props.isLoading()}
                         onPress={() => onTabValueChange(DASHBOARD_SEARCH_TYPE_FOUND)} />
                 </View>
@@ -79,7 +74,7 @@ const DashboardHeader = (props) => {
                 <Text
                     testID='dashboard-header-slider-distance-text'
                     style={styles.sliderValueStyle}>
-                    {i18n.t(DASHBOARD_SEARCH_PARAMETERS_DISTANCE)}: {props.searchParameters.radiusInMeters / 1000} km
+                    {i18n.t('general.distance')}: {props.searchParameters.radiusInMeters / 1000} km
                 </Text>
             </View>
         </>

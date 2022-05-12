@@ -6,27 +6,20 @@ import {StyleSheet, Text, View, Linking, Platform} from 'react-native';
 import {Icon, Button} from 'react-native-elements';
 import colors from '../colors';
 import i18n from '../i18n/i18n';
-import {
-    LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION,
-    LOCATION_PERMISSION_ASK_DESCRIPTION,
-    LOCATION_PERMISSION_BUTTON_TITLE,
-    LOCATION_PERMISSION_DENIED_BUTTON_TITLE,
-    LOCATION_PERMISSION_DENIED_TITLE,
-    LOCATION_PERMISSION_TITLE
-} from '../i18n/i18n.keys';
+import {ActivityAction} from 'expo-intent-launcher';
 
 const LocationPermissionInitScreen = (props) => {
 
     const onAskLocationPermission = async () => {
-        await Location.requestPermissionsAsync();
-        props.onCheckLocationPermission();
+        const response = await Location.requestForegroundPermissionsAsync();
+        props.onCheckLocationPermission(response);
     };
 
     const onOpenSettingsApp = async () => {
         if (Platform.OS === 'ios') {
             await Linking.openSettings();
         } else {
-            await IntentLauncher.startActivityAsync(IntentLauncher.ACTION_APPLICATION_SETTINGS);
+            await IntentLauncher.startActivityAsync(ActivityAction.LOCATION_SOURCE_SETTINGS);
         }
     };
 
@@ -42,17 +35,17 @@ const LocationPermissionInitScreen = (props) => {
     if (granted) {
         props.onCheckLocationPermission();
     } else if (!granted && canAskAgain) {
-        screenTitle = i18n.t(LOCATION_PERMISSION_TITLE);
-        buttonTitle = i18n.t(LOCATION_PERMISSION_BUTTON_TITLE);
-        description = i18n.t(LOCATION_PERMISSION_ASK_DESCRIPTION);
+        screenTitle = i18n.t('permissions.location.enableLocation');
+        buttonTitle = i18n.t('permissions.location.allowLocation');
+        description = i18n.t('permissions.location.askDescription');
         icon = 'room';
         buttonPressHandler = onAskLocationPermission;
 
         clearInterval();
     } else if (!granted && !canAskAgain) {
-        screenTitle = i18n.t(LOCATION_PERMISSION_DENIED_TITLE);
-        buttonTitle = i18n.t(LOCATION_PERMISSION_DENIED_BUTTON_TITLE);
-        description = i18n.t(LOCATION_PERMISSION_ASK_DENIED_DESCRIPTION);
+        screenTitle = i18n.t('general.oops');
+        buttonTitle = i18n.t('permissions.location.openSettings');
+        description = i18n.t('permissions.location.permissionDeniedDescription');
         icon = 'settings';
         buttonPressHandler = onOpenSettingsApp;
 

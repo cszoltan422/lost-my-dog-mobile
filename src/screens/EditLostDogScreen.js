@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import LostDogDetails from '../components/lost-dog-details/LostDogDetails';
 import Toast from 'react-native-toast-message';
-import {TOAST_ERROR_HEADER_TEXT} from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
 import {
     onResetSubmitForm, onSubmitFormChangeMode, onSubmitFormHideAlert, onSubmitFormImageCleared,
@@ -77,8 +76,8 @@ const EditLostDogScreen = ({ route, navigation }) => {
             Toast.show({
                 position: 'bottom',
                 type: 'error',
-                text1: i18n.t(TOAST_ERROR_HEADER_TEXT),
-                text2: i18n.t(ERROR_MESSAGE_TRANSLATION_CODES[error.message] || 'ERROR_UNKNOWN_SERVER_ERROR'),
+                text1: i18n.t('toast.headerText'),
+                text2: i18n.t(ERROR_MESSAGE_TRANSLATION_CODES[error.message] || 'toast.unknownError'),
                 autoHide: false,
                 onHide: () => dispatch(onSubmitFormHideAlert()),
             });

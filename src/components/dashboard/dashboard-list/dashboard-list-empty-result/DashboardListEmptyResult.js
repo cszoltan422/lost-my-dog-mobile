@@ -3,7 +3,6 @@ import {StyleSheet, Text, View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import i18n from '../../../../i18n/i18n';
 import colors from '../../../../colors';
-import {DASHBOARD_EMPTY_RESULT} from '../../../../i18n/i18n.keys';
 
 const DashboardListEmptyResult = () => {
 
@@ -17,7 +16,7 @@ const DashboardListEmptyResult = () => {
                 size={72}
                 color={colors.accentColor} />
             <Text style={styles.textStyle}>
-                {i18n.t(DASHBOARD_EMPTY_RESULT)}
+                {i18n.t('dashboard.emptyResult')}
             </Text>
         </View>
     );
