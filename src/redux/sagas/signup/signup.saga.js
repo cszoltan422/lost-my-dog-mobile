@@ -14,7 +14,7 @@ import {
     SIGNUP_PASSWORD_TEXT_INPUT_KEY,
     SIGNUP_USERNAME_TEXT_INPUT_KEY
 } from '../../../application.constants';
-import UserService from '../../../service/UserService';
+import UserService from '../../../service/user-service';
 
 export function* signupAttemptWatcherSaga() {
     yield takeLatest([ON_SIGNUP_ATTEMPTED], signupAttemptSaga);

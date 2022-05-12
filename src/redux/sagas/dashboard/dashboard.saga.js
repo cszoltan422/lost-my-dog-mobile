@@ -1,5 +1,5 @@
 import {takeLatest, call, select, put, delay} from 'redux-saga/effects';
-import SearchLostDogsService from '../../../service/SearchLostDogsService';
+import SearchLostDogsService from '../../../service/search-lost-dogs-service';
 import {
     ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
     ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM,

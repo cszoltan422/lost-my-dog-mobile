@@ -30,8 +30,8 @@ import {
     SUBMIT_FORM_EDIT_MODE,
     EDIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../../../application.constants';
-import UserService from '../../../service/UserService';
-import LostDogSubmissionService from '../../../service/LostDogSubmissionService';
+import UserService from '../../../service/user-service';
+import LostDogSubmissionService from '../../../service/lost-dog-submission-service';
 import {getCurrentTimeWithTimezone} from '../../../util/date/date.utils';
 
 export function* submitFormSubmittedWatcherSaga() {
@@ -108,7 +108,7 @@ function* submitFormSubmittedSaga(action) {
 
         if (isImageValid) {
             yield put(onSubmitFormPublishLoadingProgress(0.8, 'submitForm.loading.sendingRequest'));
-            const loginResult = yield call(UserService.login, user.username, user.password); // todo only login again if token expired
+            const loginResult = yield call(UserService.login, { userName: user.userName, password: user.password }); // todo only login again if token expired
 
             const payload = {
                 id: mode === SUBMIT_FORM_EDIT_MODE ? dogId : undefined,

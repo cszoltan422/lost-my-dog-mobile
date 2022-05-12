@@ -6,7 +6,7 @@ import {
     onLoginStopLoading,
     onLoginSuccess
 } from '../../actions/login/action-creators/action.creators';
-import UserService from '../../../service/UserService';
+import UserService from '../../../service/user-service';
 import {onApplicationSuccessfulLoginPersistUser} from '../../actions/application/action-creators/action.creators';
 import {USER_ASYNC_STORAGE_KEY, USER_ROLE_ADMIN_VALUE} from '../../../application.constants';
 import {setItem} from '../../../util/async-storage/async.storage';
@@ -25,7 +25,7 @@ function* loginAttemptSaga(action) {
         try {
             yield put(onLoginLoading());
 
-            const loginResult = yield call(UserService.login, username, password);
+            const loginResult = yield call(UserService.login, { userName: username, password: password });
             const userDetails = yield call(UserService.fetchUserDetails, loginResult.token);
 
             const user = {
