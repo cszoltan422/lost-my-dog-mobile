@@ -14,7 +14,7 @@ import {
     onDashboardHideAlert,
     onDashboardMounted,
     onDashboardRefreshPage
-} from '../redux/actions/dashboard/action-creators/action.creators';
+} from '../redux/actions/dashboard/action-creators/action-creators';
 import i18n from '../i18n/i18n';
 import {
     DETAILS_NAVIGATION_SCREEN_NAME, ERROR_MESSAGE_TRANSLATION_CODES,

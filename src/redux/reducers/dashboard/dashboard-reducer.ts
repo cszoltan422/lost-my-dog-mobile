@@ -10,13 +10,36 @@ import {
     ON_DASHBOARD_FETCH_NEW_PAGE,
     ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
     ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM, ON_DASHBOARD_RESET_PAGINATION_DRY
-} from '../../actions/dashboard/action-types/action.types';
+} from '../../actions/dashboard/action-types/action-types';
 import {
     DASHBOARD_INITIAL_SEARCH_DISTANCE_IN_METERS,
     DASHBOARD_LIST_PAGE_SIZE, DASHBOARD_SEARCH_TYPE_LOST
 } from '../../../application.constants';
+import {LostDog, LostDogSearchParameters} from '../../../service/search-lost-dogs-service';
 
-export const initialState = {
+export interface Pagination {
+    currentPage: number;
+}
+
+export interface DashboardError {
+    code: string;
+    message: string;
+    show: boolean;
+}
+
+export interface DashboardState {
+    dataFetched: boolean;
+    loading: boolean;
+    refreshing: boolean;
+    fetchingNew: boolean;
+    hasNoMoreData: boolean;
+    pagination: Pagination,
+    searchParameters: LostDogSearchParameters,
+    data: LostDog[],
+    error: DashboardError
+}
+
+export const initialState: DashboardState = {
     dataFetched: false,
     loading: false,
     refreshing: false,

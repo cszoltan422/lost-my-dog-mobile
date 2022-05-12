@@ -8,7 +8,9 @@ import {
     ON_DASHBOARD_LOADING,
     ON_DASHBOARD_MOUNTED, ON_DASHBOARD_REFRESH_PAGE,
     ON_DASHBOARD_REFRESHING, ON_DASHBOARD_RESET_PAGINATION_DRY
-} from '../action-types/action.types';
+} from '../action-types/action-types';
+import {LostDog} from '../../../../service/search-lost-dogs-service';
+import {DashboardError} from '../../../reducers/dashboard/dashboard-reducer';
 
 export const onDashboardMounted = () => {
     return {
@@ -46,28 +48,28 @@ export const onDashboardFetchingNewPage = () => {
     };
 };
 
-export const onDashboardResetPaginationDry = (page) => {
+export const onDashboardResetPaginationDry = (page: number) => {
     return {
         type: ON_DASHBOARD_RESET_PAGINATION_DRY,
         payload: page
     };
 };
 
-export const onDashboardChangeRadiusSearchParam = (radius) => {
+export const onDashboardChangeRadiusSearchParam = (radius: number) => {
     return {
         type: ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
         payload: radius
     };
 };
 
-export const onDashboardChangeSearchTypeParam = (searchType) => {
+export const onDashboardChangeSearchTypeParam = (searchType: string) => {
     return {
         type: ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM,
         payload: searchType
     };
 };
 
-export const onDashboardDataFetched = (clearData, data) => {
+export const onDashboardDataFetched = (clearData: boolean, data: LostDog[]) => {
     return {
         type: ON_DASHBOARD_DATA_FETCHED,
         payload: {
@@ -77,7 +79,7 @@ export const onDashboardDataFetched = (clearData, data) => {
     };
 };
 
-export const onDashboardDataFetchError = (error) => {
+export const onDashboardDataFetchError = (error: DashboardError) => {
     return {
         type: ON_DASHBOARD_DATA_FETCH_ERROR,
         payload: error

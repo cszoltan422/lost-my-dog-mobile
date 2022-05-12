@@ -6,7 +6,7 @@ import {
     ON_DASHBOARD_FETCH_NEW_PAGE,
     ON_DASHBOARD_MOUNTED,
     ON_DASHBOARD_REFRESH_PAGE
-} from '../../actions/dashboard/action-types/action.types';
+} from '../../actions/dashboard/action-types/action-types';
 import {
     onDashboardDataFetched,
     onDashboardFetchingNewPage,
@@ -14,7 +14,7 @@ import {
     onDashboardRefreshing,
     onDashboardResetPaginationDry,
     onDashboardDataFetchError
-} from '../../actions/dashboard/action-creators/action.creators';
+} from '../../actions/dashboard/action-creators/action-creators';
 import {ON_SUBMIT_FORM_SUBMIT_SUCCESS} from '../../actions/submit-form/action-types/action-types';
 
 const CLEAR_DATA_ACTIONS = [
