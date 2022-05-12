@@ -2,7 +2,7 @@ import moment from 'moment-timezone';
 import * as Localization from 'expo-localization';
 import i18n from '../../i18n/i18n';
 
-export const getTimeDifferenceString = (timeFromString) => {
+export const getTimeDifferenceString = (timeFromString: string): string => {
     const timeFrom = moment.utc(timeFromString).local();
     const timeTo = moment.tz(moment(), Localization.timezone);
 
@@ -12,7 +12,7 @@ export const getTimeDifferenceString = (timeFromString) => {
     const differenceInDays = Math.floor(difference.asDays());
     const differenceInWeeks = Math.floor(difference.asWeeks());
 
-    let result;
+    let result: string;
     if (differenceInMinutes < 5) {
         result = i18n.t('dashboard.card.submittedTimes.justNow');
     } else if (differenceInMinutes < 60) {
@@ -31,11 +31,11 @@ export const getTimeDifferenceString = (timeFromString) => {
 
 };
 
-export const formatIsoTime = (isoTimeString) => {
+export const formatIsoTime = (isoTimeString: string): string => {
     const timeInLocalTimezone = moment.utc(isoTimeString).local();
     return timeInLocalTimezone.format('YYYY. MM. DD, HH:mm');
 };
 
-export const getCurrentTimeWithTimezone = () => {
+export const getCurrentTimeWithTimezone = (): string => {
     return moment().tz(Localization.timezone).format();
 };

@@ -1,5 +1,10 @@
 import Constants from 'expo-constants';
 
+export interface ApplicationEnvironment {
+    API_URL: string;
+    GET_DEVICE_LOCATION: boolean;
+}
+
 const ENV = {
     e2e: {
         API_URL: 'http://192.168.1.70:8080',
@@ -18,17 +23,17 @@ const ENV = {
         GET_DEVICE_LOCATION: true
     },
 };
-const getEnvVars = (env = Constants.manifest.releaseChannel) => {
+const getEnvVars = (env = Constants.manifest?.releaseChannel): ApplicationEnvironment => {
     // Default values for `releaseChannel` are `undefined` in dev mode and `default` in production
     if (__DEV__) {
         return ENV.develop;
     }
     // using `indexOf` will let you pick up dev, develop, development, dev-v1, dev-v2, dev-v3, and so on..
     // Returns `-1` if the value is not found.
-    if (env.indexOf('e2e') !== -1) return ENV.e2e;
-    if (env.indexOf('dev') !== -1) return ENV.develop;
-    if (env.indexOf('staging') !== -1) return ENV.staging;
-    if (env.indexOf('prod') !== -1) return ENV.production;
+    if (env?.indexOf('e2e') !== -1) return ENV.e2e;
+    if (env?.indexOf('dev') !== -1) return ENV.develop;
+    if (env?.indexOf('staging') !== -1) return ENV.staging;
+    if (env?.indexOf('prod') !== -1) return ENV.production;
     return ENV.develop; // If you do not specify a channel, you will publish to the `default` channel.
 };
 export default getEnvVars();
