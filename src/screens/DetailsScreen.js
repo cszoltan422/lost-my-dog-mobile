@@ -10,7 +10,6 @@ import {
 } from '../application.constants';
 import colors from '../colors';
 import i18n from '../i18n/i18n';
-import {SUBMIT_DOG_TITLE} from '../i18n/i18n.keys';
 
 const DetailsScreen = ({ route, navigation }) => {
 
@@ -37,7 +36,7 @@ const DetailsScreen = ({ route, navigation }) => {
                 openIcon={{ name: 'close', color: colors.white }}
                 actions={[
                     {
-                        title: i18n.t(SUBMIT_DOG_TITLE),
+                        title: i18n.t('general.submitLostDog'),
                         icon: { name: 'add', color: colors.white },
                         color: colors.primaryColor,
                         pressHandler: () => {

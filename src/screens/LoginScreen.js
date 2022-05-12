@@ -10,11 +10,6 @@ import {
 } from '../redux/actions/login/action-creators/action.creators';
 import i18n from '../i18n/i18n';
 import colors from '../colors';
-import {
-    LOGIN_FORGOT_PASSWORD_PLACEHOLDER, LOGIN_LOGIN_TEXT,
-    LOGIN_PASSWORD_PLACEHOLDER, LOGIN_SIGN_UP_TEXT,
-    LOGIN_USERNAME_PLACEHOLDER
-} from '../i18n/i18n.keys';
 import {APPLICATION_NAME, SIGN_UP_NAVIGATION_SCREEN_NAME} from '../application.constants';
 
 const LoginScreen = (props) => {
@@ -48,7 +43,7 @@ const LoginScreen = (props) => {
                 <TextInput
                     testID='login-screen-username-text-input'
                     style={styles.inputTextStyle}
-                    placeholder={i18n.t(LOGIN_USERNAME_PLACEHOLDER)}
+                    placeholder={`${i18n.t('general.username')}...`}
                     placeholderTextColor={colors.white}
                     value={username}
                     autoCapitalize='none'
@@ -59,7 +54,7 @@ const LoginScreen = (props) => {
                     testID='login-screen-password-text-input'
                     secureTextEntry
                     style={styles.inputTextStyle}
-                    placeholder={i18n.t(LOGIN_PASSWORD_PLACEHOLDER)}
+                    placeholder={`${i18n.t('general.password')}...`}
                     placeholderTextColor={colors.white}
                     value={password}
                     autoCapitalize='none'
@@ -69,14 +64,14 @@ const LoginScreen = (props) => {
                 <Text
                     testID='login-screen-forgot-password-text'
                     style={styles.forgotPasswordStyle}>
-                    {i18n.t(LOGIN_FORGOT_PASSWORD_PLACEHOLDER)}
+                    {i18n.t('login.forgotPassword')}
                 </Text>
             </TouchableOpacity>
             <Button
                 testID='login-screen-login-button'
                 buttonStyle={styles.loginButtonStyle}
                 titleStyle={styles.loginTextStyle}
-                title={i18n.t(LOGIN_LOGIN_TEXT)}
+                title={i18n.t('general.login')}
                 loading={loading}
                 disabled={loading || emptyInput()}
                 onPress={() => dispatch(onLoginAttempted(props.navigation))} />
@@ -85,7 +80,7 @@ const LoginScreen = (props) => {
                 <Text
                     testID='login-screen-signup-text'
                     style={styles.signUpTextStyle}>
-                    {i18n.t(LOGIN_SIGN_UP_TEXT)}
+                    {i18n.t('general.signUp')}
                 </Text>
             </TouchableOpacity>
         </View>

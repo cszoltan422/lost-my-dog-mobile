@@ -7,9 +7,6 @@ import MapsView from '../common/map-view/MapsView';
 import LostDogDetailsHeaderReadonly from './header/LostDogDetailsHeaderReadonly';
 import LostDogDetailsContentReadonly from './content/LostDogDetailsContentReadonly';
 import i18n from '../../i18n/i18n';
-import {
-    DETAILS_CALL_OWNER,DETAILS_MAP_VIEW_MARKER_TITLE, DETAILS_SEND_MESSAGE
-} from '../../i18n/i18n.keys';
 import colors from '../../colors';
 
 const LostDogDetailsReadonly = (props) => {
@@ -38,7 +35,7 @@ const LostDogDetailsReadonly = (props) => {
                                 }
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={{color: colors.white}}
-                                title={i18n.t(DETAILS_SEND_MESSAGE)}
+                                title={i18n.t('general.sendMessage')}
                                 disabled={props.dog.contactEmail === ''}
                                 onPress={props.onSendOwnerButtonPressed} />
                         </View>
@@ -55,7 +52,7 @@ const LostDogDetailsReadonly = (props) => {
                                 }
                                 buttonStyle={styles.buttonStyle}
                                 titleStyle={{color: colors.white}}
-                                title={i18n.t(DETAILS_CALL_OWNER)}
+                                title={i18n.t('general.callOwner')}
                                 disabled={props.dog.contactPhone === ''}
                                 onPress={props.onCallOwnerButtonPressed} />
                         </View>
@@ -65,7 +62,7 @@ const LostDogDetailsReadonly = (props) => {
                     <MapsView
                         longitude={props.dog.longitude}
                         latitude={props.dog.latitude}
-                        markerTitle={i18n.t(DETAILS_MAP_VIEW_MARKER_TITLE)}
+                        markerTitle={i18n.t('general.lastSeenLocation')}
                         iconType='font-awesome'
                         iconName='paw'
                         iconSize={24}

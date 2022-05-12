@@ -19,9 +19,10 @@ export const onInitializeApplication = (applicationInitializer) => {
     };
 };
 
-export const onCheckLocationPermission = () => {
+export const onCheckLocationPermission = (locationPermissionResponse) => {
     return {
-      type: ON_CHECK_LOCATION_PERMISSION
+      type: ON_CHECK_LOCATION_PERMISSION,
+      payload: locationPermissionResponse
     };
 };
 

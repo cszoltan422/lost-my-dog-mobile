@@ -8,10 +8,6 @@ import LocationPicker from '../common/location-picker/LocationPicker';
 import LostDogDetailsHeader from './header/LostDogDetailsHeader';
 import LostDogDetailsContent from './content/LostDogDetailsContent';
 import i18n from '../../i18n/i18n';
-import {
-    DETAILS_MAP_VIEW_MARKER_TITLE,
-    DETAILS_SUBMIT_BUTTON_TITLE, DETAILS_SUBMITTED_LOADING_TEXT
-} from '../../i18n/i18n.keys';
 import colors from '../../colors';
 
 const LostDogDetails = (props) => {
@@ -36,7 +32,7 @@ const LostDogDetails = (props) => {
                         <LocationPicker
                             longitude={props.location.longitude}
                             latitude={props.location.latitude}
-                            markerTitle={i18n.t(DETAILS_MAP_VIEW_MARKER_TITLE)}
+                            markerTitle={i18n.t('general.lastSeenLocation')}
                             iconType='font-awesome'
                             iconName='paw'
                             iconSize={24}
@@ -50,14 +46,14 @@ const LostDogDetails = (props) => {
                             testID='details-screen-submit-button'
                             buttonStyle={styles.buttonStyle}
                             titleStyle={{color: colors.white}}
-                            title={i18n.t(DETAILS_SUBMIT_BUTTON_TITLE)}
+                            title={i18n.t('general.submit')}
                             loading={props.isLoading}
                             disabled={!props.isValid || props.isLoading}
                             onPress={props.onSubmit} />
                         {props.isLoading && (
                             <View style={styles.loadingProgressContainer}>
                                 <Text style={styles.loadingProgressInfoTextStyle}>
-                                    {i18n.t(DETAILS_SUBMITTED_LOADING_TEXT)}
+                                    {i18n.t('submitForm.loading.processing')}
                                 </Text>
                                 <Text style={styles.loadingProgressStageStyle}>
                                     {i18n.t(props.loading.stage)}

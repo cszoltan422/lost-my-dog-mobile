@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import i18n from '../../../../i18n/i18n';
-import { DASHBOARD_LIST_END_REACHED } from '../../../../i18n/i18n.keys';
 import colors from '../../../../colors';
 
 const DashboardListEndIndicator = () => {
@@ -13,7 +12,7 @@ const DashboardListEndIndicator = () => {
             <View style={styles.separator} />
             <Text
                 testID='dashboard-list-end-reached-indicator-text'
-                style={styles.text}>{i18n.t(DASHBOARD_LIST_END_REACHED)}</Text>
+                style={styles.text}>{i18n.t('dashboard.endReached')}</Text>
         </View>
     );
 

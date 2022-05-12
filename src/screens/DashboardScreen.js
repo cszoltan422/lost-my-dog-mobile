@@ -15,9 +15,6 @@ import {
     onDashboardMounted,
     onDashboardRefreshPage
 } from '../redux/actions/dashboard/action-creators/action.creators';
-import {
-    SUBMIT_DOG_TITLE, TOAST_ERROR_HEADER_TEXT
-} from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
 import {
     DETAILS_NAVIGATION_SCREEN_NAME, ERROR_MESSAGE_TRANSLATION_CODES,
@@ -52,8 +49,8 @@ const DashboardScreen = (props) => {
             Toast.show({
                 position: 'bottom',
                 type: 'error',
-                text1: i18n.t(TOAST_ERROR_HEADER_TEXT),
-                text2: i18n.t(ERROR_MESSAGE_TRANSLATION_CODES[error.message] || 'ERROR_UNKNOWN_SERVER_ERROR'),
+                text1: i18n.t('toast.headerText'),
+                text2: i18n.t(ERROR_MESSAGE_TRANSLATION_CODES[error.message] || 'toast.unknownError'),
                 autoHide: false,
                 onHide: () => dispatch(onDashboardHideAlert()),
             });
@@ -95,7 +92,7 @@ const DashboardScreen = (props) => {
                 openIcon={{ name: 'close', color: colors.white }}
                 actions={[
                     {
-                        title: i18n.t(SUBMIT_DOG_TITLE),
+                        title: i18n.t('general.submitLostDog'),
                         icon: { name: 'add', color: colors.white },
                         color: colors.primaryColor,
                         pressHandler: () => {

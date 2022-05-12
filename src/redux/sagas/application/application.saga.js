@@ -32,7 +32,7 @@ function* applicationMountedSaga() {
     if (!applicationInitialized) {
         const applicationInitializer = {};
 
-        const locationPermission = yield Location.getPermissionsAsync();
+        const locationPermission = yield Location.getForegroundPermissionsAsync();
         const cameraPermission = yield ImagePicker.getCameraPermissionsAsync();
         const mediaLibraryPermission = yield ImagePicker.getMediaLibraryPermissionsAsync();
 
@@ -91,10 +91,10 @@ function* applicationMountedSaga() {
     }
 }
 
-function* onCheckLocationPermissionSaga() {
+function* onCheckLocationPermissionSaga(action) {
     const location = yield select((state) => state.application.permissions.location);
     if (!location.granted) {
-        const locationPermission = yield Location.getPermissionsAsync();
+        const locationPermission = action.payload;
         yield put(onLocationPermissionChecked({
             granted: locationPermission.granted,
             canAskAgain: locationPermission.canAskAgain,

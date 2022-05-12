@@ -4,17 +4,6 @@ import {StyleSheet, Text, View} from 'react-native';
 import Card from '../../common/card/Card';
 import i18n from '../../../i18n/i18n';
 import {
-    DETAILS_DOG_AGE_LABEL_TITLE,
-    DETAILS_DOG_AGE_YEARS,
-    DETAILS_DOG_BREED_LABEL_TITLE, DETAILS_DOG_CHIP_NUMBER,
-    DETAILS_DOG_CITY_LABEL_TITLE,
-    DETAILS_DOG_COLOR_LABEL_TITLE,
-    DETAILS_DOG_DATE_LOST_LABEL_TITLE, DETAILS_DOG_HAS_CHIP,
-    DETAILS_DOG_NAME_LABEL_TITLE,
-    DETAILS_DOG_SEX_LABEL_TITLE,
-    DETAILS_DOG_STATUS_LABEL_TITLE
-} from '../../../i18n/i18n.keys';
-import {
     DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS, DETAILS_DOG_HAS_CHIP_ENUM_TRANSLATION_KEYS,
     DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS
 } from '../../../application.constants';
@@ -31,7 +20,7 @@ const LostDogDetailsContentReadonly = (props) => {
                         <Text
                             testID='details-screen-dog-name-text-label'
                             style={styles.labelTitle}>
-                            {i18n.t(DETAILS_DOG_NAME_LABEL_TITLE)}
+                            {i18n.t('general.name')}
                         </Text>
                         <Text
                             testID='details-screen-dog-name-text'
@@ -43,7 +32,7 @@ const LostDogDetailsContentReadonly = (props) => {
                         <Text
                             testID='details-screen-dog-breed-text-label'
                             style={styles.labelTitle}>
-                            {i18n.t(DETAILS_DOG_BREED_LABEL_TITLE)}
+                            {i18n.t('general.breed')}
                         </Text>
                         <Text
                             testID='details-screen-dog-breed-text'
@@ -57,7 +46,7 @@ const LostDogDetailsContentReadonly = (props) => {
                         <Text
                             testID='details-screen-dog-gender-text-label'
                             style={styles.labelTitle}>
-                            {i18n.t(DETAILS_DOG_SEX_LABEL_TITLE)}
+                            {i18n.t('general.sex')}
                         </Text>
                         <Text
                             testID='details-screen-dog-gender-text'
@@ -69,7 +58,7 @@ const LostDogDetailsContentReadonly = (props) => {
                         <Text
                             testID='details-screen-dog-color-text-label'
                             style={styles.labelTitle}>
-                            {i18n.t(DETAILS_DOG_COLOR_LABEL_TITLE)}
+                            {i18n.t('general.color')}
                         </Text>
                         <Text
                             testID='details-screen-dog-color-text'
@@ -83,7 +72,7 @@ const LostDogDetailsContentReadonly = (props) => {
                         <Text
                             testID='details-screen-dog-status-text-label'
                             style={styles.labelTitle}>
-                            {i18n.t(DETAILS_DOG_STATUS_LABEL_TITLE)}
+                            {i18n.t('general.status')}
                         </Text>
                         <Text
                             testID='details-screen-dog-status-text'
@@ -95,12 +84,12 @@ const LostDogDetailsContentReadonly = (props) => {
                         <Text
                             testID='details-screen-dog-age-text-label'
                             style={styles.labelTitle}>
-                            {i18n.t(DETAILS_DOG_AGE_LABEL_TITLE)}
+                            {i18n.t('general.age')}
                         </Text>
                         <Text
                             testID='details-screen-dog-age-text'
                             style={styles.labelValue}>
-                            {props.dog.age} {i18n.t(DETAILS_DOG_AGE_YEARS)}
+                            {props.dog.age} {i18n.t('general.years')}
                         </Text>
                     </View>
                 </View>
@@ -109,7 +98,7 @@ const LostDogDetailsContentReadonly = (props) => {
                         <Text
                             testID='details-screen-dog-has-chip-text-label'
                             style={styles.labelTitle}>
-                            {i18n.t(DETAILS_DOG_HAS_CHIP)}
+                            {i18n.t('general.hasChip')}
                         </Text>
                         <Text
                             testID='details-screen-dog-has-chip-text'
@@ -121,7 +110,7 @@ const LostDogDetailsContentReadonly = (props) => {
                         <Text
                             testID='details-screen-dog-chip-number-text-label'
                             style={styles.labelTitle}>
-                            {i18n.t(DETAILS_DOG_CHIP_NUMBER)}
+                            {i18n.t('general.chipNumber')}
                         </Text>
                         <Text
                             testID='details-screen-dog-chip-number-text'
@@ -135,7 +124,7 @@ const LostDogDetailsContentReadonly = (props) => {
                         <Text
                             testID='details-screen-dog-location-text-label'
                             style={styles.labelTitle}>
-                            {i18n.t(DETAILS_DOG_CITY_LABEL_TITLE)}
+                            {i18n.t('general.city')}
                         </Text>
                         <Text
                             testID='details-screen-dog-location-text'
@@ -147,7 +136,7 @@ const LostDogDetailsContentReadonly = (props) => {
                         <Text
                             testID='details-screen-dog-date-lost-text-label'
                             style={styles.labelTitle}>
-                            {i18n.t(DETAILS_DOG_DATE_LOST_LABEL_TITLE)}
+                            {i18n.t('general.dateLost')}
                         </Text>
                         <Text
                             testID='details-screen-dog-date-lost-text'

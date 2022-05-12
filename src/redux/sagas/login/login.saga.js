@@ -6,7 +6,6 @@ import {
     onLoginStopLoading,
     onLoginSuccess
 } from '../../actions/login/action-creators/action.creators';
-import {LOGIN_EMPTY_PASSWORD_OR_USERNAME, LOGIN_WRONG_PASSWORD_OR_USERNAME} from '../../../i18n/i18n.keys';
 import UserService from '../../../service/UserService';
 import {onApplicationSuccessfulLoginPersistUser} from '../../actions/application/action-creators/action.creators';
 import {USER_ASYNC_STORAGE_KEY, USER_ROLE_ADMIN_VALUE} from '../../../application.constants';
@@ -21,7 +20,7 @@ function* loginAttemptSaga(action) {
     const password = yield select((state) => state.login.password);
 
     if (!username || !password) {
-        yield put(onLoginAttemptError(LOGIN_EMPTY_PASSWORD_OR_USERNAME));
+        yield put(onLoginAttemptError('login.emptyPasswordOrUsername'));
     } else {
         try {
             yield put(onLoginLoading());
@@ -46,7 +45,7 @@ function* loginAttemptSaga(action) {
             navigation.goBack();
         } catch (error) {
             yield put(onLoginStopLoading());
-            yield put(onLoginAttemptError(LOGIN_WRONG_PASSWORD_OR_USERNAME));
+            yield put(onLoginAttemptError('login.wrongLoginCredentials'));
         }
     }
 }

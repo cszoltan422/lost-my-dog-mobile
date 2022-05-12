@@ -10,19 +10,6 @@ import {
     SIGNUP_USERNAME_TEXT_INPUT_KEY
 } from '../../../application.constants';
 import {
-    SIGNUP_CONFIRM_PASSWORD_PLACEHOLDER,
-    SIGNUP_CONFIRM_PASSWORD_VALIDATION_ERROR,
-    SIGNUP_EMAIL_PLACEHOLDER,
-    SIGNUP_EMAIL_VALIDATION_ERROR,
-    SIGNUP_FIRST_NAME_PLACEHOLDER,
-    SIGNUP_FIRST_NAME_VALIDATION_ERROR,
-    SIGNUP_LAST_NAME_PLACEHOLDER, SIGNUP_LAST_NAME_VALIDATION_ERROR,
-    SIGNUP_PASSWORD_PLACEHOLDER,
-    SIGNUP_PASSWORD_VALIDATION_ERROR,
-    SIGNUP_USERNAME_PLACEHOLDER,
-    SIGNUP_USERNAME_VALIDATION_ERROR
-} from '../../../i18n/i18n.keys';
-import {
     ON_SIGNUP_ATTEMPT_ERROR,
     ON_SIGNUP_INPUT_VALUE_CHANGED, ON_SIGNUP_LOADING, ON_SIGNUP_STOP_LOADING, ON_SIGNUP_SUCCESS,
     ON_SIGNUP_VALIDATION_ERROR
@@ -34,7 +21,7 @@ export const initialState = {
     error: '',
     inputs: {
         [SIGNUP_USERNAME_TEXT_INPUT_KEY]: {
-            label: SIGNUP_USERNAME_PLACEHOLDER,
+            label: 'general.username',
             labelTestID: 'signup-screen-username-text-input-label',
             inputTestID: 'signup-screen-username-text-input',
             errorLabelTestID: 'signup-screen-username-text-input-error',
@@ -44,7 +31,7 @@ export const initialState = {
             secureTextEntry: false,
             autoCompleteType: 'username',
             keyboardType: 'default',
-            validationErrorKey: SIGNUP_USERNAME_VALIDATION_ERROR,
+            validationErrorKey: 'signUp.userNameInvalid',
             isValid: true,
             validator: (value) =>
                 !/\s/g.test(value) &&
@@ -53,7 +40,7 @@ export const initialState = {
                 value.replace(/\s/g, '').length > 4
         },
         [SIGNUP_EMAIL_TEXT_INPUT_KEY]: {
-            label: SIGNUP_EMAIL_PLACEHOLDER,
+            label: 'general.emailAddress',
             labelTestID: 'signup-screen-email-text-input-label',
             inputTestID: 'signup-screen-email-text-input',
             errorLabelTestID: 'signup-screen-email-text-input-error',
@@ -63,7 +50,7 @@ export const initialState = {
             secureTextEntry: false,
             autoCompleteType: 'email',
             keyboardType: 'email-address',
-            validationErrorKey: SIGNUP_EMAIL_VALIDATION_ERROR,
+            validationErrorKey: 'general.emailInvalid',
             isValid: true,
             validator: (value) =>
                 !/\s/g.test(value) &&
@@ -71,7 +58,7 @@ export const initialState = {
                 validator.isEmail(value.replace(/\s/g, ''))
         },
         [SIGNUP_FIRST_NAME_TEXT_INPUT_KEY]: {
-            label: SIGNUP_FIRST_NAME_PLACEHOLDER,
+            label: 'general.firstName',
             labelTestID: 'signup-screen-first-name-text-input-label',
             inputTestID: 'signup-screen-first-name-text-input',
             errorLabelTestID: 'signup-screen-first-name-text-input-error',
@@ -81,12 +68,12 @@ export const initialState = {
             secureTextEntry: false,
             autoCompleteType: 'name',
             keyboardType: 'default',
-            validationErrorKey: SIGNUP_FIRST_NAME_VALIDATION_ERROR,
+            validationErrorKey: 'signUp.emptyFirstName',
             isValid: true,
             validator: (value) => !EMOJI_REGEX.test(value) && value.length >= 4
         },
         [SIGNUP_LAST_NAME_TEXT_INPUT_KEY]: {
-            label: SIGNUP_LAST_NAME_PLACEHOLDER,
+            label: 'general.lastName',
             labelTestID: 'signup-screen-last-name-text-input-label',
             inputTestID: 'signup-screen-last-name-text-input',
             errorLabelTestID: 'signup-screen-last-name-text-input-error',
@@ -96,12 +83,12 @@ export const initialState = {
             secureTextEntry: false,
             autoCompleteType: 'name',
             keyboardType: 'default',
-            validationErrorKey: SIGNUP_LAST_NAME_VALIDATION_ERROR,
+            validationErrorKey: 'signUp.emptyLastName',
             isValid: true,
             validator: (value) => !EMOJI_REGEX.test(value) && value.length >= 4
         },
         [SIGNUP_PASSWORD_TEXT_INPUT_KEY]: {
-            label: SIGNUP_PASSWORD_PLACEHOLDER,
+            label: 'general.password',
             labelTestID: 'signup-screen-password-text-input-label',
             inputTestID: 'signup-screen-password-text-input',
             errorLabelTestID: 'signup-screen-password-text-input-error',
@@ -111,7 +98,7 @@ export const initialState = {
             secureTextEntry: true,
             autoCompleteType: 'password',
             keyboardType: 'default',
-            validationErrorKey: SIGNUP_PASSWORD_VALIDATION_ERROR,
+            validationErrorKey: 'signUp.passwordInvalid',
             isValid: true,
             validator: (value) => !EMOJI_REGEX.test(value) && validator.isStrongPassword(value, {
                 minLength: 8,
@@ -129,7 +116,7 @@ export const initialState = {
             })
         },
         [SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY]: {
-            label: SIGNUP_CONFIRM_PASSWORD_PLACEHOLDER,
+            label: 'signUp.confirmPassword',
             labelTestID: 'signup-screen-confirm-password-text-input-label',
             inputTestID: 'signup-screen-confirm-password-text-input',
             errorLabelTestID: 'signup-screen-confirm-password-text-input-error',
@@ -139,7 +126,7 @@ export const initialState = {
             secureTextEntry: true,
             autoCompleteType: 'password',
             keyboardType: 'default',
-            validationErrorKey: SIGNUP_CONFIRM_PASSWORD_VALIDATION_ERROR,
+            validationErrorKey: 'signUp.passwordsNotMatching',
             isValid: true,
             validator: null
         },

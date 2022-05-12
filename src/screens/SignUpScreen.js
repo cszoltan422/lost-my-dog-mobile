@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import {View, StyleSheet, ScrollView, Text, TextInput, Dimensions} from 'react-native';
 import {Button, Icon, Tooltip} from 'react-native-elements';
-import { SIGN_UP_SCREEN_TITLE } from '../i18n/i18n.keys';
 import i18n from '../i18n/i18n';
 import colors from '../colors';
 import {APPLICATION_NAME} from '../application.constants';
@@ -43,7 +42,7 @@ const SignUpScreen = (props) => {
                         <View style={styles.errorToolTipContainerStyle}>
                             <Tooltip
                                 width={Dimensions.get('window').width}
-                                height={100}
+                                height={150}
                                 backgroundColor={colors.grey}
                                 popover={
                                     <Text
@@ -98,7 +97,7 @@ const SignUpScreen = (props) => {
                         testID='signup-screen-signup-button'
                         buttonStyle={styles.signupButtonStyle}
                         titleStyle={styles.signupTextStyle}
-                        title={i18n.t(SIGN_UP_SCREEN_TITLE)}
+                        title={i18n.t('general.signUp')}
                         loading={isLoading}
                         disabled={!isValid}
                         onPress={() => dispatch(onSignupAttempted(props.navigation))} />
