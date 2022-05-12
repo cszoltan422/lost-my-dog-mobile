@@ -6,8 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "eslint --ext .js,.jsx src/",
-    "lint:fix": "eslint --ext .js,.jsx src/ --fix",
+    "lint": "eslint --ext .js,.jsx,ts,tsx src/",
+    "lint:fix": "eslint --ext .js,.jsx,ts,tsx src/ --fix",
     "test": "echo test",
     "build": "npm run lint && npm run test",
     "build:ios:e2e": "npm run build && expo build:ios --release-channel e2e",
@@ -65,6 +65,12 @@
     "moment-timezone": "^0.5.33"
   },
   "devDependencies": {
+    "typescript": "^4.6.4",
+    "@types/jest": "^27.5.1",
+    "@types/react": "~17.0.21",
+    "@types/react-native": "^0.67.6",
+    "@types/react-test-renderer": "^18.0.0",
+    "@types/i18n-js": "^3.8.2",
     "@babel/core": "^7.12.9",
     "babel-eslint": "^10.1.0",
     "detox": "^18.20.2",
