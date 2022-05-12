@@ -10,7 +10,7 @@ import {
     onSubmitFormInputValueChanged,
     onSubmitFormLocationValueChanged,
     onSubmitFormSubmitted
-} from '../redux/actions/submit-form/action-creators/action.creators';
+} from '../redux/actions/submit-form/action-creators/action-creators';
 import {useComponentDidMount} from '../hooks/useComponentDidMount';
 import {useComponentWillUnmount} from '../hooks/useComponentWillUnmount';
 import {ERROR_MESSAGE_TRANSLATION_CODES} from '../application.constants';

@@ -1,13 +1,13 @@
 import { takeLatest, select, call, put } from 'redux-saga/effects';
-import {ON_LOGIN_ATTEMPTED} from '../../actions/login/action-types/action.types';
+import {ON_LOGIN_ATTEMPTED} from '../../actions/login/action-types/action-types';
 import {
     onLoginAttemptError,
     onLoginLoading,
     onLoginStopLoading,
     onLoginSuccess
-} from '../../actions/login/action-creators/action.creators';
+} from '../../actions/login/action-creators/action-creators';
 import UserService from '../../../service/user-service';
-import {onApplicationSuccessfulLoginPersistUser} from '../../actions/application/action-creators/action.creators';
+import {onApplicationSuccessfulLoginPersistUser} from '../../actions/application/action-creators/action-creators';
 import {USER_ASYNC_STORAGE_KEY, USER_ROLE_ADMIN_VALUE} from '../../../application.constants';
 import {setItem} from '../../../util/async-storage/async.storage';
 

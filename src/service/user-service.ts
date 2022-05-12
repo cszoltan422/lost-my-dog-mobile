@@ -10,7 +10,7 @@ export interface LoginResult {
     token: string;
 }
 
-export interface AppUser {
+export interface UserDetails {
     id: number;
     userName: string;
     firstName: string;

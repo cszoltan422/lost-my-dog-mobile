@@ -14,9 +14,17 @@ import {
     ON_SUBMIT_FORM_SUBMIT_SUCCESS,
     ON_SUBMIT_FORM_SUBMITTED,
     ON_SUBMIT_FORM_VALIDATION_ERROR
-} from '../action-types/action.types';
+} from '../action-types/action-types';
+import {Location} from '../../../../service/search-lost-dogs-service';
 
-export const onSubmitFormInputValueChanged = (inputKey, value) => {
+export type SubmitFormMode = 'SUBMIT_FORM_CREATE_MODE' | 'SUBMIT_FORM_EDIT_MODE';
+
+export interface ErrorMessage {
+    errorCode: number;
+    errorMessage: string;
+}
+
+export const onSubmitFormInputValueChanged = (inputKey: string, value: string) => {
     return {
         type: ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
         payload: {
@@ -26,14 +34,14 @@ export const onSubmitFormInputValueChanged = (inputKey, value) => {
     };
 };
 
-export const onSubmitFormLocationValueChanged = (coordinates) => {
+export const onSubmitFormLocationValueChanged = (coordinates: Location) => {
     return {
         type: ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED,
         payload: coordinates
     };
 };
 
-export const onSubmitFormImageSelected = (selectedImageUri) => {
+export const onSubmitFormImageSelected = (selectedImageUri: string) => {
     return {
         type: ON_SUBMIT_FORM_IMAGE_SELECTED,
         payload: selectedImageUri
@@ -46,7 +54,7 @@ export const onSubmitFormImageCleared = () => {
     };
 };
 
-export const onSubmitFormSubmitted = (route, navigation) => {
+export const onSubmitFormSubmitted = (route: any, navigation: any) => {
     return {
         type: ON_SUBMIT_FORM_SUBMITTED,
         payload: {
@@ -56,7 +64,7 @@ export const onSubmitFormSubmitted = (route, navigation) => {
     };
 };
 
-export const onSubmitFormValidationError = (inputKey) => {
+export const onSubmitFormValidationError = (inputKey: string) => {
     return {
         type: ON_SUBMIT_FORM_VALIDATION_ERROR,
         payload: inputKey
@@ -75,7 +83,7 @@ export const onSubmitFormStopLoading = () => {
     };
 };
 
-export const onSubmitFormSubmitError = (error) => {
+export const onSubmitFormSubmitError = (error: ErrorMessage) => {
     return {
         type: ON_SUBMIT_FORM_SUBMIT_ERROR,
         payload: error
@@ -94,14 +102,14 @@ export const onResetSubmitForm = () => {
     };
 };
 
-export const onSubmitFormImageInvalid = (errorKey) => {
+export const onSubmitFormImageInvalid = (errorKey: string) => {
     return {
         type: ON_SUBMIT_FORM_IMAGE_INVALID,
         payload: errorKey
     };
 };
 
-export const onSubmitFormPublishLoadingProgress = (progress, stage) => {
+export const onSubmitFormPublishLoadingProgress = (progress: number, stage: string) => {
     return {
         type: ON_SUBMIT_FORM_PUBLISH_LOADING_PROGRESS,
         payload: {
@@ -117,14 +125,14 @@ export const onSubmitFormHideAlert = () => {
     };
 };
 
-export const onSubmitFormChangeMode = (mode) => {
+export const onSubmitFormChangeMode = (mode: SubmitFormMode) => {
     return {
         type: ON_SUBMIT_FORM_CHANGE_MODE,
         payload: mode
     };
 };
 
-export const onSubmitFormSetDogId = (dogId) => {
+export const onSubmitFormSetDogId = (dogId: number) => {
     return {
         type: ON_SUBMIT_FORM_SET_DOG_ID,
         payload: dogId

@@ -7,7 +7,7 @@ import LocationPermissionInitScreen from '../screens/LocationPermissionInitScree
 import {
     onApplicationMounted,
     onCheckLocationPermission
-} from '../redux/actions/application/action-creators/action.creators';
+} from '../redux/actions/application/action-creators/action-creators';
 import {useComponentDidMount} from '../hooks/useComponentDidMount';
 import {useComponentWillUnmount} from '../hooks/useComponentWillUnmount';
 

@@ -31,7 +31,7 @@ import {
     ON_SUBMIT_FORM_STOP_LOADING,
     ON_SUBMIT_FORM_SUBMIT_ERROR,
     ON_SUBMIT_FORM_VALIDATION_ERROR
-} from '../../actions/submit-form/action-types/action.types';
+} from '../../actions/submit-form/action-types/action-types';
 
 export const initialState = {
     mode: SUBMIT_FORM_CREATE_MODE,

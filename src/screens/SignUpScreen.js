@@ -6,7 +6,7 @@ import {Button, Icon, Tooltip} from 'react-native-elements';
 import i18n from '../i18n/i18n';
 import colors from '../colors';
 import {APPLICATION_NAME} from '../application.constants';
-import {onSignupAttempted, onSignupInputValueChanged} from '../redux/actions/signup/action-creators/action.creators';
+import {onSignupAttempted, onSignupInputValueChanged} from '../redux/actions/signup/action-creators/action-creators';
 
 const SignUpScreen = (props) => {
 

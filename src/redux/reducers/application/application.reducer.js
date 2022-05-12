@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import {
     ON_LOCATION_PERMISSION_CHECKED,
     ON_INITIALIZE_APPLICATION, ON_APPLICATION_SUCCESSFUL_LOGIN_PERSIST_USER, ON_UPDATE_CURRENT_LOCATION
-} from '../../actions/application/action-types/action.types';
+} from '../../actions/application/action-types/action-types';
 import moment from 'moment';
 
 export const initialState = {

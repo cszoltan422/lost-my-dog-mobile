@@ -4,7 +4,7 @@ import {
     ON_LOGIN_LOADING,
     ON_LOGIN_PASSWORD_CHANGED, ON_LOGIN_STOP_LOADING, ON_LOGIN_SUCCESS,
     ON_LOGIN_USERNAME_CHANGED
-} from '../../actions/login/action-types/action.types';
+} from '../../actions/login/action-types/action-types';
 
 export const initialState = {
     username: '',

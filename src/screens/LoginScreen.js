@@ -7,7 +7,7 @@ import {
     onLoginAttempted,
     onLoginPasswordChanged,
     onLoginUsernameChanged
-} from '../redux/actions/login/action-creators/action.creators';
+} from '../redux/actions/login/action-creators/action-creators';
 import i18n from '../i18n/i18n';
 import colors from '../colors';
 import {APPLICATION_NAME, SIGN_UP_NAVIGATION_SCREEN_NAME} from '../application.constants';

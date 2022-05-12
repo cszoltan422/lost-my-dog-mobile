@@ -2,11 +2,11 @@ import { takeLatest, select, call, put } from 'redux-saga/effects';
 import {
     ON_APPLICATION_MOUNTED,
     ON_CHECK_LOCATION_PERMISSION, ON_WATCH_CURRENT_LOCATION
-} from '../../actions/application/action-types/action.types';
+} from '../../actions/application/action-types/action-types';
 import {E2E_MOCK_LOCATION, USER_ASYNC_STORAGE_KEY} from '../../../application.constants';
 import {
     onInitializeApplication, onLocationPermissionChecked, onUpdateCurrentLocation, onWatchCurrentLocation
-} from '../../actions/application/action-creators/action.creators';
+} from '../../actions/application/action-creators/action-creators';
 import {getItem} from '../../../util/async-storage/async.storage';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';

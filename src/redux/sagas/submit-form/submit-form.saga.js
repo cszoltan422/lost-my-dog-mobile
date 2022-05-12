@@ -1,5 +1,5 @@
 import {takeLatest, select, put, call} from 'redux-saga/effects';
-import {ON_SUBMIT_FORM_SUBMITTED} from '../../actions/submit-form/action-types/action.types';
+import {ON_SUBMIT_FORM_SUBMITTED} from '../../actions/submit-form/action-types/action-types';
 import {
     onSubmitFormImageInvalid,
     onSubmitFormLoading,
@@ -8,7 +8,7 @@ import {
     onSubmitFormSubmitError,
     onSubmitFormSubmitSuccess,
     onSubmitFormValidationError
-} from '../../actions/submit-form/action-creators/action.creators';
+} from '../../actions/submit-form/action-creators/action-creators';
 import * as FileSystem from 'expo-file-system';
 import * as ImageManipulator from 'expo-image-manipulator';
 import {
@@ -108,7 +108,7 @@ function* submitFormSubmittedSaga(action) {
 
         if (isImageValid) {
             yield put(onSubmitFormPublishLoadingProgress(0.8, 'submitForm.loading.sendingRequest'));
-            const loginResult = yield call(UserService.login, { userName: user.userName, password: user.password }); // todo only login again if token expired
+            const loginResult = yield call(UserService.login, { userName: user.username, password: user.password }); // todo only login again if token expired
 
             const payload = {
                 id: mode === SUBMIT_FORM_EDIT_MODE ? dogId : undefined,

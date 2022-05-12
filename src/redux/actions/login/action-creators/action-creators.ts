@@ -4,23 +4,23 @@ import {
     ON_LOGIN_LOADING,
     ON_LOGIN_PASSWORD_CHANGED, ON_LOGIN_STOP_LOADING, ON_LOGIN_SUCCESS,
     ON_LOGIN_USERNAME_CHANGED
-} from '../action-types/action.types';
+} from '../action-types/action-types';
 
-export const onLoginUsernameChanged = (username) => {
+export const onLoginUsernameChanged = (username: string) => {
     return {
         type: ON_LOGIN_USERNAME_CHANGED,
         payload: username
     };
 };
 
-export const onLoginPasswordChanged = (password) => {
+export const onLoginPasswordChanged = (password: string) => {
     return {
         type: ON_LOGIN_PASSWORD_CHANGED,
         payload: password
     };
 };
 
-export const onLoginAttempted = (navigation) => {
+export const onLoginAttempted = (navigation: any) => {
     return {
         type: ON_LOGIN_ATTEMPTED,
         payload: navigation
@@ -45,7 +45,7 @@ export const onLoginSuccess = () => {
     };
 };
 
-export const onLoginAttemptError = (error) => {
+export const onLoginAttemptError = (error: string) => {
     return {
         type: ON_LOGIN_ATTEMPT_ERROR,
         payload: error

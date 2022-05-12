@@ -3,9 +3,9 @@ import {
     ON_SIGNUP_ATTEMPTED,
     ON_SIGNUP_INPUT_VALUE_CHANGED, ON_SIGNUP_LOADING, ON_SIGNUP_STOP_LOADING, ON_SIGNUP_SUCCESS,
     ON_SIGNUP_VALIDATION_ERROR
-} from '../action-types/action.types';
+} from '../action-types/action-types';
 
-export const onSignupInputValueChanged = (inputKey, value) => {
+export const onSignupInputValueChanged = (inputKey: string, value: string) => {
     return {
         type: ON_SIGNUP_INPUT_VALUE_CHANGED,
         payload: {
@@ -15,14 +15,14 @@ export const onSignupInputValueChanged = (inputKey, value) => {
     };
 };
 
-export const onSignupAttempted = (navigation) => {
+export const onSignupAttempted = (navigation: any) => {
     return {
         type: ON_SIGNUP_ATTEMPTED,
         payload: navigation
     };
 };
 
-export const onSignupValidationError = (inputKey) => {
+export const onSignupValidationError = (inputKey: string) => {
     return {
         type: ON_SIGNUP_VALIDATION_ERROR,
         payload: inputKey
@@ -47,7 +47,7 @@ export const onSignupStopLoading = () => {
     };
 };
 
-export const onSignupAttemptError = (error) => {
+export const onSignupAttemptError = (error: string) => {
     return {
         type: ON_SIGNUP_ATTEMPT_ERROR,
         payload: error

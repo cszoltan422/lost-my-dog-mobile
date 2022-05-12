@@ -7,12 +7,15 @@ import {Icon, Button} from 'react-native-elements';
 import colors from '../colors';
 import i18n from '../i18n/i18n';
 import {ActivityAction} from 'expo-intent-launcher';
+import {useDispatch} from 'react-redux';
+import {onCheckLocationPermission} from '../redux/actions/application/action-creators/action-creators';
 
 const LocationPermissionInitScreen = (props) => {
+    const dispatch = useDispatch();
 
     const onAskLocationPermission = async () => {
         const response = await Location.requestForegroundPermissionsAsync();
-        props.onCheckLocationPermission(response);
+        dispatch(onCheckLocationPermission(response));
     };
 
     const onOpenSettingsApp = async () => {
@@ -33,7 +36,7 @@ const LocationPermissionInitScreen = (props) => {
     let buttonPressHandler = () => {};
 
     if (granted) {
-        props.onCheckLocationPermission();
+        dispatch(onCheckLocationPermission()); // todo check logic again
     } else if (!granted && canAskAgain) {
         screenTitle = i18n.t('permissions.location.enableLocation');
         buttonTitle = i18n.t('permissions.location.allowLocation');
@@ -50,7 +53,7 @@ const LocationPermissionInitScreen = (props) => {
         buttonPressHandler = onOpenSettingsApp;
 
         setInterval(() => {
-            props.onCheckLocationPermission();
+            dispatch(onCheckLocationPermission()); // todo check logic again
         }, 1000);
     }
 
@@ -151,7 +154,6 @@ LocationPermissionInitScreen.propTypes = {
         granted: PropTypes.bool.isRequired,
         canAskAgain: PropTypes.bool.isRequired
     }).isRequired,
-    onCheckLocationPermission: PropTypes.func.isRequired
 };
 
 export default LocationPermissionInitScreen;

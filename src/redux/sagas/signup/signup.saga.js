@@ -1,11 +1,11 @@
 import {call, put, select, takeLatest} from 'redux-saga/effects';
-import {ON_SIGNUP_ATTEMPTED} from '../../actions/signup/action-types/action.types';
+import {ON_SIGNUP_ATTEMPTED} from '../../actions/signup/action-types/action-types';
 import {
     onSignupAttemptError,
     onSignupLoading,
     onSignupStopLoading, onSignupSuccess,
     onSignupValidationError
-} from '../../actions/signup/action-creators/action.creators';
+} from '../../actions/signup/action-creators/action-creators';
 import {
     SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY,
     SIGNUP_EMAIL_TEXT_INPUT_KEY,

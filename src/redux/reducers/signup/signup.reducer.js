@@ -13,7 +13,7 @@ import {
     ON_SIGNUP_ATTEMPT_ERROR,
     ON_SIGNUP_INPUT_VALUE_CHANGED, ON_SIGNUP_LOADING, ON_SIGNUP_STOP_LOADING, ON_SIGNUP_SUCCESS,
     ON_SIGNUP_VALIDATION_ERROR
-} from '../../actions/signup/action-types/action.types';
+} from '../../actions/signup/action-types/action-types';
 
 export const initialState = {
     isValid: true,

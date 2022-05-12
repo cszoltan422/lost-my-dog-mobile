@@ -15,7 +15,7 @@ import {
     onDashboardResetPaginationDry,
     onDashboardDataFetchError
 } from '../../actions/dashboard/action-creators/action.creators';
-import {ON_SUBMIT_FORM_SUBMIT_SUCCESS} from '../../actions/submit-form/action-types/action.types';
+import {ON_SUBMIT_FORM_SUBMIT_SUCCESS} from '../../actions/submit-form/action-types/action-types';
 
 const CLEAR_DATA_ACTIONS = [
     ON_DASHBOARD_MOUNTED,
