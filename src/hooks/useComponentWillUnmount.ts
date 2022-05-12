@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
 
-export const useComponentWillUnmount = (callback) => {
+export const useComponentWillUnmount = (callback: () => void) => {
     useEffect(() => callback, []);
 };
