@@ -22,29 +22,30 @@ import {
 const LostDogDetailsContent = (props) => {
 
     const renderTextInput = (inputKey) => {
+        const input = props.inputs.get(inputKey);
         return (
             <>
                 <Text
-                    testID={props.inputs[inputKey].labelTestID}
+                    testID={input.labelTestID}
                     style={styles.labelTitle}>
-                    {i18n.t(props.inputs[inputKey].labelKey)}
-                    {props.inputs[inputKey].isRequired && '*'}
+                    {i18n.t(input.labelKey)}
+                    {input.isRequired && '*'}
                 </Text>
                 <TextInput
-                    testID={props.inputs[inputKey].inputTestID}
+                    testID={input.inputTestID}
                     style={styles.textInputStyle}
                     editable={!props.isLoading}
-                    placeholder={`${i18n.t(props.inputs[inputKey].labelKey)}...`}
-                    keyboardType={props.inputs[inputKey].keyboardType}
-                    autoCapitalize={props.inputs[inputKey].autoCapitalize}
-                    contextMenuHidden={props.inputs[inputKey].contextMenuHidden}
-                    value={props.inputs[inputKey].value}
+                    placeholder={`${i18n.t(input.labelKey)}...`}
+                    keyboardType={input.keyboardType}
+                    autoCapitalize={input.autoCapitalize}
+                    contextMenuHidden={input.contextMenuHidden}
+                    value={input.value}
                     onChangeText={(value) => props.onInputValueChanged(inputKey, value)} />
-                {!props.inputs[inputKey].isValid && (
+                {!input.isValid && (
                     <Text
-                        testID={props.inputs[inputKey].errorTestID}
+                        testID={input.errorTestID}
                         style={styles.errorLabel}>
-                        {i18n.t(props.inputs[inputKey].errorKey)}
+                        {i18n.t(input.errorKey)}
                     </Text>
                 )}
             </>
@@ -52,19 +53,20 @@ const LostDogDetailsContent = (props) => {
     };
 
     const renderDropdown = (inputKey) => {
-        const defaultValue = props.inputs[inputKey].value ?
-            i18n.t(props.inputs[inputKey].value)
-            : `${i18n.t(props.inputs[inputKey].labelKey)}...`;
+        const input = props.inputs.get(inputKey);
+        const defaultValue = input.value ?
+            i18n.t(input.value)
+            : `${i18n.t(input.labelKey)}...`;
         return (
             <>
                 <Text
-                    testID={props.inputs[inputKey].labelTestID}
+                    testID={input.labelTestID}
                     style={styles.labelTitle}>
-                    {i18n.t(props.inputs[inputKey].labelKey)}
-                    {props.inputs[inputKey].isRequired && '*'}
+                    {i18n.t(input.labelKey)}
+                    {input.isRequired && '*'}
                 </Text>
                 <ModalDropdown
-                    testID={props.inputs[inputKey].inputTestID}
+                    testID={input.inputTestID}
                     style={styles.modalDropdownContainerStyle}
                     disabled={props.isLoading}
                     dropdownStyle={styles.modalDropdownStyle}
@@ -72,18 +74,18 @@ const LostDogDetailsContent = (props) => {
                     dropdownTextStyle={styles.dropdownTextStyle}
                     dropdownTextHighlightStyle={styles.dropdownTextHighlightStyle}
                     defaultValue={defaultValue}
-                    options={props.inputs[inputKey].options.map((option) => {
+                    options={input.options.map((option) => {
                         return i18n.t(option);
                     })}
                     onSelect={(index) => {
                         props.onInputValueChanged(
                             inputKey,
-                            props.inputs[inputKey].options[index]
+                            input.options[index]
                         );
                     }} />
-                {!props.inputs[inputKey].isValid && (
+                {!input.isValid && (
                     <Text
-                        testID={props.inputs[inputKey].errorTestID}
+                        testID={input.errorTestID}
                         style={styles.errorLabel}>
                         {i18n.t('submitForm.validation.fieldEmpty')}
                     </Text>
@@ -93,25 +95,26 @@ const LostDogDetailsContent = (props) => {
     };
 
     const renderSwitch = (inputKey) => {
+        const input = props.inputs.get(inputKey);
         return (
             <>
                 <Text
-                    testID={props.inputs[inputKey].labelTestID}
+                    testID={input.labelTestID}
                     style={styles.labelTitle}>
-                    {i18n.t(props.inputs[inputKey].labelKey)}
-                    {props.inputs[inputKey].isRequired && '*'}
+                    {i18n.t(input.labelKey)}
+                    {input.isRequired && '*'}
                 </Text>
                 <Switch
-                    testID={props.inputs[inputKey].inputTestID}
+                    testID={input.inputTestID}
                     style={styles.switchStyle}
                     disabled={props.isLoading}
                     trackColor={{ false: colors.grey, true: colors.primaryColor }}
                     thumbColor={colors.accentColor}
-                    value={props.inputs[inputKey].value}
+                    value={input.value}
                     onValueChange={(value) => props.onInputValueChanged(inputKey, value)} />
-                {!props.inputs[inputKey].isValid && (
+                {!input.isValid && (
                     <Text
-                        testID={props.inputs[inputKey].errorTestID}
+                        testID={input.errorTestID}
                         style={styles.errorLabel}>
                         {i18n.t('submitForm.validation.fieldEmpty')}
                     </Text>
@@ -125,7 +128,7 @@ const LostDogDetailsContent = (props) => {
             <Card
                 testID='lost-dog-details-content-description-card'
                 styles={
-                props.inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].isValid ?
+                props.inputs.get(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY).isValid ?
                     styles.descriptionCardStyle
                     : styles.descriptionCardErrorStyle
             }>
@@ -136,9 +139,9 @@ const LostDogDetailsContent = (props) => {
                         editable={!props.isLoading}
                         multiline
                         placeholder={`${i18n.t('general.description')}*...`}
-                        value={props.inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].value}
+                        value={props.inputs.get(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY).value}
                         onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY, value)} />
-                    {!props.inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].isValid && (
+                    {!props.inputs.get(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY).isValid && (
                         <Text
                             testID='details-screen-description-text-input-error'
                             style={styles.errorLabelWhite}>
@@ -177,7 +180,7 @@ const LostDogDetailsContent = (props) => {
                         <View style={styles.columnContainer}>
                             {renderSwitch(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY)}
                         </View>
-                        {props.inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value && (
+                        {props.inputs.get(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY).value && (
                             <View style={styles.columnContainer}>
                                 {renderTextInput(SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY)}
                             </View>

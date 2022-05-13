@@ -40,15 +40,16 @@ export function* submitFormSubmittedWatcherSaga() {
 
 function* validateFormInputs(inputs) {
     let isValidForm = true;
-    for (let inputKey of Object.keys(inputs)) {
-        const validator = inputs[inputKey].validator;
-        if (validator) {
-            const value = inputs[inputKey].value;
-            const isValid = validator(value);
-
-            if (!isValid) {
-                isValidForm = false;
-                yield put(onSubmitFormValidationError(inputKey));
+    for (let inputKey of inputs.keys()) {
+        const input = inputs.get(inputKey);
+        if (input) {
+            const { value, validator } = input;
+            if (validator) {
+                const isValid = validator(value);
+                if (!isValid) {
+                    isValidForm = false;
+                    yield put(onSubmitFormValidationError(inputKey));
+                }
             }
         }
     }
@@ -114,59 +115,59 @@ function* submitFormSubmittedSaga(action) {
                 id: mode === SUBMIT_FORM_EDIT_MODE ? dogId : undefined,
                 dateLost: getCurrentTimeWithTimezone(),
                 dogName: getValueOptionally(
-                    inputs[SUBMIT_FORM_NAME_TEXT_INPUT_KEY].value,
-                    inputs[SUBMIT_FORM_NAME_TEXT_INPUT_KEY].hasChangedInEditMode,
+                    inputs.get(SUBMIT_FORM_NAME_TEXT_INPUT_KEY).value,
+                    inputs.get(SUBMIT_FORM_NAME_TEXT_INPUT_KEY).hasChangedInEditMode,
                     mode
                 ),
                 description: getValueOptionally(
-                    inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].value,
-                    inputs[SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY].hasChangedInEditMode,
+                    inputs.get(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY).value,
+                    inputs.get(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY).hasChangedInEditMode,
                     mode
                 ),
                 dogBreed: getValueOptionally(
-                    inputs[SUBMIT_FORM_BREED_TEXT_INPUT_KEY].value,
-                    inputs[SUBMIT_FORM_BREED_TEXT_INPUT_KEY].hasChangedInEditMode,
+                    inputs.get(SUBMIT_FORM_BREED_TEXT_INPUT_KEY).value,
+                    inputs.get(SUBMIT_FORM_BREED_TEXT_INPUT_KEY).hasChangedInEditMode,
                     mode
                 ),
                 age: getValueOptionally(
-                    inputs[SUBMIT_FORM_AGE_TEXT_INPUT_KEY].value,
-                    inputs[SUBMIT_FORM_AGE_TEXT_INPUT_KEY].hasChangedInEditMode,
+                    inputs.get(SUBMIT_FORM_AGE_TEXT_INPUT_KEY).value,
+                    inputs.get(SUBMIT_FORM_AGE_TEXT_INPUT_KEY).hasChangedInEditMode,
                     mode
                 ),
                 color: getValueOptionally(
-                    inputs[SUBMIT_FORM_COLOR_TEXT_INPUT_KEY].value,
-                    inputs[SUBMIT_FORM_COLOR_TEXT_INPUT_KEY].hasChangedInEditMode,
+                    inputs.get(SUBMIT_FORM_COLOR_TEXT_INPUT_KEY).value,
+                    inputs.get(SUBMIT_FORM_COLOR_TEXT_INPUT_KEY).hasChangedInEditMode,
                     mode
                 ),
                 chipNumber: getValueOptionally(
-                    inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].value,
-                    inputs[SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY].hasChangedInEditMode,
+                    inputs.get(SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY).value,
+                    inputs.get(SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY).hasChangedInEditMode,
                     mode
                 ),
                 gender: getValueOptionally(
-                    Object.keys(DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS).find(key => DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS[key] === inputs[SUBMIT_FORM_SEX_SELECT_INPUT_KEY].value),
-                    inputs[SUBMIT_FORM_SEX_SELECT_INPUT_KEY].hasChangedInEditMode,
+                    Object.keys(DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS).find(key => DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS[key] === inputs.get(SUBMIT_FORM_SEX_SELECT_INPUT_KEY).value),
+                    inputs.get(SUBMIT_FORM_SEX_SELECT_INPUT_KEY).hasChangedInEditMode,
                     mode
                 ),
                 status: getValueOptionally(
-                    Object.keys(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS).find(key => DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[key] === inputs[SUBMIT_FORM_STATUS_SELECT_INPUT_KEY].value),
-                    inputs[SUBMIT_FORM_STATUS_SELECT_INPUT_KEY].hasChangedInEditMode,
+                    Object.keys(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS).find(key => DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[key] === inputs.get(SUBMIT_FORM_STATUS_SELECT_INPUT_KEY).value),
+                    inputs.get(SUBMIT_FORM_STATUS_SELECT_INPUT_KEY).hasChangedInEditMode,
                     mode
                 ),
                 chippedStatus: getValueOptionally(
-                    inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].value ? 'YES' : 'NO',
-                    inputs[SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY].hasChangedInEditMode,
+                    inputs.get(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY).value ? 'YES' : 'NO',
+                    inputs.get(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY).hasChangedInEditMode,
                     mode
                 ),
                 specialPeculiarities: '',
                 contactPhone: getValueOptionally(
-                    inputs[SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY].value,
-                    inputs[SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY].hasChangedInEditMode,
+                    inputs.get(SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY).value,
+                    inputs.get(SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY).hasChangedInEditMode,
                     mode
                 ),
                 contactEmail: getValueOptionally(
-                    inputs[SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY].value,
-                    inputs[SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY].hasChangedInEditMode,
+                    inputs.get(SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY).value,
+                    inputs.get(SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY).hasChangedInEditMode,
                     mode
                 ),
                 longitude: getValueOptionally(

@@ -44,7 +44,9 @@ export const onSubmitFormLocationValueChanged = (coordinates: Location) => {
 export const onSubmitFormImageSelected = (selectedImageUri: string) => {
     return {
         type: ON_SUBMIT_FORM_IMAGE_SELECTED,
-        payload: selectedImageUri
+        payload: {
+            uri: selectedImageUri
+        }
     };
 };
 
@@ -67,7 +69,9 @@ export const onSubmitFormSubmitted = (route: any, navigation: any) => {
 export const onSubmitFormValidationError = (inputKey: string) => {
     return {
         type: ON_SUBMIT_FORM_VALIDATION_ERROR,
-        payload: inputKey
+        payload: {
+            inputKey
+        }
     };
 };
 
@@ -105,7 +109,9 @@ export const onResetSubmitForm = () => {
 export const onSubmitFormImageInvalid = (errorKey: string) => {
     return {
         type: ON_SUBMIT_FORM_IMAGE_INVALID,
-        payload: errorKey
+        payload: {
+            errorKey
+        }
     };
 };
 
@@ -128,13 +134,17 @@ export const onSubmitFormHideAlert = () => {
 export const onSubmitFormChangeMode = (mode: SubmitFormMode) => {
     return {
         type: ON_SUBMIT_FORM_CHANGE_MODE,
-        payload: mode
+        payload: {
+            mode
+        }
     };
 };
 
 export const onSubmitFormSetDogId = (dogId: number) => {
     return {
         type: ON_SUBMIT_FORM_SET_DOG_ID,
-        payload: dogId
+        payload: {
+            dogId
+        }
     };
 };
