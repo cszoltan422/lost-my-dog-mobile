@@ -22,15 +22,16 @@ export function* signupAttemptWatcherSaga() {
 
 function* validateFormInputs(inputs) {
     let isValidForm = true;
-    for (let inputKey of Object.keys(inputs)) {
-        const validator = inputs[inputKey].validator;
-        if (validator) {
-            const value = inputs[inputKey].value;
-            const isValid = validator(value);
-
-            if (!isValid) {
-                isValidForm = false;
-                yield put(onSignupValidationError(inputKey));
+    for (let inputKey of inputs.keys()) {
+        const input = inputs.get(inputKey);
+        if (input) {
+            const { value, validator } = input;
+            if (validator) {
+                const isValid = validator(value);
+                if (!isValid) {
+                    isValidForm = false;
+                    yield put(onSignupValidationError(inputKey));
+                }
             }
         }
     }
@@ -38,11 +39,13 @@ function* validateFormInputs(inputs) {
 }
 
 function validatePasswordMatch(inputs) {
-    return inputs[SIGNUP_PASSWORD_TEXT_INPUT_KEY].value === inputs[SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY].value;
+    return inputs.get(SIGNUP_PASSWORD_TEXT_INPUT_KEY).value === inputs.get(SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY).value;
 }
 
 function* signupAttemptSaga(action) {
     try {
+        const { payload } = action;
+        const { navigation } = payload;
         yield put(onSignupLoading());
 
         const inputs = yield select((state) => state.signup.inputs);
@@ -52,18 +55,16 @@ function* signupAttemptSaga(action) {
             const passwordsMath = validatePasswordMatch(inputs);
             if (passwordsMath) {
                 const signupResult = yield call(UserService.signup, {
-                    userName: inputs[SIGNUP_USERNAME_TEXT_INPUT_KEY].value.replace(/\s/g, ''),
-                    password: inputs[SIGNUP_PASSWORD_TEXT_INPUT_KEY].value,
-                    email: inputs[SIGNUP_EMAIL_TEXT_INPUT_KEY].value,
-                    firstName: inputs[SIGNUP_FIRST_NAME_TEXT_INPUT_KEY].value,
+                    userName: inputs.get(SIGNUP_USERNAME_TEXT_INPUT_KEY).value.replace(/\s/g, ''),
+                    password: inputs.get(SIGNUP_PASSWORD_TEXT_INPUT_KEY).value,
+                    email: inputs.get(SIGNUP_EMAIL_TEXT_INPUT_KEY).value,
+                    firstName: inputs.get(SIGNUP_FIRST_NAME_TEXT_INPUT_KEY).value,
                     middleName: '',
-                    lastName: inputs[SIGNUP_LAST_NAME_TEXT_INPUT_KEY].value,
+                    lastName: inputs.get(SIGNUP_LAST_NAME_TEXT_INPUT_KEY).value,
                 });
 
                 if (signupResult.success) {
                     yield put(onSignupSuccess());
-
-                    const navigation = action.payload;
                     navigation.goBack();
                 } else {
                     yield put(onSignupAttemptError(signupResult.errorMessage));

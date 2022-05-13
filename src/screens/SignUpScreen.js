@@ -5,7 +5,7 @@ import {View, StyleSheet, ScrollView, Text, TextInput, Dimensions} from 'react-n
 import {Button, Icon, Tooltip} from 'react-native-elements';
 import i18n from '../i18n/i18n';
 import colors from '../colors';
-import {APPLICATION_NAME} from '../application.constants';
+import {APPLICATION_NAME, SIGNUP_ERROR_TRANSLATION_KEYS} from '../application.constants';
 import {onSignupAttempted, onSignupInputValueChanged} from '../redux/actions/signup/action-creators/action-creators';
 
 const SignUpScreen = (props) => {
@@ -18,27 +18,28 @@ const SignUpScreen = (props) => {
     const dispatch = useDispatch();
 
     const renderTextInputBox = (inputKey, onChangeText) => {
+        const input = inputs.get(inputKey);
         return (
             <View style={styles.textInputBoxContainerStyle}>
                 <Text
-                    testID={inputs[inputKey].labelTestID}
+                    testID={input.labelTestID}
                     style={styles.textInputLabelStyle}>
-                    {i18n.t(inputs[inputKey].label)}
+                    {i18n.t(input.label)}
                 </Text>
                 <View style={[
                     styles.inputStyle,
-                    !inputs[inputKey].isValid ? styles.errorInputStyle : null
+                    !input.isValid ? styles.errorInputStyle : null
                 ]}>
                     <TextInput
-                        testID={inputs[inputKey].inputTestID}
+                        testID={input.inputTestID}
                         style={styles.inputTextStyle}
-                        placeholder={i18n.t(inputs[inputKey].label)}
+                        placeholder={i18n.t(input.label)}
                         placeholderTextColor={colors.white}
-                        value={inputs[inputKey].value}
-                        autoCapitalize={inputs[inputKey].autoCapitalize}
-                        secureTextEntry={inputs[inputKey].secureTextEntry}
+                        value={input.value}
+                        autoCapitalize={input.autoCapitalize}
+                        secureTextEntry={input.secureTextEntry}
                         onChangeText={onChangeText} />
-                    {!inputs[inputKey].isValid ?
+                    {!input.isValid ?
                         <View style={styles.errorToolTipContainerStyle}>
                             <Tooltip
                                 width={Dimensions.get('window').width}
@@ -46,12 +47,12 @@ const SignUpScreen = (props) => {
                                 backgroundColor={colors.grey}
                                 popover={
                                     <Text
-                                        testID={inputs[inputKey].errorLabelTestID}
+                                        testID={input.errorLabelTestID}
                                         style={styles.errorTooltipTextStyle}>
-                                        {i18n.t(inputs[inputKey].validationErrorKey)}
+                                        {i18n.t(input.validationErrorKey)}
                                     </Text>}>
                                 <Icon
-                                    testID={inputs[inputKey].errorIconTestID}
+                                    testID={input.errorIconTestID}
                                     name='report-problem'
                                     type='material' />
                             </Tooltip>
@@ -75,7 +76,7 @@ const SignUpScreen = (props) => {
                     style={styles.signUpTitleStyle}>
                     {APPLICATION_NAME}
                 </Text>
-                {Object.keys(inputs).map((inputKey) => {
+                {Array.from(inputs).map(([inputKey]) => {
                     return (
                         <Fragment key={inputKey}>
                             {renderTextInputBox(
@@ -90,7 +91,7 @@ const SignUpScreen = (props) => {
                         <Text
                             testID='signup-global-error-text'
                             style={styles.signupAttemptTextStyle}>
-                            {i18n.t(error)}
+                            {i18n.t(SIGNUP_ERROR_TRANSLATION_KEYS[error])}
                         </Text>
                     )}
                     <Button

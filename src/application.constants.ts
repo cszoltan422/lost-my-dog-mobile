@@ -28,6 +28,10 @@ export const DETAILS_DOG_HAS_CHIP_ENUM_TRANSLATION_KEYS = {
     'NO': 'general.no',
     'UNKNOWN': 'general.unknown'
 };
+export const SIGNUP_ERROR_TRANSLATION_KEYS = {
+    'USER_NAME_EXISTS': 'signUp.usernameTaken',
+    'EMAIL_EXISTS': 'signUp.emailTaken'
+};
 export const E2E_MOCK_LOCATION = {
     longitude: -122.406417,
     latitude: 37.785834

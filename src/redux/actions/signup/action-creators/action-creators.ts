@@ -18,14 +18,18 @@ export const onSignupInputValueChanged = (inputKey: string, value: string) => {
 export const onSignupAttempted = (navigation: any) => {
     return {
         type: ON_SIGNUP_ATTEMPTED,
-        payload: navigation
+        payload: {
+            navigation
+        }
     };
 };
 
 export const onSignupValidationError = (inputKey: string) => {
     return {
         type: ON_SIGNUP_VALIDATION_ERROR,
-        payload: inputKey
+        payload: {
+            inputKey
+        }
     };
 };
 
@@ -50,6 +54,8 @@ export const onSignupStopLoading = () => {
 export const onSignupAttemptError = (error: string) => {
     return {
         type: ON_SIGNUP_ATTEMPT_ERROR,
-        payload: error
+        payload: {
+            error
+        }
     };
 };

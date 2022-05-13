@@ -6,7 +6,14 @@ import {
     ON_LOGIN_USERNAME_CHANGED
 } from '../../actions/login/action-types/action-types';
 
-export const initialState = {
+export interface LoginState {
+    username: string;
+    password: string;
+    loading: boolean;
+    error: string;
+}
+
+export const initialState: LoginState = {
     username: '',
     password: '',
     loading: false,
