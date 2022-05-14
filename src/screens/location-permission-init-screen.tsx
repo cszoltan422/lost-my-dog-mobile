@@ -1,16 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import * as Location from 'expo-location';
 import * as IntentLauncher from 'expo-intent-launcher';
 import {StyleSheet, Text, View, Linking, Platform} from 'react-native';
-import {Icon, Button} from 'react-native-elements';
 import colors from '../colors';
 import i18n from '../i18n/i18n';
 import {ActivityAction} from 'expo-intent-launcher';
 import {useDispatch} from 'react-redux';
 import {onCheckLocationPermission} from '../redux/actions/application/action-creators/action-creators';
+import {ApplicationPermission} from "../redux/reducers/application/application-reducer";
+import {Button, Icon} from "@rneui/base";
 
-const LocationPermissionInitScreen = (props) => {
+interface IProps {
+    locationPermission: ApplicationPermission
+}
+
+const LocationPermissionInitScreen = (props: IProps) => {
     const dispatch = useDispatch();
 
     const onAskLocationPermission = async () => {
@@ -33,28 +37,20 @@ const LocationPermissionInitScreen = (props) => {
     let buttonTitle = '';
     let description = '';
     let icon = '';
-    let buttonPressHandler = null;
+    let buttonPressHandler = undefined;
 
-    if (granted) {
-        dispatch(onCheckLocationPermission()); // todo check logic again
-    } else if (!granted && canAskAgain) {
+    if (!granted && canAskAgain) {
         screenTitle = i18n.t('permissions.location.enableLocation');
         buttonTitle = i18n.t('permissions.location.allowLocation');
         description = i18n.t('permissions.location.askDescription');
         icon = 'room';
         buttonPressHandler = onAskLocationPermission;
-
-        clearInterval();
     } else if (!granted && !canAskAgain) {
         screenTitle = i18n.t('general.oops');
         buttonTitle = i18n.t('permissions.location.openSettings');
         description = i18n.t('permissions.location.permissionDeniedDescription');
         icon = 'settings';
         buttonPressHandler = onOpenSettingsApp;
-
-        setInterval(() => {
-            dispatch(onCheckLocationPermission()); // todo check logic again
-        }, 1000);
     }
 
     return (
@@ -147,13 +143,5 @@ const styles = StyleSheet.create({
     }
 
 });
-
-
-LocationPermissionInitScreen.propTypes = {
-    locationPermission: PropTypes.shape({
-        granted: PropTypes.bool.isRequired,
-        canAskAgain: PropTypes.bool.isRequired
-    }).isRequired,
-};
 
 export default LocationPermissionInitScreen;

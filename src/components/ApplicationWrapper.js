@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import SplashImage from './splash/SplashImage';
 import LostMyDogNavigator from './navigation/LostMyDogNavigator';
-import LocationPermissionInitScreen from '../screens/LocationPermissionInitScreen';
+import LocationPermissionInitScreen from '../screens/location-permission-init-screen';
 import {
     onApplicationMounted,
     onCheckLocationPermission
