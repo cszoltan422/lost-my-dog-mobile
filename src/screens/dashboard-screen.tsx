@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import {View, StyleSheet} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import DashboardHeader from '../components/dashboard/dashboard-header/DashboardHeader';
-import DashboardList from '../components/dashboard/dashboard-list/DashboardList';
+import DashboardHeader from '../components/dashboard/dashboard-header/dashboard-header';
+import DashboardList from '../components/dashboard/dashboard-list/dashboard-list';
 import LoadingCard from '../components/common/loading-card/loading-card';
 import FloatingActionButton from '../components/common/floating-action-button/floating-action-button';
 import Toast from 'react-native-toast-message';
@@ -23,22 +21,27 @@ import {
 } from '../application.constants';
 import colors from '../colors';
 import {useComponentDidMount} from '../hooks/useComponentDidMount';
+import {useAppDispatch, useAppSelector} from '../redux/store/store';
 
-const DashboardScreen = (props) => {
+interface IProps {
+    navigation: any;
+}
+
+const DashboardScreen = (props: IProps) => {
 
     const { navigation } = props;
 
-    const dataFetched = useSelector(state => state.dashboard.dataFetched);
-    const loading = useSelector(state => state.dashboard.loading);
-    const refreshing = useSelector(state => state.dashboard.refreshing);
-    const fetchingNew = useSelector(state => state.dashboard.fetchingNew);
-    const hasNoMoreData = useSelector(state => state.dashboard.hasNoMoreData);
-    const searchParameters = useSelector(state => state.dashboard.searchParameters);
-    const data = useSelector(state => state.dashboard.data);
-    const error = useSelector(state => state.dashboard.error);
-    const user = useSelector(state => state.application.user);
+    const dataFetched = useAppSelector(state => state.dashboard.dataFetched);
+    const loading = useAppSelector(state => state.dashboard.loading);
+    const refreshing = useAppSelector(state => state.dashboard.refreshing);
+    const fetchingNew = useAppSelector(state => state.dashboard.fetchingNew);
+    const hasNoMoreData = useAppSelector(state => state.dashboard.hasNoMoreData);
+    const searchParameters = useAppSelector(state => state.dashboard.searchParameters);
+    const data = useAppSelector(state => state.dashboard.data);
+    const error = useAppSelector(state => state.dashboard.error);
+    const user = useAppSelector(state => state.application.user);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useComponentDidMount(() => {
         dispatch(onDashboardMounted());
@@ -113,9 +116,5 @@ const styles = StyleSheet.create({
         padding: 8
     }
 });
-
-DashboardScreen.propTypes = {
-    navigation: PropTypes.object.isRequired
-};
 
 export default DashboardScreen;

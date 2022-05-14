@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View} from 'react-native';
-import {Button, Slider} from 'react-native-elements';
 import {
     DASHBOARD_MAX_SEARCH_DISTANCE_IN_METERS,
     DASHBOARD_MIN_SEARCH_DISTANCE_IN_METERS,
@@ -11,16 +10,28 @@ import {
 } from '../../../application.constants';
 import i18n from '../../../i18n/i18n';
 import colors from '../../../colors';
+import {LostDogSearchParameters} from '../../../service/search-lost-dogs-service';
+import {Button, Slider} from '@rneui/base';
 
-const DashboardHeader = (props) => {
+interface IProps {
+    loading: boolean;
+    refreshing: boolean;
+    fetchingNew: boolean;
+    isLoading: () => boolean;
+    searchParameters: LostDogSearchParameters;
+    onDashboardChangeRadiusSearchParam: (value: number) => void;
+    onDashboardChangeSearchTypeParam: (value: string) => void;
+}
 
-    const onTabValueChange = (value) => {
+const DashboardHeader = (props: IProps) => {
+
+    const onTabValueChange = (value: string) => {
         if (!props.isLoading()) {
             props.onDashboardChangeSearchTypeParam(value);
         }
     };
 
-    const onDashboardChangeSliderValue = (value) => {
+    const onDashboardChangeSliderValue = (value: number) => {
         if (!props.isLoading()) {
             props.onDashboardChangeRadiusSearchParam(value);
         }
@@ -62,7 +73,6 @@ const DashboardHeader = (props) => {
                 testID='dashboard-header-slider-container'
                 style={styles.sliderStyle}>
                 <Slider
-                    testID='dashboard-header-slider'
                     value={props.searchParameters.radiusInMeters}
                     minimumValue={DASHBOARD_MIN_SEARCH_DISTANCE_IN_METERS}
                     maximumValue={DASHBOARD_MAX_SEARCH_DISTANCE_IN_METERS}

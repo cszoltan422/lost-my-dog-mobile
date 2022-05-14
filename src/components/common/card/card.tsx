@@ -9,7 +9,7 @@ interface CardStyle {
 
 interface IProps {
     styles?: CardStyle;
-    children: React.ReactChildren
+    children: JSX.Element | JSX.Element[]
 }
 
 const Card = (props: IProps) => {

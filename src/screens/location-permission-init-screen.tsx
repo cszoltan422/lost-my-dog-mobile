@@ -7,8 +7,8 @@ import i18n from '../i18n/i18n';
 import {ActivityAction} from 'expo-intent-launcher';
 import {useDispatch} from 'react-redux';
 import {onCheckLocationPermission} from '../redux/actions/application/action-creators/action-creators';
-import {ApplicationPermission} from "../redux/reducers/application/application-reducer";
-import {Button, Icon} from "@rneui/base";
+import {ApplicationPermission} from '../redux/reducers/application/application-reducer';
+import {Button, Icon} from '@rneui/base';
 
 interface IProps {
     locationPermission: ApplicationPermission

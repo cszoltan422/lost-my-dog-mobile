@@ -4,11 +4,12 @@ import colors from '../../../colors';
 
 interface IProps {
     text: string;
+    testID?: string;
 }
 
 const Chip = (props: IProps) => {
     return (
-        <View style={styles.chip}>
+        <View style={styles.chip} testID={props.testID}>
             <Text style={styles.text}>
                 {props.text}
             </Text>

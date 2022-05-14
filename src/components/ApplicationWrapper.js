@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {View, StyleSheet} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import SplashImage from './splash/SplashImage';
+import SplashImage from './splash/splash-image';
 import LostMyDogNavigator from './navigation/LostMyDogNavigator';
 import LocationPermissionInitScreen from '../screens/location-permission-init-screen';
 import {
