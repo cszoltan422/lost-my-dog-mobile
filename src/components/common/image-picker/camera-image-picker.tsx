@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import {TouchableOpacity, View, StyleSheet, Dimensions, Image} from 'react-native';
 import {Icon} from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import colors from '../../../colors';
 
-const CameraImagePicker = (props) => {
+interface ImagePickerSelectedImage {
+    uri: string;
+    isPresent: boolean;
+    isValid: boolean;
+    errorKey: string;
+}
+
+interface IProps {
+    selectedImage: ImagePickerSelectedImage;
+    onImageSelected: (uri: string) => void;
+}
+
+const CameraImagePicker = (props: IProps) => {
 
     const [camera, setCamera] = useState({
         isDenied: false
@@ -16,7 +27,7 @@ const CameraImagePicker = (props) => {
     });
 
     const handleOnCameraIconPressed = async () => {
-        let requestResult = await ImagePicker.requestCameraPermissionsAsync();
+        const requestResult = await ImagePicker.requestCameraPermissionsAsync();
         if (requestResult.status === 'granted') {
             await launchCameraForResult();
         } else {
@@ -27,7 +38,7 @@ const CameraImagePicker = (props) => {
     };
 
     const handleImagePickerIconPressed = async () => {
-        let requestResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const requestResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (requestResult.status === 'granted') {
             await launchImagePickerForResult();
         } else {
@@ -72,23 +83,25 @@ const CameraImagePicker = (props) => {
                     <TouchableOpacity
                         testID='image-picker-image-media-library-icon'
                         style={styles.columnContainer}
-                        onPress={!imagePicker.isDenied ? handleImagePickerIconPressed : null}>
+                        onPress={!imagePicker.isDenied ? handleImagePickerIconPressed : undefined}>
                         <View>
                             <Icon
                                 type='material'
                                 name={`${!imagePicker.isDenied ? 'image' : 'broken-image'}`}
-                                color={!imagePicker.isDenied ? colors.accentColor : colors.grey} />
+                                color={!imagePicker.isDenied ? colors.accentColor : colors.grey}
+                                tvParallaxProperties={undefined} />
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
                         testID='image-picker-image-camera-icon'
                         style={styles.columnContainer}
-                        onPress={!camera.isDenied ? handleOnCameraIconPressed : null}>
+                        onPress={!camera.isDenied ? handleOnCameraIconPressed : undefined}>
                         <View>
                             <Icon
                                 type='material'
                                 name={`${!camera.isDenied ? 'photo-camera' : 'no-photography'}`}
-                                color={!camera.isDenied ? colors.accentColor : colors.grey} />
+                                color={!camera.isDenied ? colors.accentColor : colors.grey}
+                                tvParallaxProperties={undefined} />
                         </View>
                     </TouchableOpacity>
                 </>
@@ -116,15 +129,5 @@ const styles = StyleSheet.create({
         height: 400
     },
 });
-
-CameraImagePicker.propTypes = {
-    selectedImage: PropTypes.shape({
-        uri: PropTypes.string.isRequired,
-        isPresent: PropTypes.bool.isRequired,
-        isValid: PropTypes.bool.isRequired,
-        errorKey: PropTypes.string.isRequired
-    }).isRequired,
-    onImageSelected: PropTypes.func.isRequired
-};
 
 export default CameraImagePicker;

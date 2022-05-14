@@ -5,9 +5,19 @@ import MapView, { Marker } from 'react-native-maps';
 import {Icon} from 'react-native-elements';
 import {MAPS_DEFAULT_LATLON_DELTA} from '../../../application.constants';
 
-const MapsView = (props) => {
+interface IProps {
+    longitude: number;
+    latitude: number;
+    markerTitle: string;
+    iconType: string;
+    iconName: string;
+    iconColor: string;
+    iconSize: number;
+}
 
-    let region = {
+const MapsView = (props: IProps) => {
+
+    const region = {
         latitude: props.latitude,
         longitude: props.longitude,
         latitudeDelta: MAPS_DEFAULT_LATLON_DELTA.latitudeDelta,
@@ -27,7 +37,8 @@ const MapsView = (props) => {
                     type={props.iconType}
                     name={props.iconName}
                     size={props.iconSize}
-                    color={props.iconColor} />
+                    color={props.iconColor}
+                    tvParallaxProperties={undefined} />
             </Marker>
         </MapView>
     );

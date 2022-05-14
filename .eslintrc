@@ -37,7 +37,7 @@
     "quotes": [2, "single", { "avoidEscape": true, "allowTemplateLiterals": true } ],
     "jsx-quotes": ["error", "prefer-single"],
     "indent": [0],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", "tsx"] }],
     "react/jsx-indent": ["error", 4],
     "react/jsx-indent-props": 2,
     "react/prop-types": "error",

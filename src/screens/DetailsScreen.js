@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Linking} from 'react-native';
-import FloatingActionButton from '../components/common/floating-action-button/FloatingActionButton';
+import FloatingActionButton from '../components/common/floating-action-button/floating-action-button';
 import LostDogDetailsReadonly from '../components/lost-dog-details/LostDogDetailsReadonly';
 import {
     LOGIN_NAVIGATION_SCREEN_NAME,

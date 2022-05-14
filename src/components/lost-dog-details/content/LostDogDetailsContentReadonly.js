@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, Text, View} from 'react-native';
-import Card from '../../common/card/Card';
+import Card from '../../common/card/card';
 import i18n from '../../../i18n/i18n';
 import {
     DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS, DETAILS_DOG_HAS_CHIP_ENUM_TRANSLATION_KEYS,

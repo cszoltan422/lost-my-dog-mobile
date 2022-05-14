@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import {View, Text, Dimensions, StyleSheet} from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, {MapEvent, Marker, Region} from 'react-native-maps';
 import {Icon} from 'react-native-elements';
 import {MAPS_DEFAULT_LATLON_DELTA} from '../../../application.constants';
 import i18n from '../../../i18n/i18n';
 import colors from '../../../colors';
+import {Location} from '../../../service/search-lost-dogs-service';
 
-const LocationPicker = (props) => {
+interface IProps {
+    longitude: number;
+    latitude: number;
+    iconType: string;
+    iconName: string;
+    iconColor: string;
+    iconSize: number;
+    onLocationValueChanged: (location: Location) => void;
+}
+
+const LocationPicker = (props: IProps) => {
 
     const [coordinate, setCoordinate] = useState({
         latitude: 0,
@@ -25,7 +35,7 @@ const LocationPicker = (props) => {
         });
     }, []);
 
-    const handleOnPress = (event) => {
+    const handleOnPress = (event: MapEvent) => {
         const { coordinate } = event.nativeEvent;
         props.onLocationValueChanged({
             latitude: coordinate.latitude,
@@ -33,7 +43,7 @@ const LocationPicker = (props) => {
         });
     };
 
-    const handleOnRegionChangeComplete = (region) => {
+    const handleOnRegionChangeComplete = (region: Region) => {
         setCoordinate({
                 latitude: region.latitude,
                 longitude: region.longitude,
@@ -59,7 +69,8 @@ const LocationPicker = (props) => {
                 <Icon
                     type='material'
                     name='info'
-                    color={props.iconColor} />
+                    color={props.iconColor}
+                    tvParallaxProperties={undefined} />
                 <Text
                     testID='location-picker-map-info-text'
                     style={styles.mapInfoTextStyle}>
@@ -71,7 +82,8 @@ const LocationPicker = (props) => {
                 <Icon
                     type='material'
                     name='room'
-                    color={props.iconColor} />
+                    color={props.iconColor}
+                    tvParallaxProperties={undefined} />
                 <Text
                     testID='location-picker-current-coordinates-text'
                     style={styles.mapInfoTextStyle}>
@@ -100,7 +112,8 @@ const LocationPicker = (props) => {
                         type={props.iconType}
                         name={props.iconName}
                         size={props.iconSize}
-                        color={props.iconColor} />
+                        color={props.iconColor}
+                        tvParallaxProperties={undefined} />
                 </Marker>
             </MapView>
         </View>
@@ -137,15 +150,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 });
-
-LocationPicker.propTypes = {
-    longitude: PropTypes.number.isRequired,
-    latitude: PropTypes.number.isRequired,
-    iconType: PropTypes.string.isRequired,
-    iconName: PropTypes.string.isRequired,
-    iconColor: PropTypes.string.isRequired,
-    iconSize: PropTypes.number.isRequired,
-    onLocationValueChanged: PropTypes.func.isRequired
-};
 
 export default LocationPicker;

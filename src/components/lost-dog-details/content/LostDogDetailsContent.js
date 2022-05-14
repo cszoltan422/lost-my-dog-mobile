@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, Text, TextInput, View, Switch} from 'react-native';
-import Card from '../../common/card/Card';
+import Card from '../../common/card/card';
 import ModalDropdown from 'react-native-modal-dropdown';
 import i18n from '../../../i18n/i18n';
 import colors from '../../../colors';

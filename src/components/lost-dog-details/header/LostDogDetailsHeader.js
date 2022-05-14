@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, Text} from 'react-native';
 import {Button} from 'react-native-elements';
-import Card from '../../common/card/Card';
-import CameraImagePicker from '../../common/image-picker/CameraImagePicker';
+import Card from '../../common/card/card';
+import CameraImagePicker from '../../common/image-picker/camera-image-picker';
 import colors from '../../../colors';
 import i18n from '../../../i18n/i18n';
 

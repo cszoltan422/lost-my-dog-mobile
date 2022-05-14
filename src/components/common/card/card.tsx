@@ -1,9 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { View, StyleSheet } from 'react-native';
 import colors from '../../../colors';
 
-const Card = (props) => {
+interface CardStyle {
+    height: number;
+    backgroundColor: string;
+}
+
+interface IProps {
+    styles?: CardStyle;
+    children: React.ReactChildren
+}
+
+const Card = (props: IProps) => {
     return (
         <View style={{...styles.card, ...props.styles}}>
             {props.children}
@@ -23,10 +32,5 @@ const styles = StyleSheet.create({
         padding: 8
     }
 });
-
-Card.propTypes = {
-    children: PropTypes.object.isRequired,
-    styles: PropTypes.object
-};
 
 export default Card;

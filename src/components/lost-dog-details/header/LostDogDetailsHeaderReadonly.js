@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Image, StyleSheet, Text} from 'react-native';
-import Card from '../../common/card/Card';
+import Card from '../../common/card/card';
 import ENV from '../../../environmnent.config';
 import colors from '../../../colors';
 

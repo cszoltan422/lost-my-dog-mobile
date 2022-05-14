@@ -1,9 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Text, View, StyleSheet } from 'react-native';
 import colors from '../../../colors';
 
-const Chip = (props) => {
+interface IProps {
+    text: string;
+}
+
+const Chip = (props: IProps) => {
     return (
         <View style={styles.chip}>
             <Text style={styles.text}>
@@ -27,9 +30,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 });
-
-Chip.propTypes = {
-    text: PropTypes.string.isRequired
-};
 
 export default Chip;

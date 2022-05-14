@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import {SpeedDial} from 'react-native-elements';
+import {IconNode} from 'react-native-elements/dist/icons/Icon';
 
-const FloatingActionButton = (props) => {
+interface FloatingActionButtonAction {
+    color: string;
+    icon: IconNode;
+    title: string;
+    pressHandler: () => void;
+}
 
-    const [open, setOpen] = useState(false);
+interface IProps {
+    color: string;
+    icon: IconNode;
+    openIcon: IconNode;
+    actions: FloatingActionButtonAction[];
+}
+
+const FloatingActionButton = (props: IProps) => {
+
+    const [open, setOpen] = useState<boolean>(false);
 
     return (
         <SpeedDial
@@ -31,27 +45,6 @@ const FloatingActionButton = (props) => {
             })}
         </SpeedDial>
     );
-};
-
-FloatingActionButton.propTypes = {
-    color: PropTypes.string.isRequired,
-    icon: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        color: PropTypes.string.isRequired
-    }).isRequired,
-    openIcon: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        color: PropTypes.string.isRequired
-    }).isRequired,
-    actions: PropTypes.arrayOf(PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        color: PropTypes.string.isRequired,
-        icon: PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            color: PropTypes.string.isRequired
-        }).isRequired,
-        pressHandler: PropTypes.func.isRequired
-    })).isRequired
 };
 
 export default FloatingActionButton;

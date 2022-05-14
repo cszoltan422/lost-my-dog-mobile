@@ -4,8 +4,8 @@ import {View, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import DashboardHeader from '../components/dashboard/dashboard-header/DashboardHeader';
 import DashboardList from '../components/dashboard/dashboard-list/DashboardList';
-import LoadingCard from '../components/common/loading-card/LoadingCard';
-import FloatingActionButton from '../components/common/floating-action-button/FloatingActionButton';
+import LoadingCard from '../components/common/loading-card/loading-card';
+import FloatingActionButton from '../components/common/floating-action-button/floating-action-button';
 import Toast from 'react-native-toast-message';
 import {
     onDashboardChangeRadiusSearchParam,
