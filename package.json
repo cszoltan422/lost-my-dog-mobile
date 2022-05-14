@@ -45,6 +45,8 @@
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "react-native-elements": "^3.4.2",
+    "@rneui/base": "^4.0.0-rc.3",
+    "@rneui/themed": "^4.0.0-rc.3",
     "react-native-gesture-handler": "^2.2.0",
     "react-native-maps": "0.29.4",
     "react-native-material-menu": "^1.2.0",

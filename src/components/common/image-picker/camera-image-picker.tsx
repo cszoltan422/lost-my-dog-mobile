@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import {TouchableOpacity, View, StyleSheet, Dimensions, Image} from 'react-native';
-import {Icon} from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import colors from '../../../colors';
+import {Icon} from '@rneui/base';
 
 interface ImagePickerSelectedImage {
     uri: string;
@@ -88,8 +88,7 @@ const CameraImagePicker = (props: IProps) => {
                             <Icon
                                 type='material'
                                 name={`${!imagePicker.isDenied ? 'image' : 'broken-image'}`}
-                                color={!imagePicker.isDenied ? colors.accentColor : colors.grey}
-                                tvParallaxProperties={undefined} />
+                                color={!imagePicker.isDenied ? colors.accentColor : colors.grey} />
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -100,8 +99,7 @@ const CameraImagePicker = (props: IProps) => {
                             <Icon
                                 type='material'
                                 name={`${!camera.isDenied ? 'photo-camera' : 'no-photography'}`}
-                                color={!camera.isDenied ? colors.accentColor : colors.grey}
-                                tvParallaxProperties={undefined} />
+                                color={!camera.isDenied ? colors.accentColor : colors.grey} />
                         </View>
                     </TouchableOpacity>
                 </>

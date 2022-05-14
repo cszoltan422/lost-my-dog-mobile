@@ -1,8 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native';
 import {Button} from 'react-native-elements';
-import {useDispatch, useSelector} from 'react-redux';
 import {
     onLoginAttempted,
     onLoginPasswordChanged,
@@ -11,15 +9,20 @@ import {
 import i18n from '../i18n/i18n';
 import colors from '../colors';
 import {APPLICATION_NAME, SIGN_UP_NAVIGATION_SCREEN_NAME} from '../application.constants';
+import {useAppDispatch, useAppSelector} from '../redux/store/store';
 
-const LoginScreen = (props) => {
+interface IProps {
+    navigation: any;
+}
 
-    const username = useSelector(state => state.login.username);
-    const password = useSelector(state => state.login.password);
-    const loading = useSelector(state => state.login.loading);
-    const error = useSelector(state => state.login.error);
+const LoginScreen = (props: IProps) => {
 
-    const dispatch = useDispatch();
+    const username = useAppSelector(state => state.login.username);
+    const password = useAppSelector(state => state.login.password);
+    const loading = useAppSelector(state => state.login.loading);
+    const error = useAppSelector(state => state.login.error);
+
+    const dispatch = useAppDispatch();
 
     const emptyInput = () => {
         return !username || !password;
@@ -142,9 +145,5 @@ const styles = StyleSheet.create({
         fontSize: 16
     }
 });
-
-LoginScreen.propTypes = {
-    navigation: PropTypes.object.isRequired
-};
 
 export default LoginScreen;

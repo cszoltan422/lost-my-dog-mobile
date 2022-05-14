@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {View, Text, Dimensions, StyleSheet} from 'react-native';
 import MapView, {MapEvent, Marker, Region} from 'react-native-maps';
-import {Icon} from 'react-native-elements';
 import {MAPS_DEFAULT_LATLON_DELTA} from '../../../application.constants';
 import i18n from '../../../i18n/i18n';
 import colors from '../../../colors';
 import {Location} from '../../../service/search-lost-dogs-service';
+import {Icon} from '@rneui/base';
 
 interface IProps {
     longitude: number;
@@ -69,8 +69,7 @@ const LocationPicker = (props: IProps) => {
                 <Icon
                     type='material'
                     name='info'
-                    color={props.iconColor}
-                    tvParallaxProperties={undefined} />
+                    color={props.iconColor} />
                 <Text
                     testID='location-picker-map-info-text'
                     style={styles.mapInfoTextStyle}>
@@ -82,8 +81,7 @@ const LocationPicker = (props: IProps) => {
                 <Icon
                     type='material'
                     name='room'
-                    color={props.iconColor}
-                    tvParallaxProperties={undefined} />
+                    color={props.iconColor} />
                 <Text
                     testID='location-picker-current-coordinates-text'
                     style={styles.mapInfoTextStyle}>
@@ -112,8 +110,7 @@ const LocationPicker = (props: IProps) => {
                         type={props.iconType}
                         name={props.iconName}
                         size={props.iconSize}
-                        color={props.iconColor}
-                        tvParallaxProperties={undefined} />
+                        color={props.iconColor} />
                 </Marker>
             </MapView>
         </View>

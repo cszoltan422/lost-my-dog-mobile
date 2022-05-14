@@ -2,8 +2,8 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DashboardScreen from '../../screens/DashboardScreen';
 import DetailsScreen from '../../screens/DetailsScreen';
-import LoginScreen from '../../screens/LoginScreen';
-import SignUpScreen from '../../screens/SignUpScreen';
+import LoginScreen from '../../screens/login-screen';
+import SignupScreen from '../../screens/signup-screen';
 import SubmitLostDogScreen from '../../screens/SubmitLostDogScreen';
 import EditLostDogScreen from '../../screens/EditLostDogScreen';
 import colors from '../../colors';
@@ -65,7 +65,7 @@ const LostMyDogNavigator = () => {
                 }} />
             <Stack.Screen
                 name={SIGN_UP_NAVIGATION_SCREEN_NAME}
-                component={SignUpScreen}
+                component={SignupScreen}
                 options={{
                     title: i18n.t('general.signUp'),
                     headerBackTitleVisible: false

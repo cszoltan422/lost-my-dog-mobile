@@ -1,75 +1,82 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
 import {View, StyleSheet, ScrollView, Text, TextInput, Dimensions} from 'react-native';
-import {Button, Icon, Tooltip} from 'react-native-elements';
+import {Button} from 'react-native-elements';
 import i18n from '../i18n/i18n';
 import colors from '../colors';
 import {APPLICATION_NAME, SIGNUP_ERROR_TRANSLATION_KEYS} from '../application.constants';
 import {onSignupAttempted, onSignupInputValueChanged} from '../redux/actions/signup/action-creators/action-creators';
+import {useAppDispatch, useAppSelector} from '../redux/store/store';
+import {Icon, Tooltip} from '@rneui/base';
 
-const SignUpScreen = (props) => {
+interface IProps {
+    navigation: any;
+}
 
-    const isValid = useSelector(state => state.signup.isValid);
-    const isLoading = useSelector(state => state.signup.isLoading);
-    const error = useSelector(state => state.signup.error);
-    const inputs = useSelector(state => state.signup.inputs);
+const SignupScreen = (props: IProps) => {
 
-    const dispatch = useDispatch();
+    const isValid = useAppSelector(state => state.signup.isValid);
+    const isLoading = useAppSelector(state => state.signup.isLoading);
+    const error = useAppSelector(state => state.signup.error);
+    const inputs = useAppSelector(state => state.signup.inputs);
 
-    const renderTextInputBox = (inputKey, onChangeText) => {
+    const dispatch = useAppDispatch();
+
+    const renderTextInputBox = (inputKey: string, onChangeText: (text: string) => void) => {
         const input = inputs.get(inputKey);
-        return (
-            <View style={styles.textInputBoxContainerStyle}>
-                <Text
-                    testID={input.labelTestID}
-                    style={styles.textInputLabelStyle}>
-                    {i18n.t(input.label)}
-                </Text>
-                <View style={[
-                    styles.inputStyle,
-                    !input.isValid ? styles.errorInputStyle : null
-                ]}>
-                    <TextInput
-                        testID={input.inputTestID}
-                        style={styles.inputTextStyle}
-                        placeholder={i18n.t(input.label)}
-                        placeholderTextColor={colors.white}
-                        value={input.value}
-                        autoCapitalize={input.autoCapitalize}
-                        secureTextEntry={input.secureTextEntry}
-                        onChangeText={onChangeText} />
-                    {!input.isValid ?
-                        <View style={styles.errorToolTipContainerStyle}>
-                            <Tooltip
-                                width={Dimensions.get('window').width}
-                                height={150}
-                                backgroundColor={colors.grey}
-                                popover={
-                                    <Text
-                                        testID={input.errorLabelTestID}
-                                        style={styles.errorTooltipTextStyle}>
-                                        {i18n.t(input.validationErrorKey)}
-                                    </Text>}>
-                                <Icon
-                                    testID={input.errorIconTestID}
-                                    name='report-problem'
-                                    type='material' />
-                            </Tooltip>
-                        </View>
-                        : null
-                    }
+        if (input) {
+            return (
+                <View style={styles.textInputBoxContainerStyle}>
+                    <Text
+                        testID={input.labelTestID}
+                        style={styles.textInputLabelStyle}>
+                        {i18n.t(input.label)}
+                    </Text>
+                    <View style={[
+                        styles.inputStyle,
+                        !input.isValid ? styles.errorInputStyle : null
+                    ]}>
+                        <TextInput
+                            testID={input.inputTestID}
+                            style={styles.inputTextStyle}
+                            placeholder={i18n.t(input.label)}
+                            placeholderTextColor={colors.white}
+                            value={input.value}
+                            autoCapitalize={input.autoCapitalize}
+                            secureTextEntry={input.secureTextEntry}
+                            onChangeText={onChangeText} />
+                        {!input.isValid ?
+                            <View style={styles.errorToolTipContainerStyle}>
+                                <Tooltip
+                                    width={Dimensions.get('window').width}
+                                    height={150}
+                                    backgroundColor={colors.grey}
+                                    popover={
+                                        <Text
+                                            testID={input.errorLabelTestID}
+                                            style={styles.errorTooltipTextStyle}>
+                                            {i18n.t(input.validationErrorKey)}
+                                        </Text>}>
+                                    <Icon
+                                        testID={input.errorIconTestID}
+                                        name='report-problem'
+                                        type='material' />
+                                </Tooltip>
+                            </View>
+                            : null
+                        }
+                    </View>
                 </View>
-            </View>
-        );
+            );
+        } else {
+            return null;
+        }
     };
 
     return (
         <ScrollView
             testID='signup-screen-scroll-view'
             style={styles.scrollViewType}
-            contentContainerStyle={styles.scrollViewContentContainerStyle}
-            extraHeight={-64}>
+            contentContainerStyle={styles.scrollViewContentContainerStyle}>
             <View style={styles.container}>
                 <Text
                     testID='signup-screen-title-text'
@@ -91,7 +98,7 @@ const SignUpScreen = (props) => {
                         <Text
                             testID='signup-global-error-text'
                             style={styles.signupAttemptTextStyle}>
-                            {i18n.t(SIGNUP_ERROR_TRANSLATION_KEYS[error])}
+                            {i18n.t(SIGNUP_ERROR_TRANSLATION_KEYS.get(error) || '')}
                         </Text>
                     )}
                     <Button
@@ -193,8 +200,4 @@ const styles = StyleSheet.create({
     },
 });
 
-SignUpScreen.propTypes = {
-    navigation: PropTypes.object.isRequired
-};
-
-export default SignUpScreen;
+export default SignupScreen;

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Dimensions, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import {Icon} from 'react-native-elements';
 import {MAPS_DEFAULT_LATLON_DELTA} from '../../../application.constants';
+import {Icon} from '@rneui/base';
 
 interface IProps {
     longitude: number;
@@ -37,8 +37,7 @@ const MapsView = (props: IProps) => {
                     type={props.iconType}
                     name={props.iconName}
                     size={props.iconSize}
-                    color={props.iconColor}
-                    tvParallaxProperties={undefined} />
+                    color={props.iconColor} />
             </Marker>
         </MapView>
     );

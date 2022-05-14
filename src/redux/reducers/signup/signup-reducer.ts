@@ -22,7 +22,7 @@ export interface SignupInput {
     errorLabelTestID: string;
     errorIconTestID: string;
     value: string,
-    autoCapitalize: string;
+    autoCapitalize: 'none' | 'sentences' | 'words' | 'characters';
     secureTextEntry: boolean;
     autoCompleteType: string;
     keyboardType: string;
