@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DashboardScreen from '../../screens/dashboard-screen';
-import DetailsScreen from '../../screens/DetailsScreen';
+import DetailsScreen from '../../screens/details-screen';
 import LoginScreen from '../../screens/login-screen';
 import SignupScreen from '../../screens/signup-screen';
 import SubmitLostDogScreen from '../../screens/SubmitLostDogScreen';
@@ -13,7 +13,7 @@ import {
     LOGIN_NAVIGATION_SCREEN_NAME, SIGN_UP_NAVIGATION_SCREEN_NAME, SUBMIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../../application.constants';
 import i18n from '../../i18n/i18n';
-import LostDogDetailsNavigationHeader from '../lost-dog-details/navigation-header/LostDogDetailsNavigationHeader';
+import LostDogDetailsNavigationHeader from '../lost-dog-details/navigation-header/lost-dog-details-navigation-header';
 
 const Stack = createNativeStackNavigator();
 

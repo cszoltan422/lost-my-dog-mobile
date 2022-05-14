@@ -1,15 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {Button, Icon} from 'react-native-elements';
 import Card from '../common/card/card';
 import MapsView from '../common/map-view/maps-view';
-import LostDogDetailsHeaderReadonly from './header/LostDogDetailsHeaderReadonly';
-import LostDogDetailsContentReadonly from './content/LostDogDetailsContentReadonly';
+import LostDogDetailsHeaderReadonly from './header/lost-dog-details-header-readonly';
+import LostDogDetailsContentReadonly from './content/lost-dog-details-content-readonly';
 import i18n from '../../i18n/i18n';
 import colors from '../../colors';
+import {LostDog} from '../../service/search-lost-dogs-service';
+import {Button, Icon} from '@rneui/base';
 
-const LostDogDetailsReadonly = (props) => {
+interface IProps {
+    dog: LostDog;
+    onSendOwnerButtonPressed: () => void;
+    onCallOwnerButtonPressed: () => void;
+}
+
+const LostDogDetailsReadonly = (props: IProps) => {
 
     return (
         <ScrollView
@@ -97,32 +103,5 @@ const styles = StyleSheet.create({
         marginEnd: 8
     }
 });
-
-LostDogDetailsReadonly.propTypes = {
-    dog: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        submittedByUserId: PropTypes.number.isRequired,
-        dogName: PropTypes.string.isRequired,
-        dogBreed: PropTypes.string.isRequired,
-        gender: PropTypes.string.isRequired,
-        color: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        age: PropTypes.number.isRequired,
-        longitude: PropTypes.number.isRequired,
-        latitude: PropTypes.number.isRequired,
-        dateLost: PropTypes.string.isRequired,
-        contactPhone: PropTypes.string.isRequired,
-        contactEmail: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
-        city: PropTypes.string.isRequired,
-        countryCode: PropTypes.string.isRequired,
-        avatarFilename: PropTypes.string.isRequired,
-        chippedStatus: PropTypes.string.isRequired,
-        chipNumber: PropTypes.string.isRequired,
-        specialPeculiarities: PropTypes.string.isRequired
-    }).isRequired,
-    onSendOwnerButtonPressed: PropTypes.func,
-    onCallOwnerButtonPressed: PropTypes.func
-};
 
 export default LostDogDetailsReadonly;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {StyleSheet, Text, View} from 'react-native';
 import Card from '../../common/card/card';
 import i18n from '../../../i18n/i18n';
@@ -9,8 +8,13 @@ import {
 } from '../../../application.constants';
 import {formatIsoTime} from '../../../util/date/date.utils';
 import colors from '../../../colors';
+import {LostDog} from '../../../service/search-lost-dogs-service';
 
-const LostDogDetailsContentReadonly = (props) => {
+interface IProps {
+    dog: LostDog;
+}
+
+const LostDogDetailsContentReadonly = (props: IProps) => {
 
     return (
         <Card>
@@ -51,7 +55,7 @@ const LostDogDetailsContentReadonly = (props) => {
                         <Text
                             testID='details-screen-dog-gender-text'
                             style={styles.labelValue}>
-                            {i18n.t(DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS[props.dog.gender])}
+                            {i18n.t(DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS.get(props.dog.gender) || '')}
                         </Text>
                     </View>
                     <View style={styles.columnContainer}>
@@ -171,29 +175,5 @@ const styles = StyleSheet.create({
         fontSize: 16
     }
 });
-
-LostDogDetailsContentReadonly.propTypes = {
-    dog: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        submittedByUserId: PropTypes.number.isRequired,
-        dogName: PropTypes.string.isRequired,
-        dogBreed: PropTypes.string.isRequired,
-        gender: PropTypes.string.isRequired,
-        color: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        age: PropTypes.number.isRequired,
-        longitude: PropTypes.number.isRequired,
-        latitude: PropTypes.number.isRequired,
-        dateLost: PropTypes.string.isRequired,
-        contactPhone: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
-        city: PropTypes.string.isRequired,
-        countryCode: PropTypes.string.isRequired,
-        avatarFilename: PropTypes.string.isRequired,
-        chippedStatus: PropTypes.string.isRequired,
-        chipNumber: PropTypes.string.isRequired,
-        specialPeculiarities: PropTypes.string.isRequired
-    }).isRequired,
-};
 
 export default LostDogDetailsContentReadonly;

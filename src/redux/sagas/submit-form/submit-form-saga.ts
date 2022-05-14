@@ -117,7 +117,7 @@ function getPayload(
     const contactEmailInput = inputs.get(SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY);
 
     let gender: LostDogGender = 'MALE';
-    if (DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS['FEMALE'] === genderInput?.value) {
+    if (DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS.get('FEMALE') === genderInput?.value) {
         gender = 'FEMALE';
     }
 

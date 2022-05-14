@@ -1,11 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Image, StyleSheet, Text} from 'react-native';
 import Card from '../../common/card/card';
 import ENV from '../../../environmnent.config';
 import colors from '../../../colors';
+import {LostDog} from '../../../service/search-lost-dogs-service';
 
-const LostDogDetailsHeaderReadonly = (props) => {
+interface IProps {
+    dog: LostDog;
+}
+
+const LostDogDetailsHeaderReadonly = (props: IProps) => {
 
     return (
         <>
@@ -43,29 +47,5 @@ const styles = StyleSheet.create({
         fontStyle: 'italic'
     }
 });
-
-LostDogDetailsHeaderReadonly.propTypes = {
-    dog: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        submittedByUserId: PropTypes.number.isRequired,
-        dogName: PropTypes.string.isRequired,
-        dogBreed: PropTypes.string.isRequired,
-        gender: PropTypes.string.isRequired,
-        color: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        age: PropTypes.number.isRequired,
-        longitude: PropTypes.number.isRequired,
-        latitude: PropTypes.number.isRequired,
-        dateLost: PropTypes.string.isRequired,
-        contactPhone: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
-        city: PropTypes.string.isRequired,
-        countryCode: PropTypes.string.isRequired,
-        avatarFilename: PropTypes.string.isRequired,
-        chippedStatus: PropTypes.string.isRequired,
-        chipNumber: PropTypes.string.isRequired,
-        specialPeculiarities: PropTypes.string.isRequired
-    }).isRequired
-};
 
 export default LostDogDetailsHeaderReadonly;

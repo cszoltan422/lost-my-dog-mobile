@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import colors from '../../../colors';
 
 interface CardStyle {
-    height: number;
+    height: number | string;
     backgroundColor: string;
 }
 

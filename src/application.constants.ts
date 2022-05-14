@@ -19,10 +19,11 @@ export const DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS = {
     'WANDERING': 'general.wandering',
     'FOUND': 'general.found'
 };
-export const DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS = {
-    'MALE': 'general.male',
-    'FEMALE': 'general.female'
-};
+export const DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS = new Map<string, string>([
+    ['MALE', 'general.male'],
+    ['FEMALE', 'general.female']
+]);
+
 export const DETAILS_DOG_HAS_CHIP_ENUM_TRANSLATION_KEYS = {
     'YES': 'general.yes',
     'NO': 'general.no',
