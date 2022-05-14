@@ -1,4 +1,5 @@
 import ENV from '../environmnent.config';
+import axios, {AxiosResponse} from 'axios';
 
 export interface Location {
     longitude: number;
@@ -40,19 +41,22 @@ export interface LostDog {
 }
 
 export default class SearchLostDogsService {
-    static searchLostDogs(page: number, searchParams: LostDogSearchParameters, locationParameters: Location) {
-        return fetch(`${ENV.API_URL}/api/lost-dog/search`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+    static searchLostDogs(page: number, searchParams: LostDogSearchParameters, locationParameters: Location): Promise<LostDog[]> {
+        return axios.post<LostDog[]>(
+            `${ENV.API_URL}/api/lost-dog/search`,
+            {
                 longitude: locationParameters.longitude,
                 latitude: locationParameters.latitude,
                 radius: searchParams.radiusInMeters,
                 searchStatus: searchParams.searchType,
                 page: page,
-              })
-          }).then(response => response.json());
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }
+        )
+            .then((response: AxiosResponse<LostDog[]>) => response.data);
     }
 }

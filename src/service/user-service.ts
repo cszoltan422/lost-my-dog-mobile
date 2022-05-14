@@ -1,4 +1,5 @@
 import ENV from '../environmnent.config';
+import axios, {AxiosResponse} from 'axios';
 
 export interface LoginRequest {
     userName: string;
@@ -19,7 +20,7 @@ export interface UserDetails {
     email: string;
     creationDate: string;
     lastLoginTime?: string;
-    roles: Set<string>;
+    roles: string[];
     locked: boolean;
 }
 
@@ -38,33 +39,39 @@ export interface SignupResult {
 }
 
 export default class UserService {
-    static login(loginRequest: LoginRequest) {
-        return fetch(`${ENV.API_URL}/api/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(loginRequest)
-        }).then(response => response.json());
+    static login(loginRequest: LoginRequest): Promise<LoginResult> {
+        return axios.post<LoginResult>(
+            `${ENV.API_URL}/api/login`,
+            loginRequest,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }
+        )
+            .then((response: AxiosResponse<LoginResult>) => response.data);
     }
 
-    static fetchUserDetails(token: string) {
-        return fetch(`${ENV.API_URL}/api/user/details`, {
-            method: 'GET',
+    static fetchUserDetails(token: string): Promise<UserDetails> {
+        return axios.get(`${ENV.API_URL}/api/user/details`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
-        }).then(response => response.json());
+        })
+            .then((result: AxiosResponse<UserDetails>) => result.data);
     }
 
-    static signup(signupRequest: SignupRequest) {
-        return fetch(`${ENV.API_URL}/api/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(signupRequest)
-        }).then(response => response.json());
+    static signup(signupRequest: SignupRequest): Promise<SignupResult> {
+        return axios.post(
+            `${ENV.API_URL}/api/register`,
+            signupRequest,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }
+        )
+            .then((result: AxiosResponse<SignupResult>) => result.data);
     }
 }

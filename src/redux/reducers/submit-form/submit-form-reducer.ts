@@ -53,7 +53,6 @@ export interface SubmitFormTextInput {
     initialValue: string;
     isRequired: boolean;
     isValid: boolean;
-    hasChangedInEditMode: boolean;
     errorKey: string;
     labelTestID?: string;
     inputTestID?: string;
@@ -71,7 +70,6 @@ export interface SubmitFormSelectInput {
     isRequired: boolean,
     options: string[],
     isValid: boolean,
-    hasChangedInEditMode: boolean,
     errorKey: string;
     labelTestID: string;
     inputTestID: string;
@@ -84,7 +82,6 @@ export interface SubmitFormToggleInput {
     value: boolean;
     initialValue: boolean;
     isValid: boolean;
-    hasChangedInEditMode: boolean;
     errorKey: string;
     labelTestID: string;
     inputTestID: string;
@@ -141,7 +138,6 @@ export const initialState: SubmitFormState = {
                initialValue: '',
                isRequired: true,
                isValid: true,
-               hasChangedInEditMode: false,
                errorKey: 'submitForm.validation.fieldEmpty',
                validator: (value: string) =>
                    !!value &&
@@ -157,7 +153,6 @@ export const initialState: SubmitFormState = {
                initialValue: '',
                isRequired: true,
                isValid: true,
-               hasChangedInEditMode: false,
                errorKey: 'submitForm.validation.fieldEmpty',
                labelTestID: 'details-screen-dog-name-text-label',
                inputTestID: 'details-screen-dog-name-text-input',
@@ -179,7 +174,6 @@ export const initialState: SubmitFormState = {
                initialValue: '',
                isRequired: true,
                isValid: true,
-               hasChangedInEditMode: false,
                errorKey: 'submitForm.validation.fieldEmpty',
                labelTestID: 'details-screen-dog-breed-text-label',
                inputTestID: 'details-screen-dog-breed-text-input',
@@ -202,7 +196,6 @@ export const initialState: SubmitFormState = {
                isRequired: true,
                options: ['general.male', 'general.female'],
                isValid: true,
-               hasChangedInEditMode: false,
                errorKey: 'submitForm.validation.fieldEmpty',
                labelTestID: 'details-screen-dog-gender-text-label',
                inputTestID: 'details-screen-dog-gender-select-input',
@@ -221,7 +214,6 @@ export const initialState: SubmitFormState = {
                initialValue: '',
                isRequired: true,
                isValid: true,
-               hasChangedInEditMode: false,
                errorKey: 'submitForm.validation.fieldEmpty',
                labelTestID: 'details-screen-dog-color-text-label',
                inputTestID: 'details-screen-dog-color-text-input',
@@ -244,7 +236,6 @@ export const initialState: SubmitFormState = {
                isRequired: true,
                options: ['general.lost', 'general.wandering', 'general.found'],
                isValid: true,
-               hasChangedInEditMode: false,
                errorKey: 'submitForm.validation.fieldEmpty',
                labelTestID: 'details-screen-dog-status-text-label',
                inputTestID: 'details-screen-dog-status-select-input',
@@ -263,7 +254,6 @@ export const initialState: SubmitFormState = {
                initialValue: '',
                isRequired: true,
                isValid: true,
-               hasChangedInEditMode: false,
                errorKey: 'submitForm.validation.fieldEmpty',
                labelTestID: 'details-screen-dog-age-text-label',
                inputTestID: 'details-screen-dog-age-text-input',
@@ -285,7 +275,6 @@ export const initialState: SubmitFormState = {
                value: false,
                initialValue: false,
                isValid: true,
-               hasChangedInEditMode: false,
                errorKey: 'submitForm.validation.fieldEmpty',
                labelTestID: 'details-screen-dog-has-chip-toggle-label',
                inputTestID: 'details-screen-dog-has-chip-toggle-input',
@@ -300,7 +289,6 @@ export const initialState: SubmitFormState = {
                initialValue: '',
                isRequired: false,
                isValid: true,
-               hasChangedInEditMode: false,
                errorKey: 'submitForm.validation.fieldEmpty',
                keyboardType: 'numeric',
                autoCapitalize: 'none',
@@ -318,7 +306,6 @@ export const initialState: SubmitFormState = {
                initialValue: '',
                isRequired: false,
                isValid: true,
-               hasChangedInEditMode: false,
                errorKey: 'general.emailInvalid',
                keyboardType: 'email-address',
                autoCapitalize: 'none',
@@ -345,7 +332,6 @@ export const initialState: SubmitFormState = {
                initialValue: '',
                isRequired: false,
                isValid: true,
-               hasChangedInEditMode: false,
                errorKey: 'submitForm.validation.phoneNumberInvalid',
                keyboardType: 'phone-pad',
                autoCapitalize: 'none',
@@ -391,8 +377,7 @@ export const reducer = createReducer(initialState, {
             const newInput: SubmitFormInput = {
                 ...input,
                 value,
-                isValid: true,
-                hasChangedInEditMode: state.mode === SUBMIT_FORM_EDIT_MODE
+                isValid: true
             };
             state.inputs.set(inputKey, newInput);
         }
@@ -487,7 +472,8 @@ export const reducer = createReducer(initialState, {
             show: false,
         };
 
-        Object.keys(state.inputs).forEach((inputKey) => {
+
+        Array.from(state.inputs.keys()).forEach((inputKey) => {
             const input = state.inputs.get(inputKey);
             if (input) {
                 const newInput = {

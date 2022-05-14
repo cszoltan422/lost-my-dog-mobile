@@ -22,8 +22,6 @@ export interface Pagination {
 }
 
 export interface DashboardError {
-    code: string;
-    message: string;
     show: boolean;
 }
 
@@ -54,8 +52,6 @@ export const initialState: DashboardState = {
     },
     data: [],
     error: {
-        code: '',
-        message: '',
         show: false,
     }
 };
@@ -103,13 +99,9 @@ export const reducer = createReducer(initialState, {
             state.data = [...state.data, ...action.payload.data];
         }
     },
-    [ON_DASHBOARD_DATA_FETCH_ERROR]: (state, action) => {
+    [ON_DASHBOARD_DATA_FETCH_ERROR]: (state) => {
         state.loading = false;
-        state.error = {
-            show: true,
-            code: action.payload.errorCode,
-            message: action.payload.errorMessage
-        };
+        state.error.show = true;
     },
     [ON_DASHBOARD_HIDE_ALERT]: (state) => {
         state.error.show = false;

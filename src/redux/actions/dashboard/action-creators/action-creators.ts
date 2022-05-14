@@ -10,7 +10,6 @@ import {
     ON_DASHBOARD_REFRESHING, ON_DASHBOARD_RESET_PAGINATION_DRY
 } from '../action-types/action-types';
 import {LostDog} from '../../../../service/search-lost-dogs-service';
-import {DashboardError} from '../../../reducers/dashboard/dashboard-reducer';
 
 export const onDashboardMounted = () => {
     return {
@@ -79,10 +78,9 @@ export const onDashboardDataFetched = (clearData: boolean, data: LostDog[]) => {
     };
 };
 
-export const onDashboardDataFetchError = (error: DashboardError) => {
+export const onDashboardDataFetchError = () => {
     return {
-        type: ON_DASHBOARD_DATA_FETCH_ERROR,
-        payload: error
+        type: ON_DASHBOARD_DATA_FETCH_ERROR
     };
 };
 

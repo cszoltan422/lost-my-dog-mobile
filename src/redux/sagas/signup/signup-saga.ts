@@ -14,15 +14,18 @@ import {
     SIGNUP_PASSWORD_TEXT_INPUT_KEY,
     SIGNUP_USERNAME_TEXT_INPUT_KEY
 } from '../../../application.constants';
-import UserService from '../../../service/user-service';
+import UserService, {SignupRequest, SignupResult} from '../../../service/user-service';
+import {PayloadAction} from '@reduxjs/toolkit';
+import {RootState} from '../../store/store';
+import {SignupInput} from '../../reducers/signup/signup-reducer';
 
 export function* signupAttemptWatcherSaga() {
     yield takeLatest([ON_SIGNUP_ATTEMPTED], signupAttemptSaga);
 }
 
-function* validateFormInputs(inputs) {
+function* validateFormInputs(inputs: Map<string, SignupInput>) {
     let isValidForm = true;
-    for (let inputKey of inputs.keys()) {
+    for (const inputKey of inputs.keys()) {
         const input = inputs.get(inputKey);
         if (input) {
             const { value, validator } = input;
@@ -38,42 +41,47 @@ function* validateFormInputs(inputs) {
     return isValidForm;
 }
 
-function validatePasswordMatch(inputs) {
-    return inputs.get(SIGNUP_PASSWORD_TEXT_INPUT_KEY).value === inputs.get(SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY).value;
+function validatePasswordMatch(inputs: Map<string, SignupInput>) {
+    return inputs.get(SIGNUP_PASSWORD_TEXT_INPUT_KEY)?.value === inputs.get(SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY)?.value;
 }
 
-function* signupAttemptSaga(action) {
+function* signupAttemptSaga(action: PayloadAction<any>) {
     try {
         const { payload } = action;
         const { navigation } = payload;
         yield put(onSignupLoading());
 
-        const inputs = yield select((state) => state.signup.inputs);
-        let isValidForm = yield* validateFormInputs(inputs);
+        const inputs: Map<string, SignupInput> = yield select((state: RootState) => state.signup.inputs);
+        const isValidForm = yield* validateFormInputs(inputs);
 
         if (isValidForm) {
-            const passwordsMath = validatePasswordMatch(inputs);
-            if (passwordsMath) {
-                const signupResult = yield call(UserService.signup, {
-                    userName: inputs.get(SIGNUP_USERNAME_TEXT_INPUT_KEY).value.replace(/\s/g, ''),
-                    password: inputs.get(SIGNUP_PASSWORD_TEXT_INPUT_KEY).value,
-                    email: inputs.get(SIGNUP_EMAIL_TEXT_INPUT_KEY).value,
-                    firstName: inputs.get(SIGNUP_FIRST_NAME_TEXT_INPUT_KEY).value,
+            const passwordsMatch = validatePasswordMatch(inputs);
+            if (passwordsMatch) {
+
+                const signupRequest: SignupRequest = {
+                    userName: inputs.get(SIGNUP_USERNAME_TEXT_INPUT_KEY)?.value.replace(/\s/g, '') || '',
+                    password: inputs.get(SIGNUP_PASSWORD_TEXT_INPUT_KEY)?.value || '',
+                    email: inputs.get(SIGNUP_EMAIL_TEXT_INPUT_KEY)?.value || '',
+                    firstName: inputs.get(SIGNUP_FIRST_NAME_TEXT_INPUT_KEY)?.value || '',
                     middleName: '',
-                    lastName: inputs.get(SIGNUP_LAST_NAME_TEXT_INPUT_KEY).value,
-                });
+                    lastName: inputs.get(SIGNUP_LAST_NAME_TEXT_INPUT_KEY)?.value || '',
+                };
+
+                const signupResult: SignupResult = yield call(UserService.signup, signupRequest);
 
                 if (signupResult.success) {
                     yield put(onSignupSuccess());
                     navigation.goBack();
-                } else {
-                    yield put(onSignupAttemptError(signupResult.errorMessage));
                 }
             } else {
                 yield put(onSignupValidationError(SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY));
             }
         }
 
+    } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        yield put(onSignupAttemptError(error.response.data.errorMessage));
     } finally {
         yield put(onSignupStopLoading());
     }

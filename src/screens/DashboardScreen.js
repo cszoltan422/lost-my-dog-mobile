@@ -17,7 +17,7 @@ import {
 } from '../redux/actions/dashboard/action-creators/action-creators';
 import i18n from '../i18n/i18n';
 import {
-    DETAILS_NAVIGATION_SCREEN_NAME, ERROR_MESSAGE_TRANSLATION_CODES,
+    DETAILS_NAVIGATION_SCREEN_NAME,
     LOGIN_NAVIGATION_SCREEN_NAME,
     SUBMIT_DOG_NAVIGATION_SCREEN_NAME
 } from '../application.constants';
@@ -50,7 +50,7 @@ const DashboardScreen = (props) => {
                 position: 'bottom',
                 type: 'error',
                 text1: i18n.t('toast.headerText'),
-                text2: i18n.t(ERROR_MESSAGE_TRANSLATION_CODES[error.message] || 'toast.unknownError'),
+                text2: i18n.t('toast.unknownError'),
                 autoHide: false,
                 onHide: () => dispatch(onDashboardHideAlert()),
             });
