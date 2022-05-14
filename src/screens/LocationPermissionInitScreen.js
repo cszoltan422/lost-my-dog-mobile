@@ -33,7 +33,7 @@ const LocationPermissionInitScreen = (props) => {
     let buttonTitle = '';
     let description = '';
     let icon = '';
-    let buttonPressHandler = () => {};
+    let buttonPressHandler = null;
 
     if (granted) {
         dispatch(onCheckLocationPermission()); // todo check logic again
