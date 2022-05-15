@@ -1,11 +1,4 @@
 import { takeLatest, select, call, put } from 'redux-saga/effects';
-import {ON_LOGIN_ATTEMPTED} from '../../actions/login/action-types/action-types';
-import {
-    onLoginAttemptError,
-    onLoginLoading,
-    onLoginStopLoading,
-    onLoginSuccess
-} from '../../actions/login/action-creators/action-creators';
 import UserService, {LoginResult, UserDetails} from '../../../service/user-service';
 import {onApplicationSuccessfulLoginPersistUser} from '../../actions/application/action-creators/action-creators';
 import {USER_ASYNC_STORAGE_KEY, USER_ROLE_ADMIN_VALUE} from '../../../application.constants';
@@ -15,9 +8,10 @@ import {ApplicationUser} from '../../reducers/application/application-reducer';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../components/navigation/lost-my-dog-navigator';
+import {loginAttempt, loginError, loginSuccess, setLoginLoading} from '../../reducers/login/login-reducer';
 
 export function* loginAttemptWatcherSaga() {
-    yield takeLatest([ON_LOGIN_ATTEMPTED], loginAttemptSaga);
+    yield takeLatest([loginAttempt.type], loginAttemptSaga);
 }
 
 function* loginAttemptSaga(action: PayloadAction<NativeStackNavigationProp<RootStackParamList, 'LoginScreen'>>) {
@@ -25,10 +19,10 @@ function* loginAttemptSaga(action: PayloadAction<NativeStackNavigationProp<RootS
     const password: string = yield select((state: RootState) => state.login.password);
 
     if (!username || !password) {
-        yield put(onLoginAttemptError('login.emptyPasswordOrUsername'));
+        yield put(loginError('login.emptyPasswordOrUsername'));
     } else {
         try {
-            yield put(onLoginLoading());
+            yield put(setLoginLoading(true));
 
             const loginResult: LoginResult = yield call(UserService.login, { userName: username, password: password });
             const userDetails: UserDetails = yield call(UserService.fetchUserDetails, loginResult.token);
@@ -45,13 +39,13 @@ function* loginAttemptSaga(action: PayloadAction<NativeStackNavigationProp<RootS
 
             yield call(setItem, USER_ASYNC_STORAGE_KEY, JSON.stringify(user));
             yield put(onApplicationSuccessfulLoginPersistUser(user));
-            yield put(onLoginSuccess());
+            yield put(loginSuccess());
 
             const navigation = action.payload;
             navigation.goBack();
         } catch (error) {
-            yield put(onLoginStopLoading());
-            yield put(onLoginAttemptError('login.wrongLoginCredentials'));
+            yield put(setLoginLoading(false));
+            yield put(loginError('login.wrongLoginCredentials'));
         }
     }
 }
