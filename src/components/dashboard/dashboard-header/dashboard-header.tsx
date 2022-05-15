@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { StyleSheet, Text, View} from 'react-native';
 import {
     DASHBOARD_MAX_SEARCH_DISTANCE_IN_METERS,
@@ -137,18 +136,5 @@ const styles = StyleSheet.create({
         backgroundColor: colors.primaryColor
     }
 });
-
-DashboardHeader.propTypes = {
-    loading: PropTypes.bool.isRequired,
-    refreshing: PropTypes.bool.isRequired,
-    fetchingNew: PropTypes.bool.isRequired,
-    isLoading: PropTypes.func.isRequired,
-    searchParameters: PropTypes.shape({
-        radiusInMeters: PropTypes.number.isRequired,
-        searchType: PropTypes.string.isRequired,
-    }).isRequired,
-    onDashboardChangeRadiusSearchParam: PropTypes.func.isRequired,
-    onDashboardChangeSearchTypeParam: PropTypes.func.isRequired
-};
 
 export default DashboardHeader;

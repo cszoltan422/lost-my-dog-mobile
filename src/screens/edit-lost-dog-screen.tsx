@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
 import LostDogDetails from '../components/lost-dog-details/lost-dog-details';
 import Toast from 'react-native-toast-message';
 import i18n from '../i18n/i18n';
@@ -102,11 +101,6 @@ const EditLostDogScreen = (props: IProps) => {
             onImageCleared={() => dispatch(onSubmitFormImageCleared())}
             onSubmit={() => dispatch(onSubmitFormSubmitted(route, navigation))} />
     );
-};
-
-EditLostDogScreen.propTypes = {
-    route: PropTypes.object.isRequired,
-    navigation: PropTypes.object.isRequired,
 };
 
 export default EditLostDogScreen;

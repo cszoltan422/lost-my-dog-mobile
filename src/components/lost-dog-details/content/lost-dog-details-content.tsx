@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {StyleSheet, Text, TextInput, View, Switch} from 'react-native';
 import Card from '../../common/card/card';
 import ModalDropdown from 'react-native-modal-dropdown';
@@ -312,12 +311,5 @@ const styles = StyleSheet.create({
         fontSize: 12
     }
 });
-
-LostDogDetailsContent.propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    isValid: PropTypes.bool.isRequired,
-    inputs: PropTypes.object.isRequired,
-    onInputValueChanged: PropTypes.func.isRequired
-};
 
 export default LostDogDetailsContent;

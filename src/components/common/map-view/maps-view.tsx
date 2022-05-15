@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Dimensions, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import {MAPS_DEFAULT_LATLON_DELTA} from '../../../application.constants';
@@ -49,15 +48,5 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height / 2
     }
 });
-
-MapsView.propTypes = {
-    longitude: PropTypes.number.isRequired,
-    latitude: PropTypes.number.isRequired,
-    markerTitle: PropTypes.string.isRequired,
-    iconType: PropTypes.string.isRequired,
-    iconName: PropTypes.string.isRequired,
-    iconColor: PropTypes.string.isRequired,
-    iconSize: PropTypes.number.isRequired,
-};
 
 export default MapsView;

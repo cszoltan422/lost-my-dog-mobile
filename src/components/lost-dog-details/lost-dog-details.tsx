@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import ProgressBar from 'react-native-progress/Bar';
@@ -120,31 +119,5 @@ const styles = StyleSheet.create({
         width: '100%'
     }
 });
-
-LostDogDetails.propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    isValid: PropTypes.bool.isRequired,
-    inputs: PropTypes.object.isRequired,
-    loading: PropTypes.shape({
-        progress: PropTypes.number.isRequired,
-        stage: PropTypes.string.isRequired
-    }).isRequired,
-    location: PropTypes.shape({
-        longitude: PropTypes.number.isRequired,
-        latitude: PropTypes.number.isRequired,
-        isPresent: PropTypes.bool.isRequired,
-    }).isRequired,
-    selectedImage: PropTypes.shape({
-        uri: PropTypes.string.isRequired,
-        isPresent: PropTypes.bool.isRequired,
-        errorKey: PropTypes.string.isRequired,
-        isValid: PropTypes.bool.isRequired
-    }).isRequired,
-    onLocationValueChanged: PropTypes.func.isRequired,
-    onInputValueChanged: PropTypes.func.isRequired,
-    onImageSelected: PropTypes.func.isRequired,
-    onImageCleared: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-};
 
 export default LostDogDetails;
