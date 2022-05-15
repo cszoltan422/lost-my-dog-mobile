@@ -1,18 +1,21 @@
 {
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "plugins": [
     "react",
-    "react-native"
+    "react-native",
+    "@typescript-eslint"
   ],
   "settings": {
     "react": {
       "version": "detect"
     }
   },
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 8,
     "sourceType": "module",
@@ -26,6 +29,7 @@
     "node": true,
     "es6": true
   },
+  "ignorePatterns": ["src/types/react-native-progress/*"],
   "rules": {
     "no-console": "error",
     "semi": ["error", "always"],
@@ -34,12 +38,10 @@
     "quotes": [2, "single", { "avoidEscape": true, "allowTemplateLiterals": true } ],
     "jsx-quotes": ["error", "prefer-single"],
     "indent": [0],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", "tsx"] }],
     "react/jsx-indent": ["error", 4],
     "react/jsx-indent-props": 2,
-    "react/prop-types": "error",
     "react/require-default-props": [0],
-    "react/forbid-prop-types": [0],
     "react/jsx-pascal-case": [2],
     "react/jsx-boolean-value": 2,
     "react/jsx-closing-bracket-location": [2, "after-props"],
