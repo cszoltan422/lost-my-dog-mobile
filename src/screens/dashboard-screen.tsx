@@ -5,14 +5,6 @@ import DashboardList from '../components/dashboard/dashboard-list/dashboard-list
 import LoadingCard from '../components/common/loading-card/loading-card';
 import FloatingActionButton from '../components/common/floating-action-button/floating-action-button';
 import Toast from 'react-native-toast-message';
-import {
-    onDashboardChangeRadiusSearchParam,
-    onDashboardChangeSearchTypeParam,
-    onDashboardFetchNewPage,
-    onDashboardHideAlert,
-    onDashboardMounted,
-    onDashboardRefreshPage
-} from '../redux/actions/dashboard/action-creators/action-creators';
 import i18n from '../i18n/i18n';
 import colors from '../colors';
 import {useComponentDidMount} from '../hooks/useComponentDidMount';
@@ -20,6 +12,11 @@ import {useAppDispatch, useAppSelector} from '../redux/store/store';
 import {RootStackParamList} from '../components/navigation/lost-my-dog-navigator';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {LostDog} from '../service/search-lost-dogs-service';
+import {
+    dashboardIncrementPage, dashboardMounted,
+    setDashboardPage, setDashboardSearchRadius, setDashboardSearchType,
+    setDashboardShowError
+} from '../redux/reducers/dashboard/dashboard-reducer';
 
 type IProps = NativeStackScreenProps<RootStackParamList, 'DashboardScreen'>;
 
@@ -39,7 +36,7 @@ const DashboardScreen = (props: IProps) => {
     const dispatch = useAppDispatch();
 
     useComponentDidMount(() => {
-        dispatch(onDashboardMounted());
+        dispatch(dashboardMounted());
     });
 
     useEffect(() => {
@@ -50,7 +47,7 @@ const DashboardScreen = (props: IProps) => {
                 text1: i18n.t('toast.headerText'),
                 text2: i18n.t('toast.unknownError'),
                 autoHide: false,
-                onHide: () => dispatch(onDashboardHideAlert()),
+                onHide: () => dispatch(setDashboardShowError(false)),
             });
         }
     }, [error]);
@@ -67,8 +64,8 @@ const DashboardScreen = (props: IProps) => {
                 fetchingNew={fetchingNew}
                 searchParameters={searchParameters}
                 isLoading={isLoading}
-                onDashboardChangeRadiusSearchParam={(radius) => dispatch(onDashboardChangeRadiusSearchParam(radius))}
-                onDashboardChangeSearchTypeParam={(searchType) => dispatch(onDashboardChangeSearchTypeParam(searchType))} />
+                onDashboardChangeRadiusSearchParam={(radius) => dispatch(setDashboardSearchRadius(radius))}
+                onDashboardChangeSearchTypeParam={(searchType) => dispatch(setDashboardSearchType(searchType))} />
             {loading ?
                 <LoadingCard /> :
                 <DashboardList
@@ -78,8 +75,8 @@ const DashboardScreen = (props: IProps) => {
                     refreshing={refreshing}
                     hasNoMoreData={hasNoMoreData}
                     isLoading={isLoading}
-                    onDashboardFetchNewPage={() => dispatch(onDashboardFetchNewPage())}
-                    onDashboardRefreshPage={() => dispatch(onDashboardRefreshPage())}
+                    onDashboardFetchNewPage={() => dispatch(dashboardIncrementPage())}
+                    onDashboardRefreshPage={() => dispatch(setDashboardPage(0))}
                     onListItemClicked={(dog: LostDog) => {
                         props.navigation.navigate('DetailsScreen', {
                             dog: dog
