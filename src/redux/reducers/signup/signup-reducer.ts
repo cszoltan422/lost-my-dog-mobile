@@ -1,4 +1,4 @@
-import { createReducer } from '@reduxjs/toolkit';
+import {createAction, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import validator from 'validator';
 import {
     EMOJI_REGEX,
@@ -9,11 +9,8 @@ import {
     SIGNUP_PASSWORD_TEXT_INPUT_KEY,
     SIGNUP_USERNAME_TEXT_INPUT_KEY
 } from '../../../application.constants';
-import {
-    ON_SIGNUP_ATTEMPT_ERROR,
-    ON_SIGNUP_INPUT_VALUE_CHANGED, ON_SIGNUP_LOADING, ON_SIGNUP_STOP_LOADING, ON_SIGNUP_SUCCESS,
-    ON_SIGNUP_VALIDATION_ERROR
-} from '../../actions/signup/action-types/action-types';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../../components/navigation/lost-my-dog-navigator';
 
 export interface SignupInput {
     label: string;
@@ -36,6 +33,11 @@ export interface SignupState {
     isLoading: boolean;
     error: string;
     inputs: Map<string, SignupInput>;
+}
+
+export interface SignupInputChangePayload {
+    inputKey: string;
+    value: string;
 }
 
 export const initialState: SignupState = {
@@ -173,60 +175,71 @@ export const initialState: SignupState = {
     ]),
 };
 
-export const reducer = createReducer(initialState, {
-    [ON_SIGNUP_INPUT_VALUE_CHANGED]: (state, action) => {
-        const { payload } = action;
-        const { inputKey, value } = payload;
-        const input = state.inputs.get(inputKey);
-        if (input) {
-            const newInput = {
-                ...input,
-                value: value,
-                isValid: true
-            };
-            state.inputs.set(inputKey, newInput);
-        }
-        state.isValid = true;
-    },
-    [ON_SIGNUP_VALIDATION_ERROR]: (state, action) => {
-        const { payload } = action;
-        const { inputKey } = payload;
-        const input = state.inputs.get(inputKey);
-        if (input) {
-            const newInput = {
-                ...input,
-                isValid: false
-            };
-            state.inputs.set(inputKey, newInput);
-        }
-        state.isValid = false;
-    },
-    [ON_SIGNUP_SUCCESS]: (state) => {
-        state.isValid = true;
-        state.isLoading = false;
-        state.error = '';
-        Array.from(state.inputs.keys()).forEach((inputKey) => {
+const signupSlice = createSlice({
+    name: 'signup',
+    initialState,
+    reducers: {
+        signupInputChange: (state, action: PayloadAction<SignupInputChangePayload>) => {
+            const { payload } = action;
+            const { inputKey, value } = payload;
             const input = state.inputs.get(inputKey);
             if (input) {
                 const newInput = {
                     ...input,
-                    value: '',
+                    value: value,
                     isValid: true
                 };
                 state.inputs.set(inputKey, newInput);
             }
-        });
-    },
-    [ON_SIGNUP_LOADING]: (state) => {
-        state.isLoading = true;
-    },
-    [ON_SIGNUP_STOP_LOADING]: (state) => {
-        state.isLoading = false;
-    },
-    [ON_SIGNUP_ATTEMPT_ERROR]: (state, action) => {
-        const { payload } = action;
-        const { error } = payload;
-        state.error = error;
-        state.isValid = false;
+            state.isValid = true;
+        },
+        signupInputValidationError: (state, action: PayloadAction<string>) => {
+            const { payload } = action;
+            const input = state.inputs.get(payload);
+            if (input) {
+                const newInput = {
+                    ...input,
+                    isValid: false
+                };
+                state.inputs.set(payload, newInput);
+            }
+            state.isValid = false;
+        },
+        signupSuccess: (state) => {
+            state.isValid = true;
+            state.isLoading = false;
+            state.error = '';
+            Array.from(state.inputs.keys()).forEach((inputKey) => {
+                const input = state.inputs.get(inputKey);
+                if (input) {
+                    const newInput = {
+                        ...input,
+                        value: '',
+                        isValid: true
+                    };
+                    state.inputs.set(inputKey, newInput);
+                }
+            });
+        },
+        signupError: (state, action: PayloadAction<string>) => {
+            const { payload } = action;
+            state.error = payload;
+            state.isValid = false;
+        },
+        setSignupLoading: (state, action: PayloadAction<boolean>) => {
+            state.isLoading = action.payload;
+        }
     }
 });
+
+const signupReducer = signupSlice.reducer;
+
+export const {
+    signupInputChange,
+    signupInputValidationError,
+    signupSuccess,
+    signupError,
+    setSignupLoading
+} = signupSlice.actions;
+export const signupAttempted = createAction<NativeStackNavigationProp<RootStackParamList, 'SignupScreen'>>('login/loginAttempt');
+export default signupReducer;

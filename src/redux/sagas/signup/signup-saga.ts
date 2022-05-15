@@ -1,11 +1,4 @@
 import {call, put, select, takeLatest} from 'redux-saga/effects';
-import {ON_SIGNUP_ATTEMPTED} from '../../actions/signup/action-types/action-types';
-import {
-    onSignupAttemptError,
-    onSignupLoading,
-    onSignupStopLoading, onSignupSuccess,
-    onSignupValidationError
-} from '../../actions/signup/action-creators/action-creators';
 import {
     SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY,
     SIGNUP_EMAIL_TEXT_INPUT_KEY,
@@ -17,12 +10,17 @@ import {
 import UserService, {SignupRequest, SignupResult} from '../../../service/user-service';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../store/store';
-import {SignupInput} from '../../reducers/signup/signup-reducer';
+import {
+    setSignupLoading, signupAttempted, signupError,
+    SignupInput,
+    signupInputValidationError,
+    signupSuccess
+} from '../../reducers/signup/signup-reducer';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../components/navigation/lost-my-dog-navigator';
 
 export function* signupAttemptWatcherSaga() {
-    yield takeLatest([ON_SIGNUP_ATTEMPTED], signupAttemptSaga);
+    yield takeLatest([signupAttempted.type], signupAttemptSaga);
 }
 
 function* validateFormInputs(inputs: Map<string, SignupInput>) {
@@ -35,7 +33,7 @@ function* validateFormInputs(inputs: Map<string, SignupInput>) {
                 const isValid = validator(value);
                 if (!isValid) {
                     isValidForm = false;
-                    yield put(onSignupValidationError(inputKey));
+                    yield put(signupInputValidationError(inputKey));
                 }
             }
         }
@@ -49,7 +47,7 @@ function validatePasswordMatch(inputs: Map<string, SignupInput>) {
 
 function* signupAttemptSaga(action: PayloadAction<NativeStackNavigationProp<RootStackParamList, 'SignupScreen'>>) {
     try {
-        yield put(onSignupLoading());
+        yield put(setSignupLoading(true));
 
         const navigation = action.payload;
         const inputs: Map<string, SignupInput> = yield select((state: RootState) => state.signup.inputs);
@@ -71,19 +69,19 @@ function* signupAttemptSaga(action: PayloadAction<NativeStackNavigationProp<Root
                 const signupResult: SignupResult = yield call(UserService.signup, signupRequest);
 
                 if (signupResult.success) {
-                    yield put(onSignupSuccess());
+                    yield put(signupSuccess());
                     navigation.goBack();
                 }
             } else {
-                yield put(onSignupValidationError(SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY));
+                yield put(signupInputValidationError(SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY));
             }
         }
 
     } catch (error) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        yield put(onSignupAttemptError(error.response.data.errorMessage));
+        yield put(signupError(error.response.data.errorMessage));
     } finally {
-        yield put(onSignupStopLoading());
+        yield put(setSignupLoading(false));
     }
 }

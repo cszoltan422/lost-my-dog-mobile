@@ -4,11 +4,11 @@ import {Button} from 'react-native-elements';
 import i18n from '../i18n/i18n';
 import colors from '../colors';
 import {APPLICATION_NAME, SIGNUP_ERROR_TRANSLATION_KEYS} from '../application.constants';
-import {onSignupAttempted, onSignupInputValueChanged} from '../redux/actions/signup/action-creators/action-creators';
 import {useAppDispatch, useAppSelector} from '../redux/store/store';
 import {Icon, Tooltip} from '@rneui/base';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../components/navigation/lost-my-dog-navigator';
+import {signupAttempted, signupInputChange} from '../redux/reducers/signup/signup-reducer';
 
 type IProps = NativeStackScreenProps<RootStackParamList, 'SignupScreen'>;
 
@@ -87,7 +87,10 @@ const SignupScreen = (props: IProps) => {
                         <Fragment key={inputKey}>
                             {renderTextInputBox(
                                 inputKey,
-                                (value) => dispatch(onSignupInputValueChanged(inputKey, value))
+                                (value) => dispatch(signupInputChange({
+                                    inputKey: inputKey,
+                                    value: value
+                                }))
                             )}
                         </Fragment>
                     );
@@ -107,7 +110,7 @@ const SignupScreen = (props: IProps) => {
                         title={i18n.t('general.signUp')}
                         loading={isLoading}
                         disabled={!isValid}
-                        onPress={() => dispatch(onSignupAttempted(props.navigation))} />
+                        onPress={() => dispatch(signupAttempted(props.navigation))} />
                 </View>
             </View>
         </ScrollView>
