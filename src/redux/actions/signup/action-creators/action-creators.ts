@@ -4,6 +4,8 @@ import {
     ON_SIGNUP_INPUT_VALUE_CHANGED, ON_SIGNUP_LOADING, ON_SIGNUP_STOP_LOADING, ON_SIGNUP_SUCCESS,
     ON_SIGNUP_VALIDATION_ERROR
 } from '../action-types/action-types';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../../../components/navigation/lost-my-dog-navigator';
 
 export const onSignupInputValueChanged = (inputKey: string, value: string) => {
     return {
@@ -15,12 +17,10 @@ export const onSignupInputValueChanged = (inputKey: string, value: string) => {
     };
 };
 
-export const onSignupAttempted = (navigation: any) => {
+export const onSignupAttempted = (navigation: NativeStackNavigationProp<RootStackParamList, 'SignupScreen'>) => {
     return {
         type: ON_SIGNUP_ATTEMPTED,
-        payload: {
-            navigation
-        }
+        payload: navigation
     };
 };
 

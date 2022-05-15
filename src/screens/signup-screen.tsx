@@ -7,13 +7,12 @@ import {APPLICATION_NAME, SIGNUP_ERROR_TRANSLATION_KEYS} from '../application.co
 import {onSignupAttempted, onSignupInputValueChanged} from '../redux/actions/signup/action-creators/action-creators';
 import {useAppDispatch, useAppSelector} from '../redux/store/store';
 import {Icon, Tooltip} from '@rneui/base';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../components/navigation/lost-my-dog-navigator';
 
-interface IProps {
-    navigation: any;
-}
+type IProps = NativeStackScreenProps<RootStackParamList, 'SignupScreen'>;
 
 const SignupScreen = (props: IProps) => {
-
     const isValid = useAppSelector(state => state.signup.isValid);
     const isLoading = useAppSelector(state => state.signup.isLoading);
     const error = useAppSelector(state => state.signup.error);

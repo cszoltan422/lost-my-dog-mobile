@@ -55,7 +55,7 @@ const DashboardListItem = (props: IProps) => {
                     <View style={styles.statusChipContainer}>
                         <Chip
                             testID={`dashboard-list-item-header-dog-status-${props.index}`}
-                            text={i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[props.dog.status])} />
+                            text={i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS.get(props.dog.status) || '')} />
                     </View>
                 </View>
                 <View

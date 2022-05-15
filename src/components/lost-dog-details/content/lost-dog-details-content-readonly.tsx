@@ -81,7 +81,7 @@ const LostDogDetailsContentReadonly = (props: IProps) => {
                         <Text
                             testID='details-screen-dog-status-text'
                             style={styles.labelValue}>
-                            {i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS[props.dog.status])}
+                            {i18n.t(DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS.get(props.dog.status) || '')}
                         </Text>
                     </View>
                     <View style={styles.columnContainer}>

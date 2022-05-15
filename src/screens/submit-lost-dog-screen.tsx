@@ -1,7 +1,5 @@
 import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import LostDogDetails from '../components/lost-dog-details/LostDogDetails';
+import LostDogDetails from '../components/lost-dog-details/lost-dog-details';
 import Toast from 'react-native-toast-message';
 import i18n from '../i18n/i18n';
 import {
@@ -14,19 +12,25 @@ import {
 import {useComponentDidMount} from '../hooks/useComponentDidMount';
 import {useComponentWillUnmount} from '../hooks/useComponentWillUnmount';
 import {ERROR_MESSAGE_TRANSLATION_CODES} from '../application.constants';
+import {useAppDispatch, useAppSelector} from '../redux/store/store';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../components/navigation/lost-my-dog-navigator';
 
-const SubmitLostDogScreen = ({ route, navigation }) => {
+type IProps = NativeStackScreenProps<RootStackParamList, 'SubmitLostDogScreen'>;
 
-    const isValid = useSelector(state => state.submitForm.isValid);
-    const isLoading = useSelector(state => state.submitForm.isLoading);
-    const loading = useSelector(state => state.submitForm.loading);
-    const error = useSelector(state => state.submitForm.error);
-    const inputs = useSelector(state => state.submitForm.inputs);
-    const location = useSelector(state => state.submitForm.location);
-    const selectedImage = useSelector(state => state.submitForm.selectedImage);
-    const currentLocation = useSelector(state => state.application.location);
+const SubmitLostDogScreen = (props: IProps) => {
+    const { route, navigation } = props;
 
-    const dispatch = useDispatch();
+    const isValid = useAppSelector(state => state.submitForm.isValid);
+    const isLoading = useAppSelector(state => state.submitForm.isLoading);
+    const loading = useAppSelector(state => state.submitForm.loading);
+    const error = useAppSelector(state => state.submitForm.error);
+    const inputs = useAppSelector(state => state.submitForm.inputs);
+    const location = useAppSelector(state => state.submitForm.location);
+    const selectedImage = useAppSelector(state => state.submitForm.selectedImage);
+    const currentLocation = useAppSelector(state => state.application.location);
+
+    const dispatch = useAppDispatch();
 
     useComponentDidMount(() => {
         dispatch(onSubmitFormLocationValueChanged({
@@ -45,7 +49,7 @@ const SubmitLostDogScreen = ({ route, navigation }) => {
                 position: 'bottom',
                 type: 'error',
                 text1: i18n.t('toast.headerText'),
-                text2: i18n.t(ERROR_MESSAGE_TRANSLATION_CODES[error.message] || 'toast.unknownError'),
+                text2: i18n.t(ERROR_MESSAGE_TRANSLATION_CODES.get(error.message) || 'toast.unknownError'),
                 autoHide: false,
                 onHide: () => dispatch(onSubmitFormHideAlert()),
             });
@@ -67,11 +71,6 @@ const SubmitLostDogScreen = ({ route, navigation }) => {
             onSubmit={() => dispatch(onSubmitFormSubmitted(route, navigation))} />
     );
 
-};
-
-SubmitLostDogScreen.propTypes = {
-    route: PropTypes.object.isRequired,
-    navigation: PropTypes.object.isRequired,
 };
 
 export default SubmitLostDogScreen;

@@ -15,7 +15,7 @@
       "version": "detect"
     }
   },
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 8,
     "sourceType": "module",
@@ -29,6 +29,7 @@
     "node": true,
     "es6": true
   },
+  "ignorePatterns": ["src/types/react-native-progress/*"],
   "rules": {
     "no-console": "error",
     "semi": ["error", "always"],

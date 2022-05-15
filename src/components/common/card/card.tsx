@@ -9,12 +9,13 @@ interface CardStyle {
 
 interface IProps {
     styles?: CardStyle;
+    testID?: string;
     children: JSX.Element | JSX.Element[]
 }
 
 const Card = (props: IProps) => {
     return (
-        <View style={{...styles.card, ...props.styles}}>
+        <View style={{...styles.card, ...props.styles}} testID={props.testID}>
             {props.children}
         </View>
     );

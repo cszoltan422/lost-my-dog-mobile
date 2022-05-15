@@ -8,15 +8,14 @@ import {
 } from '../redux/actions/login/action-creators/action-creators';
 import i18n from '../i18n/i18n';
 import colors from '../colors';
-import {APPLICATION_NAME, SIGN_UP_NAVIGATION_SCREEN_NAME} from '../application.constants';
+import {APPLICATION_NAME} from '../application.constants';
 import {useAppDispatch, useAppSelector} from '../redux/store/store';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../components/navigation/lost-my-dog-navigator';
 
-interface IProps {
-    navigation: any;
-}
+export type LoginScreen = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
-const LoginScreen = (props: IProps) => {
-
+const LoginScreen = (props: LoginScreen) => {
     const username = useAppSelector(state => state.login.username);
     const password = useAppSelector(state => state.login.password);
     const loading = useAppSelector(state => state.login.loading);
@@ -79,7 +78,7 @@ const LoginScreen = (props: IProps) => {
                 disabled={loading || emptyInput()}
                 onPress={() => dispatch(onLoginAttempted(props.navigation))} />
             <TouchableOpacity
-                onPress={() => props.navigation.navigate(SIGN_UP_NAVIGATION_SCREEN_NAME)}>
+                onPress={() => props.navigation.navigate('SignupScreen')}>
                 <Text
                     testID='login-screen-signup-text'
                     style={styles.signUpTextStyle}>

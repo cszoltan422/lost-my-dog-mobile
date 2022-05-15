@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
 import {View, StyleSheet} from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
 import SplashImage from './splash/splash-image';
-import LostMyDogNavigator from './navigation/LostMyDogNavigator';
+import LostMyDogNavigator from './navigation/lost-my-dog-navigator';
 import LocationPermissionInitScreen from '../screens/location-permission-init-screen';
 import {
     onApplicationMounted,
-    onCheckLocationPermission
 } from '../redux/actions/application/action-creators/action-creators';
 import {useComponentDidMount} from '../hooks/useComponentDidMount';
-import {useComponentWillUnmount} from '../hooks/useComponentWillUnmount';
+import {useAppDispatch, useAppSelector} from '../redux/store/store';
 
 const ApplicationWrapper = () => {
 
     const [elapsedTime, setElapsedTime] = useState(0);
 
-    const applicationInitialized = useSelector(state => state.application.applicationInitialized);
-    const locationPermission = useSelector(state => state.application.permissions.location);
+    const applicationInitialized = useAppSelector(state => state.application.applicationInitialized);
+    const locationPermission = useAppSelector(state => state.application.permissions.location);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useComponentDidMount(() => {
         dispatch(onApplicationMounted());
@@ -29,10 +27,6 @@ const ApplicationWrapper = () => {
         }, 400);
     });
 
-    useComponentWillUnmount(() => {
-        clearInterval();
-    });
-
     if (!applicationInitialized || elapsedTime < 1600) {
         return (
             <SplashImage />
@@ -40,8 +34,7 @@ const ApplicationWrapper = () => {
     } else if (!locationPermission.granted) {
         return (
             <LocationPermissionInitScreen
-                locationPermission={locationPermission}
-                onCheckLocationPermission={(locationPermissionResponse) => dispatch(onCheckLocationPermission(locationPermissionResponse))} />
+                locationPermission={locationPermission} />
         );
     } else {
         return (

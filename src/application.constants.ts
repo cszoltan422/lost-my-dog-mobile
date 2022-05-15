@@ -1,12 +1,6 @@
 export const APPLICATION_NAME = 'LostMyDog';
 export const USER_ASYNC_STORAGE_KEY = '@USER_ASYNC_STORAGE_KEY';
 export const USER_ROLE_ADMIN_VALUE = 'ADMIN';
-export const DASHBOARD_NAVIGATION_SCREEN_NAME = 'DASHBOARD_NAVIGATION_SCREEN_NAME';
-export const DETAILS_NAVIGATION_SCREEN_NAME = 'DETAILS_NAVIGATION_SCREEN_NAME';
-export const LOGIN_NAVIGATION_SCREEN_NAME = 'LOGIN_NAVIGATION_SCREEN_NAME';
-export const SUBMIT_DOG_NAVIGATION_SCREEN_NAME = 'SUBMIT_DOG_NAVIGATION_SCREEN_NAME';
-export const EDIT_DOG_NAVIGATION_SCREEN_NAME = 'EDIT_DOG_NAVIGATION_SCREEN_NAME';
-export const SIGN_UP_NAVIGATION_SCREEN_NAME = 'SIGN_UP_NAVIGATION_SCREEN_NAME';
 export const DASHBOARD_LIST_PAGE_SIZE = 10;
 export const DASHBOARD_INITIAL_SEARCH_DISTANCE_IN_METERS = 30000;
 export const DASHBOARD_MIN_SEARCH_DISTANCE_IN_METERS = 5000;
@@ -14,11 +8,11 @@ export const DASHBOARD_MAX_SEARCH_DISTANCE_IN_METERS = 100000;
 export const DASHBOARD_STEP_SEARCH_DISTANCE_IN_METERS = 1000;
 export const DASHBOARD_SEARCH_TYPE_LOST = 'LOST';
 export const DASHBOARD_SEARCH_TYPE_FOUND = 'FOUND';
-export const DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS = {
-    'LOST': 'general.lost',
-    'WANDERING': 'general.wandering',
-    'FOUND': 'general.found'
-};
+export const DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS = new Map<string, string>([
+    ['LOST', 'general.lost'],
+    ['WANDERING', 'general.wandering'],
+    ['FOUND', 'general.found']
+]);
 export const DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS = new Map<string, string>([
     ['MALE', 'general.male'],
     ['FEMALE', 'general.female']
@@ -32,6 +26,11 @@ export const DETAILS_DOG_HAS_CHIP_ENUM_TRANSLATION_KEYS = {
 export const SIGNUP_ERROR_TRANSLATION_KEYS = new Map<string, string>([
    ['USER_NAME_EXISTS', 'signUp.usernameTaken'],
    ['EMAIL_EXISTS', 'signUp.emailTaken']
+]);
+export const ERROR_MESSAGE_TRANSLATION_CODES = new Map<string, string>([
+    ['UNKNOWN_SERVER_ERROR', 'toast.unknownError'],
+    ['UNSAFE_IMAGE', 'toast.submitLostDog.unsafeImage'],
+    ['NOT_A_DOG', 'toast.submitLostDog.imageNotADog']
 ]);
 export const E2E_MOCK_LOCATION = {
     longitude: -122.406417,
@@ -63,10 +62,5 @@ export const SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY = 'SUBMIT_FORM_CHIP_NUMBER_T
 export const SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY = 'SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY';
 export const SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY = 'SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY';
 export const ONE_GIGABYTE_IN_BYTES = 1073741824;
-export const ERROR_MESSAGE_TRANSLATION_CODES = {
-    ['UNKNOWN_SERVER_ERROR']: 'toast.unknownError',
-    ['UNSAFE_IMAGE']: 'toast.submitLostDog.unsafeImage',
-    ['NOT_A_DOG']: 'toast.submitLostDog.imageNotADog',
-};
 export const SUBMIT_FORM_CREATE_MODE = 'SUBMIT_FORM_CREATE_MODE';
 export const SUBMIT_FORM_EDIT_MODE = 'SUBMIT_FORM_EDIT_MODE';

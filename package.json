@@ -75,6 +75,7 @@
     "@types/react-test-renderer": "^18.0.0",
     "@types/i18n-js": "^3.8.2",
     "@types/validator": "^13.6.0",
+    "@types/react-native-modal-dropdown": "^0.7.2",
     "@babel/core": "^7.12.9",
     "babel-eslint": "^10.1.0",
     "detox": "^18.20.2",

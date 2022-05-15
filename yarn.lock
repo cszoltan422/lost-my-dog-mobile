@@ -1964,6 +1964,14 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.4.tgz"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
 
+"@types/react-native-modal-dropdown@^0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@types/react-native-modal-dropdown/-/react-native-modal-dropdown-0.7.2.tgz#441db1ec31055f480cb81fe9437d1e42e984646d"
+  integrity sha512-r87shEJxAH28Tn+9KelvWyV1d7RIE1aDm6iw3SEFqDfckka6PE4k059twu2MX4Xpg2EZLgQsZPieyZ7lJKthHA==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
 "@types/react-native-vector-icons@^6.4.10", "@types/react-native-vector-icons@^6.4.6":
   version "6.4.10"
   resolved "https://registry.npmjs.org/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.10.tgz"

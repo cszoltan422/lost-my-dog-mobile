@@ -1,3 +1,5 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../../components/navigation/lost-my-dog-navigator';
 import {
     ON_LOGIN_ATTEMPT_ERROR,
     ON_LOGIN_ATTEMPTED,
@@ -20,7 +22,7 @@ export const onLoginPasswordChanged = (password: string) => {
     };
 };
 
-export const onLoginAttempted = (navigation: any) => {
+export const onLoginAttempted = (navigation: NativeStackNavigationProp<RootStackParamList, 'LoginScreen'>) => {
     return {
         type: ON_LOGIN_ATTEMPTED,
         payload: navigation

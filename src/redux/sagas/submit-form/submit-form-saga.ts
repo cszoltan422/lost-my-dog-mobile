@@ -25,9 +25,8 @@ import {
     SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
     SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
     SUBMIT_FORM_STATUS_SELECT_INPUT_KEY,
-    SUBMIT_DOG_NAVIGATION_SCREEN_NAME,
     SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY,
-    SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY, EDIT_DOG_NAVIGATION_SCREEN_NAME,
+    SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY,
 } from '../../../application.constants';
 import UserService, {LoginResult} from '../../../service/user-service';
 import LostDogSubmissionService, {
@@ -45,6 +44,9 @@ import {ApplicationUser} from '../../reducers/application/application-reducer';
 import {ImageResult} from 'expo-image-manipulator/src/ImageManipulator.types';
 import {FileInfo} from 'expo-file-system/src/FileSystem.types';
 import {ChippedStatus, LostDogGender, LostDogStatus} from '../../../service/search-lost-dogs-service';
+import {RouteProp} from '@react-navigation/native';
+import {RootStackParamList} from '../../../components/navigation/lost-my-dog-navigator';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 export function* submitFormSubmittedWatcherSaga() {
     yield takeLatest([ON_SUBMIT_FORM_SUBMITTED], submitFormSubmittedSaga);
@@ -122,9 +124,9 @@ function getPayload(
     }
 
     let status: LostDogStatus = 'LOST';
-    if (DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS['FOUND'] === statusInput?.value) {
+    if (DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS.get('FOUND') === statusInput?.value) {
         status = 'FOUND';
-    } else if (DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS['WANDERING'] === statusInput?.value) {
+    } else if (DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS.get('WANDERING') === statusInput?.value) {
         status = 'WANDERING';
     }
 
@@ -156,7 +158,11 @@ function getPayload(
     };
 }
 
-function* submitFormSubmittedSaga(action: PayloadAction<any>) {
+function* submitFormSubmittedSaga(action: PayloadAction<
+    {
+        route: RouteProp<RootStackParamList, 'SubmitLostDogScreen'> | RouteProp<RootStackParamList, 'EditLostDogScreen'>,
+        navigation: NativeStackNavigationProp<RootStackParamList, 'SubmitLostDogScreen'> | NativeStackNavigationProp<RootStackParamList, 'EditLostDogScreen'>
+    }>) {
     yield put(onSubmitFormLoading());
 
     const { route, navigation } = action.payload;
@@ -188,7 +194,7 @@ function* submitFormSubmittedSaga(action: PayloadAction<any>) {
                 }
 
                 yield put(onSubmitFormSubmitSuccess());
-                if (route.name === SUBMIT_DOG_NAVIGATION_SCREEN_NAME || route.name === EDIT_DOG_NAVIGATION_SCREEN_NAME) {
+                if (route.name === 'SubmitLostDogScreen' || route.name === 'EditLostDogScreen') {
                     navigation.goBack();
                 }
             } catch (error) {

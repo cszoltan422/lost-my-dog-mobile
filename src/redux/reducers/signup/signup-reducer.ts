@@ -205,7 +205,7 @@ export const reducer = createReducer(initialState, {
         state.isValid = true;
         state.isLoading = false;
         state.error = '';
-        Object.keys(state.inputs).forEach((inputKey) => {
+        Array.from(state.inputs.keys()).forEach((inputKey) => {
             const input = state.inputs.get(inputKey);
             if (input) {
                 const newInput = {

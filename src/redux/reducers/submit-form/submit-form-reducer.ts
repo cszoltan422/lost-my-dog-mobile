@@ -33,6 +33,7 @@ import {
     ON_SUBMIT_FORM_VALIDATION_ERROR
 } from '../../actions/submit-form/action-types/action-types';
 import {Location} from '../../../service/search-lost-dogs-service';
+import {KeyboardTypeOptions} from 'react-native';
 
 export type SubmitFormType = 'SUBMIT_FORM_CREATE_MODE' | 'SUBMIT_FORM_EDIT_MODE';
 
@@ -57,8 +58,8 @@ export interface SubmitFormTextInput {
     labelTestID?: string;
     inputTestID?: string;
     errorTestID?: string;
-    keyboardType?: string;
-    autoCapitalize?: string;
+    keyboardType?: KeyboardTypeOptions;
+    autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
     contextMenuHidden?: boolean;
     validator?: (value: string) => boolean;
 }

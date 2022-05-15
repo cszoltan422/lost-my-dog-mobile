@@ -13,12 +13,14 @@ import {setItem} from '../../../util/async-storage/async.storage';
 import {RootState} from '../../store/store';
 import {ApplicationUser} from '../../reducers/application/application-reducer';
 import {PayloadAction} from '@reduxjs/toolkit';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../../components/navigation/lost-my-dog-navigator';
 
 export function* loginAttemptWatcherSaga() {
     yield takeLatest([ON_LOGIN_ATTEMPTED], loginAttemptSaga);
 }
 
-function* loginAttemptSaga(action: PayloadAction<any>) {
+function* loginAttemptSaga(action: PayloadAction<NativeStackNavigationProp<RootStackParamList, 'LoginScreen'>>) {
     const username: string = yield select((state: RootState) => state.login.username);
     const password: string = yield select((state: RootState) => state.login.password);
 
@@ -45,7 +47,7 @@ function* loginAttemptSaga(action: PayloadAction<any>) {
             yield put(onApplicationSuccessfulLoginPersistUser(user));
             yield put(onLoginSuccess());
 
-            const navigation: any = action.payload;
+            const navigation = action.payload;
             navigation.goBack();
         } catch (error) {
             yield put(onLoginStopLoading());

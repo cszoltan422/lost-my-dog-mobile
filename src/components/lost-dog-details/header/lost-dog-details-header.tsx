@@ -1,13 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {StyleSheet, Text} from 'react-native';
 import {Button} from 'react-native-elements';
 import Card from '../../common/card/card';
 import CameraImagePicker from '../../common/image-picker/camera-image-picker';
 import colors from '../../../colors';
 import i18n from '../../../i18n/i18n';
+import {SubmitFormSelectedImage} from '../../../redux/reducers/submit-form/submit-form-reducer';
 
-const LostDogDetailsHeader = (props) => {
+interface IProps {
+    selectedImage: SubmitFormSelectedImage;
+    onImageSelected: (uri: string) => void;
+    onImageCleared: () => void;
+}
+
+const LostDogDetailsHeader = (props: IProps) => {
 
     return (
         <>
@@ -51,16 +57,5 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
 });
-
-LostDogDetailsHeader.propTypes = {
-    selectedImage: PropTypes.shape({
-        uri: PropTypes.string.isRequired,
-        isPresent: PropTypes.bool.isRequired,
-        isValid: PropTypes.bool.isRequired,
-        errorKey: PropTypes.string.isRequired
-    }).isRequired,
-    onImageSelected: PropTypes.func.isRequired,
-    onImageCleared: PropTypes.func.isRequired
-};
 
 export default LostDogDetailsHeader;

@@ -16,6 +16,9 @@ import {
     ON_SUBMIT_FORM_VALIDATION_ERROR
 } from '../action-types/action-types';
 import {Location} from '../../../../service/search-lost-dogs-service';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../../components/navigation/lost-my-dog-navigator';
 
 export type SubmitFormMode = 'SUBMIT_FORM_CREATE_MODE' | 'SUBMIT_FORM_EDIT_MODE';
 
@@ -24,7 +27,7 @@ export interface ErrorMessage {
     errorMessage: string;
 }
 
-export const onSubmitFormInputValueChanged = (inputKey: string, value: string) => {
+export const onSubmitFormInputValueChanged = (inputKey: string, value: string | boolean | undefined) => {
     return {
         type: ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
         payload: {
@@ -56,7 +59,10 @@ export const onSubmitFormImageCleared = () => {
     };
 };
 
-export const onSubmitFormSubmitted = (route: any, navigation: any) => {
+export const onSubmitFormSubmitted = (
+    route: RouteProp<RootStackParamList, 'SubmitLostDogScreen'> | RouteProp<RootStackParamList, 'EditLostDogScreen'>,
+    navigation: NativeStackNavigationProp<RootStackParamList, 'SubmitLostDogScreen'> | NativeStackNavigationProp<RootStackParamList, 'EditLostDogScreen'>
+) => {
     return {
         type: ON_SUBMIT_FORM_SUBMITTED,
         payload: {

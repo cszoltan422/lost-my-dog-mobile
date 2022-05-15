@@ -4,18 +4,23 @@ import DashboardScreen from '../../screens/dashboard-screen';
 import DetailsScreen from '../../screens/details-screen';
 import LoginScreen from '../../screens/login-screen';
 import SignupScreen from '../../screens/signup-screen';
-import SubmitLostDogScreen from '../../screens/SubmitLostDogScreen';
-import EditLostDogScreen from '../../screens/EditLostDogScreen';
+import SubmitLostDogScreen from '../../screens/submit-lost-dog-screen';
+import EditLostDogScreen from '../../screens/edit-lost-dog-screen';
 import colors from '../../colors';
-import {
-    DASHBOARD_NAVIGATION_SCREEN_NAME,
-    DETAILS_NAVIGATION_SCREEN_NAME, EDIT_DOG_NAVIGATION_SCREEN_NAME,
-    LOGIN_NAVIGATION_SCREEN_NAME, SIGN_UP_NAVIGATION_SCREEN_NAME, SUBMIT_DOG_NAVIGATION_SCREEN_NAME
-} from '../../application.constants';
 import i18n from '../../i18n/i18n';
 import LostDogDetailsNavigationHeader from '../lost-dog-details/navigation-header/lost-dog-details-navigation-header';
+import {LostDog} from '../../service/search-lost-dogs-service';
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+    DashboardScreen: undefined;
+    DetailsScreen: { dog: LostDog };
+    SubmitLostDogScreen: undefined;
+    EditLostDogScreen: { dog: LostDog };
+    SignupScreen: undefined;
+    LoginScreen: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const LostMyDogNavigator = () => {
     return (
@@ -26,13 +31,13 @@ const LostMyDogNavigator = () => {
             headerTintColor: 'white'
         }}>
             <Stack.Screen
-                name={DASHBOARD_NAVIGATION_SCREEN_NAME}
+                name='DashboardScreen'
                 component={DashboardScreen}
                 options={{
                     title: i18n.t('general.dashboard')
                 }} />
             <Stack.Screen
-                name={DETAILS_NAVIGATION_SCREEN_NAME}
+                name='DetailsScreen'
                 component={DetailsScreen}
                 options={({ route, navigation }) => {
                     const { dog } = route.params;
@@ -48,13 +53,13 @@ const LostMyDogNavigator = () => {
                     };
                 }} />
             <Stack.Screen
-                name={SUBMIT_DOG_NAVIGATION_SCREEN_NAME}
+                name='SubmitLostDogScreen'
                 component={SubmitLostDogScreen}
                 options={{
                     title: i18n.t('general.submitLostDog')
                 }} />
             <Stack.Screen
-                name={EDIT_DOG_NAVIGATION_SCREEN_NAME}
+                name='EditLostDogScreen'
                 component={EditLostDogScreen}
                 options={({ route }) => {
                     const { dog } = route.params;
@@ -64,14 +69,14 @@ const LostMyDogNavigator = () => {
                     };
                 }} />
             <Stack.Screen
-                name={SIGN_UP_NAVIGATION_SCREEN_NAME}
+                name='SignupScreen'
                 component={SignupScreen}
                 options={{
                     title: i18n.t('general.signUp'),
                     headerBackTitleVisible: false
                 }} />
             <Stack.Screen
-                name={LOGIN_NAVIGATION_SCREEN_NAME}
+                name='LoginScreen'
                 component={LoginScreen}
                 options={{
                     title: i18n.t('general.login'),

@@ -14,21 +14,16 @@ import {
     onDashboardRefreshPage
 } from '../redux/actions/dashboard/action-creators/action-creators';
 import i18n from '../i18n/i18n';
-import {
-    DETAILS_NAVIGATION_SCREEN_NAME,
-    LOGIN_NAVIGATION_SCREEN_NAME,
-    SUBMIT_DOG_NAVIGATION_SCREEN_NAME
-} from '../application.constants';
 import colors from '../colors';
 import {useComponentDidMount} from '../hooks/useComponentDidMount';
 import {useAppDispatch, useAppSelector} from '../redux/store/store';
+import {RootStackParamList} from '../components/navigation/lost-my-dog-navigator';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {LostDog} from '../service/search-lost-dogs-service';
 
-interface IProps {
-    navigation: any;
-}
+type IProps = NativeStackScreenProps<RootStackParamList, 'DashboardScreen'>;
 
 const DashboardScreen = (props: IProps) => {
-
     const { navigation } = props;
 
     const dataFetched = useAppSelector(state => state.dashboard.dataFetched);
@@ -85,10 +80,11 @@ const DashboardScreen = (props: IProps) => {
                     isLoading={isLoading}
                     onDashboardFetchNewPage={() => dispatch(onDashboardFetchNewPage())}
                     onDashboardRefreshPage={() => dispatch(onDashboardRefreshPage())}
-                    onListItemClicked={(item) => props.navigation.navigate(
-                        DETAILS_NAVIGATION_SCREEN_NAME, {
-                            dog: item
-                        }, null, null)} /> }
+                    onListItemClicked={(dog: LostDog) => {
+                        props.navigation.navigate('DetailsScreen', {
+                            dog: dog
+                        });
+                    }} /> }
             <FloatingActionButton
                 color={colors.primaryColor}
                 icon={{ name: 'add', color: colors.white }}
@@ -100,8 +96,8 @@ const DashboardScreen = (props: IProps) => {
                         color: colors.primaryColor,
                         pressHandler: () => {
                             navigation.navigate(user.isLoggedIn ?
-                                SUBMIT_DOG_NAVIGATION_SCREEN_NAME
-                                : LOGIN_NAVIGATION_SCREEN_NAME
+                                'SubmitLostDogScreen'
+                                : 'LoginScreen'
                             );
                         }
                     }

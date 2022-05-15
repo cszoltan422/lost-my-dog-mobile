@@ -5,13 +5,32 @@ import {Button} from 'react-native-elements';
 import ProgressBar from 'react-native-progress/Bar';
 import Card from '../common/card/card';
 import LocationPicker from '../common/location-picker/location-picker';
-import LostDogDetailsHeader from './header/LostDogDetailsHeader';
-import LostDogDetailsContent from './content/LostDogDetailsContent';
+import LostDogDetailsHeader from './header/lost-dog-details-header';
+import LostDogDetailsContent from './content/lost-dog-details-content';
 import i18n from '../../i18n/i18n';
 import colors from '../../colors';
+import {
+    SubmitFormInput,
+    SubmitFormLoadingState,
+    SubmitFormLocation, SubmitFormSelectedImage
+} from '../../redux/reducers/submit-form/submit-form-reducer';
+import {Location} from '../../service/search-lost-dogs-service';
 
-const LostDogDetails = (props) => {
-    
+interface IProps {
+    isLoading: boolean;
+    isValid: boolean;
+    inputs: Map<string, SubmitFormInput>;
+    loading: SubmitFormLoadingState;
+    location: SubmitFormLocation;
+    selectedImage: SubmitFormSelectedImage;
+    onLocationValueChanged: (location: Location) => void;
+    onInputValueChanged: (inputKey: string, value: string | boolean | undefined) => void;
+    onImageSelected: (uri: string) => void;
+    onImageCleared: () => void;
+    onSubmit: () => void;
+}
+
+const LostDogDetails = (props: IProps) => {
     return (
         <ScrollView
             testID='details-screen-scroll-view' >

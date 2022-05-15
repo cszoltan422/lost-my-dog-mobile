@@ -18,6 +18,8 @@ import UserService, {SignupRequest, SignupResult} from '../../../service/user-se
 import {PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../store/store';
 import {SignupInput} from '../../reducers/signup/signup-reducer';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../../components/navigation/lost-my-dog-navigator';
 
 export function* signupAttemptWatcherSaga() {
     yield takeLatest([ON_SIGNUP_ATTEMPTED], signupAttemptSaga);
@@ -45,12 +47,11 @@ function validatePasswordMatch(inputs: Map<string, SignupInput>) {
     return inputs.get(SIGNUP_PASSWORD_TEXT_INPUT_KEY)?.value === inputs.get(SIGNUP_CONFIRM_PASSWORD_TEXT_INPUT_KEY)?.value;
 }
 
-function* signupAttemptSaga(action: PayloadAction<any>) {
+function* signupAttemptSaga(action: PayloadAction<NativeStackNavigationProp<RootStackParamList, 'SignupScreen'>>) {
     try {
-        const { payload } = action;
-        const { navigation } = payload;
         yield put(onSignupLoading());
 
+        const navigation = action.payload;
         const inputs: Map<string, SignupInput> = yield select((state: RootState) => state.signup.inputs);
         const isValidForm = yield* validateFormInputs(inputs);
 

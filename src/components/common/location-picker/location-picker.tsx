@@ -14,6 +14,7 @@ interface IProps {
     iconName: string;
     iconColor: string;
     iconSize: number;
+    markerTitle?: string;
     onLocationValueChanged: (location: Location) => void;
 }
 

@@ -18,11 +18,37 @@ import {
     SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY,
     SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY
 } from '../../../application.constants';
+import {
+    SubmitFormInput,
+    SubmitFormSelectInput,
+    SubmitFormTextInput
+} from '../../../redux/reducers/submit-form/submit-form-reducer';
 
-const LostDogDetailsContent = (props) => {
+interface IProps {
+    isLoading: boolean;
+    isValid: boolean;
+    inputs: Map<string, SubmitFormInput>;
+    onInputValueChanged: (inputKey: string, value: string | boolean) => void;
+}
 
-    const renderTextInput = (inputKey) => {
+const LostDogDetailsContent = (props: IProps) => {
+
+    const renderInput = (inputKey: string) => {
         const input = props.inputs.get(inputKey);
+        if (input) {
+            if ('options' in input) {
+                return renderDropdown(inputKey, input);
+            } else if ('keyboardType' in input) {
+                return renderTextInput(inputKey, input);
+            } else {
+                return renderSwitch(inputKey, input);
+            }
+        } else {
+            return null;
+        }
+    };
+
+    const renderTextInput = (inputKey: string, input: SubmitFormTextInput) => {
         return (
             <>
                 <Text
@@ -52,8 +78,7 @@ const LostDogDetailsContent = (props) => {
         );
     };
 
-    const renderDropdown = (inputKey) => {
-        const input = props.inputs.get(inputKey);
+    const renderDropdown = (inputKey: string, input: SubmitFormSelectInput) => {
         const defaultValue = input.value ?
             i18n.t(input.value)
             : `${i18n.t(input.labelKey)}...`;
@@ -77,32 +102,30 @@ const LostDogDetailsContent = (props) => {
                     options={input.options.map((option) => {
                         return i18n.t(option);
                     })}
-                    onSelect={(index) => {
+                    onSelect={(index: string) => {
                         props.onInputValueChanged(
                             inputKey,
-                            input.options[index]
+                            input.options[parseInt(index)]
                         );
                     }} />
                 {!input.isValid && (
                     <Text
                         testID={input.errorTestID}
                         style={styles.errorLabel}>
-                        {i18n.t('submitForm.validation.fieldEmpty')}
+                        {i18n.t(input.errorKey)}
                     </Text>
                 )}
             </>
         );
     };
 
-    const renderSwitch = (inputKey) => {
-        const input = props.inputs.get(inputKey);
+    const renderSwitch = (inputKey: string, input: SubmitFormInput) => {
         return (
             <>
                 <Text
                     testID={input.labelTestID}
                     style={styles.labelTitle}>
                     {i18n.t(input.labelKey)}
-                    {input.isRequired && '*'}
                 </Text>
                 <Switch
                     testID={input.inputTestID}
@@ -110,13 +133,13 @@ const LostDogDetailsContent = (props) => {
                     disabled={props.isLoading}
                     trackColor={{ false: colors.grey, true: colors.primaryColor }}
                     thumbColor={colors.accentColor}
-                    value={input.value}
+                    value={Boolean(input.value)}
                     onValueChange={(value) => props.onInputValueChanged(inputKey, value)} />
                 {!input.isValid && (
                     <Text
                         testID={input.errorTestID}
                         style={styles.errorLabel}>
-                        {i18n.t('submitForm.validation.fieldEmpty')}
+                        {i18n.t(input.errorKey)}
                     </Text>
                 )}
             </>
@@ -128,7 +151,7 @@ const LostDogDetailsContent = (props) => {
             <Card
                 testID='lost-dog-details-content-description-card'
                 styles={
-                props.inputs.get(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY).isValid ?
+                props.inputs.get(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY)?.isValid ?
                     styles.descriptionCardStyle
                     : styles.descriptionCardErrorStyle
             }>
@@ -139,9 +162,9 @@ const LostDogDetailsContent = (props) => {
                         editable={!props.isLoading}
                         multiline
                         placeholder={`${i18n.t('general.description')}*...`}
-                        value={props.inputs.get(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY).value}
+                        value={props.inputs.get(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY)?.value?.toString() || ''}
                         onChangeText={(value) => props.onInputValueChanged(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY, value)} />
-                    {!props.inputs.get(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY).isValid && (
+                    {!props.inputs.get(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY)?.isValid && (
                         <Text
                             testID='details-screen-description-text-input-error'
                             style={styles.errorLabelWhite}>
@@ -154,35 +177,35 @@ const LostDogDetailsContent = (props) => {
                 <>
                     <View style={styles.rowContainer}>
                         <View style={styles.columnContainer}>
-                            {renderTextInput(SUBMIT_FORM_NAME_TEXT_INPUT_KEY)}
+                            {renderInput(SUBMIT_FORM_NAME_TEXT_INPUT_KEY)}
                         </View>
                         <View style={styles.columnContainer}>
-                            {renderTextInput(SUBMIT_FORM_BREED_TEXT_INPUT_KEY)}
+                            {renderInput(SUBMIT_FORM_BREED_TEXT_INPUT_KEY)}
                         </View>
                     </View>
                     <View style={styles.rowContainer}>
                         <View style={styles.columnContainer}>
-                            {renderDropdown(SUBMIT_FORM_SEX_SELECT_INPUT_KEY)}
+                            {renderInput(SUBMIT_FORM_SEX_SELECT_INPUT_KEY)}
                         </View>
                         <View style={styles.columnContainer}>
-                            {renderTextInput(SUBMIT_FORM_COLOR_TEXT_INPUT_KEY)}
+                            {renderInput(SUBMIT_FORM_COLOR_TEXT_INPUT_KEY)}
                         </View>
                     </View>
                     <View style={styles.rowContainer}>
                         <View style={styles.columnContainer}>
-                            {renderDropdown(SUBMIT_FORM_STATUS_SELECT_INPUT_KEY)}
+                            {renderInput(SUBMIT_FORM_STATUS_SELECT_INPUT_KEY)}
                         </View>
                         <View style={styles.columnContainer}>
-                            {renderTextInput(SUBMIT_FORM_AGE_TEXT_INPUT_KEY)}
+                            {renderInput(SUBMIT_FORM_AGE_TEXT_INPUT_KEY)}
                         </View>
                     </View>
                     <View style={styles.rowContainer}>
                         <View style={styles.columnContainer}>
-                            {renderSwitch(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY)}
+                            {renderInput(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY)}
                         </View>
-                        {props.inputs.get(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY).value && (
+                        {props.inputs.get(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY)?.value && (
                             <View style={styles.columnContainer}>
-                                {renderTextInput(SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY)}
+                                {renderInput(SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY)}
                             </View>
                         )}
                     </View>
@@ -196,10 +219,10 @@ const LostDogDetailsContent = (props) => {
             <Card testID='lost-dog-details-content-contact-inputs-card'>
                 <View style={styles.rowContainer}>
                     <View style={styles.columnContainer}>
-                        {renderTextInput(SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY)}
+                        {renderInput(SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY)}
                     </View>
                     <View style={styles.columnContainer}>
-                        {renderTextInput(SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY)}
+                        {renderInput(SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY)}
                     </View>
                 </View>
             </Card>
