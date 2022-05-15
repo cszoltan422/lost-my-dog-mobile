@@ -1,10 +1,9 @@
 import { takeLatest, select, call, put } from 'redux-saga/effects';
 import UserService, {LoginResult, UserDetails} from '../../../service/user-service';
-import {onApplicationSuccessfulLoginPersistUser} from '../../actions/application/action-creators/action-creators';
 import {USER_ASYNC_STORAGE_KEY, USER_ROLE_ADMIN_VALUE} from '../../../application.constants';
 import {setItem} from '../../../util/async-storage/async.storage';
 import {RootState} from '../../store/store';
-import {ApplicationUser} from '../../reducers/application/application-reducer';
+import {ApplicationUser, setApplicationUser} from '../../reducers/application/application-reducer';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../components/navigation/lost-my-dog-navigator';
@@ -38,7 +37,7 @@ function* loginAttemptSaga(action: PayloadAction<NativeStackNavigationProp<RootS
             };
 
             yield call(setItem, USER_ASYNC_STORAGE_KEY, JSON.stringify(user));
-            yield put(onApplicationSuccessfulLoginPersistUser(user));
+            yield put(setApplicationUser(user));
             yield put(loginSuccess());
 
             const navigation = action.payload;

@@ -1,12 +1,5 @@
 import { takeLatest, select, call, put } from 'redux-saga/effects';
-import {
-    ON_APPLICATION_MOUNTED,
-    ON_CHECK_LOCATION_PERMISSION, ON_WATCH_CURRENT_LOCATION
-} from '../../actions/application/action-types/action-types';
 import {E2E_MOCK_LOCATION, USER_ASYNC_STORAGE_KEY} from '../../../application.constants';
-import {
-    onInitializeApplication, onLocationPermissionChecked, onUpdateCurrentLocation, onWatchCurrentLocation
-} from '../../actions/application/action-creators/action-creators';
 import {getItem} from '../../../util/async-storage/async.storage';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
@@ -18,21 +11,26 @@ import {LocationObject, LocationPermissionResponse} from 'expo-location/src/Loca
 import {CameraPermissionResponse, MediaLibraryPermissionResponse} from 'expo-image-picker/src/ImagePicker.types';
 import {
     ApplicationInitializer,
+    applicationMounted,
     ApplicationPermission,
-    ApplicationUser
+    ApplicationUser,
+    initializeApplication,
+    locationPermissionChecked,
+    setApplicationLocation,
+    setApplicationLocationPermission, watchCurrentLocation
 } from '../../reducers/application/application-reducer';
 import {PayloadAction} from '@reduxjs/toolkit';
 
 export function* applicationMountedWatcherSaga() {
-    yield takeLatest([ON_APPLICATION_MOUNTED], applicationMountedSaga);
+    yield takeLatest([applicationMounted.type], applicationMountedSaga);
 }
 
 export function* onCheckLocationPermissionWatcherSaga() {
-    yield takeLatest([ON_CHECK_LOCATION_PERMISSION], onCheckLocationPermissionSaga);
+    yield takeLatest([locationPermissionChecked.type], onCheckLocationPermissionSaga);
 }
 
 export function* onWatchCurrentLocationWatcherSaga() {
-    yield takeLatest([ON_WATCH_CURRENT_LOCATION], onWatchCurrentLocationSaga);
+    yield takeLatest([watchCurrentLocation.type], onWatchCurrentLocationSaga);
 }
 
 function* applicationMountedSaga() {
@@ -64,9 +62,9 @@ function* applicationMountedSaga() {
 
         if (locationPermission.granted) {
             if (ENV.GET_DEVICE_LOCATION) {
-                yield put(onWatchCurrentLocation());
+                yield put(watchCurrentLocation());
             } else {
-                yield put(onUpdateCurrentLocation({
+                yield put(setApplicationLocation({
                     longitude: E2E_MOCK_LOCATION.longitude,
                     latitude: E2E_MOCK_LOCATION.latitude
                 }));
@@ -94,7 +92,7 @@ function* applicationMountedSaga() {
             user: user
         };
 
-        yield put(onInitializeApplication(applicationInitializer));
+        yield put(initializeApplication(applicationInitializer));
     }
 }
 
@@ -103,7 +101,7 @@ function* onCheckLocationPermissionSaga(action: PayloadAction<LocationPermission
     if (!location.granted) {
         const locationPermission = action.payload;
         if (locationPermission) {
-            yield put(onLocationPermissionChecked({
+            yield put(setApplicationLocationPermission({
                 granted: locationPermission.granted,
                 canAskAgain: locationPermission.canAskAgain,
                 lastChecked: moment().milliseconds()
@@ -111,9 +109,9 @@ function* onCheckLocationPermissionSaga(action: PayloadAction<LocationPermission
 
             if (locationPermission.granted) {
                 if (ENV.GET_DEVICE_LOCATION) {
-                    yield put(onWatchCurrentLocation());
+                    yield put(watchCurrentLocation());
                 } else {
-                    yield put(onUpdateCurrentLocation({
+                    yield put(setApplicationLocation({
                         longitude: E2E_MOCK_LOCATION.longitude,
                         latitude: E2E_MOCK_LOCATION.latitude
                     }));
@@ -125,7 +123,7 @@ function* onCheckLocationPermissionSaga(action: PayloadAction<LocationPermission
 
 function* onWatchCurrentLocationSaga() {
     const res: LocationObject = yield call(watchPositionAsync);
-    yield put(onUpdateCurrentLocation({
+    yield put(setApplicationLocation({
         longitude: res.coords.longitude,
         latitude: res.coords.latitude
     }));
