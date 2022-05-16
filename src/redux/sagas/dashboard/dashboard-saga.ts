@@ -1,6 +1,5 @@
 import {takeLatest, call, select, put, delay} from 'redux-saga/effects';
 import SearchLostDogsService, {LostDog, LostDogSearchParameters} from '../../../service/search-lost-dogs-service';
-import {ON_SUBMIT_FORM_SUBMIT_SUCCESS} from '../../actions/submit-form/action-types/action-types';
 import {Action, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../store/store';
 import {
@@ -11,13 +10,14 @@ import {
     setDashboardRefreshing, setDashboardSearchRadius, setDashboardSearchType, setDashboardShowError
 } from '../../reducers/dashboard/dashboard-reducer';
 import {ApplicationLocation} from '../../reducers/application/application-reducer';
+import {submitFormSubmitSuccess} from '../../reducers/submit-form/submit-form-reducer';
 
 const CLEAR_DATA_ACTIONS = [
     dashboardMounted.type,
     setDashboardPage.type,
     setDashboardSearchRadius.type,
     setDashboardSearchType.type,
-    ON_SUBMIT_FORM_SUBMIT_SUCCESS
+    submitFormSubmitSuccess.type
 ];
 
 const ACTION_TYPE_STATUS_CHANGE_HANDLER = new Map<string, {(): Action}[]>([
@@ -42,7 +42,7 @@ const ACTION_TYPE_STATUS_CHANGE_HANDLER = new Map<string, {(): Action}[]>([
         [() => setDashboardLoading(true)]
     ],
     [
-        ON_SUBMIT_FORM_SUBMIT_SUCCESS,
+        submitFormSubmitSuccess.type,
         [() => setDashboardLoading(true), () => setDashboardPage(0)]
     ]
 ]);
@@ -54,7 +54,7 @@ export function* dashboardFetchActionWatcherSaga() {
         dashboardIncrementPage.type,
         setDashboardSearchRadius.type,
         setDashboardSearchType.type,
-        ON_SUBMIT_FORM_SUBMIT_SUCCESS
+        submitFormSubmitSuccess.type
     ], dashboardFetchActionSaga);
 }
 

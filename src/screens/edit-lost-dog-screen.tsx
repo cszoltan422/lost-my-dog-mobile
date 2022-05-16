@@ -2,13 +2,6 @@ import React, {useEffect} from 'react';
 import LostDogDetails from '../components/lost-dog-details/lost-dog-details';
 import Toast from 'react-native-toast-message';
 import i18n from '../i18n/i18n';
-import {
-    onResetSubmitForm, onSubmitFormChangeMode, onSubmitFormHideAlert, onSubmitFormImageCleared,
-    onSubmitFormImageSelected,
-    onSubmitFormInputValueChanged,
-    onSubmitFormLocationValueChanged, onSubmitFormSetDogId,
-    onSubmitFormSubmitted
-} from '../redux/actions/submit-form/action-creators/action-creators';
 import {useComponentDidMount} from '../hooks/useComponentDidMount';
 import {useComponentWillUnmount} from '../hooks/useComponentWillUnmount';
 import {
@@ -29,11 +22,18 @@ import ENV from '../environmnent.config';
 import {useAppDispatch, useAppSelector} from '../redux/store/store';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../components/navigation/lost-my-dog-navigator';
+import {
+    resetSubmitForm,
+    setSubmitFormDogId, setSubmitFormError,
+    setSubmitFormMode, submitFormClearImage,
+    submitFormImageChange,
+    submitFormInputChange, submitFormLocationChange, submitFormSubmit
+} from '../redux/reducers/submit-form/submit-form-reducer';
 
 type IProps = NativeStackScreenProps<RootStackParamList, 'EditLostDogScreen'>;
 
 const EditLostDogScreen = (props: IProps) => {
-    const { route, navigation } = props;
+    const { route } = props;
     const { dog } = route.params;
 
     const isValid = useAppSelector(state => state.submitForm.isValid);
@@ -47,31 +47,64 @@ const EditLostDogScreen = (props: IProps) => {
     const dispatch = useAppDispatch();
 
     useComponentDidMount(() => {
-        dispatch(onSubmitFormSetDogId(dog.id));
-        dispatch(onSubmitFormLocationValueChanged({
+        dispatch(setSubmitFormDogId(dog.id));
+        dispatch(submitFormLocationChange({
             longitude: dog.longitude,
             latitude: dog.latitude
         }));
-        dispatch(onSubmitFormImageSelected(`${ENV.API_URL}/api/image/${dog.avatarFilename}`));
+        dispatch(submitFormImageChange(`${ENV.API_URL}/api/image/${dog.avatarFilename}`));
 
-        dispatch(onSubmitFormInputValueChanged(SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY, dog.description));
-        dispatch(onSubmitFormInputValueChanged(SUBMIT_FORM_NAME_TEXT_INPUT_KEY, dog.dogName));
-        dispatch(onSubmitFormInputValueChanged(SUBMIT_FORM_BREED_TEXT_INPUT_KEY, dog.dogBreed));
-        dispatch(onSubmitFormInputValueChanged(SUBMIT_FORM_SEX_SELECT_INPUT_KEY, DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS.get(dog.gender) || ''));
-        dispatch(onSubmitFormInputValueChanged(SUBMIT_FORM_COLOR_TEXT_INPUT_KEY, dog.color));
-        dispatch(onSubmitFormInputValueChanged(SUBMIT_FORM_STATUS_SELECT_INPUT_KEY, DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS.get(dog.status) || ''));
-        dispatch(onSubmitFormInputValueChanged(SUBMIT_FORM_AGE_TEXT_INPUT_KEY, `${dog.age}`));
-        dispatch(onSubmitFormInputValueChanged(SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY, dog.chippedStatus));
-        dispatch(onSubmitFormInputValueChanged(SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY, dog.chipNumber));
-        dispatch(onSubmitFormInputValueChanged(SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY, dog.contactEmail));
-        dispatch(onSubmitFormInputValueChanged(SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY, dog.contactPhone));
+        dispatch(submitFormInputChange({
+            inputKey: SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY,
+            value: dog.description
+        }));
+        dispatch(submitFormInputChange({
+            inputKey: SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
+            value: dog.dogName
+        }));
+        dispatch(submitFormInputChange({
+            inputKey: SUBMIT_FORM_BREED_TEXT_INPUT_KEY,
+            value: dog.dogBreed
+        }));
+        dispatch(submitFormInputChange({
+            inputKey: SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
+            value: DETAILS_DOG_SEX_ENUM_TRANSLATION_KEYS.get(dog.gender) || ''
+        }));
+        dispatch(submitFormInputChange({
+            inputKey: SUBMIT_FORM_COLOR_TEXT_INPUT_KEY,
+            value: dog.color
+        }));
+        dispatch(submitFormInputChange({
+            inputKey: SUBMIT_FORM_STATUS_SELECT_INPUT_KEY,
+            value: DASHBOARD_DOG_STATUS_ENUM_TRANSLATION_KEYS.get(dog.status) || ''
+        }));
+        dispatch(submitFormInputChange({
+            inputKey: SUBMIT_FORM_AGE_TEXT_INPUT_KEY,
+            value: dog.age.toString()
+        }));
+        dispatch(submitFormInputChange({
+            inputKey: SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY,
+            value: dog.chippedStatus
+        }));
+        dispatch(submitFormInputChange({
+            inputKey: SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY,
+            value: dog.chipNumber
+        }));
+        dispatch(submitFormInputChange({
+            inputKey: SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY,
+            value: dog.contactEmail
+        }));
+        dispatch(submitFormInputChange({
+            inputKey: SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY,
+            value: dog.contactPhone
+        }));
 
-        dispatch(onSubmitFormChangeMode(SUBMIT_FORM_EDIT_MODE)); // order matters, check submit-screen.reducer.js
+        dispatch(setSubmitFormMode(SUBMIT_FORM_EDIT_MODE)); // order matters, check submit-screen.reducer.js
     });
 
     useComponentWillUnmount(() => {
-        dispatch(onSubmitFormChangeMode(SUBMIT_FORM_CREATE_MODE));
-        dispatch(onResetSubmitForm());
+        dispatch(setSubmitFormMode(SUBMIT_FORM_CREATE_MODE));
+        dispatch(resetSubmitForm());
     });
 
     useEffect(() => {
@@ -82,7 +115,11 @@ const EditLostDogScreen = (props: IProps) => {
                 text1: i18n.t('toast.headerText'),
                 text2: i18n.t(ERROR_MESSAGE_TRANSLATION_CODES.get(error.message) || 'toast.unknownError'),
                 autoHide: false,
-                onHide: () => dispatch(onSubmitFormHideAlert()),
+                onHide: () => dispatch(setSubmitFormError({
+                    show: false,
+                    code: 0,
+                    message: ''
+                })),
             });
         }
     }, [error]);
@@ -95,11 +132,14 @@ const EditLostDogScreen = (props: IProps) => {
             inputs={inputs}
             location={location}
             selectedImage={selectedImage}
-            onInputValueChanged={(inputKey, value) => dispatch(onSubmitFormInputValueChanged(inputKey, value))}
-            onLocationValueChanged={(coordinates) => dispatch(onSubmitFormLocationValueChanged(coordinates))}
-            onImageSelected={(selectedImageUri) => dispatch(onSubmitFormImageSelected(selectedImageUri))}
-            onImageCleared={() => dispatch(onSubmitFormImageCleared())}
-            onSubmit={() => dispatch(onSubmitFormSubmitted(route, navigation))} />
+            onInputValueChanged={(inputKey, value) => dispatch(submitFormInputChange({
+                inputKey: inputKey,
+                value: value
+            }))}
+            onLocationValueChanged={(coordinates) => dispatch(submitFormLocationChange(coordinates))}
+            onImageSelected={(selectedImageUri) => dispatch(submitFormImageChange(selectedImageUri))}
+            onImageCleared={() => dispatch(submitFormClearImage())}
+            onSubmit={() => dispatch(submitFormSubmit(props))} />
     );
 };
 
