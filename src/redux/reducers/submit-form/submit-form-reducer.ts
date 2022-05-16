@@ -1,4 +1,4 @@
-import {createReducer} from '@reduxjs/toolkit';
+import {createAction, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import validator from 'validator';
 import {
     EMOJI_REGEX,
@@ -8,7 +8,6 @@ import {
     SUBMIT_FORM_COLOR_TEXT_INPUT_KEY,
     SUBMIT_FORM_CREATE_MODE,
     SUBMIT_FORM_DESCRIPTION_TEXT_INPUT_KEY,
-    SUBMIT_FORM_EDIT_MODE,
     SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY,
     SUBMIT_FORM_NAME_TEXT_INPUT_KEY,
     SUBMIT_FORM_SEX_SELECT_INPUT_KEY,
@@ -16,24 +15,10 @@ import {
     SUBMIT_FORM_SUBMITTER_EMAIL_INPUT_KEY,
     SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY
 } from '../../../application.constants';
-import {
-    ON_RESET_SUBMIT_FORM,
-    ON_SUBMIT_FORM_CHANGE_MODE,
-    ON_SUBMIT_FORM_HIDE_ALERT,
-    ON_SUBMIT_FORM_IMAGE_CLEARED,
-    ON_SUBMIT_FORM_IMAGE_INVALID,
-    ON_SUBMIT_FORM_IMAGE_SELECTED,
-    ON_SUBMIT_FORM_INPUT_VALUE_CHANGED,
-    ON_SUBMIT_FORM_LOADING,
-    ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED,
-    ON_SUBMIT_FORM_PUBLISH_LOADING_PROGRESS,
-    ON_SUBMIT_FORM_SET_DOG_ID,
-    ON_SUBMIT_FORM_STOP_LOADING,
-    ON_SUBMIT_FORM_SUBMIT_ERROR,
-    ON_SUBMIT_FORM_VALIDATION_ERROR
-} from '../../actions/submit-form/action-types/action-types';
 import {Location} from '../../../service/search-lost-dogs-service';
 import {KeyboardTypeOptions} from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../../components/navigation/lost-my-dog-navigator';
 
 export type SubmitFormType = 'SUBMIT_FORM_CREATE_MODE' | 'SUBMIT_FORM_EDIT_MODE';
 
@@ -93,7 +78,6 @@ export type SubmitFormInput = SubmitFormTextInput | SubmitFormSelectInput | Subm
 
 export interface SubmitFormLocation extends Location {
     isPresent: boolean;
-    hasChangedInEditMode: boolean;
 }
 
 export interface SubmitFormSelectedImage {
@@ -101,12 +85,13 @@ export interface SubmitFormSelectedImage {
     isValid: boolean,
     errorKey: string;
     uri: string,
-    hasChangedInEditMode: boolean;
 }
+
+export type SubmitFormMode = 'SUBMIT_FORM_CREATE_MODE' | 'SUBMIT_FORM_EDIT_MODE';
 
 export interface SubmitFormState {
     mode: SubmitFormType;
-    dogId: number;
+    dogId?: number;
     isValid: boolean;
     isLoading: boolean;
     loading: SubmitFormLoadingState;
@@ -118,7 +103,7 @@ export interface SubmitFormState {
 
 export const initialState: SubmitFormState = {
     mode: SUBMIT_FORM_CREATE_MODE,
-    dogId: -1,
+    dogId: undefined,
     isValid: true,
     isLoading: false,
     loading: {
@@ -357,170 +342,157 @@ export const initialState: SubmitFormState = {
         isPresent: false,
         latitude: 0,
         longitude: 0,
-        hasChangedInEditMode: false
     },
     selectedImage: {
         isPresent: false,
         isValid: true,
         errorKey: '',
         uri: '',
-        hasChangedInEditMode: false
     },
 };
 
-export const reducer = createReducer(initialState, {
-    [ON_SUBMIT_FORM_INPUT_VALUE_CHANGED]: (state, action) => {
-        const { payload } = action;
-        const { inputKey, value } = payload;
-        const input = state.inputs.get(inputKey);
+export interface SubmitFormInputChangePayload {
+    inputKey: string;
+    value: string | boolean | undefined;
+}
 
-        if (input) {
-            const newInput: SubmitFormInput = {
-                ...input,
-                value,
-                isValid: true
-            };
-            state.inputs.set(inputKey, newInput);
-        }
-        state.isValid = true;
-    },
-    [ON_SUBMIT_FORM_LOCATION_VALUE_CHANGED]: (state, action) => {
-        const { payload } = action;
-        const { latitude, longitude } = payload;
-        state.location = {
-            isPresent: true,
-            latitude,
-            longitude,
-            hasChangedInEditMode: state.mode === SUBMIT_FORM_EDIT_MODE
-        };
-    },
-    [ON_SUBMIT_FORM_IMAGE_SELECTED]: (state, action) => {
-        const { payload } = action;
-        const { uri } = payload;
-
-        state.selectedImage = {
-            isPresent: true,
-            isValid: true,
-            errorKey: '',
-            uri,
-            hasChangedInEditMode: state.mode === SUBMIT_FORM_EDIT_MODE
-        };
-
-        state.isValid = true;
-    },
-    [ON_SUBMIT_FORM_IMAGE_CLEARED]: (state) => {
-        state.selectedImage.isPresent = false;
-        state.selectedImage.isValid = true;
-        state.selectedImage.errorKey = '';
-        state.selectedImage.uri = '';
-    },
-    [ON_SUBMIT_FORM_IMAGE_INVALID]: (state, action) => {
-        const { payload } = action;
-        const { errorKey } = payload;
-
-        state.selectedImage.isValid = false;
-        state.selectedImage.errorKey = errorKey;
-
-        state.isValid = false;
-    },
-    [ON_SUBMIT_FORM_VALIDATION_ERROR]: (state, action) => {
-        const { payload } = action;
-        const { inputKey } = payload;
-        const input = state.inputs.get(inputKey);
-
-        if (input) {
-            const newInput: SubmitFormInput = {
-                ...input,
-                isValid: false,
-            };
-            state.inputs.set(inputKey, newInput);
-        }
-
-        state.isValid = false;
-    },
-    [ON_SUBMIT_FORM_LOADING]: (state) => {
-        state.isLoading = true;
-    },
-    [ON_SUBMIT_FORM_STOP_LOADING]: (state) => {
-        state.isLoading = false;
-        state.loading = {
-            progress: 0,
-            stage: ''
-        };
-    },
-    [ON_SUBMIT_FORM_SUBMIT_ERROR]: (state, action) => {
-        const { payload } = action;
-        const { errorCode, errorMessage } = payload;
-
-        state.isLoading = false;
-        state.error = {
-            show: true,
-            code: errorCode,
-            message: errorMessage
-        };
-    },
-    [ON_RESET_SUBMIT_FORM]: (state) => {
-        state.dogId = -1;
-        state.isValid = true;
-        state.isLoading = false;
-        state.loading = {
-            progress: 0,
-            stage: ''
-        };
-        state.error = {
-            code: 0,
-            message: '',
-            show: false,
-        };
-
-
-        Array.from(state.inputs.keys()).forEach((inputKey) => {
+const submitFormSlice = createSlice({
+    name: 'submitForm',
+    initialState,
+    reducers: {
+        submitFormInputChange: (state, action: PayloadAction<SubmitFormInputChangePayload>) => {
+            const { payload } = action;
+            const { inputKey } = payload;
             const input = state.inputs.get(inputKey);
+
             if (input) {
-                const newInput = {
-                    ...input,
-                    isValid: true
+                const newInput: SubmitFormInput = {
+                    ...input
                 };
-                newInput.value = input.initialValue;
+                newInput.value = action.payload.value;
+                newInput.isValid = true;
                 state.inputs.set(inputKey, newInput);
             }
-        });
-        state.location = {
-            isPresent: false,
-            latitude: 0,
-            longitude: 0,
-            hasChangedInEditMode: false
-        };
-        state.selectedImage = {
-            isPresent: false,
-            isValid: true,
-            errorKey: '',
-            uri: '',
-            hasChangedInEditMode: false
-        };
-    },
-    [ON_SUBMIT_FORM_PUBLISH_LOADING_PROGRESS]: (state, action) => {
-        const { payload } = action;
-        const { progress, stage } = payload;
+            state.isValid = true;
+        },
+        submitFormLocationChange: (state, action: PayloadAction<Location>) => {
+            const { payload } = action;
+            const { latitude, longitude } = payload;
+            state.location = {
+                isPresent: true,
+                latitude,
+                longitude
+            };
+        },
+        submitFormImageChange: (state, action: PayloadAction<string>) => {
+            state.selectedImage = {
+                isPresent: true,
+                isValid: true,
+                errorKey: '',
+                uri: action.payload
+            };
 
-        state.loading = {
-            progress,
-            stage
-        };
-    },
-    [ON_SUBMIT_FORM_HIDE_ALERT]: (state) => {
-        state.error.show = false;
-    },
-    [ON_SUBMIT_FORM_CHANGE_MODE]: (state, action) => {
-        const { payload } = action;
-        const { mode } = payload;
+            state.isValid = true;
+        },
+        submitFormClearImage: (state) => {
+            state.selectedImage.isPresent = false;
+            state.selectedImage.isValid = true;
+            state.selectedImage.errorKey = '';
+            state.selectedImage.uri = '';
+        },
+        submitFormImageInvalid: (state, action: PayloadAction<string>) => {
+            state.selectedImage.isValid = false;
+            state.selectedImage.errorKey = action.payload;
+            state.isValid = false;
+        },
+        submitFormValidationError: (state, action: PayloadAction<string>) => {
+            const input = state.inputs.get(action.payload);
 
-        state.mode = mode;
-    },
-    [ON_SUBMIT_FORM_SET_DOG_ID]: (state, action) => {
-        const { payload } = action;
-        const { dogId } = payload;
+            if (input) {
+                const newInput: SubmitFormInput = {
+                    ...input,
+                    isValid: false,
+                };
+                state.inputs.set(action.payload, newInput);
+            }
 
-        state.dogId = dogId;
+            state.isValid = false;
+        },
+        setSubmitFormIsLoading: (state, action: PayloadAction<boolean>) => {
+            state.isLoading = action.payload;
+        },
+        setSubmitFormLoadingState: (state, action: PayloadAction<SubmitFormLoadingState>) => {
+            state.loading.stage = action.payload.stage;
+            state.loading.progress = action.payload.progress;
+        },
+        setSubmitFormError: (state, action: PayloadAction<SubmitFormError>) => {
+            state.error.show = action.payload.show;
+            state.error.code = action.payload.code;
+            state.error.message = action.payload.message;
+        },
+        setSubmitFormMode: (state, action: PayloadAction<SubmitFormMode>) => {
+            state.mode = action.payload;
+        },
+        setSubmitFormDogId: (state, action: PayloadAction<number | undefined>) => {
+            state.dogId = action.payload;
+        },
+        resetSubmitForm: (state) => {
+            state.dogId = undefined;
+            state.isValid = true;
+            state.isLoading = false;
+            state.loading = {
+                progress: 0,
+                stage: ''
+            };
+            state.error = {
+                code: 0,
+                message: '',
+                show: false,
+            };
+
+
+            Array.from(state.inputs.keys()).forEach((inputKey) => {
+                const input = state.inputs.get(inputKey);
+                if (input) {
+                    const newInput = {
+                        ...input,
+                        isValid: true
+                    };
+                    newInput.value = input.initialValue;
+                    state.inputs.set(inputKey, newInput);
+                }
+            });
+            state.location = {
+                isPresent: false,
+                latitude: 0,
+                longitude: 0
+            };
+            state.selectedImage = {
+                isPresent: false,
+                isValid: true,
+                errorKey: '',
+                uri: ''
+            };
+        }
     }
 });
+
+const submitFormReducer = submitFormSlice.reducer;
+
+export const {
+    submitFormInputChange,
+    submitFormLocationChange,
+    submitFormImageChange,
+    submitFormClearImage,
+    submitFormImageInvalid,
+    submitFormValidationError,
+    setSubmitFormIsLoading,
+    setSubmitFormLoadingState,
+    setSubmitFormError,
+    setSubmitFormMode,
+    setSubmitFormDogId,
+    resetSubmitForm
+} = submitFormSlice.actions;
+export const submitFormSubmit = createAction<NativeStackScreenProps<RootStackParamList, 'SubmitLostDogScreen' | 'EditLostDogScreen'>>('submitForm/submitFormSubmit');
+export const submitFormSubmitSuccess = createAction('submitForm/submitFormSubmitSuccess');
+export default submitFormReducer;

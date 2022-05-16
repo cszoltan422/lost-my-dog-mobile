@@ -1,12 +1,7 @@
-import {createReducer} from '@reduxjs/toolkit';
-import {
-    ON_APPLICATION_SUCCESSFUL_LOGIN_PERSIST_USER,
-    ON_INITIALIZE_APPLICATION,
-    ON_LOCATION_PERMISSION_CHECKED,
-    ON_UPDATE_CURRENT_LOCATION,
-} from '../../actions/application/action-types/action-types';
+import {createAction, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Location} from '../../../service/search-lost-dogs-service';
 import {UserDetails} from '../../../service/user-service';
+import {LocationPermissionResponse} from 'expo-location/src/Location.types';
 
 export interface ApplicationUser {
     token: string;
@@ -81,26 +76,43 @@ export const initialState: ApplicationState = {
     }
 };
 
-export const reducer = createReducer(initialState, {
-    [ON_INITIALIZE_APPLICATION]: (state, action) => {
-        const { payload } = action;
-        const { user, permissions } = payload;
-        state.applicationInitialized = true;
-        state.user = user;
-        state.permissions = permissions;
-    },
-    [ON_LOCATION_PERMISSION_CHECKED]: (state, action) => {
-        state.permissions.location = action.payload;
-    },
-    [ON_UPDATE_CURRENT_LOCATION]: (state, action) => {
-        const { payload } = action;
-        state.location = {
-            longitude: payload.longitude,
-            latitude: payload.latitude,
-            isPresent: true
-        };
-    },
-    [ON_APPLICATION_SUCCESSFUL_LOGIN_PERSIST_USER]: (state, action) => {
-        state.user = action.payload;
+const applicationSlice = createSlice({
+    name: 'application',
+    initialState,
+    reducers: {
+        initializeApplication: (state, action: PayloadAction<ApplicationInitializer>) => {
+            const { payload } = action;
+            const { user, permissions } = payload;
+            state.applicationInitialized = true;
+            state.user = user;
+            state.permissions = permissions;
+        },
+        setApplicationLocationPermission: (state, action: PayloadAction<ApplicationPermission>) => {
+            state.permissions.location = action.payload;
+        },
+        setApplicationLocation: (state, action: PayloadAction<Location>) => {
+            const { payload } = action;
+            state.location = {
+                longitude: payload.longitude,
+                latitude: payload.latitude,
+                isPresent: true
+            };
+        },
+        setApplicationUser: (state, action: PayloadAction<ApplicationUser>) => {
+            state.user = action.payload;
+        }
     }
 });
+
+const applicationReducer = applicationSlice.reducer;
+
+export const {
+    initializeApplication,
+    setApplicationLocationPermission,
+    setApplicationLocation,
+    setApplicationUser
+} = applicationSlice.actions;
+export const applicationMounted = createAction('application/applicationMounted');
+export const locationPermissionChecked = createAction<LocationPermissionResponse>('application/locationPermissionChecked');
+export const watchCurrentLocation = createAction('application/watchCurrentLocation');
+export default applicationReducer;

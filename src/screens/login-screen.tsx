@@ -1,17 +1,13 @@
 import React from 'react';
 import {View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native';
 import {Button} from 'react-native-elements';
-import {
-    onLoginAttempted,
-    onLoginPasswordChanged,
-    onLoginUsernameChanged
-} from '../redux/actions/login/action-creators/action-creators';
 import i18n from '../i18n/i18n';
 import colors from '../colors';
 import {APPLICATION_NAME} from '../application.constants';
 import {useAppDispatch, useAppSelector} from '../redux/store/store';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../components/navigation/lost-my-dog-navigator';
+import {loginAttempt, setLoginPassword, setLoginUsername} from '../redux/reducers/login/login-reducer';
 
 export type LoginScreen = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
@@ -49,7 +45,7 @@ const LoginScreen = (props: LoginScreen) => {
                     placeholderTextColor={colors.white}
                     value={username}
                     autoCapitalize='none'
-                    onChangeText={(username) => dispatch(onLoginUsernameChanged(username))} />
+                    onChangeText={(username) => dispatch(setLoginUsername(username))} />
             </View>
             <View style={styles.inputStyle} >
                 <TextInput
@@ -60,7 +56,7 @@ const LoginScreen = (props: LoginScreen) => {
                     placeholderTextColor={colors.white}
                     value={password}
                     autoCapitalize='none'
-                    onChangeText={password => dispatch(onLoginPasswordChanged(password))} />
+                    onChangeText={password => dispatch(setLoginPassword(password))} />
             </View>
             <TouchableOpacity>
                 <Text
@@ -76,7 +72,7 @@ const LoginScreen = (props: LoginScreen) => {
                 title={i18n.t('general.login')}
                 loading={loading}
                 disabled={loading || emptyInput()}
-                onPress={() => dispatch(onLoginAttempted(props.navigation))} />
+                onPress={() => dispatch(loginAttempt(props.navigation))} />
             <TouchableOpacity
                 onPress={() => props.navigation.navigate('SignupScreen')}>
                 <Text

@@ -6,8 +6,7 @@ import colors from '../colors';
 import i18n from '../i18n/i18n';
 import {ActivityAction} from 'expo-intent-launcher';
 import {useDispatch} from 'react-redux';
-import {onCheckLocationPermission} from '../redux/actions/application/action-creators/action-creators';
-import {ApplicationPermission} from '../redux/reducers/application/application-reducer';
+import {ApplicationPermission, locationPermissionChecked} from '../redux/reducers/application/application-reducer';
 import {Button, Icon} from '@rneui/base';
 
 interface IProps {
@@ -19,7 +18,7 @@ const LocationPermissionInitScreen = (props: IProps) => {
 
     const onAskLocationPermission = async () => {
         const response = await Location.requestForegroundPermissionsAsync();
-        dispatch(onCheckLocationPermission(response));
+        dispatch(locationPermissionChecked(response));
     };
 
     const onOpenSettingsApp = async () => {

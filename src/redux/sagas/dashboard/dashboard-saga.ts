@@ -1,69 +1,60 @@
 import {takeLatest, call, select, put, delay} from 'redux-saga/effects';
 import SearchLostDogsService, {LostDog, LostDogSearchParameters} from '../../../service/search-lost-dogs-service';
-import {
-    ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
-    ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM,
-    ON_DASHBOARD_FETCH_NEW_PAGE,
-    ON_DASHBOARD_MOUNTED,
-    ON_DASHBOARD_REFRESH_PAGE
-} from '../../actions/dashboard/action-types/action-types';
-import {
-    onDashboardDataFetched,
-    onDashboardFetchingNewPage,
-    onDashboardLoading,
-    onDashboardRefreshing,
-    onDashboardResetPaginationDry,
-    onDashboardDataFetchError
-} from '../../actions/dashboard/action-creators/action-creators';
-import {ON_SUBMIT_FORM_SUBMIT_SUCCESS} from '../../actions/submit-form/action-types/action-types';
 import {Action, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../store/store';
-import {Pagination} from '../../reducers/dashboard/dashboard-reducer';
+import {
+    dashboardDataFetched, dashboardIncrementPage, dashboardMounted,
+    Pagination, setDashboardFetchingNew,
+    setDashboardLoading,
+    setDashboardPage,
+    setDashboardRefreshing, setDashboardSearchRadius, setDashboardSearchType, setDashboardShowError
+} from '../../reducers/dashboard/dashboard-reducer';
 import {ApplicationLocation} from '../../reducers/application/application-reducer';
+import {submitFormSubmitSuccess} from '../../reducers/submit-form/submit-form-reducer';
 
 const CLEAR_DATA_ACTIONS = [
-    ON_DASHBOARD_MOUNTED,
-    ON_DASHBOARD_REFRESH_PAGE,
-    ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
-    ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM,
-    ON_SUBMIT_FORM_SUBMIT_SUCCESS
+    dashboardMounted.type,
+    setDashboardPage.type,
+    setDashboardSearchRadius.type,
+    setDashboardSearchType.type,
+    submitFormSubmitSuccess.type
 ];
 
 const ACTION_TYPE_STATUS_CHANGE_HANDLER = new Map<string, {(): Action}[]>([
     [
-        ON_DASHBOARD_MOUNTED,
-        [onDashboardLoading]
+        dashboardMounted.type,
+        [() => setDashboardLoading(true)]
     ],
     [
-        ON_DASHBOARD_REFRESH_PAGE,
-        [onDashboardRefreshing]
+        setDashboardPage.type,
+        [() => setDashboardRefreshing(true)]
     ],
     [
-        ON_DASHBOARD_FETCH_NEW_PAGE,
-        [onDashboardFetchingNewPage]
+        dashboardIncrementPage.type,
+        [() => setDashboardFetchingNew(true)]
     ],
     [
-        ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
-        [onDashboardLoading]
+        setDashboardSearchRadius.type,
+        [() => setDashboardLoading(true)]
     ],
     [
-        ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM,
-        [onDashboardLoading]
+        setDashboardSearchType.type,
+        [() => setDashboardLoading(true)]
     ],
     [
-        ON_SUBMIT_FORM_SUBMIT_SUCCESS,
-        [onDashboardLoading, () => onDashboardResetPaginationDry(0)]
+        submitFormSubmitSuccess.type,
+        [() => setDashboardLoading(true), () => setDashboardPage(0)]
     ]
 ]);
 
 export function* dashboardFetchActionWatcherSaga() {
     yield takeLatest([
-        ON_DASHBOARD_MOUNTED,
-        ON_DASHBOARD_REFRESH_PAGE,
-        ON_DASHBOARD_FETCH_NEW_PAGE,
-        ON_DASHBOARD_CHANGE_RADIUS_SEARCH_PARAM,
-        ON_DASHBOARD_CHANGE_SEARCH_TYPE_PARAM,
-        ON_SUBMIT_FORM_SUBMIT_SUCCESS
+        dashboardMounted.type,
+        setDashboardPage.type,
+        dashboardIncrementPage.type,
+        setDashboardSearchRadius.type,
+        setDashboardSearchType.type,
+        submitFormSubmitSuccess.type
     ], dashboardFetchActionSaga);
 }
 
@@ -92,8 +83,12 @@ function* dashboardFetchActionSaga(action: PayloadAction) {
     try {
         const result: LostDog[] = yield call(SearchLostDogsService.searchLostDogs, pagination.currentPage, searchParameters, locationParameters);
         const clearData = CLEAR_DATA_ACTIONS.includes(action.type);
-        yield put(onDashboardDataFetched(clearData, result));
+        yield put(dashboardDataFetched({
+            clearData: clearData,
+            data: result
+        }));
     } catch (error) {
-        yield put(onDashboardDataFetchError());
+        yield put(setDashboardLoading(false));
+        yield put(setDashboardShowError(true));
     }
 }

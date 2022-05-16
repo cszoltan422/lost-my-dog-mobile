@@ -1,15 +1,4 @@
 import {takeLatest, select, put, call} from 'redux-saga/effects';
-import {ON_SUBMIT_FORM_SUBMITTED} from '../../actions/submit-form/action-types/action-types';
-import {
-    ErrorMessage,
-    onSubmitFormImageInvalid,
-    onSubmitFormLoading,
-    onSubmitFormPublishLoadingProgress,
-    onSubmitFormStopLoading,
-    onSubmitFormSubmitError,
-    onSubmitFormSubmitSuccess,
-    onSubmitFormValidationError
-} from '../../actions/submit-form/action-creators/action-creators';
 import * as FileSystem from 'expo-file-system';
 import * as ImageManipulator from 'expo-image-manipulator';
 import {
@@ -36,9 +25,11 @@ import {getCurrentTimeWithTimezone} from '../../../util/date/date.utils';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../store/store';
 import {
+    setSubmitFormError,
+    setSubmitFormIsLoading, setSubmitFormLoadingState, submitFormImageInvalid,
     SubmitFormInput,
     SubmitFormLocation,
-    SubmitFormSelectedImage, SubmitFormType
+    SubmitFormSelectedImage, submitFormSubmit, submitFormSubmitSuccess, SubmitFormType, submitFormValidationError
 } from '../../reducers/submit-form/submit-form-reducer';
 import {ApplicationUser} from '../../reducers/application/application-reducer';
 import {ImageResult} from 'expo-image-manipulator/src/ImageManipulator.types';
@@ -49,7 +40,7 @@ import {RootStackParamList} from '../../../components/navigation/lost-my-dog-nav
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 export function* submitFormSubmittedWatcherSaga() {
-    yield takeLatest([ON_SUBMIT_FORM_SUBMITTED], submitFormSubmittedSaga);
+    yield takeLatest([submitFormSubmit.type], submitFormSubmittedSaga);
 }
 
 function* validateFormInputs(inputs: Map<string, SubmitFormInput>) {
@@ -63,7 +54,7 @@ function* validateFormInputs(inputs: Map<string, SubmitFormInput>) {
                     const isValid = validator(value || '');
                     if (!isValid) {
                         isValidForm = false;
-                        yield put(onSubmitFormValidationError(inputKey));
+                        yield put(submitFormValidationError(inputKey));
                     }
                 }
             }
@@ -77,11 +68,11 @@ function* validateImage(compressedImage: ImageResult | undefined) {
     if (compressedImage) {
         const imageInfo: FileInfo = yield FileSystem.getInfoAsync(compressedImage.uri, { size: true });
         if (imageInfo.size === undefined || imageInfo.size > ONE_GIGABYTE_IN_BYTES) {
-            yield put(onSubmitFormImageInvalid('submitForm.validation.imageTooLarge'));
+            yield put(submitFormImageInvalid('submitForm.validation.imageTooLarge'));
             isImageValid = false;
         }
     } else {
-        yield put(onSubmitFormImageInvalid('submitForm.validation.noImage'));
+        yield put(submitFormImageInvalid('submitForm.validation.noImage'));
         isImageValid = false;
     }
     return isImageValid;
@@ -163,7 +154,7 @@ function* submitFormSubmittedSaga(action: PayloadAction<
         route: RouteProp<RootStackParamList, 'SubmitLostDogScreen'> | RouteProp<RootStackParamList, 'EditLostDogScreen'>,
         navigation: NativeStackNavigationProp<RootStackParamList, 'SubmitLostDogScreen'> | NativeStackNavigationProp<RootStackParamList, 'EditLostDogScreen'>
     }>) {
-    yield put(onSubmitFormLoading());
+    yield put(setSubmitFormIsLoading(true));
 
     const { route, navigation } = action.payload;
     const inputs: Map<string, SubmitFormInput> = yield select((state: RootState) => state.submitForm.inputs);
@@ -173,17 +164,26 @@ function* submitFormSubmittedSaga(action: PayloadAction<
     const selectedImage: SubmitFormSelectedImage = yield select((state: RootState) => state.submitForm.selectedImage);
     const user: ApplicationUser = yield select((state: RootState) => state.application.user);
 
-    yield put(onSubmitFormPublishLoadingProgress(0.2, 'submitForm.loading.validatingForm'));
+    yield put(setSubmitFormLoadingState({
+        progress: 0.2,
+        stage: 'submitForm.loading.validatingForm'
+    }));
     const isValidForm = yield* validateFormInputs(inputs);
 
     if (isValidForm && user.isLoggedIn) {
-        yield put(onSubmitFormPublishLoadingProgress(0.4, 'submitForm.loading.compressingImage'));
+        yield put(setSubmitFormLoadingState({
+            progress: 0.4,
+            stage: 'submitForm.loading.compressingImage'
+        }));
         const compressedImage: ImageResult | undefined = yield* getCompressedImage(selectedImage);
         const isImageValid: boolean = yield* validateImage(compressedImage);
 
         if (isImageValid) {
             try {
-                yield put(onSubmitFormPublishLoadingProgress(0.8, 'submitForm.loading.sendingRequest'));
+                yield put(setSubmitFormLoadingState({
+                    progress: 0.8,
+                    stage: 'submitForm.loading.sendingRequest'
+                }));
                 const loginResult: LoginResult = yield call(UserService.login, { userName: user.username, password: user.password }); // todo only login again if token expired
 
                 const payload: LostDogSubmissionRequest = getPayload(dogId, mode, inputs, location, compressedImage);
@@ -193,22 +193,28 @@ function* submitFormSubmittedSaga(action: PayloadAction<
                     yield call(LostDogSubmissionService.updateLostDog, loginResult.token, payload);
                 }
 
-                yield put(onSubmitFormSubmitSuccess());
+                yield put(submitFormSubmitSuccess());
                 if (route.name === 'SubmitLostDogScreen' || route.name === 'EditLostDogScreen') {
                     navigation.goBack();
                 }
             } catch (error) {
-                const apiError: ErrorMessage = {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
-                    errorCode: error.response.data.errorCode,
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
-                    errorMessage: error.response.data.errorMessage
-                };
-                yield put(onSubmitFormSubmitError(apiError));
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                const errorCode = error.response.data.errorCode;
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                const errorMessage = error.response.data.errorMessage;
+                yield put(setSubmitFormError({
+                    show: true,
+                    message: errorMessage,
+                    code: errorCode
+                }));
             }
         }
     }
-    yield put(onSubmitFormStopLoading());
+    yield put(setSubmitFormIsLoading(false));
+    yield put(setSubmitFormLoadingState({
+        progress: 0,
+        stage: ''
+    }));
 }

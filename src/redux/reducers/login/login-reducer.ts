@@ -1,10 +1,6 @@
-import { createReducer } from '@reduxjs/toolkit';
-import {
-    ON_LOGIN_ATTEMPT_ERROR,
-    ON_LOGIN_LOADING,
-    ON_LOGIN_PASSWORD_CHANGED, ON_LOGIN_STOP_LOADING, ON_LOGIN_SUCCESS,
-    ON_LOGIN_USERNAME_CHANGED
-} from '../../actions/login/action-types/action-types';
+import {createAction, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../../components/navigation/lost-my-dog-navigator';
 
 export interface LoginState {
     username: string;
@@ -20,26 +16,33 @@ export const initialState: LoginState = {
     error: '',
 };
 
-export const reducer = createReducer(initialState, {
-    [ON_LOGIN_USERNAME_CHANGED]: (state, action) => {
-        state.username = action.payload;
-    },
-    [ON_LOGIN_PASSWORD_CHANGED]: (state, action) => {
-        state.password = action.payload;
-    },
-    [ON_LOGIN_LOADING]: (state) => {
-        state.loading = true;
-    },
-    [ON_LOGIN_STOP_LOADING]: (state) => {
-        state.loading = false;
-    },
-    [ON_LOGIN_SUCCESS]: (state) => {
-        state.loading = false;
-        state.username = '';
-        state.password = '';
-        state.error = '';
-    },
-    [ON_LOGIN_ATTEMPT_ERROR]: (state, action) => {
-        state.error = action.payload;
+const loginSlice = createSlice({
+    name: 'login',
+    initialState,
+    reducers: {
+        setLoginUsername: (state, action: PayloadAction<string>) => {
+            state.username = action.payload;
+        },
+        setLoginPassword: (state, action: PayloadAction<string>) => {
+            state.password = action.payload;
+        },
+        setLoginLoading: (state, action: PayloadAction<boolean>) => {
+            state.loading = action.payload;
+        },
+        loginSuccess: (state) => {
+            state.loading = false;
+            state.username = '';
+            state.password = '';
+            state.error = '';
+        },
+        loginError: (state, action: PayloadAction<string>) => {
+            state.error = action.payload;
+        }
     }
 });
+
+const loginReducer = loginSlice.reducer;
+
+export const { setLoginUsername, setLoginPassword, setLoginLoading, loginSuccess, loginError } = loginSlice.actions;
+export const loginAttempt = createAction<NativeStackNavigationProp<RootStackParamList, 'LoginScreen'>>('login/loginAttempt');
+export default loginReducer;

@@ -3,11 +3,9 @@ import {View, StyleSheet} from 'react-native';
 import SplashImage from './splash/splash-image';
 import LostMyDogNavigator from './navigation/lost-my-dog-navigator';
 import LocationPermissionInitScreen from '../screens/location-permission-init-screen';
-import {
-    onApplicationMounted,
-} from '../redux/actions/application/action-creators/action-creators';
 import {useComponentDidMount} from '../hooks/useComponentDidMount';
 import {useAppDispatch, useAppSelector} from '../redux/store/store';
+import {applicationMounted} from '../redux/reducers/application/application-reducer';
 
 const ApplicationWrapper = () => {
 
@@ -19,7 +17,7 @@ const ApplicationWrapper = () => {
     const dispatch = useAppDispatch();
 
     useComponentDidMount(() => {
-        dispatch(onApplicationMounted());
+        dispatch(applicationMounted());
         setInterval(() => {
             setElapsedTime((prevState) => {
                 return prevState + 400;
