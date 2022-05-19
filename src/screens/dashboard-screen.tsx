@@ -3,35 +3,22 @@ import {View, StyleSheet} from 'react-native';
 import DashboardHeader from '../components/dashboard/dashboard-header/dashboard-header';
 import DashboardList from '../components/dashboard/dashboard-list/dashboard-list';
 import LoadingCard from '../components/common/loading-card/loading-card';
-import FloatingActionButton from '../components/common/floating-action-button/floating-action-button';
 import Toast from 'react-native-toast-message';
 import i18n from '../i18n/i18n';
-import colors from '../colors';
 import {useComponentDidMount} from '../hooks/useComponentDidMount';
 import {useAppDispatch, useAppSelector} from '../redux/store/store';
 import {RootStackParamList} from '../components/navigation/lost-my-dog-navigator';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {LostDog} from '../service/search-lost-dogs-service';
-import {
-    dashboardIncrementPage, dashboardMounted,
-    setDashboardPage, setDashboardSearchRadius, setDashboardSearchType,
-    setDashboardShowError
-} from '../redux/reducers/dashboard/dashboard-reducer';
+import {dashboardMounted, setDashboardShowError} from '../redux/reducers/dashboard/dashboard-reducer';
+import DashboardFloatingButton from '../components/dashboard/floating-button/dashboard-floating-button';
 
 type IProps = NativeStackScreenProps<RootStackParamList, 'DashboardScreen'>;
 
 const DashboardScreen = (props: IProps) => {
     const { navigation } = props;
 
-    const dataFetched = useAppSelector(state => state.dashboard.dataFetched);
     const loading = useAppSelector(state => state.dashboard.loading);
-    const refreshing = useAppSelector(state => state.dashboard.refreshing);
-    const fetchingNew = useAppSelector(state => state.dashboard.fetchingNew);
-    const hasNoMoreData = useAppSelector(state => state.dashboard.hasNoMoreData);
-    const searchParameters = useAppSelector(state => state.dashboard.searchParameters);
-    const data = useAppSelector(state => state.dashboard.data);
     const error = useAppSelector(state => state.dashboard.error);
-    const user = useAppSelector(state => state.application.user);
 
     const dispatch = useAppDispatch();
 
@@ -52,53 +39,13 @@ const DashboardScreen = (props: IProps) => {
         }
     }, [error]);
 
-    const isLoading = () => {
-        return fetchingNew || loading || refreshing;
-    };
-
     return (
         <View style={styles.container}>
-            <DashboardHeader
-                loading={loading}
-                refreshing={refreshing}
-                fetchingNew={fetchingNew}
-                searchParameters={searchParameters}
-                isLoading={isLoading}
-                onDashboardChangeRadiusSearchParam={(radius) => dispatch(setDashboardSearchRadius(radius))}
-                onDashboardChangeSearchTypeParam={(searchType) => dispatch(setDashboardSearchType(searchType))} />
+            <DashboardHeader />
             {loading ?
                 <LoadingCard /> :
-                <DashboardList
-                    dataFetched={dataFetched}
-                    data={data}
-                    fetchingNew={fetchingNew}
-                    refreshing={refreshing}
-                    hasNoMoreData={hasNoMoreData}
-                    isLoading={isLoading}
-                    onDashboardFetchNewPage={() => dispatch(dashboardIncrementPage())}
-                    onDashboardRefreshPage={() => dispatch(setDashboardPage(0))}
-                    onListItemClicked={(dog: LostDog) => {
-                        props.navigation.navigate('DetailsScreen', {
-                            dog: dog
-                        });
-                    }} /> }
-            <FloatingActionButton
-                color={colors.primaryColor}
-                icon={{ name: 'add', color: colors.white }}
-                openIcon={{ name: 'close', color: colors.white }}
-                actions={[
-                    {
-                        title: i18n.t('general.submitLostDog'),
-                        icon: { name: 'add', color: colors.white },
-                        color: colors.primaryColor,
-                        pressHandler: () => {
-                            navigation.navigate(user.isLoggedIn ?
-                                'SubmitLostDogScreen'
-                                : 'LoginScreen'
-                            );
-                        }
-                    }
-                ]} />
+                <DashboardList navigation={navigation} /> }
+            <DashboardFloatingButton navigation={navigation} />
         </View>
     );
 };

@@ -8,28 +8,31 @@ import LostDogDetailsHeader from './header/lost-dog-details-header';
 import LostDogDetailsContent from './content/lost-dog-details-content';
 import i18n from '../../i18n/i18n';
 import colors from '../../colors';
+import {useAppDispatch, useAppSelector} from '../../redux/store/store';
 import {
-    SubmitFormInput,
-    SubmitFormLoadingState,
-    SubmitFormLocation, SubmitFormSelectedImage
+    submitFormClearImage,
+    submitFormImageChange,
+    submitFormInputChange, submitFormLocationChange, submitFormSubmit
 } from '../../redux/reducers/submit-form/submit-form-reducer';
-import {Location} from '../../service/search-lost-dogs-service';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../navigation/lost-my-dog-navigator';
 
 interface IProps {
-    isLoading: boolean;
-    isValid: boolean;
-    inputs: Map<string, SubmitFormInput>;
-    loading: SubmitFormLoadingState;
-    location: SubmitFormLocation;
-    selectedImage: SubmitFormSelectedImage;
-    onLocationValueChanged: (location: Location) => void;
-    onInputValueChanged: (inputKey: string, value: string | boolean | undefined) => void;
-    onImageSelected: (uri: string) => void;
-    onImageCleared: () => void;
-    onSubmit: () => void;
+    navigationProps: NativeStackScreenProps<RootStackParamList, 'SubmitLostDogScreen' | 'EditLostDogScreen'>;
 }
 
 const LostDogDetails = (props: IProps) => {
+    const isValid = useAppSelector(state => state.submitForm.isValid);
+    const isLoading = useAppSelector(state => state.submitForm.isLoading);
+    const loading = useAppSelector(state => state.submitForm.loading);
+    const inputs = useAppSelector(state => state.submitForm.inputs);
+    const location = useAppSelector(state => state.submitForm.location);
+    const selectedImage = useAppSelector(state => state.submitForm.selectedImage);
+
+    const { navigationProps } = props;
+
+    const dispatch = useAppDispatch();
+
     return (
         <ScrollView
             testID='details-screen-scroll-view' >
@@ -37,25 +40,28 @@ const LostDogDetails = (props: IProps) => {
                 testID='details-screen-container'
                 style={styles.container}>
                 <LostDogDetailsHeader
-                    selectedImage={props.selectedImage}
-                    onImageSelected={props.onImageSelected}
-                    onImageCleared={props.onImageCleared} />
+                    selectedImage={selectedImage}
+                    onImageSelected={(selectedImageUri) => dispatch(submitFormImageChange(selectedImageUri))}
+                    onImageCleared={() => dispatch(submitFormClearImage())} />
                 <LostDogDetailsContent
-                    isLoading={props.isLoading}
-                    isValid={props.isValid}
-                    inputs={props.inputs}
-                    onInputValueChanged={props.onInputValueChanged} />
-                {props.location.isPresent && (
+                    isLoading={isLoading}
+                    isValid={isValid}
+                    inputs={inputs}
+                    onInputValueChanged={(inputKey, value) => dispatch(submitFormInputChange({
+                        inputKey: inputKey,
+                        value: value
+                    }))} />
+                {location.isPresent && (
                     <Card>
                         <LocationPicker
-                            longitude={props.location.longitude}
-                            latitude={props.location.latitude}
+                            longitude={location.longitude}
+                            latitude={location.latitude}
                             markerTitle={i18n.t('general.lastSeenLocation')}
                             iconType='font-awesome'
                             iconName='paw'
                             iconSize={24}
                             iconColor={colors.accentColor}
-                            onLocationValueChanged={props.onLocationValueChanged} />
+                            onLocationValueChanged={(coordinates) => dispatch(submitFormLocationChange(coordinates))} />
                     </Card>
                 )}
                 <Card>
@@ -65,22 +71,22 @@ const LostDogDetails = (props: IProps) => {
                             buttonStyle={styles.buttonStyle}
                             titleStyle={{color: colors.white}}
                             title={i18n.t('general.submit')}
-                            loading={props.isLoading}
-                            disabled={!props.isValid || props.isLoading}
-                            onPress={props.onSubmit} />
-                        {props.isLoading && (
+                            loading={isLoading}
+                            disabled={!isValid || isLoading}
+                            onPress={() => dispatch(submitFormSubmit(navigationProps))} />
+                        {isLoading && (
                             <View style={styles.loadingProgressContainer}>
                                 <Text style={styles.loadingProgressInfoTextStyle}>
                                     {i18n.t('submitForm.loading.processing')}
                                 </Text>
                                 <Text style={styles.loadingProgressStageStyle}>
-                                    {i18n.t(props.loading.stage)}
+                                    {i18n.t(loading.stage)}
                                 </Text>
                                 <View style={styles.progressbarContainer}>
                                     <ProgressBar
                                         width={null}
                                         color={colors.accentColor}
-                                        progress={props.loading.progress} />
+                                        progress={loading.progress} />
                                 </View>
                             </View>
                         )}

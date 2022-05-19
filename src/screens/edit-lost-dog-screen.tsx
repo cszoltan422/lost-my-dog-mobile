@@ -25,9 +25,9 @@ import {RootStackParamList} from '../components/navigation/lost-my-dog-navigator
 import {
     resetSubmitForm,
     setSubmitFormDogId, setSubmitFormError,
-    setSubmitFormMode, submitFormClearImage,
+    setSubmitFormMode,
     submitFormImageChange,
-    submitFormInputChange, submitFormLocationChange, submitFormSubmit
+    submitFormInputChange, submitFormLocationChange
 } from '../redux/reducers/submit-form/submit-form-reducer';
 
 type IProps = NativeStackScreenProps<RootStackParamList, 'EditLostDogScreen'>;
@@ -36,18 +36,14 @@ const EditLostDogScreen = (props: IProps) => {
     const { route } = props;
     const { dog } = route.params;
 
-    const isValid = useAppSelector(state => state.submitForm.isValid);
-    const isLoading = useAppSelector(state => state.submitForm.isLoading);
-    const loading = useAppSelector(state => state.submitForm.loading);
     const error = useAppSelector(state => state.submitForm.error);
-    const inputs = useAppSelector(state => state.submitForm.inputs);
-    const location = useAppSelector(state => state.submitForm.location);
-    const selectedImage = useAppSelector(state => state.submitForm.selectedImage);
 
     const dispatch = useAppDispatch();
 
     useComponentDidMount(() => {
+        dispatch(setSubmitFormMode(SUBMIT_FORM_EDIT_MODE));
         dispatch(setSubmitFormDogId(dog.id));
+
         dispatch(submitFormLocationChange({
             longitude: dog.longitude,
             latitude: dog.latitude
@@ -84,7 +80,7 @@ const EditLostDogScreen = (props: IProps) => {
         }));
         dispatch(submitFormInputChange({
             inputKey: SUBMIT_FORM_HAS_CHIP_TOGGLE_INPUT_KEY,
-            value: dog.chippedStatus
+            value: dog.chippedStatus === 'YES'
         }));
         dispatch(submitFormInputChange({
             inputKey: SUBMIT_FORM_CHIP_NUMBER_TEXT_INPUT_KEY,
@@ -98,8 +94,6 @@ const EditLostDogScreen = (props: IProps) => {
             inputKey: SUBMIT_FORM_SUBMITTER_PHONE_NUMBER_INPUT_KEY,
             value: dog.contactPhone
         }));
-
-        dispatch(setSubmitFormMode(SUBMIT_FORM_EDIT_MODE)); // order matters, check submit-screen.reducer.js
     });
 
     useComponentWillUnmount(() => {
@@ -124,23 +118,7 @@ const EditLostDogScreen = (props: IProps) => {
         }
     }, [error]);
 
-    return (
-        <LostDogDetails
-            isValid={isValid}
-            isLoading={isLoading}
-            loading={loading}
-            inputs={inputs}
-            location={location}
-            selectedImage={selectedImage}
-            onInputValueChanged={(inputKey, value) => dispatch(submitFormInputChange({
-                inputKey: inputKey,
-                value: value
-            }))}
-            onLocationValueChanged={(coordinates) => dispatch(submitFormLocationChange(coordinates))}
-            onImageSelected={(selectedImageUri) => dispatch(submitFormImageChange(selectedImageUri))}
-            onImageCleared={() => dispatch(submitFormClearImage())}
-            onSubmit={() => dispatch(submitFormSubmit(props))} />
-    );
+    return <LostDogDetails navigationProps={props} />;
 };
 
 export default EditLostDogScreen;

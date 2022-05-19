@@ -9,21 +9,15 @@ import {useAppDispatch, useAppSelector} from '../redux/store/store';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../components/navigation/lost-my-dog-navigator';
 import {
-    resetSubmitForm, setSubmitFormError, submitFormClearImage,
-    submitFormImageChange,
-    submitFormInputChange, submitFormLocationChange, submitFormSubmit
+    resetSubmitForm,
+    setSubmitFormError,
+    submitFormLocationChange,
 } from '../redux/reducers/submit-form/submit-form-reducer';
 
 type IProps = NativeStackScreenProps<RootStackParamList, 'SubmitLostDogScreen'>;
 
 const SubmitLostDogScreen = (props: IProps) => {
-    const isValid = useAppSelector(state => state.submitForm.isValid);
-    const isLoading = useAppSelector(state => state.submitForm.isLoading);
-    const loading = useAppSelector(state => state.submitForm.loading);
     const error = useAppSelector(state => state.submitForm.error);
-    const inputs = useAppSelector(state => state.submitForm.inputs);
-    const location = useAppSelector(state => state.submitForm.location);
-    const selectedImage = useAppSelector(state => state.submitForm.selectedImage);
     const currentLocation = useAppSelector(state => state.application.location);
 
     const dispatch = useAppDispatch();
@@ -56,23 +50,7 @@ const SubmitLostDogScreen = (props: IProps) => {
         }
     }, [error]);
 
-    return (
-        <LostDogDetails
-            isValid={isValid}
-            isLoading={isLoading}
-            loading={loading}
-            inputs={inputs}
-            location={location}
-            selectedImage={selectedImage}
-            onInputValueChanged={(inputKey, value) => dispatch(submitFormInputChange({
-                inputKey: inputKey,
-                value: value
-            }))}
-            onLocationValueChanged={(coordinates) => dispatch(submitFormLocationChange(coordinates))}
-            onImageSelected={(selectedImageUri) => dispatch(submitFormImageChange(selectedImageUri))}
-            onImageCleared={() => dispatch(submitFormClearImage())}
-            onSubmit={() => dispatch(submitFormSubmit(props))} />
-    );
+    return <LostDogDetails navigationProps={props} />;
 
 };
 
