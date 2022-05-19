@@ -9,30 +9,29 @@ import {
 } from '../../../application.constants';
 import i18n from '../../../i18n/i18n';
 import colors from '../../../colors';
-import {LostDogSearchParameters} from '../../../service/search-lost-dogs-service';
 import {Button, Slider} from '@rneui/base';
+import {useAppDispatch, useAppSelector} from '../../../redux/store/store';
+import {setDashboardSearchRadius, setDashboardSearchType} from '../../../redux/reducers/dashboard/dashboard-reducer';
 
-interface IProps {
-    loading: boolean;
-    refreshing: boolean;
-    fetchingNew: boolean;
-    isLoading: () => boolean;
-    searchParameters: LostDogSearchParameters;
-    onDashboardChangeRadiusSearchParam: (value: number) => void;
-    onDashboardChangeSearchTypeParam: (value: string) => void;
-}
+const DashboardHeader = () => {
+    const loading = useAppSelector(state => state.dashboard.loading);
+    const refreshing = useAppSelector(state => state.dashboard.refreshing);
+    const fetchingNew = useAppSelector(state => state.dashboard.fetchingNew);
+    const searchParameters = useAppSelector(state => state.dashboard.searchParameters);
 
-const DashboardHeader = (props: IProps) => {
+    const dispatch = useAppDispatch();
+
+    const isLoading = loading || refreshing || fetchingNew;
 
     const onTabValueChange = (value: string) => {
-        if (!props.isLoading()) {
-            props.onDashboardChangeSearchTypeParam(value);
+        if (!isLoading) {
+            dispatch(setDashboardSearchType(value));
         }
     };
 
     const onDashboardChangeSliderValue = (value: number) => {
-        if (!props.isLoading()) {
-            props.onDashboardChangeRadiusSearchParam(value);
+        if (!isLoading) {
+            dispatch(setDashboardSearchRadius(value));
         }
     };
 
@@ -46,12 +45,12 @@ const DashboardHeader = (props: IProps) => {
                         testID='dashboard-header-tabs-lost-button'
                         buttonStyle={[
                             styles.tabButtonStyle,
-                            DASHBOARD_SEARCH_TYPE_LOST === props.searchParameters.searchType ?
+                            DASHBOARD_SEARCH_TYPE_LOST === searchParameters.searchType ?
                                 styles.activeButtonStyle : null
                         ]}
                         titleStyle={styles.titleStyle}
                         title={`${i18n.t('general.lost')} / ${i18n.t('general.wandering')}`}
-                        disabled={props.isLoading()}
+                        disabled={isLoading}
                         onPress={() => onTabValueChange(DASHBOARD_SEARCH_TYPE_LOST)} />
                 </View>
                 <View style={styles.tabItemContainer}>
@@ -59,12 +58,12 @@ const DashboardHeader = (props: IProps) => {
                         testID='dashboard-header-tabs-found-button'
                         buttonStyle={[
                             styles.tabButtonStyle,
-                            DASHBOARD_SEARCH_TYPE_FOUND === props.searchParameters.searchType ?
+                            DASHBOARD_SEARCH_TYPE_FOUND === searchParameters.searchType ?
                                 styles.activeButtonStyle : null
                         ]}
                         titleStyle={styles.titleStyle}
                         title={i18n.t('general.found')}
-                        disabled={props.isLoading()}
+                        disabled={isLoading}
                         onPress={() => onTabValueChange(DASHBOARD_SEARCH_TYPE_FOUND)} />
                 </View>
             </View>
@@ -72,18 +71,18 @@ const DashboardHeader = (props: IProps) => {
                 testID='dashboard-header-slider-container'
                 style={styles.sliderStyle}>
                 <Slider
-                    value={props.searchParameters.radiusInMeters}
+                    value={searchParameters.radiusInMeters}
                     minimumValue={DASHBOARD_MIN_SEARCH_DISTANCE_IN_METERS}
                     maximumValue={DASHBOARD_MAX_SEARCH_DISTANCE_IN_METERS}
                     step={DASHBOARD_STEP_SEARCH_DISTANCE_IN_METERS}
-                    disabled={props.isLoading()}
+                    disabled={isLoading}
                     trackStyle={styles.trackStyle}
                     thumbStyle={styles.thumbStyle}
                     onSlidingComplete={(value) => onDashboardChangeSliderValue(value)} />
                 <Text
                     testID='dashboard-header-slider-distance-text'
                     style={styles.sliderValueStyle}>
-                    {i18n.t('general.distance')}: {props.searchParameters.radiusInMeters / 1000} km
+                    {i18n.t('general.distance')}: {searchParameters.radiusInMeters / 1000} km
                 </Text>
             </View>
         </>
