@@ -10,14 +10,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v2
+        name: checking out code
+      - uses: borales/actions-yarn@v2.3.0
+        name: running yarn install
         with:
-          node-version: 16.x
-          cache: 'npm'
+          cmd: install # will run `yarn install` command
       - uses: expo/expo-github-action@v6
+        name: adding Expo cli
         with:
           expo-version: 4.x
           token: ${{ secrets.EXPO_TOKEN }}
-      - run: npm ci
-      - run: 'npm run publish:staging'
+      - uses: borales/actions-yarn@v2.3.0
+        name: running yarn publish:staging
+        with:
+          cmd: publish:staging # will run `yarn install` command
